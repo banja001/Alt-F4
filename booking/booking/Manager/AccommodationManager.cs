@@ -21,9 +21,9 @@ namespace booking.Manager
             accommodations= serializer.FromCSV(fileName);
         }
 
-        public void GetAllAccommodations()
+        public List<Accommodation> GetAllAccommodations()
         {
-            accommodations = serializer.FromCSV(fileName);
+            return accommodations;
         }
 
         public void AddAccommodation(Accommodation acc)

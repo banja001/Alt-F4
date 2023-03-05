@@ -35,7 +35,10 @@ namespace booking.View
 
         private void Confirm(object sender, RoutedEventArgs e)
         {
-            Accommodation a = new Accommodation(1,NameTextBox.Text,LocationTextBox.Text,TypeComboBox.Text,Convert.ToInt32(MaxVisitorsTextBox.Text), Convert.ToInt32(MinDaysToUseTextBox.Text), Convert.ToInt32(DaysToCancelTextBox.Text));
+            List<Accommodation> acc = accommodationManager.GetAllAccommodations();
+            Accommodation a = new Accommodation(acc.Max(a => a.Id) + 1,
+            NameTextBox.Text,LocationTextBox.Text,TypeComboBox.Text,Convert.ToInt32(MaxVisitorsTextBox.Text),
+            Convert.ToInt32(MinDaysToUseTextBox.Text), Convert.ToInt32(DaysToCancelTextBox.Text));
             accommodationManager.AddAccommodation(a);
             
         }
