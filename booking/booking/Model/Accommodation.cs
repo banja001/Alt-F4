@@ -13,7 +13,7 @@ namespace booking.Model
         public int Id { get; set; }
         private string Name { get; set; }
 
-        private string Location { get; set; }
+        private string Location { get; set; }//class
         private string Type { get; set; }
 
         private int MaxCapacity { get; set; }
@@ -21,7 +21,7 @@ namespace booking.Model
         private int MinDaysToUse { get; set; }
         private int MinDaysToCancel { get; set; }
 
-        private List<int> Images { get; set; }
+        //private List<int> Images { get; set; }//Acc image class int id string url Accomodation acc
 
         public Accommodation() { }
         public Accommodation(int id, string name,string loc ,string type, int maxCapacity, int minDaysToUse, int minDaysToCancel)

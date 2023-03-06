@@ -1,5 +1,6 @@
 ﻿using booking.Manager;
 using booking.Model;
+using booking.View.Owner;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,7 +25,7 @@ namespace booking.View
     public partial class AddAccommodationWindow : Window
     {
         private AccommodationManager accommodationManager;
-        
+        private AccommodationImageRepository accommodationImageRepository;
 
         public AddAccommodationWindow(AccommodationManager accMen)
         {
@@ -56,6 +57,11 @@ namespace booking.View
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        
+        private void AddImageClick(object sender, RoutedEventArgs e)
+        {
+            AddAccommodationImageWindow win = new AddAccommodationImageWindow(accommodationImageRepository);
+            win.Show();
+
+        }
     }
 }
