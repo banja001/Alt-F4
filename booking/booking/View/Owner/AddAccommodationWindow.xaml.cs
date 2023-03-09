@@ -24,25 +24,25 @@ namespace booking.View
     /// </summary>
     public partial class AddAccommodationWindow : Window
     {
-        private AccommodationManager accommodationManager;
+        private AccommodationRepository accommodationrepository;
         private AccommodationImageRepository accommodationImageRepository;
         private List<string> accommodationImagesUrl;
-        public AddAccommodationWindow(AccommodationManager accMen)
+        public AddAccommodationWindow(AccommodationRepository accMen)
         {
             InitializeComponent();
             DataContext = this;
-            accommodationManager = accMen;
+            accommodationrepository = accMen;
             accommodationImageRepository=new AccommodationImageRepository();
             accommodationImagesUrl = new List<string>();
         }
 
         private void Confirm(object sender, RoutedEventArgs e)
         {
-            List<Accommodation> acc = accommodationManager.GetAllAccommodations();
+            List<Accommodation> acc = accommodationrepository.GetAllAccommodations();
             Accommodation a = new Accommodation(acc.Max(a => a.Id) + 1,
             NameTextBox.Text,LocationTextBox.Text,TypeComboBox.Text,Convert.ToInt32(MaxVisitorsTextBox.Text),
             Convert.ToInt32(MinDaysToUseTextBox.Text), Convert.ToInt32(DaysToCancelTextBox.Text));
-            accommodationManager.AddAccommodation(a);
+            accommodationrepository.AddAccommodation(a);
 
             List<AccommodationImage> acci=accommodationImageRepository.GetAllImages();
             foreach(string url in accommodationImagesUrl)

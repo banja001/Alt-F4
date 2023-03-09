@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace booking.Manager
 {
-    public class AccommodationManager
+    public class AccommodationRepository
     {
         private List<Accommodation> accommodations;
         private Serializer<Accommodation> serializer;
 
         public readonly string fileName = "../../../Resources/Data/accommodation.csv";
-        public AccommodationManager() 
+        public AccommodationRepository() 
         {
             accommodations = new List<Accommodation>();
             serializer = new Serializer<Accommodation>();
