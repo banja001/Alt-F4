@@ -21,7 +21,7 @@ namespace booking.Manager
             AccommodationImages = Serializer.FromCSV(fileName);
         }
 
-        public List<AccommodationImage> GetAllAccommodations()
+        public List<AccommodationImage> GetAllImages()
         {
             return AccommodationImages;
         }

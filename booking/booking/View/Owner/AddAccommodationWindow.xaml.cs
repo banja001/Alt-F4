@@ -26,12 +26,14 @@ namespace booking.View
     {
         private AccommodationManager accommodationManager;
         private AccommodationImageRepository accommodationImageRepository;
-
+        private List<string> accommodationImagesUrl;
         public AddAccommodationWindow(AccommodationManager accMen)
         {
             InitializeComponent();
             DataContext = this;
             accommodationManager = accMen;
+            accommodationImageRepository=new AccommodationImageRepository();
+            accommodationImagesUrl = new List<string>();
         }
 
         private void Confirm(object sender, RoutedEventArgs e)
@@ -41,6 +43,25 @@ namespace booking.View
             NameTextBox.Text,LocationTextBox.Text,TypeComboBox.Text,Convert.ToInt32(MaxVisitorsTextBox.Text),
             Convert.ToInt32(MinDaysToUseTextBox.Text), Convert.ToInt32(DaysToCancelTextBox.Text));
             accommodationManager.AddAccommodation(a);
+
+            List<AccommodationImage> acci=accommodationImageRepository.GetAllImages();
+            foreach(string url in accommodationImagesUrl)
+            {
+                AccommodationImage image;
+                if (acci.Count() == 0)
+                {
+
+                    image = new AccommodationImage(0, url, a.Id);
+                }
+                else
+                {
+                    image=new AccommodationImage(acci.Max(a => a.Id) + 1,url,a.Id);
+                }
+                
+
+                accommodationImageRepository.AddAccommodationImage(image);
+            }
+            
             
         }
 
@@ -59,7 +80,8 @@ namespace booking.View
 
         private void AddImageClick(object sender, RoutedEventArgs e)
         {
-            AddAccommodationImageWindow win = new AddAccommodationImageWindow(accommodationImageRepository);
+            
+            AddAccommodationImageWindow win = new AddAccommodationImageWindow(accommodationImageRepository,accommodationImagesUrl);
             win.Show();
 
         }

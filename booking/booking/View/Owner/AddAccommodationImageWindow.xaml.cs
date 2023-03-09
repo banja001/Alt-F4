@@ -1,17 +1,8 @@
 ﻿using booking.Manager;
-using System;
+using booking.Model;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace booking.View.Owner
 {
@@ -21,21 +12,25 @@ namespace booking.View.Owner
     public partial class AddAccommodationImageWindow : Window
     {
         private AccommodationImageRepository accommodationImageRepository;
-        public AddAccommodationImageWindow(AccommodationImageRepository acci)
+        private List<string> accommodationImages;
+        public AddAccommodationImageWindow(AccommodationImageRepository acci,List<string> images)
         {
             InitializeComponent();
             DataContext = this;
             accommodationImageRepository = acci;
+            accommodationImages = images;  
+
         }
 
         public void ConfirmImageClick(object sender, RoutedEventArgs e)
         {
+            accommodationImages.Add(UrlTextBox.Text);
 
         }
 
         public void CancelImageClick(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
     }
 }
