@@ -1,5 +1,6 @@
 ﻿using booking.Model;
 using booking.Repository;
+using booking.View.Guide;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -78,7 +79,9 @@ namespace booking.View
                     } 
                     else if(user.Role == "Guide")
                     {
-
+                        GuideWindow guideWindow = new GuideWindow();
+                        guideWindow.Show();
+                        this.Close();
                     }
                 }
                 else
