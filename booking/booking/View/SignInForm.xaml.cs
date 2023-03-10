@@ -64,7 +64,9 @@ namespace booking.View
                 {
                     if (user.Role == "Owner")
                     {
-
+                        OwnerWindow win=new OwnerWindow();
+                        win.Show();
+                        this.Close();
                     }
                     else if (user.Role == "Guest1")
                     {
