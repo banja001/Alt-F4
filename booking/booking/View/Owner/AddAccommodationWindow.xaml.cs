@@ -26,21 +26,60 @@ namespace booking.View
     {
         private AccommodationRepository accommodationrepository;
         private AccommodationImageRepository accommodationImageRepository;
+        private LocationRepository locationRepository;
         private List<string> accommodationImagesUrl;
-        public AddAccommodationWindow(AccommodationRepository accMen)
+        public AddAccommodationWindow(AccommodationRepository accMen, LocationRepository locrep,AccommodationImageRepository accirep)
         {
             InitializeComponent();
             DataContext = this;
             accommodationrepository = accMen;
-            accommodationImageRepository=new AccommodationImageRepository();
+            accommodationImageRepository = accirep;
             accommodationImagesUrl = new List<string>();
+            locationRepository = locrep;
         }
 
         private void Confirm(object sender, RoutedEventArgs e)
         {
+            List<Location> locations=locationRepository.GetAllLocations();
+
+            int locid;
+            if (locations.Count() == 0)
+            {
+                locid = 0;//aaaaaaaaaaaa
+                Location loc = new Location(locid, GradTextBox.Text, DrzavaTextBox.Text);
+                locationRepository.AddLocation(loc);
+            }
+            else
+            {
+                Location location = locations.Find(a => a.Drzava == DrzavaTextBox.Text && a.Grad == GradTextBox.Text);
+                if (location == null)
+                {
+                    locid = locations.Max(a => a.Id) + 1;
+                    Location loc = new Location(locid, GradTextBox.Text, DrzavaTextBox.Text);
+                    locationRepository.AddLocation(loc);
+                }
+                else
+                {
+                    locid = location.Id;
+                }
+                
+            }
+            
+            
+            
+
             List<Accommodation> acc = accommodationrepository.GetAllAccommodations();
-            Accommodation a = new Accommodation(acc.Max(a => a.Id) + 1,
-            NameTextBox.Text,LocationTextBox.Text,TypeComboBox.Text,Convert.ToInt32(MaxVisitorsTextBox.Text),
+            int accid;
+            if (acc.Count() == 0)
+            {
+                accid = 0;
+            }
+            else
+            {
+                accid=acc.Max(a => a.Id) + 1;
+            }
+            Accommodation a = new Accommodation(accid,
+            NameTextBox.Text,locid,TypeComboBox.Text,Convert.ToInt32(MaxVisitorsTextBox.Text),
             Convert.ToInt32(MinDaysToUseTextBox.Text), Convert.ToInt32(DaysToCancelTextBox.Text));
             accommodationrepository.AddAccommodation(a);
 

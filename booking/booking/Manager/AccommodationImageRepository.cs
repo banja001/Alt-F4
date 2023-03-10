@@ -16,7 +16,7 @@ namespace booking.Manager
         public readonly string fileName = "../../../Resources/Data/accommodationImage.csv";
         public AccommodationImageRepository()
         {
-            AccommodationImages = new List<AccommodationImage>();
+            //AccommodationImages = new List<AccommodationImage>();
             Serializer = new Serializer<AccommodationImage>();
             AccommodationImages = Serializer.FromCSV(fileName);
         }

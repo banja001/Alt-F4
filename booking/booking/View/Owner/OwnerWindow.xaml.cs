@@ -21,16 +21,21 @@ namespace booking.View
     public partial class OwnerWindow : Window
     {
         private AccommodationRepository accommodationRepository;
+        private AccommodationImageRepository accommodationImageRepository;
+        private LocationRepository locationRepository;
         public OwnerWindow()
         {
             InitializeComponent();
             DataContext = this;
             accommodationRepository = new AccommodationRepository();
+            accommodationImageRepository = new AccommodationImageRepository();
+            locationRepository = new LocationRepository();
+
         }
 
         private void AddAccommodation(object sender, RoutedEventArgs e)
         {
-            AddAccommodationWindow win=new AddAccommodationWindow(accommodationRepository);
+            AddAccommodationWindow win=new AddAccommodationWindow(accommodationRepository,locationRepository,accommodationImageRepository);
             win.Show();
         }
     }

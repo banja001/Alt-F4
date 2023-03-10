@@ -13,7 +13,7 @@ namespace booking.Model
         public int Id { get; set; }
         private string Name { get; set; }
 
-        private string Location { get; set; }//class
+        private int LocationId { get; set; }//class
         private string Type { get; set; }
 
         private int MaxCapacity { get; set; }
@@ -24,11 +24,11 @@ namespace booking.Model
         //private List<int> Images { get; set; }//Acc image class int id string url Accomodation acc
 
         public Accommodation() { }
-        public Accommodation(int id, string name,string loc ,string type, int maxCapacity, int minDaysToUse, int minDaysToCancel)
+        public Accommodation(int id, string name,int loc ,string type, int maxCapacity, int minDaysToUse, int minDaysToCancel)
         {
             Id = id;
             Name = name;
-            Location = loc;
+            LocationId = loc;
             Type = type;
             MaxCapacity = maxCapacity;
             MinDaysToUse = minDaysToUse;
@@ -37,7 +37,7 @@ namespace booking.Model
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Name,Location, Type, MaxCapacity.ToString(),MinDaysToUse.ToString(),MinDaysToCancel.ToString() };
+            string[] csvValues = { Id.ToString(), Name,LocationId.ToString(), Type, MaxCapacity.ToString(),MinDaysToUse.ToString(),MinDaysToCancel.ToString() };
             return csvValues;
         }
 
@@ -45,7 +45,7 @@ namespace booking.Model
         {
             Id = Convert.ToInt32(values[0]);
             Name = values[1];
-            Location = values[2];
+            LocationId = Convert.ToInt32(values[2]);
             Type = values[3];
             MaxCapacity = Convert.ToInt32(values[4]);
             MinDaysToUse = Convert.ToInt32(values[5]);
