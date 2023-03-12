@@ -13,7 +13,7 @@ namespace booking.Model
         public int Id { get; set; }
         private string Name { get; set; }
 
-        private int LocationId { get; set; }//class
+        private int LocationId { get; set; }
         private string Type { get; set; }
 
         private int MaxCapacity { get; set; }

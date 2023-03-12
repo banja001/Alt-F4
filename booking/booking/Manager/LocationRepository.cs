@@ -17,7 +17,7 @@ namespace booking.Manager
         public readonly string fileName = "../../../Resources/Data/location.csv";
         public LocationRepository()
         {
-            //Locations = new List<Location>();
+            
             Serializer = new Serializer<Location>();
             Locations = Serializer.FromCSV(fileName);
         }

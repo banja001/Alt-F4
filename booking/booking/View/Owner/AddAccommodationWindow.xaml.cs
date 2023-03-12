@@ -45,7 +45,7 @@ namespace booking.View
             int locid;
             if (locations.Count() == 0)
             {
-                locid = 0;//aaaaaaaaaaaa
+                locid = 0;
                 Location loc = new Location(locid, GradTextBox.Text, DrzavaTextBox.Text);
                 locationRepository.AddLocation(loc);
             }
@@ -100,8 +100,8 @@ namespace booking.View
 
                 accommodationImageRepository.AddAccommodationImage(image);
             }
-            
-            
+
+            this.Close(); 
         }
 
 

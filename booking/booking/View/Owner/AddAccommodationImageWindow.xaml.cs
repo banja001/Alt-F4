@@ -25,6 +25,7 @@ namespace booking.View.Owner
         public void ConfirmImageClick(object sender, RoutedEventArgs e)
         {
             accommodationImages.Add(UrlTextBox.Text);
+            this.Close();
 
         }
 
