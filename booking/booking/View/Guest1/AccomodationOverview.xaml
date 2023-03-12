@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.View"
         mc:Ignorable="d"
+        
         Title="AccomodationOverview" Height="582" Width="846" WindowStartupLocation="CenterScreen">
     <Grid>
         <ToolBar x:Name="toolBar" Height="200" DockPanel.Dock="Top" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                <Grid Grid.Row="0" Grid.Column="0" Width="757" Height="150">
+            <Grid Grid.Row="0" Grid.Column="0" Width="800" Height="150">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -18,34 +19,34 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition>
-                            
-                        </ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <CheckBox Grid.Row="0" Grid.Column="0" Content="Apartment" IsChecked="True" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>
-                    <CheckBox Grid.Row="0" Grid.Column="1" Content="House" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>
-                    <CheckBox Grid.Row="0" Grid.Column="2" Content="Cabin" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                    <CheckBox Grid.Row="0" Grid.Column="0" Name="CheckBoxApartment"  Content="Apartment" HorizontalAlignment="Center" VerticalAlignment="Center" Unchecked="CheckBoxUnchecked" Checked="CheckBoxChecked"/>
+                    <CheckBox Grid.Row="0" Grid.Column="1" Name="CheckBoxHouse" Content="House" HorizontalAlignment="Center" VerticalAlignment="Center" Unchecked="CheckBoxUnchecked" Checked="CheckBoxChecked"></CheckBox>
+                    <CheckBox Grid.Row="0" Grid.Column="2" Name="CheckBoxCabin" Content="Cabin" HorizontalAlignment="Center" VerticalAlignment="Center" Unchecked="CheckBoxUnchecked" Checked="CheckBoxChecked"></CheckBox>
 
                     <Label Grid.Row="1" Grid.Column="0" Height="30" HorizontalAlignment="Right" Content="Name"/>
-                    <Label Grid.Row="2" Grid.Column="0" Height="30" HorizontalAlignment="Right" Content="Location"/>
+                    <Label Grid.Row="2" Grid.Column="0" Height="30" HorizontalAlignment="Right" Content="City"/>
                     <Label Grid.Row="3" Grid.Column="0" Height="30" HorizontalAlignment="Right"  Content="Number of guests"/>
-                    <Label Grid.Row="4" Grid.Column="0" Height="30" HorizontalAlignment="Right" Content="Number of dayss"/>
+                    <Label Grid.Row="4" Grid.Column="0" Height="30" HorizontalAlignment="Right" Content="Number of days"/>
 
-                    <TextBox  Grid.Row="1" Grid.Column="1" Name="tSearchBarName" Height="20"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Name="tSearchBarCity" Width="80" Height="20" HorizontalAlignment="Left"/>
+                    <TextBox  Grid.Row="1" Grid.Column="1" Name="tSearchBarName" Height="20" Text="{Binding Path=searchedAccommodation.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="tSearchBarCity" Width="80" Height="20" HorizontalAlignment="Left" Text="{Binding Path=searchedAccommodation.City, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Grid.Row="2" Grid.Column="1" Content="Country" Margin="80 0" HorizontalAlignment="Right"></Label>
-                    
-                    <TextBox Grid.Row="2" Grid.Column="1" Name="tSearchBarCountry" Width="80"  Height="20" HorizontalAlignment="Right"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" Name="tSearchBarNumberOfGuests" Height="20"/>
-                    <TextBox Grid.Row="4" Grid.Column="1" Name="tSearchBarNumberOfDays" Height="20"/>
 
-                    <Button Grid.Row="4" Grid.Column="2" Height="20" Width="67" Content="Search"></Button>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="tSearchBarCountry" Width="80"  Height="20" HorizontalAlignment="Right" Text="{Binding Path=searchedAccommodation.Country, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Name="tSearchBarNumberOfGuests" Height="20" Text="{Binding Path=searchedAccommodation.NumOfGuests, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Name="tSearchBarNumberOfDays" Height="20" Text="{Binding Path=searchedAccommodation.NumOfDays, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <Button Grid.Row="4" Grid.Column="2" Name="SearchAccommodationButton" Height="20" Width="67" Content="Search" Click="SearchAccommodations" IsEnabled="False"></Button>
                 </Grid>
             </ToolBar>
 
         <DataGrid x:Name="accommodationData"
-                          ItemsSource="{Binding Accommodations}"
+                          ItemsSource="{Binding Accommodations,
+                                        Mode=OneWay,
+                                        UpdateSourceTrigger=PropertyChanged}"
                            Height="350" Width="846" 
                            VerticalAlignment="Bottom"
                            IsReadOnly="True"
@@ -58,7 +59,13 @@
                 <DataGridTextColumn Header="Max capacity" Binding="{Binding MaxCapacity}" Width="100"/>
                 <DataGridTextColumn Header="Min days to use" Binding="{Binding MinDaysToUse}" Width="100"/>
                 <DataGridTextColumn Header="Min days to cancel" Binding="{Binding MinDaysToCancel}" Width="120"/>
-                <DataGridTextColumn Header="Images" Binding="{Binding Images}" Width="*"/>
+                <DataGridTemplateColumn Header="Images" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="ImagesButton" Click="OpenImages" >Images</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
