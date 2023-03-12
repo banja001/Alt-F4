@@ -1,4 +1,4 @@
-﻿using booking.Manager;
+﻿using booking.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +20,22 @@ namespace booking.View
     /// </summary>
     public partial class OwnerWindow : Window
     {
-        private AccommodationManager accommodationManager;
+        private AccommodationRepository accommodationRepository;
+        private AccommodationImageRepository accommodationImageRepository;
+        private LocationRepository locationRepository;
         public OwnerWindow()
         {
             InitializeComponent();
             DataContext = this;
-            accommodationManager = new AccommodationManager();
+            accommodationRepository = new AccommodationRepository();
+            accommodationImageRepository = new AccommodationImageRepository();
+            locationRepository = new LocationRepository();
+
         }
 
         private void AddAccommodation(object sender, RoutedEventArgs e)
         {
-            AddAccommodationWindow win=new AddAccommodationWindow(accommodationManager);
+            AddAccommodationWindow win=new AddAccommodationWindow(accommodationRepository,locationRepository,accommodationImageRepository);
             win.Show();
         }
     }

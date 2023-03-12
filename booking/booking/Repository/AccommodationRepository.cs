@@ -8,23 +8,33 @@ using System.Threading.Tasks;
 
 namespace booking.Repository
 {
-    internal class AccommodationRepository
+    public class AccommodationRepository
     {
-        private const string filePath = "../../../Resources/Data/accommodation.csv";
+        private List<Accommodation> accommodations;
+        private Serializer<Accommodation> serializer;
 
-        private readonly Serializer<Accommodation> _serializer;
-
-        private List<Accommodation> _accomodations;
-
-        public AccommodationRepository()
+        public readonly string fileName = "../../../Resources/Data/accommodation.csv";
+        public AccommodationRepository() 
         {
-            _serializer = new Serializer<Accommodation>();
-            _accomodations = _serializer.FromCSV(filePath);
+            //accommodations = new List<Accommodation>();
+            serializer = new Serializer<Accommodation>();
+            accommodations= serializer.FromCSV(fileName);
         }
 
-        public List<Accommodation> GetAll()
+        public List<Accommodation> findAll()
         {
-            return _serializer.FromCSV(filePath);
+            return accommodations;
         }
+
+        public void AddAccommodation(Accommodation acc)
+        {
+            
+            accommodations.Add(acc);
+            serializer.ToCSV(fileName,accommodations);
+
+        }
+
+
+        
     }
 }

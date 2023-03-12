@@ -1,4 +1,5 @@
-﻿using booking.Model;
+﻿using booking.DTO;
+using booking.Model;
 using booking.Repository;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace booking.View
     /// </summary>
     public partial class AccomodationOverview : Window
     {
-        public static ObservableCollection<Accommodation> Accommodations { get; set; }
+        public static ObservableCollection<AccommodationLocationDTO> Accommodations { get; set; }
 
         private readonly AccommodationRepository _repository;
 
@@ -31,7 +32,7 @@ namespace booking.View
             InitializeComponent();
             DataContext = this;
             _repository = new AccommodationRepository();
-            Accommodations = new ObservableCollection<Accommodation>(_repository.GetAll());
+            Accommodations = new ObservableCollection<AccommodationLocationDTO>();
         }
     }
 }
