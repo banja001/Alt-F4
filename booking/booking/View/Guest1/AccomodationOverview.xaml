@@ -1,0 +1,65 @@
+﻿<Window x:Class="booking.View.AccomodationOverview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:booking.View"
+        mc:Ignorable="d"
+        Title="AccomodationOverview" Height="582" Width="846" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <ToolBar x:Name="toolBar" Height="200" DockPanel.Dock="Top" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <Grid Grid.Row="0" Grid.Column="0" Width="757" Height="150">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition>
+                            
+                        </ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox Grid.Row="0" Grid.Column="0" Content="Apartment" IsChecked="True" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                    <CheckBox Grid.Row="0" Grid.Column="1" Content="House" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                    <CheckBox Grid.Row="0" Grid.Column="2" Content="Cabin" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>
+
+                    <Label Grid.Row="1" Grid.Column="0" Height="30" HorizontalAlignment="Right" Content="Name"/>
+                    <Label Grid.Row="2" Grid.Column="0" Height="30" HorizontalAlignment="Right" Content="Location"/>
+                    <Label Grid.Row="3" Grid.Column="0" Height="30" HorizontalAlignment="Right"  Content="Number of guests"/>
+                    <Label Grid.Row="4" Grid.Column="0" Height="30" HorizontalAlignment="Right" Content="Number of dayss"/>
+
+                    <TextBox  Grid.Row="1" Grid.Column="1" Name="tSearchBarName" Height="20"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="tSearchBarCity" Width="80" Height="20" HorizontalAlignment="Left"/>
+                    <Label Grid.Row="2" Grid.Column="1" Content="Country" Margin="80 0" HorizontalAlignment="Right"></Label>
+                    
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="tSearchBarCountry" Width="80"  Height="20" HorizontalAlignment="Right"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Name="tSearchBarNumberOfGuests" Height="20"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Name="tSearchBarNumberOfDays" Height="20"/>
+
+                    <Button Grid.Row="4" Grid.Column="2" Height="20" Width="67" Content="Search"></Button>
+                </Grid>
+            </ToolBar>
+
+        <DataGrid x:Name="accommodationData"
+                          ItemsSource="{Binding Accommodations}"
+                           Height="350" Width="846" 
+                           VerticalAlignment="Bottom"
+                           IsReadOnly="True"
+                           CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
+                           ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" CanUserResize="False"  Width="180"/>
+                <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False" Width="180"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding Type}" CanUserResize="False" Width="70"/>
+                <DataGridTextColumn Header="Max capacity" Binding="{Binding MaxCapacity}" Width="100"/>
+                <DataGridTextColumn Header="Min days to use" Binding="{Binding MinDaysToUse}" Width="100"/>
+                <DataGridTextColumn Header="Min days to cancel" Binding="{Binding MinDaysToCancel}" Width="120"/>
+                <DataGridTextColumn Header="Images" Binding="{Binding Images}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
