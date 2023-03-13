@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace booking.Manager
+namespace booking.Repository
 {
     public class AccommodationRepository
     {
@@ -21,7 +21,7 @@ namespace booking.Manager
             accommodations= serializer.FromCSV(fileName);
         }
 
-        public List<Accommodation> GetAllAccommodations()
+        public List<Accommodation> findAll()
         {
             return accommodations;
         }

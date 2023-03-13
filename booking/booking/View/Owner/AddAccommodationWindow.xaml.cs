@@ -1,5 +1,5 @@
-﻿using booking.Manager;
-using booking.Model;
+﻿using booking.Model;
+using booking.Repository;
 using booking.View.Owner;
 using System;
 using System.Collections.Generic;
@@ -45,7 +45,7 @@ namespace booking.View
             int locid;
             if (locations.Count() == 0)
             {
-                locid = 0;//aaaaaaaaaaaa
+                locid = 0;
                 Location loc = new Location(locid, GradTextBox.Text, DrzavaTextBox.Text);
                 locationRepository.AddLocation(loc);
             }
@@ -68,7 +68,7 @@ namespace booking.View
             
             
 
-            List<Accommodation> acc = accommodationrepository.GetAllAccommodations();
+            List<Accommodation> acc = accommodationrepository.findAll();
             int accid;
             if (acc.Count() == 0)
             {
@@ -100,8 +100,8 @@ namespace booking.View
 
                 accommodationImageRepository.AddAccommodationImage(image);
             }
-            
-            
+
+            this.Close(); 
         }
 
 

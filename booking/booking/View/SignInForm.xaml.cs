@@ -72,7 +72,9 @@ namespace booking.View
                     }
                     else if (user.Role == "Guest1")
                     {
-
+                        AccomodationOverview accomodationOverview = new AccomodationOverview();
+                        accomodationOverview.Show();
+                        this.Close();
                     }
                     else if(user.Role == "Guest2")
                     {

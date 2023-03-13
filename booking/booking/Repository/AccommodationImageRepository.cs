@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace booking.Manager
+namespace booking.Repository
 {
     public class AccommodationImageRepository
     {
@@ -16,7 +16,7 @@ namespace booking.Manager
         public readonly string fileName = "../../../Resources/Data/accommodationImage.csv";
         public AccommodationImageRepository()
         {
-            //AccommodationImages = new List<AccommodationImage>();
+            
             Serializer = new Serializer<AccommodationImage>();
             AccommodationImages = Serializer.FromCSV(fileName);
         }
