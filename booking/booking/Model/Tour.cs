@@ -10,14 +10,14 @@ namespace booking.Model
 {
     internal class Tour : ISerializable
     {
-        int Id {  get; set; }
-        string Name { get; set; }
-        int LocationID { get; set; }
-        string Description { get; set; }
-        string Language { get; set; }
-        int MaxGuests { get; set; }
-        DateTime StartTime { get; set; }
-        double Duration { get; set; }
+        public int Id {  get; set; }
+        public string Name { get; set; }
+        public int LocationID { get; set; }
+        public string Description { get; set; }
+        public string Language { get; set; }
+        public int MaxGuests { get; set; }
+        public DateTime StartTime { get; set; }
+        public double Duration { get; set; }
 
         public Tour()
         { }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.View.Guest2"
         mc:Ignorable="d"
-        Title="Guest Window" Height="480" Width="850" Background="LightGray" >
+        Title="Guest Window" Height="480" Width="850" >
     <Grid Margin="0, 0, 0, 0" Height="480" Width="840">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -27,7 +27,17 @@
                     <TextBox x:Name="timeSpan" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="Time span" GotFocus="TimeSpan_GotFocus" LostFocus="TimeSpan_LostFocus"></TextBox>
                     <Button x:Name="search" Foreground="White" Content="Search" Width="125" Height="25" Margin="50, 5, 5, 5" FontSize="16" FontWeight="SemiBold" Background="#FF4C7CE6"></Button>
                 </StackPanel>
-                <DataGrid Grid.Row="1" BorderBrush="#FF65696D"></DataGrid>
+                <DataGrid x:Name="tourSelectionTable" ItemsSource="{Binding TourLocationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged }" FontSize="14" FontWeight="Normal" Grid.Row="1" BorderBrush="#FF65696D" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Width="1*" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Language" Width="1*" Binding="{Binding Language}"/>
+                        <DataGridTextColumn Header="Max guest count" Width="1.3*" Binding="{Binding MaxGuests}"/>
+                        <DataGridTextColumn Header="Start time" Width="1*" Binding="{Binding StartTime}"/>
+                        <DataGridTextColumn Header="Duration" Width="0.8*" Binding="{Binding Duration}"/>
+                        <DataGridTextColumn Header="Location" Width="1*" Binding="{Binding Location}"/>
+                        <DataGridTextColumn Header="More details" Width="1.1*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
         </GroupBox>
     </Grid>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using booking.DTO;
 using booking.Model;
+using booking.Repository;
 
 namespace booking.View.Guest2
 {
@@ -20,10 +23,34 @@ namespace booking.View.Guest2
     /// </summary>
     public partial class Guest2Overview : Window
     {
+
+        private readonly LocationRepository _locationRepository;
+        private readonly TourRepository _tourRepository;
+        public ObservableCollection<TourLocationDTO> TourLocationDTOs { get; set; }
         public Guest2Overview(User user)
         {
             InitializeComponent();
+            this.DataContext = this;
+            _locationRepository = new LocationRepository();
+            _tourRepository = new TourRepository();
+            TourLocationDTOs = new ObservableCollection<TourLocationDTO>(); 
+            CreateTourDTOs();
+            
+
             welcome.Header = "Welcome " + user.Username.ToString();
+
+        }
+
+        public void CreateTourDTOs()
+        { 
+            List<Location> locations = _locationRepository.GetAllLocations();
+            foreach (Tour tour in _tourRepository.findAll())
+            {
+                Location location = locations.Find(l => l.Id == tour.LocationID);
+                TourLocationDTOs.Add(new TourLocationDTO(tour.Id, tour.Name, tour.Description, 
+                                     location.Grad + "," + location.Drzava, tour.Language, tour.MaxGuests,
+                                     tour.StartTime, tour.Duration));
+            }
         }
         private void SetContentToDefault(TextBox selectedTextbox, string defaultText)
         {
