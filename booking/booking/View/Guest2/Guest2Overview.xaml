@@ -14,7 +14,7 @@
         <StackPanel Grid.Column="0" Margin="0, 0, 0, 0">
             <Button x:Name="bookTour" Content="Book a tour" Margin="10, 45, 10, 10" Height="40" FontWeight="SemiBold" FontSize="15"></Button>
         </StackPanel>
-        <GroupBox BorderThickness="2" BorderBrush="#FF65696D" Header="Welcome User" FontSize="18" FontWeight="SemiBold" Grid.Column="1" Margin="0,30,10,40">
+        <GroupBox x:Name ="welcome" BorderThickness="2" BorderBrush="#FF65696D" FontSize="18" FontWeight="SemiBold" Grid.Column="1" Margin="0,30,10,40">
             <Grid Margin="0,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>

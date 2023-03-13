@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using booking.Model;
 
 namespace booking.View.Guest2
 {
@@ -19,9 +20,10 @@ namespace booking.View.Guest2
     /// </summary>
     public partial class Guest2Overview : Window
     {
-        public Guest2Overview()
+        public Guest2Overview(User user)
         {
             InitializeComponent();
+            welcome.Header = "Welcome " + user.Username.ToString();
         }
         private void SetContentToDefault(TextBox selectedTextbox, string defaultText)
         {
