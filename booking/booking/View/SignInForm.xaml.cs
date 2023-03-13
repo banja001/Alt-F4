@@ -1,5 +1,6 @@
 ﻿using booking.Model;
 using booking.Repository;
+using booking.View.Guest2;
 using booking.View.Guide;
 using System;
 using System.Collections.Generic;
@@ -75,7 +76,9 @@ namespace booking.View
                     }
                     else if(user.Role == "Guest2")
                     {
-                        
+                        Guest2Overview guest2Window = new Guest2Overview();
+                        guest2Window.Show();
+                        this.Close();
                     } 
                     else if(user.Role == "Guide")
                     {
