@@ -1,5 +1,5 @@
-﻿using booking.Manager;
-using booking.Model;
+﻿using booking.Model;
+using booking.Repository;
 using booking.View.Owner;
 using System;
 using System.Collections.Generic;
@@ -27,20 +27,23 @@ namespace booking.View
         private AccommodationRepository accommodationrepository;
         private AccommodationImageRepository accommodationImageRepository;
         private LocationRepository locationRepository;
+        
         private List<string> accommodationImagesUrl;
+
         public AddAccommodationWindow(AccommodationRepository accMen, LocationRepository locrep,AccommodationImageRepository accirep)
         {
             InitializeComponent();
             DataContext = this;
             accommodationrepository = accMen;
             accommodationImageRepository = accirep;
+            
             accommodationImagesUrl = new List<string>();
             locationRepository = locrep;
         }
 
         private void Confirm(object sender, RoutedEventArgs e)
         {
-            List<Location> locations=locationRepository.GetAllLocations();
+            List<Location> locations=locationRepository.FindAll();
 
             int locid;
             if (locations.Count() == 0)
@@ -51,7 +54,7 @@ namespace booking.View
             }
             else
             {
-                Location location = locations.Find(a => a.Drzava == DrzavaTextBox.Text && a.Grad == GradTextBox.Text);
+                Location location = locations.Find(a => a.State == DrzavaTextBox.Text && a.City == GradTextBox.Text);
                 if (location == null)
                 {
                     locid = locations.Max(a => a.Id) + 1;
@@ -68,7 +71,7 @@ namespace booking.View
             
             
 
-            List<Accommodation> acc = accommodationrepository.GetAllAccommodations();
+            List<Accommodation> acc = accommodationrepository.FindAll();
             int accid;
             if (acc.Count() == 0)
             {
@@ -81,9 +84,10 @@ namespace booking.View
             Accommodation a = new Accommodation(accid,
             NameTextBox.Text,locid,TypeComboBox.Text,Convert.ToInt32(MaxVisitorsTextBox.Text),
             Convert.ToInt32(MinDaysToUseTextBox.Text), Convert.ToInt32(DaysToCancelTextBox.Text));
+
             accommodationrepository.AddAccommodation(a);
 
-            List<AccommodationImage> acci=accommodationImageRepository.GetAllImages();
+            List<AccommodationImage> acci=accommodationImageRepository.FindAll();
             foreach(string url in accommodationImagesUrl)
             {
                 AccommodationImage image;

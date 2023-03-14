@@ -1,5 +1,5 @@
-﻿using booking.Manager;
-using booking.Model;
+﻿using booking.Model;
+using booking.Repository;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;

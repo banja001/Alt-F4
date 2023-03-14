@@ -11,18 +11,17 @@ namespace booking.Model
     public class Accommodation : ISerializable
     {
         public int Id { get; set; }
-        private string Name { get; set; }
+        public string Name { get; set; }
 
-        private int LocationId { get; set; }
-        private string Type { get; set; }
+        public int LocationId { get; set; }
+        public string Type { get; set; }
 
-        private int MaxCapacity { get; set; }
+        public int MaxCapacity { get; set; }
 
-        private int MinDaysToUse { get; set; }
-        private int MinDaysToCancel { get; set; }
+        public int MinDaysToUse { get; set; }
+        public int MinDaysToCancel { get; set; }
 
-        //private List<int> Images { get; set; }//Acc image class int id string url Accomodation acc
-
+        
         public Accommodation() { }
         public Accommodation(int id, string name,int loc ,string type, int maxCapacity, int minDaysToUse, int minDaysToCancel)
         {

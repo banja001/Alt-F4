@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using booking.Manager;
 using System.Runtime.Serialization;
 
 namespace booking.Serializer
