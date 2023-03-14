@@ -24,42 +24,39 @@ namespace booking.View
     /// </summary>
     public partial class AddAccommodationWindow : Window
     {
-        private AccommodationRepository accommodationrepository;
-        private AccommodationImageRepository accommodationImageRepository;
-        private LocationRepository locationRepository;
-        
-        private List<string> accommodationImagesUrl;
 
-        public AddAccommodationWindow(AccommodationRepository accMen, LocationRepository locrep,AccommodationImageRepository accirep)
+        private List<string> accommodationImagesUrl;
+        public OwnerWindow ownerWindow;
+
+        public AddAccommodationWindow(OwnerWindow win)
         {
             InitializeComponent();
             DataContext = this;
-            accommodationrepository = accMen;
-            accommodationImageRepository = accirep;
+            ownerWindow = win;
             
             accommodationImagesUrl = new List<string>();
-            locationRepository = locrep;
+            
         }
 
         private void Confirm(object sender, RoutedEventArgs e)
         {
-            List<Location> locations=locationRepository.FindAll();
+            
 
             int locid;
-            if (locations.Count() == 0)
+            if (ownerWindow.locations.Count() == 0)
             {
                 locid = 0;
                 Location loc = new Location(locid, GradTextBox.Text, DrzavaTextBox.Text);
-                locationRepository.AddLocation(loc);
+                ownerWindow.locationRepository.AddLocation(loc);
             }
             else
             {
-                Location location = locations.Find(a => a.State == DrzavaTextBox.Text && a.City == GradTextBox.Text);
+                Location location = ownerWindow.locations.Find(a => a.State == DrzavaTextBox.Text && a.City == GradTextBox.Text);
                 if (location == null)
                 {
-                    locid = locations.Max(a => a.Id) + 1;
+                    locid = ownerWindow.locations.Max(a => a.Id) + 1;
                     Location loc = new Location(locid, GradTextBox.Text, DrzavaTextBox.Text);
-                    locationRepository.AddLocation(loc);
+                    ownerWindow.locationRepository.AddLocation(loc);
                 }
                 else
                 {
@@ -67,42 +64,39 @@ namespace booking.View
                 }
                 
             }
-            
-            
-            
 
-            List<Accommodation> acc = accommodationrepository.FindAll();
+            
             int accid;
-            if (acc.Count() == 0)
+            if (ownerWindow.accommodations.Count() == 0)
             {
                 accid = 0;
             }
             else
             {
-                accid=acc.Max(a => a.Id) + 1;
+                accid= ownerWindow.accommodations.Max(a => a.Id) + 1;
             }
             Accommodation a = new Accommodation(accid,
             NameTextBox.Text,locid,TypeComboBox.Text,Convert.ToInt32(MaxVisitorsTextBox.Text),
             Convert.ToInt32(MinDaysToUseTextBox.Text), Convert.ToInt32(DaysToCancelTextBox.Text));
 
-            accommodationrepository.AddAccommodation(a);
+            ownerWindow.accommodationRepository.AddAccommodation(a);
 
-            List<AccommodationImage> acci=accommodationImageRepository.FindAll();
+            
             foreach(string url in accommodationImagesUrl)
             {
                 AccommodationImage image;
-                if (acci.Count() == 0)
+                if (ownerWindow.accommodationImages.Count() == 0)
                 {
 
                     image = new AccommodationImage(0, url, a.Id);
                 }
                 else
                 {
-                    image=new AccommodationImage(acci.Max(a => a.Id) + 1,url,a.Id);
+                    image=new AccommodationImage(ownerWindow.accommodationImages.Max(a => a.Id) + 1,url,a.Id);
                 }
                 
 
-                accommodationImageRepository.AddAccommodationImage(image);
+                ownerWindow.accommodationImageRepository.AddAccommodationImage(image);
             }
 
             this.Close(); 
@@ -124,7 +118,7 @@ namespace booking.View
         private void AddImageClick(object sender, RoutedEventArgs e)
         {
             
-            AddAccommodationImageWindow win = new AddAccommodationImageWindow(accommodationImageRepository,accommodationImagesUrl);
+            AddAccommodationImageWindow win = new AddAccommodationImageWindow(ownerWindow.accommodationImageRepository,accommodationImagesUrl);
             win.Show();
 
         }

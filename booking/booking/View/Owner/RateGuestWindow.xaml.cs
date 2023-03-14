@@ -27,25 +27,15 @@ namespace booking.View.Owner
     {
         public bool[] SelectedCleanRadiobutton { get;set; }
         public bool[] SelectedRulesRadiobutton { get; set; }
-        private Guest1RatingsRepository guest1RatingsRepository;
-        private UserRepository userRepository;
-        private ReservedDatesRepository reservedDatesRepository;
-
-        private Guest1RatingDTO SelectedItem;
-        public ObservableCollection<Guest1RatingDTO> ListToRate;
-        public RateGuestWindow(Guest1RatingsRepository g,UserRepository u,ReservedDatesRepository r,Guest1RatingDTO select, ObservableCollection<Guest1RatingDTO> list)
+        OwnerWindow ownerWindow;
+        public RateGuestWindow(OwnerWindow win)
         {
             InitializeComponent();
             this.DataContext = this;
             SelectedCleanRadiobutton = new bool[] {false,false,false,false,false};
             SelectedRulesRadiobutton = new bool[] { false, false, false, false, false };
-
-            guest1RatingsRepository = g;
-            userRepository= u;
-            reservedDatesRepository = r;
-
-            SelectedItem= select;
-            ListToRate = list;
+            ownerWindow = win;
+            
         }
 
         
@@ -71,24 +61,23 @@ namespace booking.View.Owner
                 }
             }
 
-            List<Guest1Rating> guestRatings = guest1RatingsRepository.FindAll();
-            List<User> users = userRepository.FindAll();
             
-            if (guestRatings.Count == 0)
+            
+            if (ownerWindow.guest1Ratings.Count == 0)
             {
                 id = 0;
             }
             else
             {
-                id = guestRatings.Max(m => m.Id)+1;
+                id = ownerWindow.guest1Ratings.Max(m => m.Id)+1;
             }
 
-            guestid = users.Find(m => m.Username == SelectedItem.GuestName).Id;
+            guestid = ownerWindow.users.Find(m => m.Username == ownerWindow.SelectedItem.GuestName).Id;
             Guest1Rating guestrating = new Guest1Rating(id,guestid,cleanliness,rules,comment);
-            guest1RatingsRepository.AddRating(guestrating);
+            ownerWindow.guest1RatingsRepository.AddRating(guestrating);
 
-            reservedDatesRepository.UpdateRating(SelectedItem.DateId);
-            ListToRate.Remove(SelectedItem);
+            ownerWindow.reservedDatesRepository.UpdateRating(ownerWindow.SelectedItem.DateId);
+            ownerWindow.ListToRate.Remove(ownerWindow.SelectedItem);
 
             this.Close();
         }

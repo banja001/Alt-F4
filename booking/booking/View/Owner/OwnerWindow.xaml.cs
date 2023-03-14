@@ -26,30 +26,48 @@ namespace booking.View
     /// </summary>
     public partial class OwnerWindow : Window
     {
-        private AccommodationRepository accommodationRepository;
-        private AccommodationImageRepository accommodationImageRepository;
-        private LocationRepository locationRepository;
-        private ReservedDatesRepository reservedDatesRepository;
-        private Guest1RatingsRepository guest1RatingsRepository;
-        private UserRepository userRepository;
+        public AccommodationRepository accommodationRepository;
+        public List<Accommodation> accommodations;
+
+        public AccommodationImageRepository accommodationImageRepository;
+        public List<AccommodationImage> accommodationImages;
+
+        public LocationRepository locationRepository;
+        public List <Location> locations;
+
+        public ReservedDatesRepository reservedDatesRepository;
+        public List<ReservedDates> reservedDates;
+
+        public Guest1RatingsRepository guest1RatingsRepository;
+        public List<Guest1Rating> guest1Ratings;
+
+        public UserRepository userRepository;
+        public List<User> users;
         public ObservableCollection<Guest1RatingDTO> ListToRate { get; set; }
         public Guest1RatingDTO SelectedItem { get; set; }
         public OwnerWindow()
         {
             InitializeComponent();
             DataContext = this;
-            userRepository = new UserRepository();
-            accommodationRepository = new AccommodationRepository();
-            accommodationImageRepository = new AccommodationImageRepository();
-            locationRepository = new LocationRepository();
-            reservedDatesRepository = new ReservedDatesRepository();
-            guest1RatingsRepository = new Guest1RatingsRepository();
 
+            userRepository = new UserRepository();
+            users = userRepository.FindAll();
+            accommodationRepository = new AccommodationRepository();
+            accommodations=accommodationRepository.FindAll();
+            accommodationImageRepository = new AccommodationImageRepository();
+            accommodationImages = accommodationImageRepository.FindAll();
+            locationRepository = new LocationRepository();
+            locations = locationRepository.FindAll();
+            reservedDatesRepository = new ReservedDatesRepository();
+            reservedDates = reservedDatesRepository.FindAll();
+            guest1RatingsRepository = new Guest1RatingsRepository();
+            guest1Ratings = guest1RatingsRepository.FindAll();
+            
 
             List<ReservedDates> ratingDates=PickDatesForRating();
             List<Guest1RatingDTO> tempList = new List<Guest1RatingDTO>();
-            List<User> users = userRepository.FindAll();
-            List<Accommodation> accommodations=accommodationRepository.FindAll();
+            
+            
 
 
             foreach(ReservedDates date in ratingDates)
@@ -70,14 +88,12 @@ namespace booking.View
 
         private void AddAccommodation(object sender, RoutedEventArgs e)
         {
-            AddAccommodationWindow win=new AddAccommodationWindow(accommodationRepository,locationRepository,accommodationImageRepository);
+            AddAccommodationWindow win=new AddAccommodationWindow(this);
             win.Show();
         }
 
         public List<ReservedDates> PickDatesForRating()//picks dates and guests that should display in datagrid for owner to rate
-        {
-            List<ReservedDates> reservedDates = reservedDatesRepository.FindAll();
-            
+        { 
             List<ReservedDates> ratingDates = new List<ReservedDates>();
             foreach(ReservedDates reservedDate in reservedDates)
             {
@@ -102,7 +118,7 @@ namespace booking.View
             else
             {
                 
-                RateGuestWindow win = new RateGuestWindow(guest1RatingsRepository,userRepository,reservedDatesRepository,SelectedItem,ListToRate);
+                RateGuestWindow win = new RateGuestWindow(this);
                 win.ShowDialog();
                 
             }
