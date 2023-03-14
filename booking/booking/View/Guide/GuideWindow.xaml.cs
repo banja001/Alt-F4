@@ -1,5 +1,7 @@
-﻿using System;
+﻿using booking.Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +21,29 @@ namespace booking.View.Guide
     /// </summary>
     public partial class GuideWindow : Window
     {
+        public Tour Tour { get; set; }
+        public CheckPoint CheckPoint { get; set; }
+        public ObservableCollection<CheckPoint> CheckPointsForListBox{ get; set;}
         public GuideWindow()
         {
             InitializeComponent();
+            this.DataContext = this;
+            Tour = new Tour();
+            Tour.Name = "Probaa";
+            CheckPoint = new CheckPoint();
+            CheckPointsForListBox = new ObservableCollection<CheckPoint>();
+        }
+        
+
+        private void ConfirmTour(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void AddCheckPointToListBox(object sender, RoutedEventArgs e)
+        {
+            CheckPoint CheckPointToListBox=new CheckPoint(3,CheckPoint.Name,true,2,2);
+            CheckPointsForListBox.Add(CheckPointToListBox);
         }
     }
 }

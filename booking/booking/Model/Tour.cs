@@ -8,21 +8,21 @@ using System.Threading.Tasks;
 
 namespace booking.Model
 {
-    internal class Tour : ISerializable
+    public class Tour : ISerializable
     {
-        int Id {  get; set; }
-        string Name { get; set; }
-        int LocationID { get; set; }
-        string Description { get; set; }
-        string Language { get; set; }
-        int MaxGuests { get; set; }
-        DateTime StartTime { get; set; }
-        double Duration { get; set; }
+        public int Id {  get; set; }
+        public string Name { get; set; }
+        public Location Location { get; set; }
+        public string Description { get; set; }
+        public string Language { get; set; }
+        public int MaxGuests { get; set; }
+        public DateTime StartTime { get; set; }
+        public double Duration { get; set; }
 
         public Tour()
         { }
 
-        public Tour(int id, string name, string description, string language, int maxGuests,DateTime startTime, double duration, int location)
+        public Tour(int id, string name, string description, string language, int maxGuests,DateTime startTime, double duration, Location location)
         {
             Id = id;
             Name = name;   
@@ -31,14 +31,14 @@ namespace booking.Model
             MaxGuests = maxGuests;
             StartTime = startTime;
             Duration = duration;
-            LocationID=location;
+            Location=location;
         }
 
         public string[] ToCSV()
         {
             string[] csvValues = {  Id.ToString(),
                                     Name.ToString(),
-                                    LocationID.ToString(), 
+                                    Location.State.ToString()+","+Location.City.ToString(), 
                                     Description.ToString(),
                                     Language.ToString(),
                                     MaxGuests.ToString(),
@@ -52,7 +52,9 @@ namespace booking.Model
         {
             Id = Convert.ToInt32(values[0]);
             Name = Convert.ToString(values[1]);
-            LocationID = Convert.ToInt32(values[2]);
+            string[] locationProperties= Convert.ToString(values[2]).Split(',');
+            Location.State = locationProperties[0];
+            Location.City = locationProperties[1];
             Description = Convert.ToString(values[3]);
             Language = Convert.ToString(values[4]);
             MaxGuests= Convert.ToInt32(values[5]);

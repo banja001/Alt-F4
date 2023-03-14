@@ -51,7 +51,7 @@ namespace booking.View
             }
             else
             {
-                Location location = locations.Find(a => a.Drzava == DrzavaTextBox.Text && a.Grad == GradTextBox.Text);
+                Location location = locations.Find(a => a.State == DrzavaTextBox.Text && a.City == GradTextBox.Text);
                 if (location == null)
                 {
                     locid = locations.Max(a => a.Id) + 1;

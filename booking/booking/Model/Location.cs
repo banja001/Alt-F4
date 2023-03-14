@@ -12,14 +12,14 @@ namespace booking.Model
     {
 
         public int Id { get; set; }
-        public string Grad { get; set; }
-        public string Drzava { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
 
         public Location(int id, string grad, string drzava)
         {
             Id = id;
-            Grad = grad;
-            Drzava = drzava;
+            City = grad;
+            State = drzava;
         }
 
         public Location()
@@ -28,15 +28,15 @@ namespace booking.Model
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Grad, Drzava };
+            string[] csvValues = { Id.ToString(), City, State };
             return csvValues;
         }
 
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
-            Grad = values[1];
-            Drzava = values[2];
+            City = values[1];
+            State = values[2];
         }
     }
 }
