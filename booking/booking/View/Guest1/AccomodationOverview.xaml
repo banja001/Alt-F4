@@ -51,6 +51,7 @@
                            Height="350" Width="846" 
                            VerticalAlignment="Bottom"
                            IsReadOnly="True"
+                           SelectionMode="Single"
                            CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
                            ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False">
             <DataGrid.Columns>
