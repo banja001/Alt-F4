@@ -1,4 +1,5 @@
-﻿using System;
+﻿using booking.Serializer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace booking.Model
 {
-    internal class TourImage
+    public class TourImage : ISerializable
     {
         public int Id { get; set; }
         public string Url { get; set; }
