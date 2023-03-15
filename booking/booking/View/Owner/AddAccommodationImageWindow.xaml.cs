@@ -1,5 +1,5 @@
-﻿using booking.Manager;
-using booking.Model;
+﻿using booking.Model;
+using booking.Repository;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -25,6 +25,7 @@ namespace booking.View.Owner
         public void ConfirmImageClick(object sender, RoutedEventArgs e)
         {
             accommodationImages.Add(UrlTextBox.Text);
+            this.Close();
 
         }
 

@@ -1,0 +1,44 @@
+﻿<Window x:Class="booking.View.Guest2.Guest2Overview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:booking.View.Guest2"
+        mc:Ignorable="d"
+        Title="Guest Window" Height="480" Width="850" >
+    <Grid Margin="0, 0, 0, 0" Height="480" Width="840">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Margin="0, 0, 0, 0">
+            <Button x:Name="bookTour" Content="Book a tour" Margin="10, 45, 10, 10" Height="40" FontWeight="SemiBold" FontSize="15"></Button>
+        </StackPanel>
+        <GroupBox x:Name ="welcome" BorderThickness="2" BorderBrush="#FF65696D" FontSize="18" FontWeight="SemiBold" Grid.Column="1" Margin="0,30,10,40">
+            <Grid Margin="0,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Row="0">
+                    <TextBox x:Name="peopleCount" BorderBrush="#FF65696D" Foreground="LightGray" Margin="15, 5, 5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="People count" LostFocus="PeopleCount_LostFocus" GotFocus="PeopleCount_GotFocus"></TextBox>
+                    <TextBox x:Name="language" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="Language" GotFocus="Language_GotFocus" LostFocus="Language_LostFocus"></TextBox>
+                    <TextBox x:Name="location" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="Location" LostFocus="Location_LostFocus" GotFocus="Location_GotFocus"></TextBox>
+                    <TextBox x:Name="timeSpan" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="Time span" GotFocus="TimeSpan_GotFocus" LostFocus="TimeSpan_LostFocus"></TextBox>
+                    <Button x:Name="search" Foreground="White" Content="Search" Width="125" Height="25" Margin="50, 5, 5, 5" FontSize="16" FontWeight="SemiBold" Background="#FF4C7CE6"></Button>
+                </StackPanel>
+                <DataGrid x:Name="tourSelectionTable" ItemsSource="{Binding TourLocationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged }" FontSize="14" FontWeight="Normal" Grid.Row="1" BorderBrush="#FF65696D" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Width="1*" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Language" Width="1*" Binding="{Binding Language}"/>
+                        <DataGridTextColumn Header="Max guest count" Width="1.3*" Binding="{Binding MaxGuests}"/>
+                        <DataGridTextColumn Header="Start time" Width="1*" Binding="{Binding StartTime}"/>
+                        <DataGridTextColumn Header="Duration" Width="0.8*" Binding="{Binding Duration}"/>
+                        <DataGridTextColumn Header="Location" Width="1*" Binding="{Binding Location}"/>
+                        <DataGridTextColumn Header="More details" Width="1.1*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>
