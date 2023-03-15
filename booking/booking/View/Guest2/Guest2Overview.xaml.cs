@@ -48,13 +48,13 @@ namespace booking.View.Guest2
         { 
             List<Location> locations = _locationRepository.GetAllLocations();
             List<TourImage> tourImages = _tourImageRepository.findAll();
-            foreach (Tour tour in _tourRepository.findAll())
+            foreach (Tour tour in _tourRepository.FindAll())
             {
                 Location location = locations.Find(l => l.Id == tour.Location.Id);
                 List<TourImage> images = tourImages.FindAll(i => i.TourId == tour.Id);
                 TourLocationDTOs.Add(new TourLocationDTO(tour.Id, tour.Name, tour.Description, 
                                      location.City + "," + location.State, tour.Language, tour.MaxGuests,
-                                     tour.StartTime, tour.Duration, images));
+                                     tour.StartTime.Date, tour.Duration, images));
             }
         }
         private void SetContentToDefault(TextBox selectedTextbox, string defaultText)
