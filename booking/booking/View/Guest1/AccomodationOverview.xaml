@@ -39,14 +39,15 @@
                     <TextBox Grid.Row="3" Grid.Column="1" Name="tSearchBarNumberOfGuests" Height="20" Text="{Binding Path=searchedAccommodation.NumOfGuests, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBox Grid.Row="4" Grid.Column="1" Name="tSearchBarNumberOfDays" Height="20" Text="{Binding Path=searchedAccommodation.NumOfDays, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <Button Grid.Row="4" Grid.Column="2" Name="SearchAccommodationButton" Height="20" Width="67" Content="Search" Click="SearchAccommodations" IsEnabled="False"></Button>
-                </Grid>
+                    <Button Grid.Row="4" Grid.Column="2" Name="SearchAccommodationButton" Height="20" Width="67" Content="Search" Click="SearchAccommodations"/>
+            </Grid>
             </ToolBar>
 
         <DataGrid x:Name="accommodationData"
-                          ItemsSource="{Binding Accommodations,
+                          ItemsSource="{Binding AccommodationDTOs,
                                         Mode=OneWay,
                                         UpdateSourceTrigger=PropertyChanged}"
+                          SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
                            Height="350" Width="846" 
                            VerticalAlignment="Bottom"
                            IsReadOnly="True"

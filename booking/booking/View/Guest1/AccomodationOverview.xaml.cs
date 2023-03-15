@@ -1,5 +1,4 @@
-﻿using booking.DAO;
-using booking.DTO;
+﻿using booking.DTO;
 using booking.Model;
 using booking.Repository;
 using booking.View.Guest1;
@@ -25,11 +24,11 @@ namespace booking.View
     /// </summary>
     public partial class AccomodationOverview : Window
     {
-        public static ObservableCollection<AccommodationLocationDTO> Accommodations { get; set; }
+        public static ObservableCollection<AccommodationLocationDTO> AccommodationDTOs { get; set; }
 
-        private AccommodationDAO accomodationDAO;
+        public AccommodationLocationDTO SelectedAccommodation { get; set; }
 
-        public SearchedAccomodationDTO searchedAccommodation { get; set; }
+        public SearchedAccomodationDTO SearchedAccommodation { get; set; }
 
         private readonly AccommodationRepository _accomodationRepository;
 
@@ -43,39 +42,42 @@ namespace booking.View
             _accomodationRepository = new AccommodationRepository();
             _locationRepository = new LocationRepository();
 
-            accomodationDAO = new AccommodationDAO();
-            searchedAccommodation = new SearchedAccomodationDTO();
+            SearchedAccommodation = new SearchedAccomodationDTO();
 
-            Accommodations = accomodationDAO.getAll(_accomodationRepository.findAll(), _locationRepository);
+            AccommodationDTOs = _accomodationRepository.getAll(_accomodationRepository.findAll(), _locationRepository);
+
+            CheckBoxApartment.IsChecked = true;
+            CheckBoxCabin.IsChecked = true;
+            CheckBoxHouse.IsChecked = true;
         }
 
         private void SearchAccommodations(object sender, RoutedEventArgs e)
         {
-            searchedAccommodation.Type.Clear(); //so that previous values dont stay saved in the list
+            SearchedAccommodation.Type.Clear(); //so that previous values dont stay saved in the list
             if (CheckBoxApartment.IsChecked == true)
-                searchedAccommodation.Type.Add("Apartment");
+                SearchedAccommodation.Type.Add("Apartment");
             if (CheckBoxCabin.IsChecked == true)
-                searchedAccommodation.Type.Add("Cabin");
+                SearchedAccommodation.Type.Add("Cabin");
             if (CheckBoxHouse.IsChecked == true)
-                searchedAccommodation.Type.Add("House");
+                SearchedAccommodation.Type.Add("House");
 
-            searchedAccommodation.City = (searchedAccommodation.City == null) ? "" : searchedAccommodation.City;
-            searchedAccommodation.Country = (searchedAccommodation.Country == null) ? "" : searchedAccommodation.Country;
+            SearchedAccommodation.City = (SearchedAccommodation.City == null) ? "" : SearchedAccommodation.City;
+            SearchedAccommodation.Country = (SearchedAccommodation.Country == null) ? "" : SearchedAccommodation.Country;
 
-            List<AccommodationLocationDTO> accommodationList = accomodationDAO.getAll(_accomodationRepository.findAll(), _locationRepository).ToList();
+            List<AccommodationLocationDTO> accommodationList = _accomodationRepository.getAll(_accomodationRepository.findAll(), _locationRepository).ToList();
 
-            Accommodations.Clear();
+            AccommodationDTOs.Clear();
 
             foreach(AccommodationLocationDTO accommodation in accommodationList)
             {
-                bool matchingType = (searchedAccommodation.Type.Find(u => u == accommodation.Type) != null) ? true : false;
-                bool matchingName = string.IsNullOrEmpty(searchedAccommodation.Name) || accommodation.Name == searchedAccommodation.Name;
-                bool matchingLocation = accommodation.Location.Contains(searchedAccommodation.City + "," + searchedAccommodation.Country);
-                bool matchingNumOfGuests = searchedAccommodation.NumOfGuests == 0 || accommodation.MaxCapacity >= searchedAccommodation.NumOfGuests;
-                bool matchingNumOfDays = searchedAccommodation.NumOfDays == 0 || accommodation.MinDaysToUse <= searchedAccommodation.NumOfDays;
+                bool matchingType = (SearchedAccommodation.Type.Find(u => u == accommodation.Type) != null) ? true : false;
+                bool matchingName = string.IsNullOrEmpty(SearchedAccommodation.Name) || accommodation.Name == SearchedAccommodation.Name;
+                bool matchingLocation = accommodation.Location.Contains(SearchedAccommodation.City + "," + SearchedAccommodation.Country);
+                bool matchingNumOfGuests = SearchedAccommodation.NumOfGuests == 0 || accommodation.MaxCapacity >= SearchedAccommodation.NumOfGuests;
+                bool matchingNumOfDays = SearchedAccommodation.NumOfDays == 0 || accommodation.MinDaysToUse <= SearchedAccommodation.NumOfDays;
 
                 if(matchingType && matchingName && matchingLocation && matchingNumOfGuests && matchingNumOfDays)
-                    Accommodations.Add(accommodation);
+                    AccommodationDTOs.Add(accommodation);
             }
         }
 
@@ -87,12 +89,13 @@ namespace booking.View
 
         private void CheckBoxChecked(object sender, RoutedEventArgs e)
         {
-            SearchAccommodationButton.IsEnabled = true;
+            if(SearchAccommodationButton.IsEnabled == false)
+                SearchAccommodationButton.IsEnabled = true;
         }
 
         private void OpenImages(object sender, RoutedEventArgs e)
         {
-            ImagesOverview imagesOverview = new ImagesOverview();
+            ImagesOverview imagesOverview = new ImagesOverview(SelectedAccommodation);
             imagesOverview.Owner = this;
             imagesOverview.Show();
         }

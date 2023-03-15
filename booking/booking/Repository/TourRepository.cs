@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace booking.Repository
 {
-    class TourRepository
+    public class TourRepository
     {
         private List<Tour> tours;
         private Serializer<Tour> serializer;

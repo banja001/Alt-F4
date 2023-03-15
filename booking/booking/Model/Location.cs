@@ -15,11 +15,11 @@ namespace booking.Model
         public string City { get; set; }
         public string State { get; set; }
 
-        public Location(int id, string grad, string drzava)
+        public Location(int id, string city, string state)
         {
             Id = id;
-            City = grad;
-            State = drzava;
+            City = city;
+            State = state;
         }
 
         public Location()

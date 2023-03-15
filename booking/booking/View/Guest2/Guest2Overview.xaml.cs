@@ -26,13 +26,16 @@ namespace booking.View.Guest2
 
         private readonly LocationRepository _locationRepository;
         private readonly TourRepository _tourRepository;
+        private readonly TourImageRepository _tourImageRepository;
         public ObservableCollection<TourLocationDTO> TourLocationDTOs { get; set; }
+        public TourLocationDTO SelectedTour { get; set; }
         public Guest2Overview(User user)
         {
             InitializeComponent();
             this.DataContext = this;
             _locationRepository = new LocationRepository();
             _tourRepository = new TourRepository();
+            _tourImageRepository = new TourImageRepository();
             TourLocationDTOs = new ObservableCollection<TourLocationDTO>(); 
             CreateTourDTOs();
             
@@ -44,12 +47,14 @@ namespace booking.View.Guest2
         public void CreateTourDTOs()
         { 
             List<Location> locations = _locationRepository.GetAllLocations();
+            List<TourImage> tourImages = _tourImageRepository.findAll();
             foreach (Tour tour in _tourRepository.findAll())
             {
-                Location location = locations.Find(l => l.Id == tour.LocationID);
+                Location location = locations.Find(l => l.Id == tour.Location.Id);
+                List<TourImage> images = tourImages.FindAll(i => i.TourId == tour.Id);
                 TourLocationDTOs.Add(new TourLocationDTO(tour.Id, tour.Name, tour.Description, 
-                                     location.Grad + "," + location.Drzava, tour.Language, tour.MaxGuests,
-                                     tour.StartTime, tour.Duration));
+                                     location.City + "," + location.State, tour.Language, tour.MaxGuests,
+                                     tour.StartTime, tour.Duration, images));
             }
         }
         private void SetContentToDefault(TextBox selectedTextbox, string defaultText)
@@ -105,5 +110,12 @@ namespace booking.View.Guest2
             SetContentToDefault(timeSpan, "Time span");
         }
 
+        private void MoreDetailsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var moreDetailsWindow = new MoreDetailsOverview(this);
+            moreDetailsWindow.Owner = this;
+            moreDetailsWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            moreDetailsWindow.ShowDialog();
+        }
     }
 }
