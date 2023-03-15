@@ -14,7 +14,7 @@ namespace booking.Repository
         private List<Location> Locations;
         private Serializer<Location> Serializer;
 
-        public readonly string fileName = "../../../Resources/Data/location.csv";
+        private readonly string fileName = "../../../Resources/Data/location.csv";
         public LocationRepository()
         {
             

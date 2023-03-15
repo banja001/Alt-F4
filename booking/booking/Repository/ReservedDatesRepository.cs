@@ -13,7 +13,7 @@ namespace booking.Repository
         private List<ReservedDates> reservedDates;
         private Serializer<ReservedDates> serializer;
 
-        public readonly string fileName = "../../../Resources/Data/reservedDates.csv";
+        private readonly string fileName = "../../../Resources/Data/reservedDates.csv";
 
         public ReservedDatesRepository()
         {
