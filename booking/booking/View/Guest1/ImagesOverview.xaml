@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.View.Guest1"
         mc:Ignorable="d"
-        Title="ImagesOverview" Height="450" Width="800" WindowStartupLocation="CenterOwner">
+        Title="ImagesOverview" Height="442" Width="633" WindowStartupLocation="CenterOwner">
     <Grid>
-        
+        <Button Content="Previous" Margin="10,188,548,213" Height="20" IsEnabled="False"/>
+        <Button Content="Next" Margin="548,188,10,213" Height="20"/>
+        <Image Name="AccommodationImage" Margin="118,14,117,14"/>
+
     </Grid>
 </Window>
