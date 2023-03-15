@@ -44,8 +44,8 @@ namespace booking.Repository
 
             foreach (Accommodation accommodation in accommodations)
             {
-                string locationCity = locations.Find(u => u.Id == accommodation.LocationId).Grad;
-                string locationCountry = locations.Find(u => u.Id == accommodation.LocationId).Drzava;
+                string locationCity = locations.Find(u => u.Id == accommodation.LocationId).City;
+                string locationCountry = locations.Find(u => u.Id == accommodation.LocationId).State;
 
                 accommodationLocation = new AccommodationLocationDTO(accommodation.Id, accommodation.Name, locationCity + "," + locationCountry,
                     accommodation.Type, accommodation.MaxCapacity, accommodation.MinDaysToUse, accommodation.MinDaysToCancel);

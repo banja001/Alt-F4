@@ -18,7 +18,7 @@ namespace booking.DTO
         public int MaxGuests { get; set; }
         public DateTime StartTime { get; set; }
         public double Duration { get; set; }
-        public List<TourImage> TourImages { get; set; }
+        public List<TourImage> Images { get; set; }
 
         public TourLocationDTO() { }
         public TourLocationDTO(int id, string name, string description, string location, string language, int maxGuests, DateTime startTime, double duration, List<TourImage> tourImages)
@@ -31,7 +31,7 @@ namespace booking.DTO
             this.StartTime = startTime;
             this.Duration = duration;
             this.MaxGuests = maxGuests;
-            this.TourImages = tourImages;
+            this.Images = tourImages;
         }
     }
 }

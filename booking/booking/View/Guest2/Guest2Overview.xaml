@@ -27,7 +27,7 @@
                     <TextBox x:Name="timeSpan" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="Time span" GotFocus="TimeSpan_GotFocus" LostFocus="TimeSpan_LostFocus"></TextBox>
                     <Button x:Name="search" Foreground="White" Content="Search" Width="125" Height="25" Margin="50, 5, 5, 5" FontSize="16" FontWeight="SemiBold" Background="#FF4C7CE6"></Button>
                 </StackPanel>
-                <DataGrid x:Name="tourSelectionTable" ItemsSource="{Binding TourLocationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged }" FontSize="12" FontWeight="Normal" Grid.Row="1" BorderBrush="#FF65696D" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True" >
+                <DataGrid x:Name="tourSelectionTable" SelectedItem="{Binding SelectedTour}" ItemsSource="{Binding TourLocationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged }" FontSize="12" FontWeight="Normal" Grid.Row="1" BorderBrush="#FF65696D" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True" >
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name"  Width="1*" Binding="{Binding Name}" />
                         <DataGridTextColumn Header="Language" Width="1*" Binding="{Binding Language}"/>

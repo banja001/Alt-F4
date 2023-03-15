@@ -7,4 +7,18 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\TourImages\NoviSad1.jpg" />
+    <None Remove="Resources\TourImages\NoviSad2.jpg" />
+    <None Remove="Resources\TourImages\Podunavci1.jpg" />
+    <None Remove="Resources\TourImages\Podunavci2.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\TourImages\NoviSad1.jpg" />
+    <Resource Include="Resources\TourImages\NoviSad2.jpg" />
+    <Resource Include="Resources\TourImages\Podunavci1.jpg" />
+    <Resource Include="Resources\TourImages\Podunavci2.jpg" />
+  </ItemGroup>
+
 </Project>
