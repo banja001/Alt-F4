@@ -34,5 +34,9 @@ namespace booking.Repository
             Serializer.ToCSV(fileName, Locations);
 
         }
+        public int MakeID()
+        {
+            return Locations[Locations.Count - 1].Id + 1;
+        }
     }
 }

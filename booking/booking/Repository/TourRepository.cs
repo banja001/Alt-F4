@@ -20,9 +20,19 @@ namespace booking.Repository
             serializer = new Serializer<Tour>();
             tours = serializer.FromCSV(fileName);
         }
-        public List<Tour> findAll()
+        public List<Tour> FindAll()
         {
             return tours;
+        }
+        public void Add(Tour tour)
+        {
+            tours.Add(tour);
+            serializer.ToCSV(fileName, tours);
+        }
+
+        public int MakeID()
+        {
+            return tours[tours.Count - 1].Id + 1;
         }
     }
 }

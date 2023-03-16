@@ -16,15 +16,16 @@ namespace booking.Model
         public string Description { get; set; }
         public string Language { get; set; }
         public int MaxGuests { get; set; }
-        public DateTime StartTime { get; set; }
+        public DateAndTime StartTime { get; set; }
         public double Duration { get; set; }
 
         public Tour()
         {
             Location = new Location();  
+            StartTime = new DateAndTime();
         }
 
-        public Tour(int id, string name, string description, string language, int maxGuests, DateTime startTime, double duration, Location location)
+        public Tour(int id, string name, string description, string language, int maxGuests, DateAndTime startTime, double duration, Location location)
         {
             Id = id;
             Name = name;
@@ -44,7 +45,7 @@ namespace booking.Model
                                     Description.ToString(),
                                     Language.ToString(),
                                     MaxGuests.ToString(),
-                                    StartTime.ToString("g", CultureInfo.GetCultureInfo("es-ES")),
+                                    StartTime.ToString(),
                                     Duration.ToString()
                                  };
             return csvValues;
@@ -58,7 +59,9 @@ namespace booking.Model
             Description = Convert.ToString(values[3]);
             Language = Convert.ToString(values[4]);
             MaxGuests = Convert.ToInt32(values[5]);
-            StartTime = Convert.ToDateTime(values[6], CultureInfo.GetCultureInfo("es-ES"));
+            string[] dateAndTime = Convert.ToString(values[6]).Split(" ");
+            StartTime.Date = Convert.ToDateTime(dateAndTime[0], CultureInfo.GetCultureInfo("es-ES"));
+            StartTime.Time = dateAndTime[1];
             Duration = Convert.ToInt32(values[7]);
         }
     }

@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace booking.Model
 {
-    internal class CheckPoint: ISerializable
+    public class CheckPoint: ISerializable
     {
-        int Id { get; set; }
-        string Name { get; set; }
-        bool Active { get; set; }
-        int TourId { get; set; }
-        int Order { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public bool Active { get; set; }
+        public int TourId { get; set; }
+        public int Order { get; set; }
 
         public CheckPoint() 
         {
