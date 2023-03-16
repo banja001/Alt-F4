@@ -31,13 +31,13 @@
                     <Label Grid.Row="3" Grid.Column="0" Height="30" HorizontalAlignment="Right"  Content="Number of guests"/>
                     <Label Grid.Row="4" Grid.Column="0" Height="30" HorizontalAlignment="Right" Content="Number of days"/>
 
-                    <TextBox  Grid.Row="1" Grid.Column="1" Name="tSearchBarName" Height="20" Text="{Binding Path=searchedAccommodation.Name, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Name="tSearchBarCity" Width="80" Height="20" HorizontalAlignment="Left" Text="{Binding Path=searchedAccommodation.City, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox  Grid.Row="1" Grid.Column="1" Name="tSearchBarName" Height="20" Text="{Binding Path=SearchedAccommodation.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="tSearchBarCity" Width="80" Height="20" HorizontalAlignment="Left" Text="{Binding Path=SearchedAccommodation.City, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Grid.Row="2" Grid.Column="1" Content="Country" Margin="80 0" HorizontalAlignment="Right"></Label>
 
-                    <TextBox Grid.Row="2" Grid.Column="1" Name="tSearchBarCountry" Width="80"  Height="20" HorizontalAlignment="Right" Text="{Binding Path=searchedAccommodation.Country, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" Name="tSearchBarNumberOfGuests" Height="20" Text="{Binding Path=searchedAccommodation.NumOfGuests, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox Grid.Row="4" Grid.Column="1" Name="tSearchBarNumberOfDays" Height="20" Text="{Binding Path=searchedAccommodation.NumOfDays, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="tSearchBarCountry" Width="80"  Height="20" HorizontalAlignment="Right" Text="{Binding Path=SearchedAccommodation.Country, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Name="tSearchBarNumberOfGuests" Height="20" Text="{Binding Path=SearchedAccommodation.NumOfGuests, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Name="tSearchBarNumberOfDays" Height="20" Text="{Binding Path=SearchedAccommodation.NumOfDays, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <Button Grid.Row="4" Grid.Column="2" Name="SearchAccommodationButton" Height="20" Width="67" Content="Search" Click="SearchAccommodations"/>
             </Grid>
