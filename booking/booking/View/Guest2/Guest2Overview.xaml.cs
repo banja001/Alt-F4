@@ -117,5 +117,18 @@ namespace booking.View.Guest2
             moreDetailsWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             moreDetailsWindow.ShowDialog();
         }
+
+        private void BookTourButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedTour != null)
+            {
+                var bookTourWindow = new BookTourOverview(this);
+                bookTourWindow.Owner = this;
+                bookTourWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                bookTourWindow.ShowDialog();
+            }
+            else
+                MessageBox.Show("Niste izabrali turu koju zelite da rezervisete!");
+        }
     }
 }

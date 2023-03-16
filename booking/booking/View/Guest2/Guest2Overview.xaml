@@ -12,7 +12,7 @@
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" Margin="0, 0, 0, 0">
-            <Button x:Name="bookTour" Content="Book a tour" Margin="10, 45, 10, 10" Height="40" FontWeight="SemiBold" FontSize="15"></Button>
+            <Button x:Name="bookTourButton" Content="Book a tour" Margin="10, 45, 10, 10" Height="40" FontWeight="SemiBold" FontSize="15" Click="BookTourButton_Click"></Button>
         </StackPanel>
         <GroupBox x:Name ="welcome" BorderThickness="2" BorderBrush="#FF65696D" FontSize="18" FontWeight="SemiBold" Grid.Column="1" Margin="0,30,10,50">
             <Grid Margin="0,0,0,0">

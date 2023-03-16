@@ -69,6 +69,12 @@ namespace booking.View.Guest2
             {
                 changePresentImage();
             }
+            /*else if(TourImages.Count() == 1)
+            {
+                swipeLeftButton.IsEnabled = false;
+                swipeRightButton.IsEnabled = false;
+                changePresentImage();
+            }*/
         }
 
         private void changePresentImage()
