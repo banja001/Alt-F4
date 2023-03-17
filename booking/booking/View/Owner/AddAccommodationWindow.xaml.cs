@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,105 +25,145 @@ namespace booking.View
     /// </summary>
     public partial class AddAccommodationWindow : Window
     {
-        private AccommodationRepository accommodationrepository;
-        private AccommodationImageRepository accommodationImageRepository;
-        private LocationRepository locationRepository;
+
         private List<string> accommodationImagesUrl;
-        public AddAccommodationWindow(AccommodationRepository accMen, LocationRepository locrep,AccommodationImageRepository accirep)
+        public OwnerWindow ownerWindow;
+        public List<string> StateList;
+        
+        public AddAccommodationWindow(OwnerWindow win)
         {
             InitializeComponent();
             DataContext = this;
-            accommodationrepository = accMen;
-            accommodationImageRepository = accirep;
+            ownerWindow = win;
             accommodationImagesUrl = new List<string>();
-            locationRepository = locrep;
+
+            
+            
+            StateList = new List<string>();
+
+            foreach (Location loc in ownerWindow.locations)
+            {
+
+                if (StateList.Find(m=>m==loc.State) == null)
+
+                {
+                    StateList.Add(loc.State);
+                }
+                
+            }
+
+            StateComboBox.ItemsSource = StateList;
+            
+
+
+        }
+
+        public Regex intRegex = new Regex("[0-9]{1,4}");
+
+        private bool isValid()
+        {
+            if (string.IsNullOrEmpty(StateComboBox.Text) || string.IsNullOrEmpty(CityComboBox.Text) || string.IsNullOrEmpty(NameTextBox.Text) || string.IsNullOrEmpty(TypeComboBox.Text) ||
+                string.IsNullOrEmpty(MaxVisitorsTextBox.Text) || string.IsNullOrEmpty(MinDaysToUseTextBox.Text) || string.IsNullOrEmpty(DaysToCancelTextBox.Text))
+            {
+                MessageBox.Show("Please fill in all of the textboxes", "Error");
+                return false;
+            }
+            Match match = intRegex.Match(MaxVisitorsTextBox.Text);
+            if (!match.Success)
+            {
+                MessageBox.Show("Max visitors should be a valid number", "Error");
+                return false; ;
+            }
+            match = intRegex.Match(MinDaysToUseTextBox.Text);
+            if (!match.Success)
+            {
+                MessageBox.Show("Min reservation should be a valid number", "Error");
+                return false;
+            }
+            match = intRegex.Match(DaysToCancelTextBox.Text);
+            if (!match.Success)
+            {
+                MessageBox.Show("Days to cancel should be a valid number", "Error");
+                return false;
+            }
+
+
+
+            return true;
         }
 
         private void Confirm(object sender, RoutedEventArgs e)
         {
-            List<Location> locations=locationRepository.GetAllLocations();
 
-            int locid;
-            if (locations.Count() == 0)
+            if (!isValid())
             {
-                locid = 0;
-                Location loc = new Location(locid, GradTextBox.Text, DrzavaTextBox.Text);
-                locationRepository.AddLocation(loc);
+                return;
             }
-            else
-            {
-                Location location = locations.Find(a => a.State == DrzavaTextBox.Text && a.City == GradTextBox.Text);
-                if (location == null)
-                {
-                    locid = locations.Max(a => a.Id) + 1;
-                    Location loc = new Location(locid, GradTextBox.Text, DrzavaTextBox.Text);
-                    locationRepository.AddLocation(loc);
-                }
-                else
-                {
-                    locid = location.Id;
-                }
-                
-            }
-            
-            
-            
 
-            List<Accommodation> acc = accommodationrepository.findAll();
+            string State = StateComboBox.Text;
+            string City = CityComboBox.Text;
+            int locid = ownerWindow.locations.Find(m => m.State == State && m.City==City).Id;     
+
             int accid;
-            if (acc.Count() == 0)
+            if (ownerWindow.accommodations.Count() == 0)
             {
                 accid = 0;
             }
             else
             {
-                accid=acc.Max(a => a.Id) + 1;
+                accid= ownerWindow.accommodations.Max(a => a.Id) + 1;
             }
-            Accommodation a = new Accommodation(accid,
+            Accommodation a = new Accommodation(accid,ownerWindow.OwnerId,
             NameTextBox.Text,locid,TypeComboBox.Text,Convert.ToInt32(MaxVisitorsTextBox.Text),
             Convert.ToInt32(MinDaysToUseTextBox.Text), Convert.ToInt32(DaysToCancelTextBox.Text));
-            accommodationrepository.AddAccommodation(a);
 
-            List<AccommodationImage> acci=accommodationImageRepository.GetAllImages();
+            
+            ownerWindow.accommodationRepository.AddAccommodation(a);
+            
+
+            
+
+            
             foreach(string url in accommodationImagesUrl)
             {
                 AccommodationImage image;
-                if (acci.Count() == 0)
+                if (ownerWindow.accommodationImages.Count() == 0)
                 {
 
                     image = new AccommodationImage(0, url, a.Id);
                 }
                 else
                 {
-                    image=new AccommodationImage(acci.Max(a => a.Id) + 1,url,a.Id);
+                    image=new AccommodationImage(ownerWindow.accommodationImages.Max(a => a.Id) + 1,url,a.Id);
                 }
                 
 
-                accommodationImageRepository.AddAccommodationImage(image);
+                ownerWindow.accommodationImageRepository.AddAccommodationImage(image);
             }
 
             this.Close(); 
         }
 
-
-
-
-
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         private void AddImageClick(object sender, RoutedEventArgs e)
         {
             
-            AddAccommodationImageWindow win = new AddAccommodationImageWindow(accommodationImageRepository,accommodationImagesUrl);
-            win.Show();
+            AddAccommodationImageWindow win = new AddAccommodationImageWindow(ownerWindow.accommodationImageRepository,accommodationImagesUrl);
+            win.ShowDialog();
 
+        }
+
+        private void StateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            List<string> CityList=new List<string>();
+            CityComboBox.SelectedItem=null;
+            foreach (var loc in ownerWindow.locations)
+            {
+                if (StateComboBox.SelectedItem.ToString() == loc.State)
+                {
+                    CityList.Add(loc.City);
+                }
+            }
+            CityComboBox.ItemsSource = CityList;
         }
     }
 }

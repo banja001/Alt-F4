@@ -12,7 +12,7 @@ namespace booking.Model
     {
         public int Id { get; set; }
         public string Url { get; set; }
-        public int AccomodationId { get; set; }
+        public int AccommodationId { get; set; }
 
         public AccommodationImage() { }
 
@@ -20,12 +20,12 @@ namespace booking.Model
         {
             this.Id = id;
             this.Url = url;
-            this.AccomodationId = accomodation;
+            this.AccommodationId = accomodation;
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(),Url, AccomodationId.ToString()};
+            string[] csvValues = { Id.ToString(),Url, AccommodationId.ToString()};
             return csvValues;
         }
 
@@ -33,7 +33,7 @@ namespace booking.Model
         {
             Id = Convert.ToInt32(values[0]);
             Url = values[1];
-            AccomodationId = Convert.ToInt32(values[2]);
+            AccommodationId = Convert.ToInt32(values[2]);
 
         }
     }

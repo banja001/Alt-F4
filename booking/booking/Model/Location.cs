@@ -18,8 +18,10 @@ namespace booking.Model
         public Location(int id, string city, string state)
         {
             Id = id;
-            City = city;
-            State = state;
+
+            City = grad;
+            State = drzava;
+
         }
 
         public Location()
