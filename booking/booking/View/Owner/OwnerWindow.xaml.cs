@@ -86,16 +86,16 @@ namespace booking.View
                 guestsToRate.AccommodationName = accommodations.Find(u => u.Id == date.AccommodationId).Name;
                 tempList.Add(guestsToRate);
             }
-            ListToRate = new ObservableCollection<Guest1RatingDTO>(tempList);    
-            
-            
+            ListToRate = new ObservableCollection<Guest1RatingDTO>(tempList);
 
+
+            
         }
 
         private void AddAccommodation(object sender, RoutedEventArgs e)
         {
             AddAccommodationWindow win=new AddAccommodationWindow(this);
-            win.Show();
+            win.ShowDialog();
         }
 
         public List<ReservedDates> PickDatesForRating()//picks dates and guests that should display in datagrid for owner to rate

@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -54,15 +55,50 @@ namespace booking.View
 
         }
 
-        
+        public Regex intRegex = new Regex("[0-9]{1,4}");
+
+        private bool isValid()
+        {
+            if (string.IsNullOrEmpty(StateComboBox.Text) || string.IsNullOrEmpty(CityComboBox.Text) || string.IsNullOrEmpty(NameTextBox.Text) || string.IsNullOrEmpty(TypeComboBox.Text) ||
+                string.IsNullOrEmpty(MaxVisitorsTextBox.Text) || string.IsNullOrEmpty(MinDaysToUseTextBox.Text) || string.IsNullOrEmpty(DaysToCancelTextBox.Text))
+            {
+                MessageBox.Show("Please fill in all of the textboxes", "Error");
+                return false;
+            }
+            Match match = intRegex.Match(MaxVisitorsTextBox.Text);
+            if (!match.Success)
+            {
+                MessageBox.Show("Max visitors should be a valid number", "Error");
+                return false; ;
+            }
+            match = intRegex.Match(MinDaysToUseTextBox.Text);
+            if (!match.Success)
+            {
+                MessageBox.Show("Min reservation should be a valid number", "Error");
+                return false;
+            }
+            match = intRegex.Match(DaysToCancelTextBox.Text);
+            if (!match.Success)
+            {
+                MessageBox.Show("Days to cancel should be a valid number", "Error");
+                return false;
+            }
+
+
+
+            return true;
+        }
 
         private void Confirm(object sender, RoutedEventArgs e)
         {
 
-            string State=StateComboBox.Text;
+            if (!isValid())
+            {
+                return;
+            }
+
+            string State = StateComboBox.Text;
             string City = CityComboBox.Text;
-
-
             int locid = ownerWindow.locations.Find(m => m.State == State && m.City==City).Id;     
             int accid;
             if (ownerWindow.accommodations.Count() == 0)
@@ -77,7 +113,11 @@ namespace booking.View
             NameTextBox.Text,locid,TypeComboBox.Text,Convert.ToInt32(MaxVisitorsTextBox.Text),
             Convert.ToInt32(MinDaysToUseTextBox.Text), Convert.ToInt32(DaysToCancelTextBox.Text));
 
+            
             ownerWindow.accommodationRepository.AddAccommodation(a);
+            
+
+            
 
             
             foreach(string url in accommodationImagesUrl)
@@ -100,24 +140,11 @@ namespace booking.View
             this.Close(); 
         }
 
-
-
-
-
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         private void AddImageClick(object sender, RoutedEventArgs e)
         {
             
             AddAccommodationImageWindow win = new AddAccommodationImageWindow(ownerWindow.accommodationImageRepository,accommodationImagesUrl);
-            win.Show();
+            win.ShowDialog();
 
         }
 

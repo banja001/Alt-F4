@@ -5,6 +5,8 @@ using System.Linq;
 using booking.Serializer;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.ComponentModel;
 
 namespace booking.Model
 {
@@ -54,6 +56,9 @@ namespace booking.Model
             MinDaysToUse = Convert.ToInt32(values[6]);
             MinDaysToCancel = Convert.ToInt32(values[7]);
         }
+
+        
+
         
     }
 }

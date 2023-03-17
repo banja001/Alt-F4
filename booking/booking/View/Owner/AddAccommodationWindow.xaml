@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:booking.View"
         mc:Ignorable="d"
         Title="AddAccommodationWindow" Height="450" Width="800">
+    
     <Grid>
         <Label Content="Name" HorizontalAlignment="Left" Margin="136,77,0,0" VerticalAlignment="Top" Height="38" Width="81"/>
         <Label Content="Location" HorizontalAlignment="Left" Margin="140,135,0,0" VerticalAlignment="Top"/>

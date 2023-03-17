@@ -24,7 +24,7 @@ namespace booking.View.Owner
 
         public void ConfirmImageClick(object sender, RoutedEventArgs e)
         {
-            if (UrlTextBox.Text == "")
+            if (string.IsNullOrEmpty(UrlTextBox.Text))
             {
                 MessageBox.Show("Please fill all of the textboxes");
                 return;
