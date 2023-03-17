@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Configuration;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,8 @@ namespace booking.View
     /// </summary>
     public partial class OwnerWindow : Window
     {
+        public int OwnerId { get; set; }
+
         public AccommodationRepository accommodationRepository;
         public List<Accommodation> accommodations;
 
@@ -45,10 +48,13 @@ namespace booking.View
         public List<User> users;
         public ObservableCollection<Guest1RatingDTO> ListToRate { get; set; }
         public Guest1RatingDTO SelectedItem { get; set; }
-        public OwnerWindow()
+        public OwnerWindow(int id)
         {
             InitializeComponent();
             DataContext = this;
+
+            OwnerId = id;
+
 
             userRepository = new UserRepository();
             users = userRepository.FindAll();
@@ -97,7 +103,9 @@ namespace booking.View
             List<ReservedDates> ratingDates = new List<ReservedDates>();
             foreach(ReservedDates reservedDate in reservedDates)
             {
-                if (DateOnly.FromDateTime(DateTime.Today) >= reservedDate.EndDate && DateOnly.FromDateTime(DateTime.Today) < reservedDate.EndDate.AddDays(5) && reservedDate.Rated==-1)
+                accommodations.Find(m => m.Id == reservedDate.AccommodationId);
+                if (DateOnly.FromDateTime(DateTime.Today) >= reservedDate.EndDate && DateOnly.FromDateTime(DateTime.Today) < reservedDate.EndDate.AddDays(5) && reservedDate.Rated==-1
+                    && accommodations.Find(m => m.Id == reservedDate.AccommodationId).OwnerId==OwnerId)
                 {
                     ratingDates.Add(reservedDate);
                 }

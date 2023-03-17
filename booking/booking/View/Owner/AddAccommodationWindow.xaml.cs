@@ -27,45 +27,43 @@ namespace booking.View
 
         private List<string> accommodationImagesUrl;
         public OwnerWindow ownerWindow;
-
+        public List<string> StateList;
+        
         public AddAccommodationWindow(OwnerWindow win)
         {
             InitializeComponent();
             DataContext = this;
             ownerWindow = win;
-            
             accommodationImagesUrl = new List<string>();
-            
-        }
 
-        private void Confirm(object sender, RoutedEventArgs e)
-        {
             
+            
+            StateList = new List<string>();
 
-            int locid;
-            if (ownerWindow.locations.Count() == 0)
+            foreach (Location loc in ownerWindow.locations)
             {
-                locid = 0;
-                Location loc = new Location(locid, GradTextBox.Text, DrzavaTextBox.Text);
-                ownerWindow.locationRepository.AddLocation(loc);
-            }
-            else
-            {
-                Location location = ownerWindow.locations.Find(a => a.State == DrzavaTextBox.Text && a.City == GradTextBox.Text);
-                if (location == null)
+                if (StateList.Find(m=>m==loc.State) == null)
                 {
-                    locid = ownerWindow.locations.Max(a => a.Id) + 1;
-                    Location loc = new Location(locid, GradTextBox.Text, DrzavaTextBox.Text);
-                    ownerWindow.locationRepository.AddLocation(loc);
-                }
-                else
-                {
-                    locid = location.Id;
+                    StateList.Add(loc.State);
                 }
                 
             }
 
+            StateComboBox.ItemsSource = StateList;
             
+
+        }
+
+        
+
+        private void Confirm(object sender, RoutedEventArgs e)
+        {
+
+            string State=StateComboBox.Text;
+            string City = CityComboBox.Text;
+
+
+            int locid = ownerWindow.locations.Find(m => m.State == State && m.City==City).Id;     
             int accid;
             if (ownerWindow.accommodations.Count() == 0)
             {
@@ -75,7 +73,7 @@ namespace booking.View
             {
                 accid= ownerWindow.accommodations.Max(a => a.Id) + 1;
             }
-            Accommodation a = new Accommodation(accid,
+            Accommodation a = new Accommodation(accid,ownerWindow.OwnerId,
             NameTextBox.Text,locid,TypeComboBox.Text,Convert.ToInt32(MaxVisitorsTextBox.Text),
             Convert.ToInt32(MinDaysToUseTextBox.Text), Convert.ToInt32(DaysToCancelTextBox.Text));
 
@@ -121,6 +119,20 @@ namespace booking.View
             AddAccommodationImageWindow win = new AddAccommodationImageWindow(ownerWindow.accommodationImageRepository,accommodationImagesUrl);
             win.Show();
 
+        }
+
+        private void StateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            List<string> CityList=new List<string>();
+            CityComboBox.SelectedItem=null;
+            foreach (var loc in ownerWindow.locations)
+            {
+                if (StateComboBox.SelectedItem.ToString() == loc.State)
+                {
+                    CityList.Add(loc.City);
+                }
+            }
+            CityComboBox.ItemsSource = CityList;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using booking.DTO;
+﻿ using booking.DTO;
 using booking.Model;
 using booking.Repository;
 using System;
@@ -73,6 +73,12 @@ namespace booking.View.Owner
             }
 
             guestid = ownerWindow.users.Find(m => m.Username == ownerWindow.SelectedItem.GuestName).Id;
+            if (cleanliness == 0 || rules == 0)
+            {
+                MessageBox.Show("Please rate all of the stats", "Error");
+                return;
+
+            }
             Guest1Rating guestrating = new Guest1Rating(id,guestid,cleanliness,rules,comment);
             ownerWindow.guest1RatingsRepository.AddRating(guestrating);
 
