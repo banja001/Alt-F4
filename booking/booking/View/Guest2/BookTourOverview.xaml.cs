@@ -28,7 +28,7 @@ namespace booking.View.Guest2
         public int AvailableSpace { get; set; }
         public TourLocationDTO TourForBooking { get; set; }
         public User CurrentUser { get; set; }
-
+        
         public BookTourOverview(Guest2Overview guest2Overview, User user)
         {
             InitializeComponent();
@@ -58,6 +58,10 @@ namespace booking.View.Guest2
                                                                   NumberOfGuests);
                 _reservationTourRepository.Add(reservation);
                 MessageBox.Show("Rezervisali ste turu uspesno!");
+
+                Guest2Overview parentWindow = new Guest2Overview(CurrentUser);
+                parentWindow.Show();   
+                
                 this.Close();
             }
             else

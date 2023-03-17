@@ -69,21 +69,24 @@ namespace booking.View.Guest2
             {
                 changePresentImage();
             }
-            /*else if(TourImages.Count() == 1)
+            else if(TourImages.Count() == 0)
             {
                 swipeLeftButton.IsEnabled = false;
                 swipeRightButton.IsEnabled = false;
                 changePresentImage();
-            }*/
+            }
         }
 
         private void changePresentImage()
         {
-            BitmapImage bitmapimage = new BitmapImage();
-            bitmapimage.BeginInit();
-            bitmapimage.UriSource = new Uri(@TourImages[currentImageIndex].Url, UriKind.Absolute);
-            bitmapimage.EndInit();
-            PresentTourImage.Source = bitmapimage;
+            if (TourImages.Count != 0)
+            {
+                BitmapImage bitmapimage = new BitmapImage();
+                bitmapimage.BeginInit();
+                bitmapimage.UriSource = new Uri(@TourImages[currentImageIndex].Url, UriKind.Absolute);
+                bitmapimage.EndInit();
+                PresentTourImage.Source = bitmapimage;
+            }
         }
     }
 }

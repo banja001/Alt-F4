@@ -134,6 +134,7 @@ namespace booking.View.Guest2
                 bookTourWindow.Owner = this;
                 bookTourWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 bookTourWindow.ShowDialog();
+                this.Close();
             }
             else
                 MessageBox.Show("Niste izabrali turu koju zelite da rezervisete!");
