@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace booking.Repository
 {
@@ -23,6 +24,20 @@ namespace booking.Repository
         public List<TourImage> findAll()
         {
             return tourImages;
+        }
+        public void Add(TourImage tourImage)
+        { 
+            tourImages.Add(tourImage);
+            serializer.ToCSV(fileName,tourImages);
+        }
+        public void AddRange(List<TourImage> TourImagesFromList)
+        {
+            tourImages.AddRange(TourImagesFromList);
+            serializer.ToCSV(fileName, tourImages);
+        }
+        public int MakeID()
+        {
+            return tourImages[tourImages.Count - 1].Id + 1;
         }
     }
 }
