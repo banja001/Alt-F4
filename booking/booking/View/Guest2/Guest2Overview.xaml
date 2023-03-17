@@ -21,11 +21,11 @@
                     <RowDefinition Height="4*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Row="0">
-                    <TextBox x:Name="peopleCount" BorderBrush="#FF65696D" Foreground="LightGray" Margin="15, 5, 5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="People count" LostFocus="PeopleCount_LostFocus" GotFocus="PeopleCount_GotFocus"></TextBox>
-                    <TextBox x:Name="language" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="Language" GotFocus="Language_GotFocus" LostFocus="Language_LostFocus"></TextBox>
-                    <TextBox x:Name="location" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="Location" LostFocus="Location_LostFocus" GotFocus="Location_GotFocus"></TextBox>
-                    <TextBox x:Name="timeSpan" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="Time span" GotFocus="TimeSpan_GotFocus" LostFocus="TimeSpan_LostFocus"></TextBox>
-                    <Button x:Name="search" Foreground="White" Content="Search" Width="125" Height="25" Margin="50, 5, 5, 5" FontSize="16" FontWeight="SemiBold" Background="#FF4C7CE6"></Button>
+                    <TextBox x:Name="PeopleCount" BorderBrush="#FF65696D" Foreground="LightGray" Margin="15, 5, 5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="People count" LostFocus="PeopleCount_LostFocus" GotFocus="PeopleCount_GotFocus"></TextBox>
+                    <TextBox x:Name="Language" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="Language" GotFocus="Language_GotFocus" LostFocus="Language_LostFocus"></TextBox>
+                    <TextBox x:Name="Location" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="Location" LostFocus="Location_LostFocus" GotFocus="Location_GotFocus"></TextBox>
+                    <TextBox x:Name="TimeSpan" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="Time span" GotFocus="TimeSpan_GotFocus" LostFocus="TimeSpan_LostFocus"></TextBox>
+                    <Button x:Name="Search" Foreground="White" Content="Search" Width="125" Height="25" Margin="50, 5, 5, 5" FontSize="16" FontWeight="SemiBold" Background="#FF4C7CE6" Click="Search_Click"></Button>
                 </StackPanel>
                 <DataGrid x:Name="tourSelectionTable" SelectedItem="{Binding SelectedTour}" ItemsSource="{Binding TourLocationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged }" FontSize="12" FontWeight="Normal" Grid.Row="1" BorderBrush="#FF65696D" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True" >
                     <DataGrid.Columns>
