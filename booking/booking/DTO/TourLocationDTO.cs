@@ -33,5 +33,6 @@ namespace booking.DTO
             this.MaxGuests = maxGuests;
             this.Images = tourImages;
         }
+
     }
 }

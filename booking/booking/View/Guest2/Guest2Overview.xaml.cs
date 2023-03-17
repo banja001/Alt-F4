@@ -27,8 +27,10 @@ namespace booking.View.Guest2
         private readonly LocationRepository _locationRepository;
         private readonly TourRepository _tourRepository;
         private readonly TourImageRepository _tourImageRepository;
+        private readonly ReservationTourRepository _reservationTourRepository;
         public ObservableCollection<TourLocationDTO> TourLocationDTOs { get; set; }
         public TourLocationDTO SelectedTour { get; set; }
+        public User currentUser { get; set; }   
         public Guest2Overview(User user)
         {
             InitializeComponent();
@@ -36,11 +38,13 @@ namespace booking.View.Guest2
             _locationRepository = new LocationRepository();
             _tourRepository = new TourRepository();
             _tourImageRepository = new TourImageRepository();
+            _reservationTourRepository = new ReservationTourRepository();
             TourLocationDTOs = new ObservableCollection<TourLocationDTO>(); 
+            currentUser = user;
             CreateTourDTOs();
-            
-
-            welcome.Header = "Welcome " + user.Username.ToString();
+            UpdateTable();
+           
+            welcome.Header = "Welcome " + currentUser.Username.ToString();
 
         }
 
@@ -52,9 +56,13 @@ namespace booking.View.Guest2
             {
                 Location location = locations.Find(l => l.Id == tour.Location.Id);
                 List<TourImage> images = tourImages.FindAll(i => i.TourId == tour.Id);
-                TourLocationDTOs.Add(new TourLocationDTO(tour.Id, tour.Name, tour.Description, 
+                //int numberOfGuests = _reservationTourRepository.GetNumberOfGuestsForTourId(tour.Id);
+                //if (numberOfGuests < tour.MaxGuests)
+                //{ 
+                    TourLocationDTOs.Add(new TourLocationDTO(tour.Id, tour.Name, tour.Description,
                                      location.City + "," + location.State, tour.Language, tour.MaxGuests,
                                      tour.StartTime.Date, tour.Duration, images));
+                //}
             }
         }
         private void SetContentToDefault(TextBox selectedTextbox, string defaultText)
@@ -122,13 +130,25 @@ namespace booking.View.Guest2
         {
             if (SelectedTour != null)
             {
-                var bookTourWindow = new BookTourOverview(this);
+                var bookTourWindow = new BookTourOverview(this, currentUser);
                 bookTourWindow.Owner = this;
                 bookTourWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 bookTourWindow.ShowDialog();
             }
             else
                 MessageBox.Show("Niste izabrali turu koju zelite da rezervisete!");
+        }
+
+        public void UpdateTable() 
+        {
+            foreach (TourLocationDTO tour in TourLocationDTOs.ToList<TourLocationDTO>())
+            {
+                int numberOfGuests = _reservationTourRepository.GetNumberOfGuestsForTourId(tour.Id);
+                if (numberOfGuests >= tour.MaxGuests)
+                {
+                    TourLocationDTOs.Remove(tour);
+                }
+            }
         }
     }
 }
