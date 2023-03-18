@@ -14,15 +14,18 @@ namespace booking.Repository
         private List<Location> Locations;
         private Serializer<Location> Serializer;
 
-        private readonly string fileName = "../../../Resources/Data/location.csv";
+
+        public readonly string fileName = "../../../Resources/Data/location.csv";
         public LocationRepository()
         {
-            
+
+
             Serializer = new Serializer<Location>();
             Locations = Serializer.FromCSV(fileName);
         }
 
-        public List<Location> GetAllLocations()
+        public List<Location> FindAll()
+
         {
             return Locations;
         }
@@ -34,9 +37,11 @@ namespace booking.Repository
             Serializer.ToCSV(fileName, Locations);
 
         }
+
         public int MakeID()
         {
             return Locations[Locations.Count - 1].Id + 1;
         }
+
     }
 }

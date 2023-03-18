@@ -5,9 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.View"
         mc:Ignorable="d"
-        Title="OwnerWindow" Height="450" Width="800">
+        Title="OwnerWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button Content="Add" HorizontalAlignment="Left" Margin="32,34,0,0" VerticalAlignment="Top" Height="32" Width="136" Click="AddAccommodation"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="797*"/>
+        </Grid.ColumnDefinitions>
+        <Button Content="Add" HorizontalAlignment="Left" Margin="29,34,0,0" VerticalAlignment="Top" Height="32" Width="136" Click="AddAccommodation" Grid.Column="1"/>
+        <Button Name="RateGuests" Content="Rate guests" HorizontalAlignment="Left" Margin="571,228,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.842,-1.682" Height="24" Width="78" Click="RateGuests_Click" Grid.Column="1">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.362"/>
+                    <TranslateTransform X="0.334" Y="-0.659"/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <Label Name="RateGuestsLabel" Content="" HorizontalAlignment="Left" Margin="644,328,0,0" VerticalAlignment="Top" Width="122" Height="29" Grid.Column="1"/>
+        <DataGrid x:Name="DataGridRaatings" ItemsSource="{Binding ListToRate, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
+                  IsReadOnly="True" AutoGenerateColumns="False" Margin="397,267,10,16" Grid.Column="1" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Guest" Width="90" Binding="{Binding GuestName}"/>
+                <DataGridTextColumn Header="Accommodation" Width="120" Binding="{Binding AccommodationName}"/>
+                <DataGridTextColumn Header="Start date" Width="90" Binding="{Binding StartDate}"/>
+                <DataGridTextColumn Header="End date" Width="90" Binding="{Binding EndDate}"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </Window>

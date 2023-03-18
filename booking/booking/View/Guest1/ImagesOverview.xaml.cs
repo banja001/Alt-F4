@@ -42,7 +42,7 @@ namespace booking.View.Guest1
 
             _repository = new AccommodationImageRepository();
 
-            images = _repository.GetAllImages();
+            images = _repository.FindAll();
             AccommodationImages = new List<AccommodationImage>();
 
             GetAccommodationImages();
@@ -53,7 +53,7 @@ namespace booking.View.Guest1
         {
             foreach(AccommodationImage image in images)
             {
-                if(image.AccomodationId == accommodation.Id)
+                if(image.AccommodationId == accommodation.Id)
                 {
                     AccommodationImages.Add(image);
                 }

@@ -1,0 +1,29 @@
+﻿<Window x:Class="booking.View.Owner.RateGuestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:booking.View.Owner"
+        mc:Ignorable="d"
+        
+        Title="RateGuestWindow" Height="450" Width="400"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <RadioButton GroupName="clean" Content="1" HorizontalAlignment="Left" Margin="315,33,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=SelectedRulesRadiobutton[0]}"/>
+        <RadioButton GroupName="clean" Content="2" HorizontalAlignment="Left" Margin="315,63,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=SelectedRulesRadiobutton[1]}"/>
+        <RadioButton GroupName="clean" Content="3" HorizontalAlignment="Left" Margin="315,93,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=SelectedRulesRadiobutton[2]}"/>
+        <RadioButton GroupName="clean" Content="4" HorizontalAlignment="Left" Margin="315,123,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=SelectedRulesRadiobutton[3]}"/>
+        <RadioButton GroupName="clean" Content="5" HorizontalAlignment="Left" Margin="315,153,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=SelectedRulesRadiobutton[4]}"/>
+        <RadioButton GroupName="rules" Content="1" HorizontalAlignment="Left" Margin="153,33,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=SelectedCleanRadiobutton[0]}"/>
+        <RadioButton GroupName="rules" Content="2" HorizontalAlignment="Left" Margin="153,63,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=SelectedCleanRadiobutton[1]}"/>
+        <RadioButton GroupName="rules" Content="3" HorizontalAlignment="Left" Margin="153,93,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=SelectedCleanRadiobutton[2]}"/>
+        <RadioButton GroupName="rules" Content="4" HorizontalAlignment="Left" Margin="153,123,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=SelectedCleanRadiobutton[3]}"/>
+        <RadioButton GroupName="rules" Content="5" HorizontalAlignment="Left" Margin="153,153,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=SelectedCleanRadiobutton[4]}"/>
+        <Label Content="Comment" HorizontalAlignment="Left" Margin="32,186,0,0" VerticalAlignment="Top"/>
+        <Label Content="Respecting the &#xD;&#xA;rules of the guest" HorizontalAlignment="Left" Margin="200,29,0,0" VerticalAlignment="Top" Height="49" Width="101"/>
+        <Label Content="Cleanliness of&#xD;&#xA;the guest" HorizontalAlignment="Left" Margin="32,33,0,0" VerticalAlignment="Top" Height="49" Width="94"/>
+        <TextBox Name="CommentTextBox" HorizontalAlignment="Left" Margin="46,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="294" Height="148"/>
+        <Button Content="Confirm" HorizontalAlignment="Left" Margin="294,384,0,0" VerticalAlignment="Top" Height="28" Width="68" Click="AddRating_Click"/>
+
+    </Grid>
+</Window>

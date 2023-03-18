@@ -44,7 +44,7 @@ namespace booking.View
 
             SearchedAccommodation = new SearchedAccomodationDTO();
 
-            AccommodationDTOs = _accomodationRepository.getAll(_accomodationRepository.findAll(), _locationRepository);
+            AccommodationDTOs = _accomodationRepository.getAll(_accomodationRepository.FindAll(), _locationRepository);
 
             CheckBoxApartment.IsChecked = true;
             CheckBoxCabin.IsChecked = true;
@@ -64,7 +64,7 @@ namespace booking.View
             SearchedAccommodation.City = (SearchedAccommodation.City == null) ? "" : SearchedAccommodation.City;
             SearchedAccommodation.Country = (SearchedAccommodation.Country == null) ? "" : SearchedAccommodation.Country;
 
-            List<AccommodationLocationDTO> accommodationList = _accomodationRepository.getAll(_accomodationRepository.findAll(), _locationRepository).ToList();
+            List<AccommodationLocationDTO> accommodationList = _accomodationRepository.getAll(_accomodationRepository.FindAll(), _locationRepository).ToList();
 
             AccommodationDTOs.Clear();
 

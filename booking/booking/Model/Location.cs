@@ -20,6 +20,7 @@ namespace booking.Model
             Id = id;
             City = city;
             State = state;
+
         }
 
         public Location()
