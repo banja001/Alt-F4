@@ -1,4 +1,5 @@
-﻿using booking.Model;
+﻿using booking.DTO;
+using booking.Model;
 using booking.Serializer;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,22 @@ namespace booking.Repository
             AccommodationImages.Add(acci);
             Serializer.ToCSV(fileName, AccommodationImages);
 
+        }
+
+        //prepraviti nazive za metodu i promenljive da se zna na sta se misli, neadekvatni su trenutno
+        public List<AccommodationImage> GetAccommodationImages(AccommodationLocationDTO accommodation)
+        {
+            List<AccommodationImage> accommodationImages = new List<AccommodationImage>();
+
+            foreach (AccommodationImage image in AccommodationImages)
+            {
+                if (image.AccomodationId == accommodation.Id)
+                {
+                    accommodationImages.Add(image);
+                }
+            }
+
+            return accommodationImages;
         }
 
     }

@@ -1,0 +1,45 @@
+﻿<Window x:Class="booking.View.Guide.AddTourWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:booking.View.Guide"
+        mc:Ignorable="d"
+        Title="Add Tour window" Height="500" Width="800">
+    <Grid Height="500" Width="800">
+        <TabControl>
+            <TabItem Header="Add tour">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
+                    <Label Content="Name: " HorizontalAlignment="Left" Margin="20,30,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
+                    <TextBox x:Name="NameTB" HorizontalAlignment="Left" Text="{Binding Path=Tour.Name}"  Margin="90,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26" IsEnabled="True"/>
+                    <Label Content="County: " HorizontalAlignment="Left" Margin="20,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
+                    <TextBox x:Name="CountyTB" HorizontalAlignment="Left" Text="{Binding Path=Tour.Location.State}" Margin="90,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26" IsEnabled="True"/>
+                    <Label Content="City: " HorizontalAlignment="Left" Margin="20,120,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
+                    <TextBox x:Name="CityTB" HorizontalAlignment="Left" Margin="90,120,0,0" Text="{Binding Path=Tour.Location.City}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26" IsEnabled="True"/>
+                    <Label Content="Language: " HorizontalAlignment="Left" Margin="20,165,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
+                    <TextBox x:Name="LanguageTB" HorizontalAlignment="Left" Margin="90,165,0,0" Text="{Binding Path=Tour.Language}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26" IsEnabled="True"/>
+                    <Label Content="Duration: " HorizontalAlignment="Left" Margin="20,210,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
+                    <TextBox x:Name="DurationTB" HorizontalAlignment="Left" Margin="90,210,0,0" Text="{Binding Path=Tour.Duration}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26" IsEnabled="True"/>
+                    <Label Content="Description: " HorizontalAlignment="Left" Margin="20,262,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
+                    <TextBox x:Name="DescriptionTB" HorizontalAlignment="Left" Margin="90,262,0,0" Text="{Binding Path=Tour.Description}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="134" IsEnabled="True"/>
+                    <Label Content="Date: " HorizontalAlignment="Left" Margin="356,30,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
+                    <DatePicker Name="DateDTP" HorizontalAlignment="Left" Margin="496,30,0,0" SelectedDate="{Binding Path=Tour.StartTime.Date}" DisplayDate="01.04.2023." VerticalAlignment="Top" Height="26" Width="200" SelectedDateFormat="Short" FirstDayOfWeek="Monday" IsTodayHighlighted="True"/>
+                    <Label Content="Time: " HorizontalAlignment="Left" Margin="356,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
+                    <TextBox Name="TimeTB" HorizontalAlignment="Left" Margin="496,75,0,0" Text="{Binding Path=Tour.StartTime.Time}"  TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26"/>
+                    <Label Content="Max number of guests: " HorizontalAlignment="Left" Margin="356,120,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
+                    <TextBox x:Name="MaxNumGuestsTB" HorizontalAlignment="Left" Margin="496,120,0,0" Text="{Binding Path=Tour.MaxGuests}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26"/>
+                    <Label Content="Key point: " HorizontalAlignment="Left" Margin="355,210,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
+                    <TextBox Name="CheckPointTB" HorizontalAlignment="Left" Margin="496,210,0,0" Text="{Binding Path=CheckPoint.Name}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26"/>
+                    <Button Name="AddCheckPoint" Content="+" HorizontalAlignment="Left" Margin="722,210,0,0" VerticalAlignment="Top" Height="26" Width="26" Click="AddCheckPointToListBox"/>
+                    <Label Content="List of check points: " HorizontalAlignment="Left" Margin="356,262,0,0" VerticalAlignment="Top"/>
+                    <ListBox Name="CheckPointsLB" ItemsSource="{Binding CheckPointsForListBox}" DisplayMemberPath="Name" Width="200" Margin="496,262,98,90" />
+                    <Button x:Name="ConfirmB" IsEnabled="False" Content="Confirm" HorizontalAlignment="Left" Margin="359,383,0,0" VerticalAlignment="Top" Width="80" Height="26" Click="ConfirmTour"/>
+                    <Label Content="Images: " HorizontalAlignment="Left" Margin="356,165,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
+                    <TextBox x:Name="ImagesTB" HorizontalAlignment="Left" Margin="496,165,0,0" Text="{Binding Path=Image}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26" IsEnabled="True"/>
+                    <Button x:Name="AddImage" Content="+" HorizontalAlignment="Left" Margin="722,165,0,0" VerticalAlignment="Top" Height="26" Width="26" Click="AddImageToList"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

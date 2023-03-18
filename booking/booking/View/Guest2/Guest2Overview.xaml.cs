@@ -83,39 +83,39 @@ namespace booking.View.Guest2
         }
         private void PeopleCount_LostFocus(object sender, RoutedEventArgs e)
         {
-            SetContentToDefault(peopleCount, "People count");
+            SetContentToDefault(PeopleCount, "People count");
         }
 
         private void PeopleCount_GotFocus(object sender, RoutedEventArgs e)
         {
-            RemoveContent(peopleCount, "People count");
+            RemoveContent(PeopleCount, "People count");
         }
 
         private void Language_GotFocus(object sender, RoutedEventArgs e)
         {
-            RemoveContent(language, "Language");
+            RemoveContent(Language, "Language");
         }
 
         private void Language_LostFocus(object sender, RoutedEventArgs e)
         {
-            SetContentToDefault(language, "Language");
+            SetContentToDefault(Language, "Language");
         }
 
         private void Location_LostFocus(object sender, RoutedEventArgs e)
         {
-            SetContentToDefault(location, "Location");
+            SetContentToDefault(Location, "Location");
         }
         private void Location_GotFocus(object sender, RoutedEventArgs e)
         {
-            RemoveContent(location, "Location");
+            RemoveContent(Location, "Location");
         }
         private void TimeSpan_GotFocus(object sender, RoutedEventArgs e)
         {
-            RemoveContent(timeSpan, "Time span");
+            RemoveContent(TimeSpan, "Time span");
         }
         private void TimeSpan_LostFocus(object sender, RoutedEventArgs e)
         {
-            SetContentToDefault(timeSpan, "Time span");
+            SetContentToDefault(TimeSpan, "Time span");
         }
 
         private void MoreDetailsButton_Click(object sender, RoutedEventArgs e)
@@ -150,6 +150,11 @@ namespace booking.View.Guest2
                     TourLocationDTOs.Remove(tour);
                 }
             }
+        }
+
+        private void Search_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
