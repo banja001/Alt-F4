@@ -39,7 +39,9 @@
                     <TextBox Grid.Row="3" Grid.Column="1" Name="tSearchBarNumberOfGuests" Height="20" Text="{Binding Path=SearchedAccommodation.NumOfGuests, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBox Grid.Row="4" Grid.Column="1" Name="tSearchBarNumberOfDays" Height="20" Text="{Binding Path=SearchedAccommodation.NumOfDays, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <Button Grid.Row="4" Grid.Column="2" Name="SearchAccommodationButton" Height="20" Width="67" Content="Search" Click="SearchAccommodations"/>
+                    <Button Grid.Row="4" Grid.Column="2" Name="SearchAccommodationButton" Height="20" Width="67" Content="Search" Margin="30 0" HorizontalAlignment="Left" Click="SearchAccommodations"/>
+                    <Button Grid.Row="4" Grid.Column="2" Name="ReserveAccommodationButton" Height="20" Width="67" Content="Reserve" Margin="30 0" HorizontalAlignment="Right" Click="ReserveAccommodations"/>
+
             </Grid>
             </ToolBar>
 

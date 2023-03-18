@@ -26,7 +26,7 @@ namespace booking.View
     {
         public static ObservableCollection<AccommodationLocationDTO> AccommodationDTOs { get; set; }
 
-        public AccommodationLocationDTO SelectedAccommodation { get; set; }
+        public static AccommodationLocationDTO SelectedAccommodation { get; set; }
 
         public SearchedAccomodationDTO SearchedAccommodation { get; set; }
 
@@ -98,6 +98,20 @@ namespace booking.View
             ImagesOverview imagesOverview = new ImagesOverview(SelectedAccommodation);
             imagesOverview.Owner = this;
             imagesOverview.Show();
+        }
+
+        private void ReserveAccommodations(object sender, RoutedEventArgs e)
+        {
+            if (SelectedAccommodation != null)
+            {
+                ReserveAccommodation reserveAccommodation = new ReserveAccommodation();
+                reserveAccommodation.Owner = this;
+                reserveAccommodation.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("You have to select an accommodation you wish to reserve", "Warning");
+            }
         }
     }
 }
