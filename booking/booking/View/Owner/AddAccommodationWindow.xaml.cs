@@ -99,11 +99,13 @@ namespace booking.View
             {
                 return;
             }
+            // Pitati jovana sta je ovo
 
             string State = StateComboBox.Text;
             string City = CityComboBox.Text;
             int locid = ownerWindow.locations.Find(m => m.State == State && m.City==City).Id;     
 
+            List<Accommodation> acc = accommodationrepository.GetAll();
             int accid;
             if (ownerWindow.accommodations.Count() == 0)
             {
