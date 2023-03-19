@@ -38,5 +38,6 @@ namespace booking.Repository
         {
             return Locations[Locations.Count - 1].Id + 1;
         }
+       
     }
 }

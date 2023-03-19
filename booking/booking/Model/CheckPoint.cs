@@ -12,6 +12,7 @@ namespace booking.Model
         public int Id { get; set; }
         public string Name { get; set; }
         public bool Active { get; set; }
+        public bool NotChecked { get; set; }
         public int TourId { get; set; }
         public int Order { get; set; }
 
@@ -27,6 +28,7 @@ namespace booking.Model
             Active = active;
             TourId = tourId;
             Order = order;
+            NotChecked = !active;
         }
 
         public string[] ToCSV()

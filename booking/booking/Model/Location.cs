@@ -38,5 +38,11 @@ namespace booking.Model
             City = values[1];
             State = values[2];
         }
+        public string CityState
+        {
+            get { return City + ", " + State; }
+        }
+
+    
     }
 }

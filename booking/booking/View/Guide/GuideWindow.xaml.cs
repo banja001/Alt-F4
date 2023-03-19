@@ -32,7 +32,8 @@ namespace booking.View.Guide
 
         private void LiveTrackingTour(object sender, RoutedEventArgs e)
         {
-
+            LiveTrackingWindow liveTrackingWindow=new LiveTrackingWindow();
+            liveTrackingWindow.ShowDialog();
         }
     }
 }
