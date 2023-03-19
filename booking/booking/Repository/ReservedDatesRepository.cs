@@ -36,5 +36,16 @@ namespace booking.Repository
         {
             return reservedDates[reservedDates.Count - 1].Id + 1;
         }
+
+        public void Add(ReservedDates reservedDate)
+        {
+            reservedDates.Add(reservedDate);
+            Save();
+        }
+
+        public void Save()
+        {
+            serializer.ToCSV(fileName, reservedDates);
+        }
     }
 }

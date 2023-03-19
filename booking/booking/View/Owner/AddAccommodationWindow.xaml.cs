@@ -68,7 +68,7 @@ namespace booking.View
             
             
 
-            List<Accommodation> acc = accommodationrepository.findAll();
+            List<Accommodation> acc = accommodationrepository.GetAll();
             int accid;
             if (acc.Count() == 0)
             {

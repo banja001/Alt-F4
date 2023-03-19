@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:cvt="clr-namespace:booking.Converter"
         xmlns:local="clr-namespace:booking.View.Guest1"
         mc:Ignorable="d"
-        Title="ReserveAccommodation" Height="400" Width="600" WindowStartupLocation="CenterScreen">
+        Title="ReserveAccommodation" Height="430" Width="600" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid Grid.Row="0" Grid.Column="0" Width="580" Height="380">
             <Grid.RowDefinitions>
@@ -31,20 +32,21 @@
             <Button Grid.Row="2" Grid.Column="2" Name="SearchFreeDatesButton" Height="20" Width="67" Content="Search" Margin="10 0" HorizontalAlignment="Left" Click="SearchFreeDates"/>
             <Button Grid.Row="2" Grid.Column="2" Name="ReserveAccommodationButton" Height="20" Width="67" Content="Reserve" Margin="10 0" HorizontalAlignment="Right" Click="ReserveAccommodationClick"/>
 
-
+            <Label Grid.Row="3" Grid.Column="0" Name="AlternativeDates" Content="Alternative dates:" Visibility="Hidden"/>
             <DataGrid x:Name="accommodationData"
                           ItemsSource="{Binding FreeDates,
                                         Mode=OneWay,
                                         UpdateSourceTrigger=PropertyChanged}"
-                          SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
+                          SelectedItem="{Binding SelectedDates, UpdateSourceTrigger=PropertyChanged}"
+                           Height="200" VerticalAlignment="Bottom"
                            Grid.Row="3" Grid.ColumnSpan="3"
                            IsReadOnly="True"
                            SelectionMode="Single"
                            CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
                            ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Start date" Binding="{Binding StartDate}" CanUserResize="False"  Width="290"/>
-                    <DataGridTextColumn Header="End date" Binding="{Binding EndDate}" CanUserResize="False" Width="290*"/>
+                    <DataGridTextColumn Header="Start date" Binding="{Binding StartDate, Converter={cvt:DateTimeToDateOnlyConverter}}" CanUserResize="False" Width="290"/>
+                    <DataGridTextColumn Header="End date" Binding="{Binding EndDate, Converter={cvt:DateTimeToDateOnlyConverter}}" CanUserResize="False" Width="290*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
