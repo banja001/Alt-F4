@@ -26,7 +26,7 @@ namespace booking.View
     {
         public static ObservableCollection<AccommodationLocationDTO> AccommodationDTOs { get; set; }
 
-        public AccommodationLocationDTO SelectedAccommodation { get; set; }
+        public static AccommodationLocationDTO SelectedAccommodation { get; set; }
 
         public SearchedAccomodationDTO SearchedAccommodation { get; set; }
 
@@ -44,16 +44,36 @@ namespace booking.View
 
             SearchedAccommodation = new SearchedAccomodationDTO();
 
-            AccommodationDTOs = _accomodationRepository.getAll(_accomodationRepository.FindAll(), _locationRepository);
+            AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
 
             CheckBoxApartment.IsChecked = true;
             CheckBoxCabin.IsChecked = true;
             CheckBoxHouse.IsChecked = true;
         }
 
+        public ObservableCollection<AccommodationLocationDTO> CreateAccomodationDTOs(List<Accommodation> accommodations)
+        {
+            List<Location> locations = _locationRepository.GetAll();
+            ObservableCollection<AccommodationLocationDTO> accommodationLocations = new ObservableCollection<AccommodationLocationDTO>();
+            AccommodationLocationDTO accommodationLocation;
+
+            foreach (Accommodation accommodation in accommodations)
+            {
+                string locationCity = locations.Find(u => u.Id == accommodation.LocationId).City;
+                string locationCountry = locations.Find(u => u.Id == accommodation.LocationId).State;
+
+                accommodationLocation = new AccommodationLocationDTO(accommodation.Id, accommodation.Name, locationCity + "," + locationCountry,
+                    accommodation.Type, accommodation.MaxCapacity, accommodation.MinDaysToUse, accommodation.MinDaysToCancel);
+
+                accommodationLocations.Add(accommodationLocation);
+            }
+
+            return accommodationLocations;
+        }
+
         private void SearchAccommodations(object sender, RoutedEventArgs e)
         {
-            SearchedAccommodation.Type.Clear(); //so that previous values dont stay saved in the list
+            SearchedAccommodation.Type.Clear(); 
             if (CheckBoxApartment.IsChecked == true)
                 SearchedAccommodation.Type.Add("Apartment");
             if (CheckBoxCabin.IsChecked == true)
@@ -64,7 +84,7 @@ namespace booking.View
             SearchedAccommodation.City = (SearchedAccommodation.City == null) ? "" : SearchedAccommodation.City;
             SearchedAccommodation.Country = (SearchedAccommodation.Country == null) ? "" : SearchedAccommodation.Country;
 
-            List<AccommodationLocationDTO> accommodationList = _accomodationRepository.getAll(_accomodationRepository.FindAll(), _locationRepository).ToList();
+            List<AccommodationLocationDTO> accommodationList = CreateAccomodationDTOs(_accomodationRepository.GetAll()).ToList();
 
             AccommodationDTOs.Clear();
 
@@ -98,6 +118,20 @@ namespace booking.View
             ImagesOverview imagesOverview = new ImagesOverview(SelectedAccommodation);
             imagesOverview.Owner = this;
             imagesOverview.Show();
+        }
+
+        private void ReserveAccommodations(object sender, RoutedEventArgs e)
+        {
+            if (SelectedAccommodation != null)
+            {
+                ReserveAccommodation reserveAccommodation = new ReserveAccommodation();
+                reserveAccommodation.Owner = this;
+                reserveAccommodation.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("You have to select an accommodation you wish to reserve", "Warning");
+            }
         }
     }
 }

@@ -46,10 +46,10 @@
                 <Label Content="Available space:" Grid.Column="0" Grid.Row="6" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,5"/>
                 <TextBox IsEnabled="False" Text="{Binding AvailableSpace, Mode=TwoWay}" Grid.Column="1" Grid.Row="6" IsReadOnly="False" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,10"/>
                 <Label Content="Number of guests:" Grid.Column="0" Grid.Row="7" FontSize="12" FontWeight="Normal" Margin="30, 20, 20, 0"/>
-                <TextBox x:Name="GuestNumberInput" Text="{Binding NumberOfGuests, Mode=TwoWay}" Grid.Column="1" Grid.Row="7" IsReadOnly="False" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,10" TextChanged="GuestNumberInput_TextChanged"/>
+                <TextBox x:Name="GuestNumberInput" Text="{Binding NumberOfGuests, Mode=TwoWay}" Grid.Column="1" Grid.Row="7" IsReadOnly="False" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,10" TextChanged="GuestNumberInputTextChanged"/>
             </Grid>
         </GroupBox>
-        <Button x:Name="ConfirmBookingButton" Grid.Row="1" Grid.Column="0" Content="Confirm" FontWeight="DemiBold" Margin="60, 15, 40, 25" Background="#FF4C7CE6" Foreground="White" Click="ConfirmBookingButton_Click"/>
-        <Button x:Name="CancelBookingButton" Grid.Row="1" Grid.Column="1" Content="Cancel" FontWeight="DemiBold" Margin="40, 15, 60, 25" Click="CancelBookingButton_Click"/>
+        <Button x:Name="ConfirmBookingButton" Grid.Row="1" Grid.Column="0" Content="Confirm" FontWeight="DemiBold" Margin="60, 15, 40, 25" Background="#FF4C7CE6" Foreground="White" Click="ConfirmBookingButtonClick"/>
+        <Button x:Name="CancelBookingButton" Grid.Row="1" Grid.Column="1" Content="Cancel" FontWeight="DemiBold" Margin="40, 15, 60, 25" Click="CancelBookingButtonClick"/>
     </Grid>
 </Window>

@@ -12,33 +12,32 @@ namespace booking.Model
     public class ReservedDates : ISerializable
     {
         public int Id { get; set; }
-        public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public int AccommodationId { get; set; }
 
         public int UserId { get; set; }
         public int Rated { get; set; }
-        
+
+        public int NumOfGuests { get; set; }
 
         public ReservedDates() { }
 
-        public ReservedDates(int id, DateOnly startDate, DateOnly endDate, int accommodationId, int userId, int rated)
-
+        public ReservedDates(DateTime startDate, DateTime endDate, int accommodationId, int userId = -1, int rated = -1, int id = 0, int numOfGuests = 0)
         {
             Id = id;
             StartDate = startDate;
             EndDate = endDate;
             AccommodationId = accommodationId;
-
             UserId = userId;
             Rated = rated;
+            NumOfGuests = numOfGuests;
 
         }
 
         public string[] ToCSV()
         {
-
-            string[] csvValues = { Id.ToString(), StartDate.ToString("dd/MM/yyyy"), EndDate.ToString("dd/MM/yyyy"), AccommodationId.ToString(), UserId.ToString(),
+            string[] csvValues = { Id.ToString(), StartDate.ToString("dd/MM/yyyy"), EndDate.ToString("dd/MM/yyyy"), AccommodationId.ToString(), NumOfGuests.ToString(),UserId.ToString(),
             Rated.ToString()};
 
             return csvValues;
@@ -47,14 +46,12 @@ namespace booking.Model
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
-            StartDate = DateOnly.ParseExact(values[1], "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            EndDate = DateOnly.ParseExact(values[2], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            StartDate = DateTime.ParseExact(values[1], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            EndDate = DateTime.ParseExact(values[2], "dd/MM/yyyy", CultureInfo.InvariantCulture);
             AccommodationId = Convert.ToInt32(values[3]);
-
-            UserId = Convert.ToInt32(values[4]);
-            Rated = Convert.ToInt32(values[5]);
-            
-
+            NumOfGuests = Convert.ToInt32(values[4]);
+            UserId = Convert.ToInt32(values[5]);
+            Rated = Convert.ToInt32(values[6]);
         }
     }
 }

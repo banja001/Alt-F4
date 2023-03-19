@@ -56,13 +56,13 @@ namespace booking.View
             userRepository = new UserRepository();
             users = userRepository.FindAll();
             accommodationRepository = new AccommodationRepository();
-            accommodations=accommodationRepository.FindAll();
+            accommodations=accommodationRepository.GetAll();
             accommodationImageRepository = new AccommodationImageRepository();
             accommodationImages = accommodationImageRepository.FindAll();
             locationRepository = new LocationRepository();
-            locations = locationRepository.FindAll();
+            locations = locationRepository.GetAll();
             reservedDatesRepository = new ReservedDatesRepository();
-            reservedDates = reservedDatesRepository.FindAll();
+            reservedDates = reservedDatesRepository.GetAll();
             guest1RatingsRepository = new Guest1RatingsRepository();
             guest1Ratings = guest1RatingsRepository.FindAll();
             
@@ -77,8 +77,9 @@ namespace booking.View
             {
                 Guest1RatingDTO guestsToRate = new Guest1RatingDTO();
                 guestsToRate.DateId = date.Id;
-                guestsToRate.StartDate = date.StartDate;
-                guestsToRate.EndDate = date.EndDate;
+                // treba da se promeni u datetime a ne dateonly
+                //guestsToRate.StartDate = date.StartDate;
+                //guestsToRate.EndDate = date.EndDate;
                 guestsToRate.GuestName = users.Find(u => u.Id == date.UserId).Username;
                 guestsToRate.AccommodationName = accommodations.Find(u => u.Id == date.AccommodationId).Name;
                 tempList.Add(guestsToRate);
@@ -114,12 +115,12 @@ namespace booking.View
             foreach(ReservedDates reservedDate in reservedDates)
             {
                 accommodations.Find(m => m.Id == reservedDate.AccommodationId);
-                if (DateOnly.FromDateTime(DateTime.Today) >= reservedDate.EndDate && DateOnly.FromDateTime(DateTime.Today) < reservedDate.EndDate.AddDays(5) && reservedDate.Rated==-1
+                if (DateTime.Today >= reservedDate.EndDate && DateTime.Today < reservedDate.EndDate.AddDays(5) && reservedDate.Rated==-1
                     && accommodations.Find(m => m.Id == reservedDate.AccommodationId).OwnerId==OwnerId)
                 {
                     ratingDates.Add(reservedDate);
                 }
-
+                
             }
 
             return ratingDates;

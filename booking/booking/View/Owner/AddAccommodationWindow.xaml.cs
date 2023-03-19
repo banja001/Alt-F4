@@ -46,6 +46,7 @@ namespace booking.View
             
 
 
+
         }
 
         private void InitializeStateList()
@@ -107,7 +108,6 @@ namespace booking.View
             {
                 return;
             }
-
             string State = StateComboBox.Text;
             string City = CityComboBox.Text;
             int locid = ownerWindow.locations.Find(m => m.State == State && m.City==City).Id;     
