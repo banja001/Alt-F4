@@ -53,7 +53,7 @@ namespace booking.View
 
         public ObservableCollection<AccommodationLocationDTO> CreateAccomodationDTOs(List<Accommodation> accommodations)
         {
-            List<Location> locations = _locationRepository.GetAllLocations();
+            List<Location> locations = _locationRepository.GetAll();
             ObservableCollection<AccommodationLocationDTO> accommodationLocations = new ObservableCollection<AccommodationLocationDTO>();
             AccommodationLocationDTO accommodationLocation;
 

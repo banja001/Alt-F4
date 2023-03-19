@@ -45,7 +45,7 @@ namespace booking.Repository
 
             foreach (AccommodationImage image in AccommodationImages)
             {
-                if (image.AccomodationId == accommodation.Id)
+                if (image.AccommodationId == accommodation.Id)
                 {
                     accommodationImages.Add(image);
                 }

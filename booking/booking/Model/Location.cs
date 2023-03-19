@@ -19,8 +19,8 @@ namespace booking.Model
         {
             Id = id;
 
-            City = grad;
-            State = drzava;
+            City = city;
+            State = state;
 
         }
 

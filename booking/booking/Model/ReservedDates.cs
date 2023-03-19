@@ -23,7 +23,7 @@ namespace booking.Model
 
         public ReservedDates() { }
 
-        public ReservedDates(DateTime startDate, DateTime endDate, int accommodationId, int userId, int rated, int id = 0, int numOfGuests = 0)
+        public ReservedDates(DateTime startDate, DateTime endDate, int accommodationId, int userId = -1, int rated = -1, int id = 0, int numOfGuests = 0)
         {
             Id = id;
             StartDate = startDate;

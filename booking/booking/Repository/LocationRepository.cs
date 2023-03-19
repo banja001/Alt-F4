@@ -24,7 +24,7 @@ namespace booking.Repository
             Locations = Serializer.FromCSV(fileName);
         }
 
-        public List<Location> FindAll()
+        public List<Location> GetAll()
 
         {
             return Locations;

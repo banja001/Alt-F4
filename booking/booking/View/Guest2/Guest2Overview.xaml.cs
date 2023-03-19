@@ -56,7 +56,7 @@ namespace booking.View.Guest2
         }
         private void FillStateComboBox()
         {
-            List<Location> locations = _locationRepository.GetAllLocations();
+            List<Location> locations = _locationRepository.GetAll();
             foreach(Location location in locations)
             {
                 String state = location.State;
@@ -67,7 +67,7 @@ namespace booking.View.Guest2
 
         public List<TourLocationDTO> CreateTourDTOs()
         { 
-            List<Location> locations = _locationRepository.GetAllLocations();
+            List<Location> locations = _locationRepository.GetAll();
             List<TourImage> tourImages = _tourImageRepository.findAll();
             List<TourLocationDTO> localTourLocationDTOs = new List<TourLocationDTO>();
             foreach (Tour tour in _tourRepository.FindAll())
@@ -165,7 +165,7 @@ namespace booking.View.Guest2
             if (StateComboBox.SelectedIndex != -1)
             {
                 CityComboBox.IsEnabled = true;
-                List<Location> locations = _locationRepository.GetAllLocations();
+                List<Location> locations = _locationRepository.GetAll();
                 List<string> cities = new List<string>();
                 foreach (Location location in locations)
                 {
