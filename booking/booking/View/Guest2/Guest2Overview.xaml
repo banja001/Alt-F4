@@ -4,17 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.View.Guest2"
+        xmlns:cvt="clr-namespace:booking.Converter"
         mc:Ignorable="d"
-        Title="Guest Window" Height="480" Width="900">
+        Title="Guest Window" Height="500" Width="900">
     <Grid Margin="0, 0, 0, 0" Height="480" Width="890">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" Margin="0, 0, 0, 0">
-            <Button x:Name="bookTourButton" Content="Book a tour" Margin="10, 45, 10, 10" Height="40" FontWeight="SemiBold" FontSize="15" Click="BookTourButtonClick"></Button>
+        <StackPanel Grid.Column="0">
+            <Button x:Name="bookTourButton" Foreground="White" Background="#FF4C7CE6" Content="Book a tour" Margin="10, 35, 10, 10" Height="40" FontWeight="SemiBold" FontSize="15" Click="BookTourButtonClick"></Button>
+            <StackPanel Orientation="Horizontal" Margin="0,320">
+                <Button x:Name="logOutButton" FontSize="14" FontWeight="SemiBold" Content="Log out" Width="70" Height="30" Margin="10,0,5,10" Click="LogOutButtonClick"/>
+                <Button x:Name="exitButton" FontSize="14" FontWeight="SemiBold" Content="Exit" Width="70" Height="30" Margin="5,0,10,10" Click="ExitButtonClick"/>
+            </StackPanel>
         </StackPanel>
-        <GroupBox x:Name ="welcome" BorderThickness="2" BorderBrush="#FF65696D" FontSize="18" FontWeight="SemiBold" Grid.Column="1" Margin="0,30,10,50">
+        <GroupBox x:Name ="welcome" BorderThickness="2" BorderBrush="#FF65696D" FontSize="18" FontWeight="SemiBold" Grid.Column="1" Margin="0,20,10,20">
             <Grid Margin="0,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -33,7 +38,7 @@
                         <DataGridTextColumn Header="Name"  Width="1*" Binding="{Binding Name}" />
                         <DataGridTextColumn Header="Language" Width="1*" Binding="{Binding Language}"/>
                         <DataGridTextColumn Header="Max guest count" Width="1.3*" Binding="{Binding MaxGuests}"/>
-                        <DataGridTextColumn Header="Start time" Width="1*" Binding="{Binding StartTime}"/>
+                        <DataGridTextColumn Header="Start time" Width="1*" Binding="{Binding StartTime, Converter={cvt:DateTimeToDateOnlyConverter}}"/>
                         <DataGridTextColumn Header="Duration(h)" Width="0.8*" Binding="{Binding Duration}"/>
                         <DataGridTextColumn Header="Location" Width="1*" Binding="{Binding Location}"/>
                         <DataGridTemplateColumn Header="More details" Width="1.1*">

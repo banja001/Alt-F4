@@ -253,8 +253,11 @@ namespace booking.View.Guest2
         }
 
         public void FilterByPeopleCount(int peopleCount)
-        {
-            List<TourLocationDTO> localDTOs = TourLocationDTOs.Where(t => t.MaxGuests - _reservationTourRepository.GetNumberOfGuestsForTourId(t.Id) >= peopleCount).ToList();
+        {   // U slucaju da je korisnik hteo da pregleda ture na osnovu slobodnog mesta:
+            // List<TourLocationDTO> localDTOs = TourLocationDTOs.Where(t => t.MaxGuests - _reservationTourRepository.GetNumberOfGuestsForTourId(t.Id) >= peopleCount).ToList();
+            
+            // Pregled tura na osnovu maksimalnog kapaciteta ture:
+            List<TourLocationDTO> localDTOs = TourLocationDTOs.Where(t => t.MaxGuests >= peopleCount).ToList();
             TourLocationDTOs = new ObservableCollection<TourLocationDTO>(localDTOs);
             
         }
@@ -284,6 +287,17 @@ namespace booking.View.Guest2
         {
             List<TourLocationDTO> localDTOs = TourLocationDTOs.Where(t => t.Duration <= duration).ToList();
             TourLocationDTOs = new ObservableCollection<TourLocationDTO>(localDTOs);
+        }
+        private void LogOutButtonClick(object sender, RoutedEventArgs e)
+        {
+            SignInForm signInForm = new SignInForm();
+            signInForm.Show();
+            this.Close();
+        }
+
+        private void ExitButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

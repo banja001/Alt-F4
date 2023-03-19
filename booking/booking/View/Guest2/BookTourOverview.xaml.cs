@@ -45,9 +45,7 @@ namespace booking.View.Guest2
         }
 
         private void CancelBookingButtonClick(object sender, RoutedEventArgs e)
-        {
-            Guest2Overview parentWindow = new Guest2Overview(CurrentUser);
-            parentWindow.Show();    
+        {  
             this.Close();
         }
 
@@ -100,6 +98,12 @@ namespace booking.View.Guest2
             {
                 this.ConfirmBookingButton.IsEnabled = true;
             }
+        }
+
+        private void BookTourOverviewClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Guest2Overview parentWindow = new Guest2Overview(CurrentUser);
+            parentWindow.Show();
         }
     }
 }
