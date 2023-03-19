@@ -13,7 +13,12 @@ namespace booking.Repository
         private List<ReservedDates> reservedDates;
         private Serializer<ReservedDates> serializer;
 
-        private readonly string fileName = "../../../Resources/Data/reservedDates.csv";
+
+        public readonly string fileName = "../../../Resources/Data/reservedDates.csv";
+
+
+        
+
 
         public ReservedDatesRepository()
         {
@@ -21,9 +26,21 @@ namespace booking.Repository
             reservedDates = serializer.FromCSV(fileName);
         }
 
-        public List<ReservedDates> findAll()
+        public List<ReservedDates> FindAll()
         {
             return reservedDates;
         }
+
+        public void UpdateRating(int id)
+        {
+            ReservedDates r=reservedDates.Find(u => u.Id == id);
+            reservedDates.Remove(r);
+            r.Rated = 1;
+            reservedDates.Add(r);
+            serializer.ToCSV(fileName, reservedDates);
+        }
+
+        
+
     }
 }
