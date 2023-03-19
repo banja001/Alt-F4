@@ -21,9 +21,9 @@ namespace booking.View.Guest2
     public partial class MoreDetailsOverview : Window
     {
         private List<TourImage> TourImages;
+
         private int currentImageIndex;
         private String Description { get; set; }
-        private String ImageUrl { get; set; }
         public MoreDetailsOverview(Guest2Overview guest2Overview)
         {
             InitializeComponent();
@@ -32,7 +32,7 @@ namespace booking.View.Guest2
             showInitalDetails(guest2Overview);
         }
 
-        private void SwipeLeftButton_Click(object sender, RoutedEventArgs e)
+        private void SwipeLeftButtonClick(object sender, RoutedEventArgs e)
         {
             if (currentImageIndex == 0)
             {
@@ -47,7 +47,7 @@ namespace booking.View.Guest2
 
         }
 
-        private void SwipeRightButton_Click(object sender, RoutedEventArgs e)
+        private void SwipeRightButtonClick(object sender, RoutedEventArgs e)
         {
             if (currentImageIndex == TourImages.Count - 1)
             {

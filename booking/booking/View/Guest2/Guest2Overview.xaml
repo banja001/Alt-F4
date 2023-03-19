@@ -12,7 +12,7 @@
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" Margin="0, 0, 0, 0">
-            <Button x:Name="bookTourButton" Content="Book a tour" Margin="10, 45, 10, 10" Height="40" FontWeight="SemiBold" FontSize="15" Click="BookTourButton_Click"></Button>
+            <Button x:Name="bookTourButton" Content="Book a tour" Margin="10, 45, 10, 10" Height="40" FontWeight="SemiBold" FontSize="15" Click="BookTourButtonClick"></Button>
         </StackPanel>
         <GroupBox x:Name ="welcome" BorderThickness="2" BorderBrush="#FF65696D" FontSize="18" FontWeight="SemiBold" Grid.Column="1" Margin="0,30,10,50">
             <Grid Margin="0,0,0,0">
@@ -21,11 +21,12 @@
                     <RowDefinition Height="4*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Row="0">
-                    <TextBox x:Name="peopleCount" BorderBrush="#FF65696D" Foreground="LightGray" Margin="15, 5, 5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="People count" LostFocus="PeopleCount_LostFocus" GotFocus="PeopleCount_GotFocus"></TextBox>
-                    <TextBox x:Name="language" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="Language" GotFocus="Language_GotFocus" LostFocus="Language_LostFocus"></TextBox>
-                    <TextBox x:Name="location" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="Location" LostFocus="Location_LostFocus" GotFocus="Location_GotFocus"></TextBox>
-                    <TextBox x:Name="timeSpan" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="100" Height="25" FontSize="14" FontWeight="Normal" Text="Time span" GotFocus="TimeSpan_GotFocus" LostFocus="TimeSpan_LostFocus"></TextBox>
-                    <Button x:Name="search" Foreground="White" Content="Search" Width="125" Height="25" Margin="50, 5, 5, 5" FontSize="16" FontWeight="SemiBold" Background="#FF4C7CE6"></Button>
+                    <TextBox x:Name="PeopleCount" BorderBrush="#FF65696D" Foreground="LightGray" Margin="15, 5, 5, 5" Width="80" Height="20" FontSize="12" FontWeight="Normal" Text="People count" LostFocus="PeopleCountLostFocus" GotFocus="PeopleCountGotFocus"></TextBox>
+                    <TextBox x:Name="Language" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="80" Height="20" FontSize="12" FontWeight="Normal" Text="Language" GotFocus="LanguageGotFocus" LostFocus="LanguageLostFocus"></TextBox>
+                    <ComboBox x:Name="StateComboBox" SelectedItem="{Binding SelectedState, Mode=TwoWay}" ItemsSource="{Binding States, Mode=OneWay}" BorderBrush="#FF65696D" Margin="5, 5" Width="80" Height="20" FontSize="12" FontWeight="Normal" SelectionChanged="StateComboBoxSelectionChanged"/>
+                    <ComboBox x:Name="CityComboBox" SelectedItem="{Binding SelectedCity, Mode=TwoWay}" IsEnabled="false" BorderBrush="#FF65696D" Margin="5, 5" Width="80" Height="20" FontSize="12" FontWeight="Normal"/>
+                    <TextBox x:Name="Duration" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="80" Height="20" FontSize="12" FontWeight="Normal" Text="Duration(h)" GotFocus="DurationGotFocus" LostFocus="DurationLostFocus"></TextBox>
+                    <Button x:Name="Search" Foreground="White" Padding="0, -1, 0, 3" Content="Search" Width="125" Height="20" Margin="90, 5, 15, 5" FontSize="14" FontWeight="SemiBold" Background="#FF4C7CE6" Click="SearchButtonClick"></Button>
                 </StackPanel>
                 <DataGrid x:Name="tourSelectionTable" SelectedItem="{Binding SelectedTour}" ItemsSource="{Binding TourLocationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged }" FontSize="12" FontWeight="Normal" Grid.Row="1" BorderBrush="#FF65696D" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True" >
                     <DataGrid.Columns>
@@ -38,7 +39,7 @@
                         <DataGridTemplateColumn Header="More details" Width="1.1*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Margin="5" x:Name="MoreDetailsButton" Click="MoreDetailsButton_Click">Details</Button>
+                                    <Button Margin="5" x:Name="MoreDetailsButton" Click="MoreDetailsButtonClick">Details</Button>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
