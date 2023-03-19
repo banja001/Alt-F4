@@ -24,6 +24,10 @@ namespace booking.Repository
         {
             return appointments;
         }
+        public void Save(List<Appointment> appointmentsForSave)
+        {
+            serializer.ToCSV(fileName, appointmentsForSave);
+        }
         public void Add(Appointment appointment)
         {
             appointments.Add(appointment);
@@ -32,7 +36,13 @@ namespace booking.Repository
 
         public int MakeID()
         {
-            return appointments[appointments.Count - 1].Id + 1;
+            if(appointments.Count!=0)
+                return appointments[appointments.Count - 1].Id + 1;
+            return 1;
+        }
+        public int FindLast()
+        {
+            return 1;
         }
     }
 }

@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace booking.Repository
 {
@@ -33,6 +35,21 @@ namespace booking.Repository
         {
             attendance.Add(tourAttendance);
             serializer.ToCSV(fileName, attendance);
+        }
+        public TourAttendance GetById(int index) 
+        {
+            foreach (TourAttendance ta in attendance)
+            {
+                if(ta.Id == index)
+                    return ta;
+            }
+            return null;
+        }
+        public int MakeID()
+        {
+            if(attendance.Count>0)
+                return attendance[attendance.Count - 1].Id + 1;
+            return 1;
         }
     }
 }

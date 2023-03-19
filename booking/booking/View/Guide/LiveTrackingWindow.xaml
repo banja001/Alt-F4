@@ -26,11 +26,11 @@
                 <DataGridTextColumn Header="Language" Binding="{Binding Language}"  Width="75"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Start tour" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="100" Height="30" Grid.Row="2" Margin="0,10,0,0" Click="StartTour"/>
+        <Button Content="Start tour" Name="StartTourB" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="100" Height="30" Grid.Row="2" Margin="0,10,0,0" Click="StartTour"/>
         <Button Content="Exit" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="30" Grid.Row="2" Grid.Column="1" Margin="0,89,0,0" Click="Exit"/>
-        <Button Content="Cancel tour" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="30" Grid.Row="2" Grid.Column="0" Margin="0,90,0,0" Click="CancelTour"/>
+        <Button Content="Cancel tour" Name="CancelTourB" HorizontalAlignment="Center" IsEnabled="False" VerticalAlignment="Top" Width="100" Height="30" Grid.Row="2" Grid.Column="0" Margin="0,90,0,0" Click="CancelTour"/>
     
-        <ListBox Name="CheckPointsLB" ItemsSource="{Binding CheckPoints}" Margin="20" Grid.Row="1" Grid.Column="0" SelectionChanged="CheckPointsLB_SelectionChanged" >
+        <ListBox Name="CheckPointsLB" ItemsSource="{Binding AppointmentCheckPoints}" Grid.Row="1" Grid.Column="0" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -42,9 +42,10 @@
         </ListBox>
         <DataGrid Name="GuestsDG" ItemsSource="{Binding GuestsOnTour}" Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,2,0" Width="400" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding User.Username}" CanUserResize="False" Width="75"/>
-                <DataGridTextColumn Header="Number Of Guests" Binding="{Binding NumberOfGuests}" CanUserResize="False"  Width="75"/>
-                <DataGridTextColumn Header="Check point" Binding="{Binding StartedCheckPoint.Id}" CanUserResize="False"  Width="75"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Guest.User.Username}" CanUserResize="False" Width="75"/>
+                <DataGridTextColumn Header="Number Of Guests" Binding="{Binding Guest.NumberOfGuests}" CanUserResize="False"  Width="75"/>
+                <DataGridTextColumn Header="Check point" Binding="{Binding StartedCheckPoint.Name}" CanUserResize="False"  Width="75"/>
+                <DataGridCheckBoxColumn Header="Attend" Binding="{Binding Appeared}" CanUserResize="False"  Width="75"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

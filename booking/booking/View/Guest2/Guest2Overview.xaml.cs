@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using booking.DTO;
 using booking.Model;
 using booking.Repository;
+using booking.View.Guide;
 
 namespace booking.View.Guest2
 {
@@ -28,9 +29,13 @@ namespace booking.View.Guest2
         private readonly TourRepository _tourRepository;
         private readonly TourImageRepository _tourImageRepository;
         private readonly ReservationTourRepository _reservationTourRepository;
+        private readonly AnswerRepository _answerRepository;
+        private readonly TourAttendanceRepository _tourAttendanceRepository;
+        private readonly AppointmentCheckPointRepository _appointmentCheckPointRepository;
         public ObservableCollection<TourLocationDTO> TourLocationDTOs { get; set; }
         public TourLocationDTO SelectedTour { get; set; }
-        public User currentUser { get; set; }   
+        public User currentUser { get; set; }  
+        public Answer Answer { get; set; }
         public Guest2Overview(User user)
         {
             InitializeComponent();
@@ -38,14 +43,16 @@ namespace booking.View.Guest2
             _locationRepository = new LocationRepository();
             _tourRepository = new TourRepository();
             _tourImageRepository = new TourImageRepository();
+            _answerRepository = new AnswerRepository();
             _reservationTourRepository = new ReservationTourRepository();
+            _tourAttendanceRepository= new TourAttendanceRepository();
+            _appointmentCheckPointRepository = new AppointmentCheckPointRepository();
             TourLocationDTOs = new ObservableCollection<TourLocationDTO>(); 
             currentUser = user;
             CreateTourDTOs();
             UpdateTable();
-           
             welcome.Header = "Welcome " + currentUser.Username.ToString();
-
+            FindAnswer();
         }
 
         public void CreateTourDTOs()
@@ -150,10 +157,25 @@ namespace booking.View.Guest2
                 }
             }
         }
-
-        private void Search_Click(object sender, RoutedEventArgs e)
+        public void FindAnswer()
         {
+            foreach (Answer a in _answerRepository.FindAll())
+            {
+                int userIdInAnswer = _reservationTourRepository.GetById(_tourAttendanceRepository.GetById(a.User.Id).Guest.Id).User.Id;
 
+                if (userIdInAnswer == currentUser.Id)
+                {
+
+                    AppointmentCheckPoint currentCheckPoint = _appointmentCheckPointRepository.FindAll().Find(chepo => chepo.Id == a.AppointmentCheckPoint.Id);
+                   if(a.HaveToAnswer)
+                       if( MessageBox.Show("Are you on check point " + currentCheckPoint.Name + "?","Confirmation",MessageBoxButton.YesNo)==MessageBoxResult.Yes )
+                       {
+                            a.HaveToAnswer = false;
+                            a.AppointmentCheckPoint= currentCheckPoint;
+                            _answerRepository.SaveOneInFile(a);
+                       }
+                }
+            }
         }
     }
 }

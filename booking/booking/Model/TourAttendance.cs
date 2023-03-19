@@ -10,43 +10,37 @@ namespace booking.Model
     public class TourAttendance:ISerializable
     {
         public int Id { get; set; }
-        public Tour Tour { get; set; }
-        public User User { get; set; }
-        public int NumberOfGuests { get; set; }
-        public CheckPoint StartedCheckPoint { get; set; }
-
+        public ReservationTour Guest { get; set; }
+        public AppointmentCheckPoint StartedCheckPoint { get; set; }
+        public bool Appeared { get; set; }
 
         public TourAttendance()
         {
-            this.User = new User();
-            this.Tour = new Tour();
-            this.StartedCheckPoint = new CheckPoint();
+            this.Guest = new ReservationTour();
+            this.StartedCheckPoint = new AppointmentCheckPoint();
         }
 
-        public TourAttendance(int id, int tourId, int userId, int numberOfGuests,int checkPointId)
+        public TourAttendance(int id, int guestId, int checkPointId, bool appeared)
         {
-            this.User = new User();
-            this.Tour = new Tour();
-            this.StartedCheckPoint = new CheckPoint();
+            this.StartedCheckPoint = new AppointmentCheckPoint();
+            this.Guest = new ReservationTour();
             this.Id = id;
-            this.Tour.Id = tourId;
-            this.User.Id = userId;
-            this.NumberOfGuests = numberOfGuests;
+            this.Guest.Id= guestId;
             this.StartedCheckPoint.Id = checkPointId;
+            this.Appeared = appeared;
         }
 
         public void FromCSV(string[] values)
         {
             this.Id = int.Parse(values[0]);
-            this.Tour.Id = int.Parse(values[1]);
-            this.User.Id = int.Parse(values[2]);
-            this.NumberOfGuests = int.Parse(values[3]);
-            this.StartedCheckPoint.Id = int.Parse(values[4]);
+            this.Guest.Id= int.Parse(values[1]);
+            this.StartedCheckPoint.Id = int.Parse(values[2]);
+            this.Appeared = bool.Parse(values[3]);
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Tour.Id.ToString(), User.Id.ToString(), NumberOfGuests.ToString(), StartedCheckPoint.Id.ToString() };
+            string[] csvValues = { Id.ToString(), Guest.Id.ToString(), StartedCheckPoint.Id.ToString(),Appeared.ToString() };
             return csvValues;
         }
     }

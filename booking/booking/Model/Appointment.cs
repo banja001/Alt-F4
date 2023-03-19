@@ -8,30 +8,38 @@ using System.Threading.Tasks;
 
 namespace booking.Model
 {
-    internal class Appointment: ISerializable
+    public class Appointment: ISerializable
     {
         public int Id { get; set; }
         public DateAndTime Start { get; set; }
         public DateAndTime End { get; set;}
         public Tour Tour { get; set; }
         public User Guide { get; set; }
+        public bool Active { get; set; }
 
-        public Appointment(int id, DateAndTime start, DateAndTime end)
+        public Appointment(int id, DateAndTime start, DateAndTime end, int tourId, int guideId, bool active)
         {
+            Tour = new Tour();
+            Guide = new User();
             Id = id;
             Start = start;
             End = end;
+            Tour.Id = tourId;
+            Guide.Id = guideId;
+            Active = active;
         }
 
         public Appointment()
         {
             Tour = new Tour();
             Guide = new User();
+            Start = new DateAndTime();
+            End=new DateAndTime();
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Start.ToString(), End.ToString(), Tour.Id.ToString(), Guide.Id.ToString() };
+            string[] csvValues = { Id.ToString(), Start.ToString(), End.ToString(), Tour.Id.ToString(), Guide.Id.ToString(), Active.ToString() };
             return csvValues;
         }
 
@@ -42,10 +50,11 @@ namespace booking.Model
             Start.Date = Convert.ToDateTime(dateAndTime[0], CultureInfo.GetCultureInfo("es-ES"));
             Start.Time = dateAndTime[1];
             dateAndTime = Convert.ToString(values[2]).Split(" ");
-            Start.Date = Convert.ToDateTime(dateAndTime[0], CultureInfo.GetCultureInfo("es-ES"));
-            Start.Time = dateAndTime[1];
+            End.Date = Convert.ToDateTime(dateAndTime[0], CultureInfo.GetCultureInfo("es-ES"));
+            End.Time = dateAndTime[1];
             this.Tour.Id = int.Parse(values[3]);
             this.Guide.Id= int.Parse(values[4]);
+            this.Active = bool.Parse(values[5]);
         }
         
         
