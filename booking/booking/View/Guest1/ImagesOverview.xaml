@@ -7,9 +7,19 @@
         mc:Ignorable="d"
         Title="ImagesOverview" Height="442" Width="633" WindowStartupLocation="CenterOwner">
     <Grid>
-        <Button Content="Previous" Margin="10,188,548,213" Height="20" IsEnabled="False"/>
-        <Button Content="Next" Margin="548,188,10,213" Height="20"/>
-        <Image Name="AccommodationImage" Margin="118,14,117,14"/>
-
+        <Grid Grid.Row="0" Grid.Column="0" Width="600" Height="410">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="50"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Row="0" Grid.Column="0" Name="PrevImageButton" Content="Prev" Height="20" Width="40" HorizontalAlignment="Left" Click="PrevImageButtonClick" IsEnabled="False"/>
+            <Button Grid.Row="0" Grid.Column="2" Name="NextImageButton" Content="Next" Height="20" Width="40" HorizontalAlignment="Right" Click="NextPictureClick" IsEnabled="False"/>
+            <Image Grid.Row="0" Grid.Column="1" Name="AccommodationImage"/>
+            <Label Grid.Row="0" Grid.Column="1" Name="NoImagesLabel" Height="50" HorizontalAlignment="Center"></Label>
+        </Grid>
     </Grid>
 </Window>

@@ -2,6 +2,7 @@
 using booking.Serializer;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,11 @@ namespace booking.Repository
         public void Add(CheckPoint checkPoint)
         {
             checkPoints.Add(checkPoint);
+            serializer.ToCSV(fileName, checkPoints);
+        }
+        public void AddRange(List<CheckPoint> checkPointsFromListBox)
+        {
+            checkPoints.AddRange(checkPointsFromListBox);
             serializer.ToCSV(fileName, checkPoints);
         }
 

@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace booking.View.Guest1
 {
@@ -25,8 +26,9 @@ namespace booking.View.Guest1
         AccommodationLocationDTO accommodation;
 
         private readonly AccommodationImageRepository _repository;
-        private List<AccommodationImage> images;
         public List<AccommodationImage> AccommodationImages { get; set; }
+
+        private int activeImageIndx;
 
         public ImagesOverview()
         {
@@ -42,32 +44,64 @@ namespace booking.View.Guest1
 
             _repository = new AccommodationImageRepository();
 
-            images = _repository.GetAllImages();
-            AccommodationImages = new List<AccommodationImage>();
+            AccommodationImages = _repository.GetAccommodationImages(accommodation);
 
-            GetAccommodationImages();
             ShowImage();
         }
 
-        public void GetAccommodationImages()
+        public void SetImageSource(string url)
         {
-            foreach(AccommodationImage image in images)
-            {
-                if(image.AccomodationId == accommodation.Id)
-                {
-                    AccommodationImages.Add(image);
-                }
-            }
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri(@url, UriKind.Absolute);
+            bitmapImage.EndInit();
+            AccommodationImage.Source = bitmapImage;
         }
 
         public void ShowImage()
         {
-            BitmapImage bitmapImage = new BitmapImage();
-            bitmapImage.BeginInit();
-            bitmapImage.UriSource = new Uri(AccommodationImages[0].Url, UriKind.Relative);
-            bitmapImage.EndInit();
+            if (AccommodationImages.Count == 0)
+            {
+                NoImagesLabel.Content = "No images for display";
+                return;
+            }
 
-            AccommodationImage.Source = bitmapImage;
+            activeImageIndx = 0;
+            SetImageSource(AccommodationImages[activeImageIndx].Url);
+            CheckIndexScope();
+        }
+
+        public void NextPictureClick(object sender, RoutedEventArgs e)
+        {
+            SetImageSource(AccommodationImages[++activeImageIndx].Url);
+            CheckIndexScope();
+        }
+
+        private void PrevImageButtonClick(object sender, RoutedEventArgs e)
+        {
+            SetImageSource(AccommodationImages[--activeImageIndx].Url);
+            CheckIndexScope();
+        }
+
+        public void CheckIndexScope()
+        {
+            if(activeImageIndx + 1 == AccommodationImages.Count)
+            {
+                NextImageButton.IsEnabled = false;
+            }
+            else
+            {
+                NextImageButton.IsEnabled = true;
+            }
+
+            if(activeImageIndx == 0)
+            {
+                PrevImageButton.IsEnabled = false;
+            }
+            else
+            {
+                PrevImageButton.IsEnabled = true;
+            }
         }
     }
 }
