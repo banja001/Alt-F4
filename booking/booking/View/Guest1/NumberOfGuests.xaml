@@ -18,7 +18,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Row="0" Grid.Column="0" Name="NumOfGuestsLabel" Content="Number of guests" VerticalAlignment="Center" HorizontalAlignment="Center" Height="26" Width="104"/>
-            <TextBox Grid.Column="1" Name="NumOfGuestsTextBox" Text="{Binding Path=GuestsNumber, UpdateSourceTrigger=PropertyChanged}" Height="20" Width="200" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBox Grid.Column="1" Name="NumOfGuestsTextBox" Text="{Binding Path=GuestsNumber, UpdateSourceTrigger=PropertyChanged}" Height="20" Width="200" VerticalAlignment="Center" HorizontalAlignment="Center" TextChanged="NumOfGuestsTextChanged"/>
             <Button Grid.Row="0" Grid.Column="2" Name="ReserveButton" Content="Reserve" Height="20" Width="67" Click="ReserveButtonClick"/>
         </Grid>
     </Grid>

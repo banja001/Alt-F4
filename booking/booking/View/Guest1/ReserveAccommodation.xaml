@@ -7,6 +7,15 @@
         xmlns:local="clr-namespace:booking.View.Guest1"
         mc:Ignorable="d"
         Title="ReserveAccommodation" Height="430" Width="600" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <StackPanel>
+                <!-- Placeholder for the TextBox itself -->
+                <AdornedElementPlaceholder x:Name="textBox" />
+                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" />
+            </StackPanel>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid>
         <Grid Grid.Row="0" Grid.Column="0" Width="580" Height="380">
             <Grid.RowDefinitions>
@@ -25,9 +34,12 @@
             <Label Grid.Row="1" Grid.Column="0" Content="End date" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             <Label Grid.Row="2" Grid.Column="0" Content="Number of days" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
-            <DatePicker Grid.Row="0" SelectedDate="{Binding Path=NewDate.StartDate, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center"></DatePicker>
-            <DatePicker Grid.Row="1" SelectedDate="{Binding Path=NewDate.EndDate, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center"></DatePicker>
-            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding NumOfDays, UpdateSourceTrigger=PropertyChanged}" Height="30" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBox>
+            <DatePicker Grid.Row="0" SelectedDate="{Binding Path=NewDate.StartDate, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" 
+                        Height="30" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" SelectedDateChanged="SelectedDateChanged"></DatePicker>
+            <DatePicker Grid.Row="1" SelectedDate="{Binding Path=NewDate.EndDate, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" 
+                        Height="30" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" SelectedDateChanged="SelectedDateChanged"></DatePicker>
+            <TextBox Grid.Row="2" Grid.Column="1" Name="NumOfDaysTextBox" Text="{Binding NumOfDays, UpdateSourceTrigger=PropertyChanged}" 
+                      Height="30" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="NumOfDaysTextChanged"></TextBox>
 
             <Button Grid.Row="2" Grid.Column="2" Name="SearchFreeDatesButton" Height="20" Width="67" Content="Search" Margin="10 0" HorizontalAlignment="Left" Click="SearchFreeDates"/>
             <Button Grid.Row="2" Grid.Column="2" Name="ReserveAccommodationButton" Height="20" Width="67" Content="Reserve" Margin="10 0" HorizontalAlignment="Right" Click="ReserveAccommodationClick"/>

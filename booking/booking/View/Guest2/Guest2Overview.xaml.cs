@@ -50,7 +50,7 @@ namespace booking.View.Guest2
 
         public void CreateTourDTOs()
         { 
-            List<Location> locations = _locationRepository.GetAllLocations();
+            List<Location> locations = _locationRepository.GetAll();
             List<TourImage> tourImages = _tourImageRepository.findAll();
             foreach (Tour tour in _tourRepository.FindAll())
             {

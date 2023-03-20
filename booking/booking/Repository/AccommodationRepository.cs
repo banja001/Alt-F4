@@ -17,10 +17,11 @@ namespace booking.Repository
 
         private readonly string fileName = "../../../Resources/Data/accommodation.csv";
         public AccommodationRepository() 
+
         {
             //accommodations = new List<Accommodation>();
             serializer = new Serializer<Accommodation>();
-            accommodations= serializer.FromCSV(fileName);
+            accommodations = serializer.FromCSV(fileName);
         }
 
         public List<Accommodation> GetAll()
@@ -30,9 +31,9 @@ namespace booking.Repository
 
         public void AddAccommodation(Accommodation acc)
         {
-            
+
             accommodations.Add(acc);
-            serializer.ToCSV(fileName,accommodations);
+            serializer.ToCSV(fileName, accommodations);
 
         }
 
@@ -40,5 +41,6 @@ namespace booking.Repository
         {
             return accommodations.Find(a => a.Id == id);
         }
+
     }
 }

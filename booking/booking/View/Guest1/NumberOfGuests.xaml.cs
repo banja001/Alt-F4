@@ -27,8 +27,10 @@ namespace booking.View.Guest1
 
         private ReservedDates selectedDates;
 
+        private int userId;
+
         public int GuestsNumber { get; set; }
-        public NumberOfGuests()
+        public NumberOfGuests(int id)
         {
             InitializeComponent();
             DataContext = this;
@@ -37,6 +39,8 @@ namespace booking.View.Guest1
             _accommodationRepository = new AccommodationRepository();
 
             selectedDates = ReserveAccommodation.SelectedDates;
+
+            userId = id;
         }
 
         private void ReserveButtonClick(object sender, RoutedEventArgs e)
@@ -51,11 +55,26 @@ namespace booking.View.Guest1
 
             selectedDates.Id = _datesRepository.MakeId();
             selectedDates.NumOfGuests = GuestsNumber;
+            selectedDates.UserId = userId;
             _datesRepository.Add(selectedDates);
 
             MessageBox.Show("Your reservation has been successfully made!");
 
             this.Close();
+        }
+
+        private void NumOfGuestsTextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                Int32.Parse(NumOfGuestsTextBox.Text);
+                ReserveButton.IsEnabled = true;
+            }
+            catch
+            {
+                MessageBox.Show("You have to enter a number for number of guests!");
+                ReserveButton.IsEnabled = false;
+            }
         }
     }
 }

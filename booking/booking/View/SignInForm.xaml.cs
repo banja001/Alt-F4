@@ -30,6 +30,8 @@ namespace booking.View
 
         private string _userName;
 
+        
+
         public string UserName
         {
             get => _userName;
@@ -64,15 +66,16 @@ namespace booking.View
             {
                 if(user.Password == txtPassword.Password)
                 {
+
                     if (user.Role == "Owner")
                     {
-                        OwnerWindow win=new OwnerWindow();
+                        OwnerWindow win=new OwnerWindow(user.Id);
                         win.Show();
                         this.Close();
                     }
                     else if (user.Role == "Guest1")
                     {
-                        AccomodationOverview accomodationOverview = new AccomodationOverview();
+                        AccomodationOverview accomodationOverview = new AccomodationOverview(user.Id);
                         accomodationOverview.Show();
                         this.Close();
                     }
