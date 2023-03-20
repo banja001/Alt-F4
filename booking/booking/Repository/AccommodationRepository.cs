@@ -17,43 +17,29 @@ namespace booking.Repository
 
         private readonly string fileName = "../../../Resources/Data/accommodation.csv";
         public AccommodationRepository() 
+
         {
             //accommodations = new List<Accommodation>();
             serializer = new Serializer<Accommodation>();
-            accommodations= serializer.FromCSV(fileName);
+            accommodations = serializer.FromCSV(fileName);
         }
 
-        public List<Accommodation> findAll()
+        public List<Accommodation> GetAll()
         {
             return accommodations;
         }
 
         public void AddAccommodation(Accommodation acc)
         {
-            
+
             accommodations.Add(acc);
-            serializer.ToCSV(fileName,accommodations);
+            serializer.ToCSV(fileName, accommodations);
 
         }
 
-        public ObservableCollection<AccommodationLocationDTO> getAll(List<Accommodation> accommodations, LocationRepository locationRepository)///u code behind, createAccomodationDTOs
+        public Accommodation FindById(int id)
         {
-            List<Location> locations = locationRepository.GetAllLocations();
-            ObservableCollection<AccommodationLocationDTO> accommodationLocations = new ObservableCollection<AccommodationLocationDTO>();
-            AccommodationLocationDTO accommodationLocation;
-
-            foreach (Accommodation accommodation in accommodations)
-            {
-                string locationCity = locations.Find(u => u.Id == accommodation.LocationId).City;
-                string locationCountry = locations.Find(u => u.Id == accommodation.LocationId).State;
-
-                accommodationLocation = new AccommodationLocationDTO(accommodation.Id, accommodation.Name, locationCity + "," + locationCountry,
-                    accommodation.Type, accommodation.MaxCapacity, accommodation.MinDaysToUse, accommodation.MinDaysToCancel);
-
-                accommodationLocations.Add(accommodationLocation);
-            }
-
-            return accommodationLocations;
+            return accommodations.Find(a => a.Id == id);
         }
 
     }

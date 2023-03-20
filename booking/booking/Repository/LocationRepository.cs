@@ -17,12 +17,12 @@ namespace booking.Repository
         private readonly string fileName = "../../../Resources/Data/location.csv";
         public LocationRepository()
         {
-            
+
             Serializer = new Serializer<Location>();
             Locations = Serializer.FromCSV(fileName);
         }
 
-        public List<Location> GetAllLocations()
+        public List<Location> GetAll()
         {
             return Locations;
         }

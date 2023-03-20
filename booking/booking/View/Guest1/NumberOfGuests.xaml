@@ -1,0 +1,25 @@
+﻿<Window x:Class="booking.View.Guest1.NumberOfGuests"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:booking.View.Guest1"
+        mc:Ignorable="d"
+        Title="NumberOfGuests" Height="176" Width="467" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid Grid.Row="0" Grid.Column="0" Width="460" Height="150">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="134*"></ColumnDefinition>
+                <ColumnDefinition Width="215*"></ColumnDefinition>
+                <ColumnDefinition Width="111*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Name="NumOfGuestsLabel" Content="Number of guests" VerticalAlignment="Center" HorizontalAlignment="Center" Height="26" Width="104"/>
+            <TextBox Grid.Column="1" Name="NumOfGuestsTextBox" Text="{Binding Path=GuestsNumber, UpdateSourceTrigger=PropertyChanged}" Height="20" Width="200" VerticalAlignment="Center" HorizontalAlignment="Center" TextChanged="NumOfGuestsTextChanged"/>
+            <Button Grid.Row="0" Grid.Column="2" Name="ReserveButton" Content="Reserve" Height="20" Width="67" Click="ReserveButtonClick"/>
+        </Grid>
+    </Grid>
+</Window>

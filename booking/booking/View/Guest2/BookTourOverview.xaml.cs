@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,6 +30,8 @@ namespace booking.View.Guest2
         public TourLocationDTO TourForBooking { get; set; }
         public User CurrentUser { get; set; }
 
+        private bool confirmButtonFlag;
+        
         public BookTourOverview(Guest2Overview guest2Overview, User user)
         {
             InitializeComponent();
@@ -41,15 +44,17 @@ namespace booking.View.Guest2
             AvailableSpace = TourForBooking.MaxGuests - takenSpace - NumberOfGuests;
 
             this.ConfirmBookingButton.IsEnabled = false;
+            confirmButtonFlag = false;
         }
 
-        private void CancelBookingButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void CancelBookingButtonClick(object sender, RoutedEventArgs e)
+        {  
             this.Close();
         }
 
-        private void ConfirmBookingButton_Click(object sender, RoutedEventArgs e)
+        private void ConfirmBookingButtonClick(object sender, RoutedEventArgs e)
         {
+            Guest2Overview parentWindow = new Guest2Overview(CurrentUser);
             if (CheckAvailability())
             {
                 ReservationTour reservation = new ReservationTour(_reservationTourRepository.GetNextIndex(),
@@ -57,12 +62,24 @@ namespace booking.View.Guest2
                                                                   CurrentUser.Id,
                                                                   NumberOfGuests);
                 _reservationTourRepository.Add(reservation);
-                MessageBox.Show("Rezervisali ste turu uspesno!");
+                MessageBox.Show("Tour reserved successfully!", "Success");
+
+                parentWindow.Show();
+                confirmButtonFlag = true;
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Na turi trenutno nema dovoljno mesta za sve goste!");
+                var result = MessageBox.Show("There's currently not enough space to reserve the selected tour," +
+                                             "do you want to see other options on same location?", "Error message", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    parentWindow.FilterByPeopleCount(NumberOfGuests);
+                    parentWindow.FilterByLocation(TourForBooking.Location);
+                    parentWindow.tourSelectionTable.ItemsSource = parentWindow.TourLocationDTOs;
+                    parentWindow.Show();
+                    this.Close();
+                }
             }
         }
         private bool CheckAvailability()
@@ -72,10 +89,11 @@ namespace booking.View.Guest2
             return isAvailable;
         }
 
-        private void GuestNumberInput_TextChanged(object sender, TextChangedEventArgs e)
+        private void GuestNumberInputTextChanged(object sender, TextChangedEventArgs e)
         {
+            Regex numberOfGuestsRegex = new Regex("^[1-9][0-9]*$");
             var GuestNumberInput = sender as TextBox;
-            bool isInvalid = string.IsNullOrEmpty(GuestNumberInput.Text) || GuestNumberInput.Text.Equals("0");
+            bool isInvalid = string.IsNullOrEmpty(GuestNumberInput.Text) || GuestNumberInput.Text.Equals("0") || !numberOfGuestsRegex.IsMatch(GuestNumberInput.Text);
             if (isInvalid)
             {
                 this.ConfirmBookingButton.IsEnabled = false;
@@ -83,6 +101,15 @@ namespace booking.View.Guest2
             else
             {
                 this.ConfirmBookingButton.IsEnabled = true;
+            }
+        }
+
+        private void BookTourOverviewClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if(!confirmButtonFlag)
+            {
+                Guest2Overview parentWindow = new Guest2Overview(CurrentUser);
+                parentWindow.Show();
             }
         }
     }

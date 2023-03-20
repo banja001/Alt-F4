@@ -26,7 +26,7 @@ namespace booking.View
     {
         public static ObservableCollection<AccommodationLocationDTO> AccommodationDTOs { get; set; }
 
-        public AccommodationLocationDTO SelectedAccommodation { get; set; }
+        public static AccommodationLocationDTO SelectedAccommodation { get; set; }
 
         public SearchedAccomodationDTO SearchedAccommodation { get; set; }
 
@@ -34,7 +34,14 @@ namespace booking.View
 
         private readonly LocationRepository _locationRepository;
 
-        public AccomodationOverview()
+        public string SelectedState { get; set; }
+        public string SelectedCity { get; set; }
+
+        public ObservableCollection<string> States { get; set; }
+
+        private int userId;
+
+        public AccomodationOverview(int id)
         {
             InitializeComponent();
             DataContext = this;
@@ -44,16 +51,52 @@ namespace booking.View
 
             SearchedAccommodation = new SearchedAccomodationDTO();
 
-            AccommodationDTOs = _accomodationRepository.getAll(_accomodationRepository.findAll(), _locationRepository);
+            AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
+
+            userId = id;
+
+            States = new ObservableCollection<string>();
+            FillStateComboBox();
 
             CheckBoxApartment.IsChecked = true;
             CheckBoxCabin.IsChecked = true;
             CheckBoxHouse.IsChecked = true;
         }
 
+        private void FillStateComboBox()
+        {
+            List<Location> locations = _locationRepository.GetAll();
+            foreach (Location location in locations)
+            {
+                String state = location.State;
+                if (!States.Contains(state))
+                    States.Add(state);
+            }
+        }
+
+        public ObservableCollection<AccommodationLocationDTO> CreateAccomodationDTOs(List<Accommodation> accommodations)
+        {
+            List<Location> locations = _locationRepository.GetAll();
+            ObservableCollection<AccommodationLocationDTO> accommodationLocations = new ObservableCollection<AccommodationLocationDTO>();
+            AccommodationLocationDTO accommodationLocation;
+
+            foreach (Accommodation accommodation in accommodations)
+            {
+                string locationCity = locations.Find(u => u.Id == accommodation.LocationId).City;
+                string locationCountry = locations.Find(u => u.Id == accommodation.LocationId).State;
+
+                accommodationLocation = new AccommodationLocationDTO(accommodation.Id, accommodation.Name, locationCity + "," + locationCountry,
+                    accommodation.Type, accommodation.MaxCapacity, accommodation.MinDaysToUse, accommodation.MinDaysToCancel);
+
+                accommodationLocations.Add(accommodationLocation);
+            }
+
+            return accommodationLocations;
+        }
+
         private void SearchAccommodations(object sender, RoutedEventArgs e)
         {
-            SearchedAccommodation.Type.Clear(); //so that previous values dont stay saved in the list
+            SearchedAccommodation.Type.Clear(); 
             if (CheckBoxApartment.IsChecked == true)
                 SearchedAccommodation.Type.Add("Apartment");
             if (CheckBoxCabin.IsChecked == true)
@@ -61,10 +104,13 @@ namespace booking.View
             if (CheckBoxHouse.IsChecked == true)
                 SearchedAccommodation.Type.Add("House");
 
+            SearchedAccommodation.City = CityComboBox.Text;
+            SearchedAccommodation.Country = StateComboBox.Text;
+
             SearchedAccommodation.City = (SearchedAccommodation.City == null) ? "" : SearchedAccommodation.City;
             SearchedAccommodation.Country = (SearchedAccommodation.Country == null) ? "" : SearchedAccommodation.Country;
 
-            List<AccommodationLocationDTO> accommodationList = _accomodationRepository.getAll(_accomodationRepository.findAll(), _locationRepository).ToList();
+            List<AccommodationLocationDTO> accommodationList = CreateAccomodationDTOs(_accomodationRepository.GetAll()).ToList();
 
             AccommodationDTOs.Clear();
 
@@ -98,6 +144,54 @@ namespace booking.View
             ImagesOverview imagesOverview = new ImagesOverview(SelectedAccommodation);
             imagesOverview.Owner = this;
             imagesOverview.Show();
+        }
+
+        private void ReserveAccommodations(object sender, RoutedEventArgs e)
+        {
+            if (SelectedAccommodation != null)
+            {
+                ReserveAccommodation reserveAccommodation = new ReserveAccommodation(userId);
+                reserveAccommodation.Owner = this;
+                reserveAccommodation.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("You have to select an accommodation you wish to reserve", "Warning");
+            }
+        }
+
+        private void StateSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CityComboBox.IsEnabled = true;
+            List<Location> locations = _locationRepository.GetAll();
+            List<string> cities = new List<string>();
+            foreach (Location location in locations)
+            {
+                String city = location.City;
+                bool isValid = !cities.Contains(city) && SelectedState.Equals(location.State);
+                if (isValid)
+                    cities.Add(city);
+            }
+            CityComboBox.ItemsSource = cities;
+        }
+
+        private void ChangedNumbersOf(object sender, TextChangedEventArgs e)
+        {
+            if (SearchedAccommodation.IsValid)
+            {
+                SearchAccommodationButton.IsEnabled = true;
+            }
+            else
+            {
+                SearchAccommodationButton.IsEnabled = false;
+            }
+        }
+
+        private void SeeAll(object sender, RoutedEventArgs e)
+        {
+            AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
+
+            accommodationData.ItemsSource = AccommodationDTOs;
         }
     }
 }

@@ -21,11 +21,17 @@ namespace booking.Repository
             _serializer = new Serializer<User>();
             _users = _serializer.FromCSV(FilePath);
         }
+        public List<User> FindAll()
+        {
+            return _users;
+        }
 
         public User GetByUsername(string userName)
         {
             _users = _serializer.FromCSV(FilePath);
             return _users.FirstOrDefault(u => u.Username == userName);
         }
+
+        
     }
 }

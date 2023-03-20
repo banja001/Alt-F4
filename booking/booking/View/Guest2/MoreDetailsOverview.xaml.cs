@@ -21,9 +21,9 @@ namespace booking.View.Guest2
     public partial class MoreDetailsOverview : Window
     {
         private List<TourImage> TourImages;
+
         private int currentImageIndex;
         private String Description { get; set; }
-        private String ImageUrl { get; set; }
         public MoreDetailsOverview(Guest2Overview guest2Overview)
         {
             InitializeComponent();
@@ -32,7 +32,7 @@ namespace booking.View.Guest2
             showInitalDetails(guest2Overview);
         }
 
-        private void SwipeLeftButton_Click(object sender, RoutedEventArgs e)
+        private void SwipeLeftButtonClick(object sender, RoutedEventArgs e)
         {
             if (currentImageIndex == 0)
             {
@@ -47,7 +47,7 @@ namespace booking.View.Guest2
 
         }
 
-        private void SwipeRightButton_Click(object sender, RoutedEventArgs e)
+        private void SwipeRightButtonClick(object sender, RoutedEventArgs e)
         {
             if (currentImageIndex == TourImages.Count - 1)
             {
@@ -69,21 +69,24 @@ namespace booking.View.Guest2
             {
                 changePresentImage();
             }
-            /*else if(TourImages.Count() == 1)
+            else if(TourImages.Count() == 0)
             {
                 swipeLeftButton.IsEnabled = false;
                 swipeRightButton.IsEnabled = false;
                 changePresentImage();
-            }*/
+            }
         }
 
         private void changePresentImage()
         {
-            BitmapImage bitmapimage = new BitmapImage();
-            bitmapimage.BeginInit();
-            bitmapimage.UriSource = new Uri(@TourImages[currentImageIndex].Url, UriKind.Absolute);
-            bitmapimage.EndInit();
-            PresentTourImage.Source = bitmapimage;
+            if (TourImages.Count != 0)
+            {
+                BitmapImage bitmapimage = new BitmapImage();
+                bitmapimage.BeginInit();
+                bitmapimage.UriSource = new Uri(@TourImages[currentImageIndex].Url, UriKind.Absolute);
+                bitmapimage.EndInit();
+                PresentTourImage.Source = bitmapimage;
+            }
         }
     }
 }
