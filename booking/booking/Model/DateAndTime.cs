@@ -1,4 +1,6 @@
-﻿using System;
+﻿using booking.Serializer;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -9,11 +11,12 @@ using System.Text.RegularExpressions;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows.Automation;
+using System.Windows.Controls;
 using System.Xml.Linq;
 
 namespace booking.Model
 {
-    public class DateAndTime
+    public class DateAndTime: ISerializable
     {
         public DateTime Date { get; set; }
         private string time;
@@ -34,7 +37,10 @@ namespace booking.Model
             Date = date;
             Time = time;
         }
-        public DateAndTime() { }
+        public DateAndTime() 
+        {
+            Date = new DateTime();
+        }
 
         public override string ToString()
         {
@@ -80,6 +86,25 @@ namespace booking.Model
         {
             if (!IsValid) return false;
             return true;
+        }
+
+        public void AddTime(double timeToAdd)
+        {
+            DateTime time = DateTime.ParseExact(this.ToString(), "d/M/yyyy H:mm", CultureInfo.InvariantCulture);
+            time = time.AddHours(timeToAdd);
+            Date = time.Date;
+            Time = time.ToString("HH:mm");
+        }
+        public string[] ToCSV()
+        {
+            string[] csvValues = {Date.ToString("d/M/yyyy H:mm", CultureInfo.InvariantCulture),Time };
+            return csvValues;
+        }
+
+        public void FromCSV(string[] values)
+        {
+            this.Date = DateTime.ParseExact(values[0], "d/M/yyyy H:mm", CultureInfo.InvariantCulture);
+            Time = values[1];
         }
     }
 }

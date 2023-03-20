@@ -12,10 +12,10 @@ namespace booking.DTO
         public string GuestName { get; set; }
         public string AccommodationName { get; set; }
 
-        public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
-        public Guest1RatingDTO(int dateid,string guestName, string accommodationName, DateOnly startDate, DateOnly endDate)
+        public Guest1RatingDTO(int dateid,string guestName, string accommodationName, DateTime startDate, DateTime endDate)
         {
             DateId = dateid;
             GuestName = guestName;

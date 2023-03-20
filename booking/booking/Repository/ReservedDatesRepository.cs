@@ -20,11 +20,11 @@ namespace booking.Repository
             serializer = new Serializer<ReservedDates>();
             reservedDates = serializer.FromCSV(fileName);
         }
-
         public List<ReservedDates> GetAll()
         {
             return reservedDates;
         }
+
         public List<ReservedDates> GetAllByAccommodationId(int id)
         {
             return reservedDates.FindAll(d => d.AccommodationId == id);
@@ -47,7 +47,7 @@ namespace booking.Repository
         }
         public void UpdateRating(int id)
         {
-            ReservedDates r=reservedDates.Find(u => u.Id == id);
+            ReservedDates r = reservedDates.Find(u => u.Id == id);
             reservedDates.Remove(r);
             r.Rated = 1;
             reservedDates.Add(r);

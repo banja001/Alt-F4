@@ -22,6 +22,7 @@ namespace booking.Model
 
         public int MaxCapacity { get; set; }
 
+
         public int MinDaysToUse { get; set; }
         public int MinDaysToCancel { get; set; }
 

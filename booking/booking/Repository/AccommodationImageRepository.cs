@@ -14,14 +14,17 @@ namespace booking.Repository
         private List<AccommodationImage> AccommodationImages;
         private Serializer<AccommodationImage> Serializer;
 
-        private readonly string fileName = "../../../Resources/Data/accommodationImage.csv";
+
+        public readonly string fileName = "../../../Resources/Data/accommodationImage.csv";
         public AccommodationImageRepository()
         {
+
+
             Serializer = new Serializer<AccommodationImage>();
             AccommodationImages = Serializer.FromCSV(fileName);
         }
 
-        public List<AccommodationImage> FindAll()
+        public List<AccommodationImage> GetAll()
         {
             return AccommodationImages;
         }
@@ -34,8 +37,7 @@ namespace booking.Repository
 
         }
 
-        //prepraviti nazive za metodu i promenljive da se zna na sta se misli, neadekvatni su trenutno
-        public List<AccommodationImage> GetAccommodationImages(AccommodationLocationDTO accommodation)
+        public List<AccommodationImage> Get(AccommodationLocationDTO accommodation)
         {
             List<AccommodationImage> accommodationImages = new List<AccommodationImage>();
 

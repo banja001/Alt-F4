@@ -1,9 +1,13 @@
+
 ﻿using booking.DTO;
 using booking.Model;
 using booking.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+
+﻿using booking.Model;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +27,6 @@ namespace booking.Repository
             serializer = new Serializer<Accommodation>();
             accommodations = serializer.FromCSV(fileName);
         }
-
         public List<Accommodation> GetAll()
         {
             return accommodations;
@@ -36,7 +39,6 @@ namespace booking.Repository
             serializer.ToCSV(fileName, accommodations);
 
         }
-
         public Accommodation FindById(int id)
         {
             return accommodations.Find(a => a.Id == id);

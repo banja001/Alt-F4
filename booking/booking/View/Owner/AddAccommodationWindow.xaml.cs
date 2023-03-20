@@ -3,6 +3,7 @@ using booking.Repository;
 using booking.View.Owner;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -29,33 +30,39 @@ namespace booking.View
         private List<string> accommodationImagesUrl;
         public OwnerWindow ownerWindow;
         public List<string> StateList;
-
+        
+        
         public AddAccommodationWindow(OwnerWindow win)
         {
             InitializeComponent();
             DataContext = this;
             ownerWindow = win;
             accommodationImagesUrl = new List<string>();
-
-
-
             StateList = new List<string>();
 
-            /*foreach (Location loc in ownerWindow.locations)
-            {
-                if (StateList.Find(m=>m==loc.State) == null)
-                {
-                    StateList.Add(loc.State);
-                }
-                
-            }*/
-
+            InitializeStateList();
             StateComboBox.ItemsSource = StateList;
+            
+            
 
 
         }
 
-        public Regex intRegex = new Regex("[0-9]{1,4}");
+        private void InitializeStateList()
+        {
+            foreach (Location loc in ownerWindow.locations)
+            {
+
+                if (StateList.Find(m => m == loc.State) == null)
+
+                {
+                    StateList.Add(loc.State);
+                }
+
+            }
+        }
+
+        public Regex intRegex = new Regex("^[0-9]{1,4}$");
 
         private bool isValid()
         {
@@ -83,7 +90,11 @@ namespace booking.View
                 MessageBox.Show("Days to cancel should be a valid number", "Error");
                 return false;
             }
-
+            if (accommodationImagesUrl.Count() == 0)
+            {
+                MessageBox.Show("Please enter atleast one image", "Error");
+                return false;
+            }
 
 
             return true;
@@ -93,36 +104,13 @@ namespace booking.View
         {
 
             if (!isValid())
-            {/*
+            {
                 return;
             }
-
-            else
-            {
-                Location location = locations.Find(a => a.State == DrzavaTextBox.Text && a.City == GradTextBox.Text);
-                if (location == null)
-                {
-                    locid = locations.Max(a => a.Id) + 1;
-                    Location loc = new Location(locid, GradTextBox.Text, DrzavaTextBox.Text);
-                    locationRepository.AddLocation(loc);
-                }
-                else
-                {
-                    locid = location.Id;
-                }
-                
-            }
-            
-            
-            
-
-            List<Accommodation> acc = accommodationrepository.GetAll();
-
 
             string State = StateComboBox.Text;
             string City = CityComboBox.Text;
             int locid = ownerWindow.locations.Find(m => m.State == State && m.City==City).Id;     
-
             int accid;
             if (ownerWindow.accommodations.Count() == 0)
             {
@@ -135,8 +123,6 @@ namespace booking.View
             Accommodation a = new Accommodation(accid,ownerWindow.OwnerId,
             NameTextBox.Text,locid,TypeComboBox.Text,Convert.ToInt32(MaxVisitorsTextBox.Text),
             Convert.ToInt32(MinDaysToUseTextBox.Text), Convert.ToInt32(DaysToCancelTextBox.Text));
-
-            
             ownerWindow.accommodationRepository.AddAccommodation(a);
             
 
@@ -155,35 +141,42 @@ namespace booking.View
                 {
                     image=new AccommodationImage(ownerWindow.accommodationImages.Max(a => a.Id) + 1,url,a.Id);
                 }
-                
-
                 ownerWindow.accommodationImageRepository.AddAccommodationImage(image);
-            }*/
-
-                this.Close();
             }
 
-            /*private void AddImageClick(object sender, RoutedEventArgs e)
-            {
-                
-                AddAccommodationImageWindow win = new AddAccommodationImageWindow(ownerWindow.accommodationImageRepository,accommodationImagesUrl);
-                win.ShowDialog();
+            this.Close(); 
+        }
 
-            }
+        private void AddImageClick(object sender, RoutedEventArgs e)
+        {
+            
+            AddAccommodationImageWindow win = new AddAccommodationImageWindow(ownerWindow.accommodationImageRepository,accommodationImagesUrl);
+            win.ShowDialog();
 
-            private void StateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        }
+
+        private void StateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            List<string> CityList=new List<string>();
+            CityComboBox.SelectedItem=null;
+            foreach (var loc in ownerWindow.locations)
             {
-                List<string> CityList=new List<string>();
-                CityComboBox.SelectedItem=null;
-                foreach (var loc in ownerWindow.locations)
+                if (StateComboBox.SelectedItem.ToString() == loc.State)
                 {
-                    if (StateComboBox.SelectedItem.ToString() == loc.State)
-                    {
-                        CityList.Add(loc.City);
-                    }
+                    CityList.Add(loc.City);
                 }
-                CityComboBox.ItemsSource = CityList;
-            }*/
+            }
+            CityComboBox.ItemsSource = CityList;
+        }
+
+        private void RemoveImageClick(object sender, RoutedEventArgs e)
+        {
+            if (accommodationImagesUrl.Count() > 0)
+            {
+                accommodationImagesUrl.RemoveAt(accommodationImagesUrl.Count() - 1);
+                MessageBox.Show("Image removed","Message");
+            }
+            
         }
     }
 }

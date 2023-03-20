@@ -34,6 +34,8 @@ namespace booking.Model
             StartDate = startDate;
             EndDate = endDate;
             AccommodationId = accommodationId;
+            UserId = userId;
+            Rated = rated;
             NumOfGuests = numOfGuests;
             UserId = userId;
             Rated = rated;
@@ -71,6 +73,7 @@ namespace booking.Model
                 return null;
             }
         }
+
 
         private readonly string[] _validatedProperties = { "NumOfGuests", "StartDate", "EndDate" };
 

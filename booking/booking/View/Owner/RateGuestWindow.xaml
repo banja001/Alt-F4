@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:booking.View.Owner"
         mc:Ignorable="d"
         
-        Title="RateGuestWindow" Height="450" Width="400">
+        Title="RateGuestWindow" Height="450" Width="400"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <RadioButton GroupName="clean" Content="1" HorizontalAlignment="Left" Margin="315,33,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=SelectedRulesRadiobutton[0]}"/>
         <RadioButton GroupName="clean" Content="2" HorizontalAlignment="Left" Margin="315,63,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=SelectedRulesRadiobutton[1]}"/>

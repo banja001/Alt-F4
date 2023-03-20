@@ -14,7 +14,8 @@ namespace booking.Repository
         private List<Location> Locations;
         private Serializer<Location> Serializer;
 
-        private readonly string fileName = "../../../Resources/Data/location.csv";
+
+        public readonly string fileName = "../../../Resources/Data/location.csv";
         public LocationRepository()
         {
 
@@ -34,6 +35,7 @@ namespace booking.Repository
             Serializer.ToCSV(fileName, Locations);
 
         }
+
         public int MakeID()
         {
             return Locations[Locations.Count - 1].Id + 1;

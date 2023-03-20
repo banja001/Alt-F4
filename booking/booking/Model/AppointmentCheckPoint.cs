@@ -7,37 +7,39 @@ using System.Threading.Tasks;
 
 namespace booking.Model
 {
-    public class CheckPoint: ISerializable
+    public class AppointmentCheckPoint:ISerializable
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public bool Active { get; set; }
         public bool NotChecked { get; set; }
-        public int TourId { get; set; }
+        public int AppointmentId { get; set; }
         public int Order { get; set; }
 
-        public CheckPoint() 
+        public AppointmentCheckPoint()
         {
 
         }
 
-        public CheckPoint(int id, string name, bool active, int tourId, int order)
+        public AppointmentCheckPoint(int id, string name, bool active,bool notchecked, int appointmentId, int order)
         {
             Id = id;
             Name = name;
             Active = active;
-            TourId = tourId;
+            NotChecked= notchecked;
+            AppointmentId = appointmentId;
             Order = order;
             NotChecked = !active;
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { 
+            string[] csvValues = {
                                     Id.ToString(),
                                     Name.ToString(),
                                     Active.ToString(),
-                                    TourId.ToString(),
+                                    NotChecked.ToString(),
+                                    AppointmentId.ToString(),
                                     Order.ToString(),
                                  };
             return csvValues;
@@ -45,11 +47,12 @@ namespace booking.Model
 
         public void FromCSV(string[] values)
         {
-            Id= Convert.ToInt32(values[0]);
-            Name= Convert.ToString(values[1]);
+            Id = Convert.ToInt32(values[0]);
+            Name = Convert.ToString(values[1]);
             Active = Convert.ToBoolean(values[2]);
-            TourId = Convert.ToInt32(values[3]); 
-            Order = Convert.ToInt32(values[4]);
+            NotChecked= Convert.ToBoolean(values[3]);
+            AppointmentId = Convert.ToInt32(values[4]);
+            Order = Convert.ToInt32(values[5]);
         }
     }
 }

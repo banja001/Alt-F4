@@ -44,18 +44,22 @@ namespace booking.View.Guest1
 
             _repository = new AccommodationImageRepository();
 
-            AccommodationImages = _repository.GetAccommodationImages(accommodation);
+
+            AccommodationImages = _repository.Get(accommodation);
+
 
             ShowImage();
         }
 
         public void SetImageSource(string url)
         {
+
             BitmapImage bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
             bitmapImage.UriSource = new Uri(@url, UriKind.Absolute);
             bitmapImage.EndInit();
             AccommodationImage.Source = bitmapImage;
+
         }
 
         public void ShowImage()

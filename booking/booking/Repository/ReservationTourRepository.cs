@@ -58,5 +58,14 @@ namespace booking.Repository
             }
             return numberOfGuests;
         }
+        public ReservationTour GetById(int id)
+        {
+            foreach (ReservationTour reservation in reservations)
+            {
+                if (reservation.Id == id)
+                    return reservation;
+            }
+            return null;
+        }
     }
 }

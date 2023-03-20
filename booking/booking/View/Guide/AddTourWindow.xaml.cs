@@ -61,6 +61,7 @@ namespace booking.View.Guide
                     _locationRepository.AddLocation(Tour.Location);
                     _tourRepository.Add(Tour);
                     MessageBox.Show("Tour is addded!");
+                    this.Close();
                 }
                 else
                     MessageBox.Show("Form is not properly filled!");
@@ -86,14 +87,15 @@ namespace booking.View.Guide
         }
         private bool IsEmpty()
         {
+
             return !string.IsNullOrEmpty(NameTB.Text) && !string.IsNullOrEmpty(CountyTB.Text) && !string.IsNullOrEmpty(CityTB.Text)
                 && !string.IsNullOrEmpty(LanguageTB.Text) && !string.IsNullOrEmpty(DurationTB.Text) && !string.IsNullOrEmpty(DescriptionTB.Text)
-                && !string.IsNullOrEmpty(TimeTB.Text) && !string.IsNullOrEmpty(MaxNumGuestsTB.Text) && !string.IsNullOrEmpty(ImagesTB.Text);
+                && !string.IsNullOrEmpty(TimeTB.Text) && !string.IsNullOrEmpty(MaxNumGuestsTB.Text);
         }
 
         private bool IsDateAfter()
         {
-            return DateDTP.SelectedDate > DateTime.Today;
+            return DateDTP.SelectedDate >= DateTime.Today;
         }
         private bool IsAllOK()
         {

@@ -14,6 +14,7 @@ namespace booking.Model
         public User User { get; set; }
         public int NumberOfGuests { get; set; } 
 
+
         public ReservationTour() 
         { 
             this.User = new User();

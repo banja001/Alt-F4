@@ -21,7 +21,7 @@ namespace booking.Repository
             _serializer = new Serializer<User>();
             _users = _serializer.FromCSV(FilePath);
         }
-        public List<User> FindAll()
+        public List<User> GetAll()
         {
             return _users;
         }

@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.View"
         mc:Ignorable="d"
-        Title="AddAccommodationWindow" Height="450" Width="800">
+        Title="AddAccommodationWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
     
     <Grid>
         <Label Content="Name" HorizontalAlignment="Left" Margin="136,77,0,0" VerticalAlignment="Top" Height="38" Width="81"/>
@@ -19,17 +20,18 @@
         <ComboBox Name="TypeComboBox" HorizontalAlignment="Left" Margin="400,188,0,0" VerticalAlignment="Top" Width="120">
             <ComboBoxItem Content="Apartment"></ComboBoxItem>
             <ComboBoxItem Content="House"></ComboBoxItem>
-            <ComboBoxItem Content="Hut"></ComboBoxItem>
+            <ComboBoxItem Content="Cabin"></ComboBoxItem>
         </ComboBox>
         <TextBox Name="MaxVisitorsTextBox" HorizontalAlignment="Left" Margin="400,236,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox Name="MinDaysToUseTextBox" HorizontalAlignment="Left" Margin="400,288,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox Name="DaysToCancelTextBox" HorizontalAlignment="Left" Margin="400,335,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120"/>
         <Button Content="confirm" HorizontalAlignment="Left" Margin="658,96,0,0" VerticalAlignment="Top" Width="60" Height="36" Click="Confirm"/>
-        <Button Content="+" HorizontalAlignment="Left" Margin="400,372,0,0" VerticalAlignment="Top" Height="31" Width="41"/>
-        <Button Content="-" HorizontalAlignment="Left" Margin="460,372,0,0" VerticalAlignment="Top" Height="31" Width="41"/>
+        <Button Content="+" HorizontalAlignment="Left" Margin="400,372,0,0" VerticalAlignment="Top" Height="31" Width="41" Click="AddImageClick"/>
+        <Button Name="removeImageButton" Content="-" HorizontalAlignment="Left" Margin="460,372,0,0" VerticalAlignment="Top" Height="31" Width="41" Click="RemoveImageClick"/>
         <Label Content="Grad" HorizontalAlignment="Left" Margin="522,114,0,0" VerticalAlignment="Top"/>
         <Label Content="Drzava" HorizontalAlignment="Left" Margin="358,114,0,0" VerticalAlignment="Top"/>
-        <ComboBox Name="StateComboBox"  HorizontalAlignment="Left" Margin="321,148,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox Name="StateComboBox"  HorizontalAlignment="Left" Margin="321,148,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="StateComboBox_SelectionChanged"/>
         <ComboBox Name="CityComboBox" HorizontalAlignment="Left" Margin="480,148,0,0" VerticalAlignment="Top" Width="120"/>
+        
     </Grid>
 </Window>
