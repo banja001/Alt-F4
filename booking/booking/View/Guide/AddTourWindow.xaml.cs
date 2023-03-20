@@ -86,14 +86,15 @@ namespace booking.View.Guide
         }
         private bool IsEmpty()
         {
+
             return !string.IsNullOrEmpty(NameTB.Text) && !string.IsNullOrEmpty(CountyTB.Text) && !string.IsNullOrEmpty(CityTB.Text)
                 && !string.IsNullOrEmpty(LanguageTB.Text) && !string.IsNullOrEmpty(DurationTB.Text) && !string.IsNullOrEmpty(DescriptionTB.Text)
-                && !string.IsNullOrEmpty(TimeTB.Text) && !string.IsNullOrEmpty(MaxNumGuestsTB.Text) && !string.IsNullOrEmpty(ImagesTB.Text);
+                && !string.IsNullOrEmpty(TimeTB.Text) && !string.IsNullOrEmpty(MaxNumGuestsTB.Text);
         }
 
         private bool IsDateAfter()
         {
-            return DateDTP.SelectedDate > DateTime.Today;
+            return DateDTP.SelectedDate >= DateTime.Today;
         }
         private bool IsAllOK()
         {

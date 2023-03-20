@@ -1,0 +1,53 @@
+1|Knez Mihajlova|True|False|1|1
+2|Kalemegdan|True|False|1|2
+3|Zoo vrt|True|False|1|3
+4|Dunav|False|True|1|4
+5|Centar|True|False|2|1
+6|Kej|True|False|2|2
+7|Obala Ibra|True|False|2|3
+8|Muzej|True|False|2|4
+9|Trg Svetog Save|True|False|2|5
+10|Centar|True|False|3|1
+11|Kej|True|False|3|2
+12|Obala Ibra|True|False|3|3
+13|Muzej|False|True|3|4
+14|Trg Svetog Save|False|True|3|5
+15|Knez Mihajlova|True|False|4|1
+16|Kalemegdan|True|False|4|2
+17|Zoo vrt|True|False|4|3
+18|Dunav|False|True|4|4
+19|Centar|True|False|5|1
+20|Kej|True|False|5|2
+21|Obala Ibra|True|False|5|3
+22|Muzej|True|False|5|4
+23|Trg Svetog Save|True|False|5|5
+24|Knez Mihajlova|True|False|6|1
+25|Kalemegdan|True|False|6|2
+26|Zoo vrt|True|False|6|3
+27|Dunav|True|False|6|4
+28|Knez Mihajlova|True|False|7|1
+29|Kalemegdan|True|False|7|2
+30|Zoo vrt|False|True|7|3
+31|Dunav|False|True|7|4
+32|Centar|True|False|8|1
+33|Kej|True|False|8|2
+34|Obala Ibra|True|False|8|3
+35|Muzej|True|False|8|4
+36|Trg Svetog Save|True|False|8|5
+37|Knez Mihajlova|True|False|9|1
+38|Kalemegdan|True|False|9|2
+39|Zoo vrt|True|False|9|3
+40|Dunav|True|False|9|4
+41|Knez Mihajlova|True|False|10|1
+42|Kalemegdan|True|False|10|2
+43|Zoo vrt|True|False|10|3
+44|Dunav|True|False|10|4
+45|Centar|True|False|11|1
+46|Kej|True|False|11|2
+47|Obala Ibra|True|False|11|3
+48|Muzej|False|True|11|4
+49|Trg Svetog Save|False|True|11|5
+50|Knez Mihajlova|True|False|12|1
+51|Kalemegdan|True|False|12|2
+52|Zoo vrt|True|False|12|3
+53|Dunav|True|False|12|4

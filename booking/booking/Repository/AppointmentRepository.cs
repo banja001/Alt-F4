@@ -1,0 +1,48 @@
+﻿using booking.Model;
+using booking.Serializer;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace booking.Repository
+{
+    internal class AppointmentRepository
+    {
+        private List<Appointment> appointments;
+        private Serializer<Appointment> serializer;
+
+        private readonly string fileName = "../../../Resources/Data/appointment.csv";
+
+        public AppointmentRepository()
+        {
+            serializer = new Serializer<Appointment>();
+            appointments = serializer.FromCSV(fileName);
+        }
+        public List<Appointment> FindAll()
+        {
+            return appointments;
+        }
+        public void Save(List<Appointment> appointmentsForSave)
+        {
+            serializer.ToCSV(fileName, appointmentsForSave);
+        }
+        public void Add(Appointment appointment)
+        {
+            appointments.Add(appointment);
+            serializer.ToCSV(fileName, appointments);
+        }
+
+        public int MakeID()
+        {
+            if(appointments.Count!=0)
+                return appointments[appointments.Count - 1].Id + 1;
+            return 1;
+        }
+        public int FindLast()
+        {
+            return 1;
+        }
+    }
+}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using booking.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,11 @@ namespace booking.View.Guide
     /// </summary>
     public partial class GuideWindow : Window
     {
-        public GuideWindow()
+        public User Guide = new User();
+        public GuideWindow(User user)
         {
             InitializeComponent();
+            Guide= user;
         }
 
         private void AddTour(object sender, RoutedEventArgs e)
@@ -32,7 +35,9 @@ namespace booking.View.Guide
 
         private void LiveTrackingTour(object sender, RoutedEventArgs e)
         {
-
+            
+            LiveTrackingWindow liveTrackingWindow=new LiveTrackingWindow(Guide);
+            liveTrackingWindow.ShowDialog();
         }
     }
 }
