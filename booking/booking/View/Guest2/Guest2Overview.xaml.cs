@@ -195,7 +195,7 @@ namespace booking.View.Guest2
         {
             if (!IsInputValid())
             {
-                MessageBox.Show("Unet format polja za pretragu nije odgovarajuci!", "Format warning");
+                MessageBox.Show("Invalid search format!", "Format warning");
 
                 // Resetuj sva polja za pretrazivanje na default za novi pokusaj
                 PeopleCount.Text = "People count";
@@ -310,6 +310,7 @@ namespace booking.View.Guest2
         private void ExitButtonClick(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
         public void FindAnswer()
         {
             foreach (Answer a in _answerRepository.FindAll())

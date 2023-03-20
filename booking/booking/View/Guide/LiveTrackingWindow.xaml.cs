@@ -47,7 +47,7 @@ namespace booking.View.Guide
             _tourRepository = new TourRepository();
             Tours = new ObservableCollection<Tour>();
             _locationRepository = new LocationRepository();
-            Locations = _locationRepository.GetAllLocations();
+            Locations = _locationRepository.GetAll();
             _reservationTourRepository = new ReservationTourRepository();
             _appointmentRepository= new AppointmentRepository();
             _checkPointRepository= new CheckPointRepository();
@@ -109,7 +109,7 @@ namespace booking.View.Guide
 
         private void StartTour(object sender, RoutedEventArgs e)
         {
-            if (SelectedTour.Id>0)
+            if (SelectedTour.Id>0 && !string.IsNullOrEmpty(SelectedTour.Name))
             { 
                 DateAndTime EndDate = new DateAndTime(SelectedTour.StartTime.Date,SelectedTour.StartTime.Time);
                 EndDate.AddTime(SelectedTour.Duration);
@@ -121,6 +121,7 @@ namespace booking.View.Guide
                 UncheckAll();
                 AppointmentCheckPoints[0].Active = true;
                 AppointmentCheckPoints[0].NotChecked = false;
+                _appointmentCheckPointRepository.SaveOneInFile(AppointmentCheckPoints[0]);
                 LooksOfDataGrid(GuestsDG);
                 foreach (TourAttendance ta in GuestsOnTour)
                 {

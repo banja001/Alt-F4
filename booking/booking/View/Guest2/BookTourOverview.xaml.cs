@@ -29,6 +29,7 @@ namespace booking.View.Guest2
         public int AvailableSpace { get; set; }
         public TourLocationDTO TourForBooking { get; set; }
         public User CurrentUser { get; set; }
+        private bool ConfirmButtonFlag { get; set; }
         
         public BookTourOverview(Guest2Overview guest2Overview, User user)
         {
@@ -40,7 +41,7 @@ namespace booking.View.Guest2
             NumberOfGuests = 0;
             int takenSpace = _reservationTourRepository.GetNumberOfGuestsForTourId(TourForBooking.Id);
             AvailableSpace = TourForBooking.MaxGuests - takenSpace - NumberOfGuests;
-
+            ConfirmButtonFlag = false;
             this.ConfirmBookingButton.IsEnabled = false;
         }
 
@@ -61,7 +62,8 @@ namespace booking.View.Guest2
                 _reservationTourRepository.Add(reservation);
                 MessageBox.Show("Tour reserved successfully!", "Success");
 
-                parentWindow.Show();   
+                parentWindow.Show();
+                ConfirmButtonFlag=true;
                 this.Close();
             }
             else
@@ -102,8 +104,11 @@ namespace booking.View.Guest2
 
         private void BookTourOverviewClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Guest2Overview parentWindow = new Guest2Overview(CurrentUser);
-            parentWindow.Show();
+            if (!ConfirmButtonFlag)
+            {
+                Guest2Overview parentWindow = new Guest2Overview(CurrentUser);
+                parentWindow.Show();
+            }
         }
     }
 }

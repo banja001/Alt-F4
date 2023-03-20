@@ -61,6 +61,7 @@ namespace booking.View.Guide
                     _locationRepository.AddLocation(Tour.Location);
                     _tourRepository.Add(Tour);
                     MessageBox.Show("Tour is addded!");
+                    this.Close();
                 }
                 else
                     MessageBox.Show("Form is not properly filled!");

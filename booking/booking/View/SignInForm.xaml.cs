@@ -83,13 +83,13 @@ namespace booking.View
                     {
                         Guest2Overview guest2Window = new Guest2Overview(user);
                         guest2Window.Show();
-                        //this.Close();
+                        this.Close();
                     } 
                     else if(user.Role == "Guide")
                     {
                             
                         GuideWindow guideWindow = new GuideWindow(user);
-                        guideWindow.Show();
+                        guideWindow.ShowDialog();
                         //this.Close();
                     }
                 }
