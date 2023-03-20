@@ -30,8 +30,6 @@ namespace booking.View
         private List<string> accommodationImagesUrl;
         public OwnerWindow ownerWindow;
         public List<string> StateList;
-        
-        
         public AddAccommodationWindow(OwnerWindow win)
         {
             InitializeComponent();
@@ -143,9 +141,6 @@ namespace booking.View
                 }
                 ownerWindow.accommodationImageRepository.AddAccommodationImage(image);
             }
-
-            this.Close(); 
-        }
 
         private void AddImageClick(object sender, RoutedEventArgs e)
         {

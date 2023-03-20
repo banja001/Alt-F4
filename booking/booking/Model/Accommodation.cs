@@ -5,9 +5,7 @@ using System.Linq;
 using booking.Serializer;
 using System.Text;
 using System.Threading.Tasks;
-
 using System.Text.RegularExpressions;
-
 using System.ComponentModel;
 
 namespace booking.Model
@@ -15,8 +13,6 @@ namespace booking.Model
     public class Accommodation : ISerializable
     {
         public int Id { get; set; }
-
-
 
         public int OwnerId { get; set; }
         public string Name { get; set; }

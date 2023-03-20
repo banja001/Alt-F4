@@ -16,13 +16,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using booking.Converter;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace booking.View.Guest1
 {
     /// <summary>
     /// Interaction logic for ReserveAccommodation.xaml
     /// </summary>
-    public partial class ReserveAccommodation : Window
+    public partial class ReserveAccommodation : Window, INotifyPropertyChanged
     {
         public List<ReservedDates> ReservedDates { get; set; }
 
@@ -35,10 +37,12 @@ namespace booking.View.Guest1
         public ReservedDates NewDate { get; set; }
 
         public int NumOfDays { get; set; }
-
+        
         private readonly ReservedDatesRepository _repository;
 
-        public ReserveAccommodation()
+        private int userId;
+
+        public ReserveAccommodation(int userId)
         {
             InitializeComponent();
             DataContext = this;
@@ -53,6 +57,14 @@ namespace booking.View.Guest1
 
 
             FreeDates = new ObservableCollection<ReservedDates>();
+            this.userId = userId;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void ReserveAccommodationClick(object sender, RoutedEventArgs e)
@@ -63,7 +75,7 @@ namespace booking.View.Guest1
                 return;
             }
 
-            NumberOfGuests numOfGuestsWindow = new NumberOfGuests();
+            NumberOfGuests numOfGuestsWindow = new NumberOfGuests(userId);
             numOfGuestsWindow.Owner = this;
             numOfGuestsWindow.ShowDialog();
         }
@@ -80,10 +92,6 @@ namespace booking.View.Guest1
             AlternativeDates.Visibility = Visibility.Hidden;
             bool reservedDateExists = false;
 
-            //1. no reserved dates in scope
-            //2. there are reserved dates that fully fit scope
-            //3. there are reserved dates that overlap on the left side
-            //4. there are reserved dates taht overlap on the right side
             foreach (ReservedDates reservedDate in ReservedDates)
             {
                 if (NewDate.StartDate < reservedDate.StartDate && reservedDate.EndDate < NewDate.EndDate)
@@ -95,7 +103,7 @@ namespace booking.View.Guest1
                 {
                     reservedDateExists = AddDates(NewDate.StartDate, reservedDate.StartDate);
                 }
-                else if (NewDate.StartDate >= reservedDate.StartDate && NewDate.StartDate <= reservedDate.EndDate)   //poslednje menjano
+                else if (NewDate.StartDate >= reservedDate.StartDate && NewDate.StartDate <= reservedDate.EndDate)
                 {
                     if (NewDate.EndDate > reservedDate.EndDate)
                         AddDates(reservedDate.EndDate, NewDate.EndDate);
@@ -162,10 +170,10 @@ namespace booking.View.Guest1
             int endMonth = NewDate.EndDate.Month;
             int startYear = NewDate.StartDate.Year;
 
-            List<ReservedDates> filteredReservedDates = ReservedDates.Where(d => d.StartDate.Month >= startMonth && d.EndDate.Month <= endMonth
-            || (d.StartDate.Month >= startMonth && d.StartDate.Month != d.EndDate.Month)).ToList();
+            List<ReservedDates> filteredReservedDates = ReservedDates.Where(d => d.StartDate.Month == startMonth || d.StartDate.Month == endMonth
+            || d.EndDate.Month == startMonth || d.EndDate.Month == endMonth).ToList();
 
-            List<DateTime> dates = Enumerable.Range(1, DateTime.DaysInMonth(startYear, startMonth))
+            List <DateTime> dates = Enumerable.Range(1, DateTime.DaysInMonth(startYear, startMonth))
                     .Select(day => new DateTime(startYear, startMonth, day))
                     .ToList();
             
@@ -190,18 +198,65 @@ namespace booking.View.Guest1
                 FreeDates.Add(new ReservedDates(date, date.AddDays(NumOfDays - 1), selectedAccommodation.Id));
             }
 
+            List<ReservedDates> freeDatesCpy = new List<ReservedDates>(FreeDates);
+
             foreach (ReservedDates reservedDate in filteredReservedDates)
             {
+                if(NewDate.StartDate.Month > reservedDate.StartDate.Month)
+                {
+                    reservedDate.StartDate = new DateTime(reservedDate.EndDate.Year, reservedDate.EndDate.Month, NumOfDays);
+                }
+
+                if (NewDate.EndDate.Month < reservedDate.EndDate.Month)
+                {
+                    reservedDate.EndDate = new DateTime(reservedDate.EndDate.Year, reservedDate.EndDate.Month, DateTime.DaysInMonth(reservedDate.EndDate.Year, reservedDate.EndDate.Month) - NumOfDays);
+                }
+
                 ReservedDates startDate = FreeDates.Where(d => d.EndDate == reservedDate.StartDate).ToList()[0];
                 ReservedDates endDate = FreeDates.Where(d => d.StartDate == reservedDate.EndDate).ToList()[0];
 
                 int startIndx = FreeDates.IndexOf(startDate);
 
-                while (FreeDates[startIndx + 1].StartDate < endDate.StartDate)
+                int i = (endDate.StartDate - FreeDates[startIndx + 1].StartDate).Days - 1;
+                int j = 0;
+
+                while ( j <= i )
                 {
-                    FreeDates.Remove(FreeDates[startIndx + 1]);
+                    if(freeDatesCpy.Contains(FreeDates[startIndx + 1 + j]))
+                        freeDatesCpy.Remove(FreeDates[startIndx + 1 + j]);
+
+                    j++;
                 }              
             }
+
+            FreeDates = new ObservableCollection<ReservedDates>(freeDatesCpy);
         }
+
+        private void NumOfDaysTextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                Int32.Parse(NumOfDaysTextBox.Text);
+                SearchFreeDatesButton.IsEnabled = true;
+            }
+            catch
+            {
+                MessageBox.Show("You have to enter numbers for number of days!", "Warning");
+                SearchFreeDatesButton.IsEnabled = false;
+            }
+        }
+
+        private void SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!NewDate.IsValid)
+            {
+                SearchFreeDatesButton.IsEnabled = false;
+            }
+            else
+            {
+                SearchFreeDatesButton.IsEnabled = true;
+            }
+        }
+
     }
 }

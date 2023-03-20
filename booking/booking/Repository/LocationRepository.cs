@@ -19,13 +19,11 @@ namespace booking.Repository
         public LocationRepository()
         {
 
-
             Serializer = new Serializer<Location>();
             Locations = Serializer.FromCSV(fileName);
         }
 
         public List<Location> GetAll()
-
         {
             return Locations;
         }

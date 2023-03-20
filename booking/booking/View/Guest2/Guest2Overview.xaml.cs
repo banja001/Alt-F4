@@ -79,7 +79,6 @@ namespace booking.View.Guest2
 
         public List<TourLocationDTO> CreateTourDTOs()
         { 
-
             List<Location> locations = _locationRepository.GetAll();
             List<TourImage> tourImages = _tourImageRepository.findAll();
             List<TourLocationDTO> localTourLocationDTOs = new List<TourLocationDTO>();

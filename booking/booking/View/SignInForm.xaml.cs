@@ -75,7 +75,7 @@ namespace booking.View
                     }
                     else if (user.Role == "Guest1")
                     {
-                        AccomodationOverview accomodationOverview = new AccomodationOverview();
+                        AccomodationOverview accomodationOverview = new AccomodationOverview(user.Id);
                         accomodationOverview.Show();
                         this.Close();
                     }

@@ -21,7 +21,7 @@ namespace booking.Repository
             _serializer = new Serializer<User>();
             _users = _serializer.FromCSV(FilePath);
         }
-        public List<User> FindAll()
+        public List<User> GettAll()
         {
             return _users;
         }
@@ -30,10 +30,6 @@ namespace booking.Repository
         {
             _users = _serializer.FromCSV(FilePath);
             return _users.FirstOrDefault(u => u.Username == userName);
-        }
-        public List<User> GetUsers() 
-        {
-            return _users;
         }
     }
 }

@@ -34,7 +34,14 @@ namespace booking.View
 
         private readonly LocationRepository _locationRepository;
 
-        public AccomodationOverview()
+        public string SelectedState { get; set; }
+        public string SelectedCity { get; set; }
+
+        public ObservableCollection<string> States { get; set; }
+
+        private int userId;
+
+        public AccomodationOverview(int id)
         {
             InitializeComponent();
             DataContext = this;
@@ -46,9 +53,25 @@ namespace booking.View
 
             AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
 
+            userId = id;
+
+            States = new ObservableCollection<string>();
+            FillStateComboBox();
+
             CheckBoxApartment.IsChecked = true;
             CheckBoxCabin.IsChecked = true;
             CheckBoxHouse.IsChecked = true;
+        }
+
+        private void FillStateComboBox()
+        {
+            List<Location> locations = _locationRepository.GetAll();
+            foreach (Location location in locations)
+            {
+                String state = location.State;
+                if (!States.Contains(state))
+                    States.Add(state);
+            }
         }
 
         public ObservableCollection<AccommodationLocationDTO> CreateAccomodationDTOs(List<Accommodation> accommodations)
@@ -80,6 +103,9 @@ namespace booking.View
                 SearchedAccommodation.Type.Add("Cabin");
             if (CheckBoxHouse.IsChecked == true)
                 SearchedAccommodation.Type.Add("House");
+
+            SearchedAccommodation.City = CityComboBox.Text;
+            SearchedAccommodation.Country = StateComboBox.Text;
 
             SearchedAccommodation.City = (SearchedAccommodation.City == null) ? "" : SearchedAccommodation.City;
             SearchedAccommodation.Country = (SearchedAccommodation.Country == null) ? "" : SearchedAccommodation.Country;
@@ -124,7 +150,7 @@ namespace booking.View
         {
             if (SelectedAccommodation != null)
             {
-                ReserveAccommodation reserveAccommodation = new ReserveAccommodation();
+                ReserveAccommodation reserveAccommodation = new ReserveAccommodation(userId);
                 reserveAccommodation.Owner = this;
                 reserveAccommodation.ShowDialog();
             }
@@ -132,6 +158,40 @@ namespace booking.View
             {
                 MessageBox.Show("You have to select an accommodation you wish to reserve", "Warning");
             }
+        }
+
+        private void StateSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CityComboBox.IsEnabled = true;
+            List<Location> locations = _locationRepository.GetAll();
+            List<string> cities = new List<string>();
+            foreach (Location location in locations)
+            {
+                String city = location.City;
+                bool isValid = !cities.Contains(city) && SelectedState.Equals(location.State);
+                if (isValid)
+                    cities.Add(city);
+            }
+            CityComboBox.ItemsSource = cities;
+        }
+
+        private void ChangedNumbersOf(object sender, TextChangedEventArgs e)
+        {
+            if (SearchedAccommodation.IsValid)
+            {
+                SearchAccommodationButton.IsEnabled = true;
+            }
+            else
+            {
+                SearchAccommodationButton.IsEnabled = false;
+            }
+        }
+
+        private void SeeAll(object sender, RoutedEventArgs e)
+        {
+            AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
+
+            accommodationData.ItemsSource = AccommodationDTOs;
         }
     }
 }

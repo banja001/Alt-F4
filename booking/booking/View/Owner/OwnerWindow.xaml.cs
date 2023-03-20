@@ -3,7 +3,6 @@
 using booking.Model;
 using booking.Repository;
 using booking.View.Owner;
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
