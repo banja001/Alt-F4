@@ -21,7 +21,7 @@ namespace booking.Repository
             Guest1Ratings = Serializer.FromCSV(fileName);
         }
 
-        public List<Guest1Rating> FindAll()
+        public List<Guest1Rating>GetAll()
         {
             return Guest1Ratings;
         }
