@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="RatingView" Height="749" Width="430">
     <Grid>
-        <DataGrid x:Name="dgrMain" ItemsSource="{Binding OwnerRatings, UpdateSourceTrigger=PropertyChanged}"
+        <DataGrid x:Name="dgrMain" ItemsSource="{Binding OwnerRatings, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="DatagridSelectionChange"
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False" Margin="10,105,10,451" Grid.Column="1" >
             <DataGrid.Columns>
@@ -16,9 +16,13 @@
                 <DataGridTextColumn Header="Kind Rating" Width="90" Binding="{Binding KindRating}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Grid DataContext="{Binding ElementName=dgrMain,Path=SelectedItem}">
-            <TextBlock Background="Gray" HorizontalAlignment="Center" Margin="0,337,0,0" TextWrapping="Wrap" Text="{Binding Path=Comment}" VerticalAlignment="Top" Height="137" Width="222"/>
+        <Grid DataContext="{Binding ElementName=dgrMain,Path=SelectedItem}" Margin="0,217,0,85">
+            <TextBlock Background="Gray" HorizontalAlignment="Center" Margin="0,104,0,0" TextWrapping="Wrap" Text="{Binding Path=Comment}" VerticalAlignment="Top" Height="137" Width="222"/>
+            <Button x:Name="NextImageButton" Content="&gt;&gt;" HorizontalAlignment="Left" Margin="348,315,0,0" VerticalAlignment="Top" Height="41" Width="40" Click="NextPictureClick"/>
+            <Button x:Name="PrevImageButton" Content="&lt;&lt;" HorizontalAlignment="Left" Margin="30,298,0,0" VerticalAlignment="Top" Height="40" Width="39" Click="PrevImageButtonClick"/>
+            <Image HorizontalAlignment="Left" Name="OwnerImage" Height="161" Margin="104,294,0,0" VerticalAlignment="Top" Width="211"/>
+            <Label Content="" Name="NoImagesLabel" Margin="182,323,182,366"/>
 
         </Grid>
-        </Grid>
+    </Grid>
 </Window>

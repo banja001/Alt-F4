@@ -14,12 +14,15 @@ namespace booking.DTO
 
         public string Comment { get; set; }
 
-        public OwnerRatingDTO(string guestName, int kindRating, int cleanRating, string comment)
+        public int ReservationId { get; set; }
+
+        public OwnerRatingDTO(string guestName, int kindRating, int cleanRating, string comment, int reservationId)
         {
             GuestName = guestName;
             KindRating = kindRating;
             CleanRating = cleanRating;
             Comment = comment;
+            ReservationId = reservationId;
         }
 
         public OwnerRatingDTO()

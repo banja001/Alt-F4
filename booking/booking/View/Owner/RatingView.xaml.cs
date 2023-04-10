@@ -25,6 +25,10 @@ namespace booking.View.Owner
     {
         public OwnerRatingRepository OwnerRatingRepository { get; set; }
 
+        private int ActiveImageIndx;
+        public List<OwnerRatingImage> OwnerRatingImages { get; set; }
+
+        private readonly OwnerRatingImageRepository OwnerRatingImageRepository;
         public ObservableCollection<OwnerRatingDTO> OwnerRatings { get; set; }
         public OwnerRatingDTO SelectedItem { get; set; }
         public RatingView(OwnerWindow win)
@@ -32,6 +36,10 @@ namespace booking.View.Owner
             InitializeComponent();
             DataContext = this;
             OwnerRatingRepository = new OwnerRatingRepository();
+
+            OwnerRatingImageRepository = new OwnerRatingImageRepository();
+            OwnerRatingImages = new List<OwnerRatingImage>();
+
             OwnerRatings = new ObservableCollection<OwnerRatingDTO>();
             foreach(OwnerRating OwnerRating in OwnerRatingRepository.GetAll())
             {
@@ -39,7 +47,7 @@ namespace booking.View.Owner
                 if (res == null) continue;
                 else if (res.Rated == 1 && OwnerRating.OwnerId==win.OwnerId)
                 {
-                    OwnerRatingDTO ow=new OwnerRatingDTO(win.users.Find(s=>s.Id==res.UserId).Username,OwnerRating.CleanRating,OwnerRating.KindRating,OwnerRating.Comment);
+                    OwnerRatingDTO ow=new OwnerRatingDTO(win.users.Find(s=>s.Id==res.UserId).Username,OwnerRating.CleanRating,OwnerRating.KindRating,OwnerRating.Comment,OwnerRating.ReservationId);
                     
 
 
@@ -48,7 +56,69 @@ namespace booking.View.Owner
 
 
             }
+            
+        }
 
+        public void DatagridSelectionChange(object sender, RoutedEventArgs e)
+        {
+            int a = SelectedItem.ReservationId;
+            OwnerRatingImages = OwnerRatingImageRepository.Get(a);
+            ShowImage();
+        }
+
+        public void SetImageSource(string url)
+        {
+
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri(@url, UriKind.Absolute);
+            bitmapImage.EndInit();
+            OwnerImage.Source = bitmapImage;
+
+        }
+        public void ShowImage()
+        {
+            if (OwnerRatingImages.Count == 0)
+            {
+                NoImagesLabel.Content = "No images for display";
+                return;
+            }
+
+            ActiveImageIndx = 0;
+            SetImageSource(OwnerRatingImages[ActiveImageIndx].Url);
+            CheckIndexScope();
+        }
+
+        public void NextPictureClick(object sender, RoutedEventArgs e)
+        {
+            SetImageSource(OwnerRatingImages[++ActiveImageIndx].Url);
+            CheckIndexScope();
+        }
+
+        private void PrevImageButtonClick(object sender, RoutedEventArgs e)
+        {
+            SetImageSource(OwnerRatingImages[--ActiveImageIndx].Url);
+            CheckIndexScope();
+        }
+        public void CheckIndexScope()
+        {
+            if (ActiveImageIndx + 1 == OwnerRatingImages.Count)
+            {
+                NextImageButton.IsEnabled = false;
+            }
+            else
+            {
+                NextImageButton.IsEnabled = true;
+            }
+
+            if (ActiveImageIndx == 0)
+            {
+                PrevImageButton.IsEnabled = false;
+            }
+            else
+            {
+                PrevImageButton.IsEnabled = true;
+            }
         }
     }
 }
