@@ -43,6 +43,7 @@ namespace booking.View
         public List<Guest1Rating> guest1Ratings;
         public UserRepository userRepository;
         public List<User> users;
+        
         public ObservableCollection<Guest1RatingDTO> ListToRate { get; set; }
         public Guest1RatingDTO SelectedItem { get; set; }
         public OwnerWindow(int id)
@@ -51,6 +52,7 @@ namespace booking.View
             DataContext = this;
             OwnerId = id;
             CreateInstances();
+            
             List<ReservedDates> ratingDates = PickDatesForRating();
             List<Guest1RatingDTO> tempList = GetGuestsToRate(ratingDates);
             ListToRate = new ObservableCollection<Guest1RatingDTO>(tempList);
@@ -105,7 +107,7 @@ namespace booking.View
             win.ShowDialog();
         }
 
-        public List<ReservedDates> PickDatesForRating()//picks dates and guests that should display in datagrid for owner to rate
+        public List<ReservedDates> PickDatesForRating()
         { 
             List<ReservedDates> ratingDates = new List<ReservedDates>();
             foreach(ReservedDates reservedDate in reservedDates)
@@ -138,6 +140,12 @@ namespace booking.View
                 
             }
            
+        }
+
+        private void View_Ratings_Click(object sender, RoutedEventArgs e)
+        {
+            RatingView win = new RatingView(this);
+            win.ShowDialog();
         }
     }
 }

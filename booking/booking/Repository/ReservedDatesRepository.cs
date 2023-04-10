@@ -49,7 +49,7 @@ namespace booking.Repository
         {
             ReservedDates r = reservedDates.Find(u => u.Id == id);
             reservedDates.Remove(r);
-            r.Rated = 1;
+            r.Rated++;
             reservedDates.Add(r);
             serializer.ToCSV(fileName, reservedDates);
         }

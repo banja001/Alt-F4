@@ -34,6 +34,7 @@
                 <DataGridTextColumn Header="End date" Width="90" Binding="{Binding EndDate}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Grid.Column="1" Content="View Rating" HorizontalAlignment="Left" Margin="565,100,0,0" VerticalAlignment="Top" Height="44" Width="99" Click="View_Ratings_Click"/>
 
     </Grid>
 </Window>
