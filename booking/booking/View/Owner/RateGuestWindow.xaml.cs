@@ -38,28 +38,20 @@ namespace booking.View.Owner
             
         }
 
-
+        
 
         private void AddRating_Click(object sender, RoutedEventArgs e)
         {
-
-            string comment = CommentTextBox.Text;
-            int cleanliness = GetCleanliness();
-            int rules = GetRulesRating();
-            int id = ownerWindow.guest1Ratings.Count == 0 ? 0 : ownerWindow.guest1Ratings.Max(m => m.Id) + 1;
-            int guestid = ownerWindow.users.Find(m => m.Username == ownerWindow.SelectedItem.GuestName).Id;
-            if (cleanliness == 0 || rules == 0)
+            int cleanliness=0,rules=0,id,guestid;
+            string comment=CommentTextBox.Text;
+            for(int i = 0; i < SelectedCleanRadiobutton.Length; i++)
             {
-                MessageBox.Show("Please rate all of the stats", "Error");
-                return;
+                if (SelectedCleanRadiobutton[i] == true)
+                {
+                    cleanliness = i+1;
+                    break;
+                }
             }
-            ModifyForGuestRating(comment, cleanliness, rules, id, guestid);
-            this.Close();
-        }
-
-        private int GetRulesRating()
-        {
-            int rules = 0;
             for (int i = 0; i < SelectedRulesRadiobutton.Length; i++)
             {
                 if (SelectedRulesRadiobutton[i] == true)
@@ -69,30 +61,34 @@ namespace booking.View.Owner
                 }
             }
 
-            return rules;
-        }
-
-        private int GetCleanliness()
-        {
-            int c = 0;
-            for (int i = 0; i < SelectedCleanRadiobutton.Length; i++)
+            
+            
+            if (ownerWindow.guest1Ratings.Count == 0)
             {
-                if (SelectedCleanRadiobutton[i] == true)
-                {
-                    c = i + 1;
-                    break;
-                }
+                id = 0;
+            }
+            else
+            {
+                id = ownerWindow.guest1Ratings.Max(m => m.Id)+1;
             }
 
-            return c;
-        }
-        private void ModifyForGuestRating(string comment, int cleanliness, int rules, int id, int guestid)
-        {
-            Guest1Rating guestrating = new Guest1Rating(id, guestid, cleanliness, rules, comment);
+            guestid = ownerWindow.users.Find(m => m.Username == ownerWindow.SelectedItem.GuestName).Id;
+            if (cleanliness == 0 || rules == 0)
+            {
+                MessageBox.Show("Please rate all of the stats", "Error");
+                return;
+
+            }
+            Guest1Rating guestrating = new Guest1Rating(id,guestid,cleanliness,rules,comment);
             ownerWindow.guest1RatingsRepository.AddRating(guestrating);
+
             ownerWindow.reservedDatesRepository.UpdateRating(ownerWindow.SelectedItem.DateId);
             ownerWindow.ListToRate.Remove(ownerWindow.SelectedItem);
+
+            this.Close();
         }
+
+        
 
     }
 }
