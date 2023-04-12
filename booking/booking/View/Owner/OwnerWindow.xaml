@@ -23,7 +23,7 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Label Name="RateGuestsLabel" Content="" HorizontalAlignment="Left" Margin="644,328,0,0" VerticalAlignment="Top" Width="122" Height="29" Grid.Column="1"/>
+
         <DataGrid x:Name="DataGridRaatings" ItemsSource="{Binding ListToRate, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False" Margin="397,267,10,16" Grid.Column="1" >
@@ -35,6 +35,8 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button Grid.Column="1" Content="View Rating" HorizontalAlignment="Left" Margin="565,100,0,0" VerticalAlignment="Top" Height="44" Width="99" Click="View_Ratings_Click"/>
+        <Label x:Name="AverageLabel" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="48,217,0,0" VerticalAlignment="Top" Width="188" Background="Gray"/>
+
 
     </Grid>
 </Window>

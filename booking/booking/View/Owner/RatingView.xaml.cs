@@ -23,25 +23,28 @@ namespace booking.View.Owner
     /// </summary>
     public partial class RatingView : Window
     {
-        public OwnerRatingRepository OwnerRatingRepository { get; set; }
+        
 
         private int ActiveImageIndx;
-        public List<OwnerRatingImage> OwnerRatingImages { get; set; }
 
-        private readonly OwnerRatingImageRepository OwnerRatingImageRepository;
+        private OwnerWindow win;
+        
         public ObservableCollection<OwnerRatingDTO> OwnerRatings { get; set; }
         public OwnerRatingDTO SelectedItem { get; set; }
         public RatingView(OwnerWindow win)
         {
             InitializeComponent();
             DataContext = this;
-            OwnerRatingRepository = new OwnerRatingRepository();
+            NextImageButton.IsEnabled = false;
+            PrevImageButton.IsEnabled = false;
+            this.win = win;
+            
 
-            OwnerRatingImageRepository = new OwnerRatingImageRepository();
-            OwnerRatingImages = new List<OwnerRatingImage>();
+           
+            
 
             OwnerRatings = new ObservableCollection<OwnerRatingDTO>();
-            foreach(OwnerRating OwnerRating in OwnerRatingRepository.GetAll())
+            foreach(OwnerRating OwnerRating in win.OwnerRatings)
             {
                 ReservedDates res=win.reservedDates.Find(s => s.Id == OwnerRating.ReservationId);
                 if (res == null) continue;
@@ -61,8 +64,9 @@ namespace booking.View.Owner
 
         public void DatagridSelectionChange(object sender, RoutedEventArgs e)
         {
+            ActiveImageIndx = 0;
             int a = SelectedItem.ReservationId;
-            OwnerRatingImages = OwnerRatingImageRepository.Get(a);
+            win.OwnerRatingImages = win.OwnerRatingImageRepository.Get(a);
             ShowImage();
         }
 
@@ -78,31 +82,32 @@ namespace booking.View.Owner
         }
         public void ShowImage()
         {
-            if (OwnerRatingImages.Count == 0)
+            CheckIndexScope();
+            if (win.OwnerRatingImages.Count == 0)
             {
                 NoImagesLabel.Content = "No images for display";
                 return;
             }
 
             ActiveImageIndx = 0;
-            SetImageSource(OwnerRatingImages[ActiveImageIndx].Url);
-            CheckIndexScope();
+            SetImageSource(win.OwnerRatingImages[ActiveImageIndx].Url);
+            
         }
 
         public void NextPictureClick(object sender, RoutedEventArgs e)
         {
-            SetImageSource(OwnerRatingImages[++ActiveImageIndx].Url);
+            SetImageSource(win.OwnerRatingImages[++ActiveImageIndx].Url);
             CheckIndexScope();
         }
 
         private void PrevImageButtonClick(object sender, RoutedEventArgs e)
         {
-            SetImageSource(OwnerRatingImages[--ActiveImageIndx].Url);
+            SetImageSource(win.OwnerRatingImages[--ActiveImageIndx].Url);
             CheckIndexScope();
         }
         public void CheckIndexScope()
         {
-            if (ActiveImageIndx + 1 == OwnerRatingImages.Count)
+            if (ActiveImageIndx + 1 >= win.OwnerRatingImages.Count)
             {
                 NextImageButton.IsEnabled = false;
             }
@@ -111,7 +116,7 @@ namespace booking.View.Owner
                 NextImageButton.IsEnabled = true;
             }
 
-            if (ActiveImageIndx == 0)
+            if (ActiveImageIndx <= 0)
             {
                 PrevImageButton.IsEnabled = false;
             }

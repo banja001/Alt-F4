@@ -30,6 +30,8 @@ namespace booking.View
     public partial class OwnerWindow : Window
     {
         public int OwnerId { get; set; }
+        public int AverageRating { get; set; }
+
 
         public AccommodationRepository accommodationRepository;
         public List<Accommodation> accommodations;
@@ -43,7 +45,10 @@ namespace booking.View
         public List<Guest1Rating> guest1Ratings;
         public UserRepository userRepository;
         public List<User> users;
-        
+        public OwnerRatingImageRepository OwnerRatingImageRepository;
+        public List<OwnerRatingImage> OwnerRatingImages;
+        public OwnerRatingRepository OwnerRatingRepository;
+        public List<OwnerRating> OwnerRatings;
         public ObservableCollection<Guest1RatingDTO> ListToRate { get; set; }
         public Guest1RatingDTO SelectedItem { get; set; }
         public OwnerWindow(int id)
@@ -56,6 +61,29 @@ namespace booking.View
             List<ReservedDates> ratingDates = PickDatesForRating();
             List<Guest1RatingDTO> tempList = GetGuestsToRate(ratingDates);
             ListToRate = new ObservableCollection<Guest1RatingDTO>(tempList);
+            int sum = 0;
+            int i = 0;
+            if (OwnerRatings.Count == 0)
+            {
+                AverageRating = 0;
+            }
+            else
+            {
+                foreach(var rating in OwnerRatings)
+                {
+                    if (rating.OwnerId == OwnerId)
+                    {
+                        
+                        sum += rating.KindRating + rating.CleanRating;
+                        i = i + 2;
+                    }
+                    
+                }
+                
+                AverageRating = sum / i;
+            }
+            AverageLabel.Content = AverageRating;
+
 
             if (tempList.Count() != 0)
             {
@@ -92,6 +120,11 @@ namespace booking.View
             reservedDates = reservedDatesRepository.GetAll();
             guest1RatingsRepository = new Guest1RatingsRepository();
             guest1Ratings = guest1RatingsRepository.GetAll();
+            OwnerRatingImageRepository=new OwnerRatingImageRepository();
+            OwnerRatingImages=OwnerRatingImageRepository.GetAll();
+            OwnerRatingRepository=new OwnerRatingRepository();
+            OwnerRatings=OwnerRatingRepository.GetAll();
+
         }
 
         private void NotifyUser(object sender, RoutedEventArgs e)
