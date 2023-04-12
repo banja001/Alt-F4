@@ -44,29 +44,34 @@ namespace booking.View.Guide
         {
             InitializeComponent();
             this.DataContext = this;
-            _tourRepository = new TourRepository();
-            Tours = new ObservableCollection<Tour>();
-            _locationRepository = new LocationRepository();
-            Locations = _locationRepository.GetAll();
-            _reservationTourRepository = new ReservationTourRepository();
-            _appointmentRepository= new AppointmentRepository();
-            _checkPointRepository= new CheckPointRepository();
-            _userRepository= new UserRepository();
-            _tourattendanceRepository= new TourAttendanceRepository();  
-            _answerRepository= new AnswerRepository();
-            _appointmentCheckPointRepository= new AppointmentCheckPointRepository();
+            InitializeRepositories();
             Answer = new Answer();
             SelectedTour= new Tour();   
             AppointmentCheckPoints= new ObservableCollection<AppointmentCheckPoint>();
             GuestsOnTour= new ObservableCollection<TourAttendance>();
             Appointments= _appointmentRepository.FindAll();
             Guide = guide;
+            Tours = new ObservableCollection<Tour>();
+            Locations = _locationRepository.GetAll();
             ShowTours();
             ShowAppointment();
             FindAppropriateLocation();
             LooksOfDataGrid(ToursDG);
-            
         }
+
+        private void InitializeRepositories()
+        {
+            _tourRepository = new TourRepository();
+            _locationRepository = new LocationRepository();
+            _reservationTourRepository = new ReservationTourRepository();
+            _appointmentRepository = new AppointmentRepository();
+            _checkPointRepository = new CheckPointRepository();
+            _userRepository = new UserRepository();
+            _tourattendanceRepository = new TourAttendanceRepository();
+            _answerRepository = new AnswerRepository();
+            _appointmentCheckPointRepository = new AppointmentCheckPointRepository();
+        }
+
         private void ShowTours()
         {
             foreach (Tour tour in _tourRepository.FindAll()) 
@@ -111,29 +116,44 @@ namespace booking.View.Guide
         {
             if (SelectedTour.Id>0 && !string.IsNullOrEmpty(SelectedTour.Name))
             { 
-                DateAndTime EndDate = new DateAndTime(SelectedTour.StartTime.Date,SelectedTour.StartTime.Time);
-                EndDate.AddTime(SelectedTour.Duration);
-                Appointment appointment = new Appointment(_appointmentRepository.MakeID(),SelectedTour.StartTime, EndDate,SelectedTour.Id,Guide.Id,true);
-                _appointmentRepository.Add(appointment);
-                CurrentAppointment = appointment;
+                CreateAppointment();
                 FindCheckPoints();
                 FindGuests();
                 UncheckAll();
-
-                AppointmentCheckPoints[0].Active = true;
-                AppointmentCheckPoints[0].NotChecked = false;
-                _appointmentCheckPointRepository.SaveOneInFile(AppointmentCheckPoints[0]);
+                SaveCheckPoint();
                 LooksOfDataGrid(GuestsDG);
-                foreach (TourAttendance ta in GuestsOnTour)
-                {
-                    Answer = new Answer(_answerRepository.MakeID(), ta, AppointmentCheckPoints[0], false, true);
-                    _answerRepository.Add(Answer);
-                }
+                SendRequestToTourAttendance();
                 StartTourB.IsEnabled = false;
                 CancelTourB.IsEnabled = true;
             }
             else
                 MessageBox.Show("Select tour, please!");
+        }
+
+        private void CreateAppointment()
+        {
+            DateAndTime EndDate = new DateAndTime(SelectedTour.StartTime.Date, SelectedTour.StartTime.Time);
+            EndDate.AddTime(SelectedTour.Duration);
+            Appointment appointment = new Appointment(_appointmentRepository.MakeID(), SelectedTour.StartTime, EndDate,
+                SelectedTour.Id, Guide.Id, true);
+            _appointmentRepository.Add(appointment);
+            CurrentAppointment = appointment;
+        }
+
+        private void SaveCheckPoint()
+        {
+            AppointmentCheckPoints[0].Active = true;
+            AppointmentCheckPoints[0].NotChecked = false;
+            _appointmentCheckPointRepository.SaveOneInFile(AppointmentCheckPoints[0]);
+        }
+
+        private void SendRequestToTourAttendance()
+        {
+            foreach (TourAttendance ta in GuestsOnTour)
+            {
+                Answer = new Answer(_answerRepository.MakeID(), ta, AppointmentCheckPoints[0], false, true);
+                _answerRepository.Add(Answer);
+            }
         }
 
         private void Exit(object sender, RoutedEventArgs e)
