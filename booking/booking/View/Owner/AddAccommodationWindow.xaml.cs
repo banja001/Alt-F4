@@ -110,16 +110,26 @@ namespace booking.View
 
             string State = StateComboBox.Text;
             string City = CityComboBox.Text;
-            int locid = ownerWindow.locations.Find(m => m.State == State && m.City == City).Id;
-            int accid = ownerWindow.accommodations.Count() == 0 ? 0 : ownerWindow.accommodations.Max(a => a.Id) + 1;
-            Accommodation a = new Accommodation(accid, ownerWindow.OwnerId, NameTextBox.Text, locid, TypeComboBox.Text, Convert.ToInt32(MaxVisitorsTextBox.Text), Convert.ToInt32(MinDaysToUseTextBox.Text), Convert.ToInt32(DaysToCancelTextBox.Text));
+            int locid = ownerWindow.locations.Find(m => m.State == State && m.City==City).Id;     
+            int accid;
+            if (ownerWindow.accommodations.Count() == 0)
+            {
+                accid = 0;
+            }
+            else
+            {
+                accid= ownerWindow.accommodations.Max(a => a.Id) + 1;
+            }
+            Accommodation a = new Accommodation(accid,ownerWindow.OwnerId,
+            NameTextBox.Text,locid,TypeComboBox.Text,Convert.ToInt32(MaxVisitorsTextBox.Text),
+            Convert.ToInt32(MinDaysToUseTextBox.Text), Convert.ToInt32(DaysToCancelTextBox.Text));
             ownerWindow.accommodationRepository.AddAccommodation(a);
-            AddImage(a);
-            this.Close();
-        }
-        private void AddImage(Accommodation a)
-        {
-            foreach (string url in accommodationImagesUrl)
+            
+
+            
+
+            
+            foreach(string url in accommodationImagesUrl)
             {
                 AccommodationImage image;
                 if (ownerWindow.accommodationImages.Count() == 0)
@@ -129,11 +139,14 @@ namespace booking.View
                 }
                 else
                 {
-                    image = new AccommodationImage(ownerWindow.accommodationImages.Max(a => a.Id) + 1, url, a.Id);
+                    image=new AccommodationImage(ownerWindow.accommodationImages.Max(a => a.Id) + 1,url,a.Id);
                 }
                 ownerWindow.accommodationImageRepository.AddAccommodationImage(image);
             }
+
+            this.Close(); 
         }
+
         private void AddImageClick(object sender, RoutedEventArgs e)
         {
             
