@@ -41,6 +41,19 @@ namespace booking.Model
             Rated = rated;
         }
 
+        public ReservedDates(ReservedDates reservedDate)
+        {
+            Id = reservedDate.Id;
+            StartDate = reservedDate.StartDate;
+            EndDate = reservedDate.EndDate;
+            AccommodationId = reservedDate.AccommodationId;
+            UserId = reservedDate.UserId;
+            Rated = reservedDate.Rated;
+            NumOfGuests = reservedDate.NumOfGuests;
+            UserId = reservedDate.UserId;
+            Rated = reservedDate.Rated;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

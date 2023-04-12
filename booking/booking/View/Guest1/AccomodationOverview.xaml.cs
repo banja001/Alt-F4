@@ -56,8 +56,13 @@ namespace booking.View
             userId = id;
 
             States = new ObservableCollection<string>();
-            FillStateComboBox();
 
+            FillStateComboBox();
+            InitializeCheckBoxes();
+        }
+
+        private void InitializeCheckBoxes()
+        {
             CheckBoxApartment.IsChecked = true;
             CheckBoxCabin.IsChecked = true;
             CheckBoxHouse.IsChecked = true;
@@ -82,11 +87,7 @@ namespace booking.View
 
             foreach (Accommodation accommodation in accommodations)
             {
-                string locationCity = locations.Find(u => u.Id == accommodation.LocationId).City;
-                string locationCountry = locations.Find(u => u.Id == accommodation.LocationId).State;
-
-                accommodationLocation = new AccommodationLocationDTO(accommodation.Id, accommodation.Name, locationCity + "," + locationCountry,
-                    accommodation.Type, accommodation.MaxCapacity, accommodation.MinDaysToUse, accommodation.MinDaysToCancel);
+                accommodationLocation = CreateAccommodationLocation(locations, accommodation);
 
                 accommodationLocations.Add(accommodationLocation);
             }
@@ -94,15 +95,20 @@ namespace booking.View
             return accommodationLocations;
         }
 
+        private static AccommodationLocationDTO CreateAccommodationLocation(List<Location> locations, Accommodation accommodation)
+        {
+            AccommodationLocationDTO accommodationLocation;
+            string locationCity = locations.Find(u => u.Id == accommodation.LocationId).City;
+            string locationCountry = locations.Find(u => u.Id == accommodation.LocationId).State;
+
+            accommodationLocation = new AccommodationLocationDTO(accommodation.Id, accommodation.Name, locationCity + "," + locationCountry,
+                accommodation.Type, accommodation.MaxCapacity, accommodation.MinDaysToUse, accommodation.MinDaysToCancel);
+            return accommodationLocation;
+        }
+
         private void SearchAccommodations(object sender, RoutedEventArgs e)
         {
-            SearchedAccommodation.Type.Clear(); 
-            if (CheckBoxApartment.IsChecked == true)
-                SearchedAccommodation.Type.Add("Apartment");
-            if (CheckBoxCabin.IsChecked == true)
-                SearchedAccommodation.Type.Add("Cabin");
-            if (CheckBoxHouse.IsChecked == true)
-                SearchedAccommodation.Type.Add("House");
+            SetAccommodationTypes();
 
             SearchedAccommodation.City = CityComboBox.Text;
             SearchedAccommodation.Country = StateComboBox.Text;
@@ -114,17 +120,33 @@ namespace booking.View
 
             AccommodationDTOs.Clear();
 
-            foreach(AccommodationLocationDTO accommodation in accommodationList)
+            foreach (AccommodationLocationDTO accommodation in accommodationList)
             {
-                bool matchingType = (SearchedAccommodation.Type.Find(u => u == accommodation.Type) != null) ? true : false;
-                bool matchingName = string.IsNullOrEmpty(SearchedAccommodation.Name) || accommodation.Name.ToLower().Contains(SearchedAccommodation.Name.ToLower());
-                bool matchingLocation = accommodation.Location.Contains(SearchedAccommodation.City + "," + SearchedAccommodation.Country);
-                bool matchingNumOfGuests = SearchedAccommodation.NumOfGuests == 0 || accommodation.MaxCapacity >= SearchedAccommodation.NumOfGuests;
-                bool matchingNumOfDays = SearchedAccommodation.NumOfDays == 0 || accommodation.MinDaysToUse <= SearchedAccommodation.NumOfDays;
-
-                if(matchingType && matchingName && matchingLocation && matchingNumOfGuests && matchingNumOfDays)
-                    AccommodationDTOs.Add(accommodation);
+                AddAccommodationToList(accommodation);
             }
+        }
+
+        private void SetAccommodationTypes()
+        {
+            SearchedAccommodation.Type.Clear();
+            if (CheckBoxApartment.IsChecked == true)
+                SearchedAccommodation.Type.Add("Apartment");
+            if (CheckBoxCabin.IsChecked == true)
+                SearchedAccommodation.Type.Add("Cabin");
+            if (CheckBoxHouse.IsChecked == true)
+                SearchedAccommodation.Type.Add("House");
+        }
+
+        private void AddAccommodationToList(AccommodationLocationDTO accommodation)
+        {
+            bool matchingType = (SearchedAccommodation.Type.Find(u => u == accommodation.Type) != null) ? true : false;
+            bool matchingName = string.IsNullOrEmpty(SearchedAccommodation.Name) || accommodation.Name.ToLower().Contains(SearchedAccommodation.Name.ToLower());
+            bool matchingLocation = accommodation.Location.Contains(SearchedAccommodation.City + "," + SearchedAccommodation.Country);
+            bool matchingNumOfGuests = SearchedAccommodation.NumOfGuests == 0 || accommodation.MaxCapacity >= SearchedAccommodation.NumOfGuests;
+            bool matchingNumOfDays = SearchedAccommodation.NumOfDays == 0 || accommodation.MinDaysToUse <= SearchedAccommodation.NumOfDays;
+
+            if (matchingType && matchingName && matchingLocation && matchingNumOfGuests && matchingNumOfDays)
+                AccommodationDTOs.Add(accommodation);
         }
 
         private void CheckBoxUnchecked(object sender, RoutedEventArgs e)
@@ -177,14 +199,7 @@ namespace booking.View
 
         private void ChangedNumbersOf(object sender, TextChangedEventArgs e)
         {
-            if (SearchedAccommodation.IsValid)
-            {
-                SearchAccommodationButton.IsEnabled = true;
-            }
-            else
-            {
-                SearchAccommodationButton.IsEnabled = false;
-            }
+            SearchAccommodationButton.IsEnabled = SearchedAccommodation.IsValid;
         }
 
         private void SeeAll(object sender, RoutedEventArgs e)
