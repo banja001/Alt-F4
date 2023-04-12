@@ -119,6 +119,7 @@ namespace booking.View.Guide
                 FindCheckPoints();
                 FindGuests();
                 UncheckAll();
+
                 AppointmentCheckPoints[0].Active = true;
                 AppointmentCheckPoints[0].NotChecked = false;
                 _appointmentCheckPointRepository.SaveOneInFile(AppointmentCheckPoints[0]);
