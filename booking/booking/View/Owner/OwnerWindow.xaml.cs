@@ -49,31 +49,22 @@ namespace booking.View
         {
             InitializeComponent();
             DataContext = this;
-
             OwnerId = id;
+            CreateInstances();
+            List<ReservedDates> ratingDates = PickDatesForRating();
+            List<Guest1RatingDTO> tempList = GetGuestsToRate(ratingDates);
+            ListToRate = new ObservableCollection<Guest1RatingDTO>(tempList);
 
+            if (tempList.Count() != 0)
+            {
+                Loaded += NotifyUser;
+            }
+        }
 
-            userRepository = new UserRepository();
-            users = userRepository.GetAll();
-            accommodationRepository = new AccommodationRepository();
-            accommodations=accommodationRepository.GetAll();
-            accommodationImageRepository = new AccommodationImageRepository();
-            accommodationImages = accommodationImageRepository.GetAll();
-            locationRepository = new LocationRepository();
-            locations = locationRepository.GetAll();
-            reservedDatesRepository = new ReservedDatesRepository();
-            reservedDates = reservedDatesRepository.GetAll();
-            guest1RatingsRepository = new Guest1RatingsRepository();
-            guest1Ratings = guest1RatingsRepository.FindAll();
-            
-
-            List<ReservedDates> ratingDates=PickDatesForRating();
+        private List<Guest1RatingDTO> GetGuestsToRate(List<ReservedDates> ratingDates)
+        {
             List<Guest1RatingDTO> tempList = new List<Guest1RatingDTO>();
-            
-            
-
-
-            foreach(ReservedDates date in ratingDates)
+            foreach (ReservedDates date in ratingDates)
             {
                 Guest1RatingDTO guestsToRate = new Guest1RatingDTO();
                 guestsToRate.DateId = date.Id;
@@ -83,18 +74,24 @@ namespace booking.View
                 guestsToRate.AccommodationName = accommodations.Find(u => u.Id == date.AccommodationId).Name;
                 tempList.Add(guestsToRate);
             }
-            ListToRate = new ObservableCollection<Guest1RatingDTO>(tempList);
-
-            if (tempList.Count() != 0)
-            {
-                Loaded += NotifyUser;
-            }
-            
-
-            
+            return tempList;
         }
-        
-        
+        private void CreateInstances()
+        {
+            userRepository = new UserRepository();
+            users = userRepository.GetAll();
+            accommodationRepository = new AccommodationRepository();
+            accommodations = accommodationRepository.GetAll();
+            accommodationImageRepository = new AccommodationImageRepository();
+            accommodationImages = accommodationImageRepository.GetAll();
+            locationRepository = new LocationRepository();
+            locations = locationRepository.GetAll();
+            reservedDatesRepository = new ReservedDatesRepository();
+            reservedDates = reservedDatesRepository.GetAll();
+            guest1RatingsRepository = new Guest1RatingsRepository();
+            guest1Ratings = guest1RatingsRepository.GetAll();
+        }
+
         private void NotifyUser(object sender, RoutedEventArgs e)
         {
             
