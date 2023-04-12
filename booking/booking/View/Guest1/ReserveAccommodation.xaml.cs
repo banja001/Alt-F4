@@ -24,7 +24,7 @@ namespace booking.View.Guest1
     /// <summary>
     /// Interaction logic for ReserveAccommodation.xaml
     /// </summary>
-    public partial class ReserveAccommodation : Window, INotifyPropertyChanged
+    public partial class ReserveAccommodation : Window
     {
         public List<ReservedDates> ReservedDates { get; set; }
 
@@ -53,18 +53,16 @@ namespace booking.View.Guest1
             selectedAccommodation = AccomodationOverview.SelectedAccommodation;
 
             ReservedDates = _repository.GetAllByAccommodationId(selectedAccommodation.Id);
-            ReservedDates = ReservedDates.OrderBy(d => d.StartDate).ToList();
-
 
             FreeDates = new ObservableCollection<ReservedDates>();
             this.userId = userId;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void FilterReservedDatesByMonth()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            ReservedDates = ReservedDates.OrderBy(d => d.StartDate).ToList();
+            ReservedDates = ReservedDates.Where(d => d.StartDate.Month == NewDate.StartDate.Month || d.StartDate.Month == NewDate.EndDate.Month
+                                            || d.EndDate.Month == NewDate.EndDate.Month || d.EndDate.Month == NewDate.StartDate.Month).ToList();
         }
 
         private void ReserveAccommodationClick(object sender, RoutedEventArgs e)
@@ -88,45 +86,25 @@ namespace booking.View.Guest1
                 return;
             }
 
-            FreeDates.Clear();
-            AlternativeDates.Visibility = Visibility.Hidden;
-            bool reservedDateExists = false;
-
-            foreach (ReservedDates reservedDate in ReservedDates)
+            FilterReservedDatesByMonth();
+            if (NumOfDays > (NewDate.EndDate - NewDate.StartDate).Days)
             {
-                if (NewDate.StartDate < reservedDate.StartDate && reservedDate.EndDate < NewDate.EndDate)
-                {
-                    AddDates(NewDate.StartDate, reservedDate.StartDate);
-                    reservedDateExists = AddDates(reservedDate.EndDate, NewDate.EndDate);
-                }
-                else if (NewDate.StartDate < reservedDate.StartDate && NewDate.EndDate > reservedDate.StartDate && NewDate.EndDate < reservedDate.EndDate)
-                {
-                    reservedDateExists = AddDates(NewDate.StartDate, reservedDate.StartDate);
-                }
-                else if (NewDate.StartDate >= reservedDate.StartDate && NewDate.StartDate <= reservedDate.EndDate)
-                {
-                    if (NewDate.EndDate > reservedDate.EndDate)
-                        AddDates(reservedDate.EndDate, NewDate.EndDate);
-
-                    reservedDateExists = true;
-                }
+                OfferAlternativeDates();
             }
-
-
-            if (FreeDates.Count == 0)
+            else
             {
-                if (!reservedDateExists)
-                {
-                    AddDates(NewDate.StartDate, NewDate.EndDate);
-                }
-                else
-                {
+                FreeDates.Clear();
+                AlternativeDates.Visibility = Visibility.Hidden;
+
+                CreateDateIntervals(NewDate.StartDate, NewDate.EndDate);
+                RemoveReservedDatesFromIntervals();
+
+                if (FreeDates.Count == 0)
                     OfferAlternativeDates();
-                }
             }
         }
-        
-        private bool AddDates(DateTime startDate, DateTime endDate)
+
+        private void CreateDateIntervals(DateTime startDate, DateTime endDate)
         {
             while ((endDate - startDate).Days >= NumOfDays - 1)
             {
@@ -134,16 +112,63 @@ namespace booking.View.Guest1
 
                 startDate = startDate.AddDays(1);
             }
+        }
 
-            return true;
+        private void RemoveReservedDatesFromIntervals()
+        {
+            foreach(var date in ReservedDates)
+            {
+                if (FreeDates.Count == 0)
+                    return;
+                
+                if (date.EndDate < FreeDates[0].StartDate || date.StartDate > FreeDates[FreeDates.Count - 1].EndDate)
+                    continue;
+
+                DateTime firstDate = GetStartOfReservedDate(date).AddDays(-NumOfDays + 2);
+                DateTime lastDate = GetEndOfReservedDate(date);
+
+                while (firstDate < lastDate)
+                {
+                    if (FreeDates.Where(d => d.StartDate == firstDate).Count() != 0)
+                        FreeDates.Remove(FreeDates.Where(d => d.StartDate == firstDate).ToList()[0]);
+
+                    firstDate = firstDate.AddDays(1);
+                }
+            }
+        }
+
+        private static DateTime GetEndOfReservedDate(ReservedDates date)
+        {
+            List<ReservedDates> firstDates = FreeDates.Where(d => d.EndDate == date.EndDate).ToList();
+
+            return firstDates.Count() == 0
+                ? new DateTime(FreeDates[FreeDates.Count - 1].EndDate.Year, FreeDates[FreeDates.Count - 1].EndDate.Month, FreeDates[FreeDates.Count - 1].EndDate.Day)
+                : firstDates[0].EndDate;
+        }
+
+        private static DateTime GetStartOfReservedDate(ReservedDates date)
+        {
+            List<ReservedDates> lastDates = FreeDates.Where(d => d.StartDate == date.StartDate).ToList();
+
+            return lastDates.Count() == 0
+                ? new DateTime(FreeDates[0].StartDate.Year, FreeDates[0].StartDate.Month, FreeDates[0].StartDate.Day)
+                : lastDates[0].StartDate;
         }
 
         private void OfferAlternativeDates()
         {
             AlternativeDates.Visibility = Visibility.Visible;
 
-            CreatePossibleIntervals();
+            DateTime startDate = new DateTime(NewDate.StartDate.Year, NewDate.StartDate.Month, 1);
+            DateTime endDate = new DateTime(NewDate.EndDate.Year, NewDate.EndDate.Month, DateTime.DaysInMonth(NewDate.EndDate.Year, NewDate.EndDate.Month));
+            
+            CreateDateIntervals(startDate, endDate);
+            RemoveReservedDatesFromIntervals(); 
+            PickFourClosestDates();             
+        }
 
+        private void PickFourClosestDates()
+        {
             ReservedDates closestDateBefore = FreeDates.MinBy(d => Math.Abs((NewDate.StartDate - d.EndDate).Days));
             ReservedDates closestDateAfter = FreeDates.MinBy(d => Math.Abs((d.StartDate - NewDate.EndDate).Days));
 
@@ -153,7 +178,11 @@ namespace booking.View.Guest1
             ReservedDates secondClosestBefore = FreeDates[--closestDateBeforeIndx];
             ReservedDates secondClosestAfter = FreeDates[++closestDateAfterIndx];
 
+            AddClosestDatesToList(closestDateBefore, closestDateAfter, secondClosestBefore, secondClosestAfter);
+        }
 
+        private void AddClosestDatesToList(ReservedDates closestDateBefore, ReservedDates closestDateAfter, ReservedDates secondClosestBefore, ReservedDates secondClosestAfter)
+        {
             FreeDates.Clear();
 
             FreeDates.Add(secondClosestBefore);
@@ -162,74 +191,6 @@ namespace booking.View.Guest1
             FreeDates.Add(secondClosestAfter);
 
             accommodationData.ItemsSource = FreeDates;
-        }
-
-        private void CreatePossibleIntervals()
-        {
-            int startMonth = NewDate.StartDate.Month;
-            int endMonth = NewDate.EndDate.Month;
-            int startYear = NewDate.StartDate.Year;
-
-            List<ReservedDates> filteredReservedDates = ReservedDates.Where(d => d.StartDate.Month == startMonth || d.StartDate.Month == endMonth
-            || d.EndDate.Month == startMonth || d.EndDate.Month == endMonth).ToList();
-
-            List <DateTime> dates = Enumerable.Range(1, DateTime.DaysInMonth(startYear, startMonth))
-                    .Select(day => new DateTime(startYear, startMonth, day))
-                    .ToList();
-            
-            while (startMonth != endMonth)
-            {
-                startMonth++;
-
-                if (startMonth == 13)
-                {
-                    startMonth = 1;
-                    startYear++;
-                }
-
-                for (var date = new DateTime(startYear, startMonth, 1); date.Month == startMonth; date = date.AddDays(1))
-                {
-                    dates.Add(date);
-                }
-            }
-
-            foreach (DateTime date in dates)
-            {
-                FreeDates.Add(new ReservedDates(date, date.AddDays(NumOfDays - 1), selectedAccommodation.Id));
-            }
-
-            List<ReservedDates> freeDatesCpy = new List<ReservedDates>(FreeDates);
-
-            foreach (ReservedDates reservedDate in filteredReservedDates)
-            {
-                if(NewDate.StartDate.Month > reservedDate.StartDate.Month)
-                {
-                    reservedDate.StartDate = new DateTime(reservedDate.EndDate.Year, reservedDate.EndDate.Month, NumOfDays);
-                }
-
-                if (NewDate.EndDate.Month < reservedDate.EndDate.Month)
-                {
-                    reservedDate.EndDate = new DateTime(reservedDate.EndDate.Year, reservedDate.EndDate.Month, DateTime.DaysInMonth(reservedDate.EndDate.Year, reservedDate.EndDate.Month) - NumOfDays);
-                }
-
-                ReservedDates startDate = FreeDates.Where(d => d.EndDate == reservedDate.StartDate).ToList()[0];
-                ReservedDates endDate = FreeDates.Where(d => d.StartDate == reservedDate.EndDate).ToList()[0];
-
-                int startIndx = FreeDates.IndexOf(startDate);
-
-                int i = (endDate.StartDate - FreeDates[startIndx + 1].StartDate).Days - 1;
-                int j = 0;
-
-                while ( j <= i )
-                {
-                    if(freeDatesCpy.Contains(FreeDates[startIndx + 1 + j]))
-                        freeDatesCpy.Remove(FreeDates[startIndx + 1 + j]);
-
-                    j++;
-                }              
-            }
-
-            FreeDates = new ObservableCollection<ReservedDates>(freeDatesCpy);
         }
 
         private void NumOfDaysTextChanged(object sender, TextChangedEventArgs e)
@@ -248,15 +209,7 @@ namespace booking.View.Guest1
 
         private void SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!NewDate.IsValid)
-            {
-                SearchFreeDatesButton.IsEnabled = false;
-            }
-            else
-            {
-                SearchFreeDatesButton.IsEnabled = true;
-            }
+            SearchFreeDatesButton.IsEnabled = NewDate.IsValid;
         }
-
     }
 }

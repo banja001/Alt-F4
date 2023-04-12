@@ -53,14 +53,19 @@ namespace booking.View.Guest1
                 return;
             }
 
-            selectedDates.Id = _datesRepository.MakeId();
-            selectedDates.NumOfGuests = GuestsNumber;
-            selectedDates.UserId = userId;
+            SetSelectedDatesParameters();
             _datesRepository.Add(selectedDates);
 
             MessageBox.Show("Your reservation has been successfully made!");
 
             this.Close();
+        }
+
+        private void SetSelectedDatesParameters()
+        {
+            selectedDates.Id = _datesRepository.MakeId();
+            selectedDates.NumOfGuests = GuestsNumber;
+            selectedDates.UserId = userId;
         }
 
         private void NumOfGuestsTextChanged(object sender, TextChangedEventArgs e)

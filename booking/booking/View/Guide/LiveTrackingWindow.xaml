@@ -28,7 +28,7 @@
         </DataGrid>
         <Button Content="Start tour" Name="StartTourB" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="100" Height="30" Grid.Row="2" Margin="0,10,0,0" Click="StartTour"/>
         <Button Content="Exit" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="30" Grid.Row="2" Grid.Column="1" Margin="0,89,0,0" Click="Exit"/>
-        <Button Content="Cancel tour" Name="CancelTourB" HorizontalAlignment="Center" IsEnabled="False" VerticalAlignment="Top" Width="100" Height="30" Grid.Row="2" Grid.Column="0" Margin="0,90,0,0" Click="CancelTour"/>
+        <Button Content="End tour" Name="CancelTourB" HorizontalAlignment="Center" IsEnabled="False" VerticalAlignment="Top" Width="100" Height="30" Grid.Row="2" Grid.Column="0" Margin="0,90,0,0" Click="CancelTour"/>
     
         <ListBox Name="CheckPointsLB" ItemsSource="{Binding AppointmentCheckPoints}" Grid.Row="1" Grid.Column="0" >
             <ListBox.ItemTemplate>

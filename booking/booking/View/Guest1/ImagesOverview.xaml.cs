@@ -47,19 +47,16 @@ namespace booking.View.Guest1
 
             AccommodationImages = _repository.Get(accommodation);
 
-
             ShowImage();
         }
 
         public void SetImageSource(string url)
         {
-
             BitmapImage bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
             bitmapImage.UriSource = new Uri(@url, UriKind.Absolute);
             bitmapImage.EndInit();
             AccommodationImage.Source = bitmapImage;
-
         }
 
         public void ShowImage()
@@ -89,23 +86,8 @@ namespace booking.View.Guest1
 
         public void CheckIndexScope()
         {
-            if(activeImageIndx + 1 == AccommodationImages.Count)
-            {
-                NextImageButton.IsEnabled = false;
-            }
-            else
-            {
-                NextImageButton.IsEnabled = true;
-            }
-
-            if(activeImageIndx == 0)
-            {
-                PrevImageButton.IsEnabled = false;
-            }
-            else
-            {
-                PrevImageButton.IsEnabled = true;
-            }
+            NextImageButton.IsEnabled = activeImageIndx + 1 == AccommodationImages.Count ? false : true;
+            PrevImageButton.IsEnabled = activeImageIndx == 0 ? false : true;
         }
     }
 }
