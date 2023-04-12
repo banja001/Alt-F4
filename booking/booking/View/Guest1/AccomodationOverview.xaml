@@ -1,0 +1,77 @@
+﻿<Window x:Class="booking.View.AccomodationOverview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:booking.View"
+        mc:Ignorable="d"
+        
+        Title="AccomodationOverview" Height="649" Width="846" WindowStartupLocation="CenterScreen">
+    <Grid>
+
+
+        <ToolBar x:Name="toolBar" Height="200" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,7,0,0">
+            <Grid Grid.Row="0" Grid.Column="0" Width="800" Height="150">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <CheckBox Grid.Row="0" Grid.Column="0" x:Name="CheckBoxApartment"  Content="Apartment" HorizontalAlignment="Center" VerticalAlignment="Center" Unchecked="CheckBoxUnchecked" Checked="CheckBoxChecked"/>
+                <CheckBox Grid.Row="0" Grid.Column="1" x:Name="CheckBoxHouse" Content="House" HorizontalAlignment="Center" VerticalAlignment="Center" Unchecked="CheckBoxUnchecked" Checked="CheckBoxChecked"/>
+                <CheckBox Grid.Row="0" Grid.Column="2" x:Name="CheckBoxCabin" Content="Cabin" HorizontalAlignment="Center" VerticalAlignment="Center" Unchecked="CheckBoxUnchecked" Checked="CheckBoxChecked"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Height="30" HorizontalAlignment="Right" Content="Name"/>
+                <Label Grid.Row="2" Grid.Column="0" Height="30" HorizontalAlignment="Right" Content="State"/>
+                <Label Grid.Row="3" Grid.Column="0" Height="30" HorizontalAlignment="Right"  Content="Number of guests"/>
+                <Label Grid.Row="4" Grid.Column="0" Height="30" HorizontalAlignment="Right" Content="Number of days"/>
+
+                <TextBox  Grid.Row="1" Grid.Column="1" x:Name="tSearchBarName" Height="20" Text="{Binding SearchedAccommodation.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="StateComboBox" Width="80" Height="20" HorizontalAlignment="Left" ItemsSource="{Binding States, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedState}" SelectionChanged="StateSelectionChanged"/>
+                <Label Grid.Row="2" Grid.Column="1" Content="City" Margin="80 0" HorizontalAlignment="Right"/>
+
+                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="CityComboBox" Width="80"  Height="20" HorizontalAlignment="Right" SelectedItem="{Binding SelectedCity}" IsEnabled="False"/>
+                <TextBox Grid.Row="3" Grid.Column="1" x:Name="tSearchBarNumberOfGuests" Height="20" Text="{Binding SearchedAccommodation.NumOfGuests, UpdateSourceTrigger=PropertyChanged}" TextChanged="ChangedNumbersOf"/>
+                <TextBox Grid.Row="4" Grid.Column="1" x:Name="tSearchBarNumberOfDays" Height="20" Text="{Binding SearchedAccommodation.NumOfDays, UpdateSourceTrigger=PropertyChanged}" TextChanged="ChangedNumbersOf"/>
+
+                <Button Grid.Row="4" Grid.Column="2" x:Name="SearchAccommodationButton" Height="20" Width="67" Content="Search" Margin="30 0" HorizontalAlignment="Left" Click="SearchAccommodations"/>
+                <Button Grid.Row="4" Grid.Column="2" x:Name="SeeAllButton" Height="20" Width="67" Content="See all" Margin="30 0" HorizontalAlignment="Center" Click="SeeAll"/>
+                <Button Grid.Row="4" Grid.Column="2" x:Name="ReserveAccommodationButton" Height="20" Width="67" Content="Reserve" Margin="30 0" HorizontalAlignment="Right" Click="ReserveAccommodations"/>
+
+            </Grid>
+        </ToolBar>
+
+        <DataGrid x:Name="accommodationData"
+                          ItemsSource="{Binding AccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                          SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
+                           Height="409" 
+                           VerticalAlignment="Top"
+                           IsReadOnly="True"
+                           SelectionMode="Single"
+                           CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
+                           ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Margin="0,224,0,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" CanUserResize="False"  Width="180"/>
+                <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False" Width="180"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding Type}" CanUserResize="False" Width="70"/>
+                <DataGridTextColumn Header="Max capacity" Binding="{Binding MaxCapacity}" Width="100"/>
+                <DataGridTextColumn Header="Min days to use" Binding="{Binding MinDaysToUse}" Width="100"/>
+                <DataGridTextColumn Header="Min days to cancel" Binding="{Binding MinDaysToCancel}" Width="120"/>
+                <DataGridTemplateColumn Header="Images" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="ImagesButton" Click="OpenImages" Content="Images" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

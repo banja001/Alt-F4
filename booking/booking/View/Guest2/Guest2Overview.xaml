@@ -1,0 +1,56 @@
+﻿<Window x:Class="booking.View.Guest2.Guest2Overview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:booking.View.Guest2"
+        xmlns:cvt="clr-namespace:booking.Converter"
+        mc:Ignorable="d"
+        Title="Guest Window" Height="500" Width="900">
+    <Grid Margin="0, 0, 0, 0" Height="480" Width="890">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <Button x:Name="bookTourButton" Foreground="White" Background="#FF4C7CE6" Content="Book a tour" Margin="10, 35, 10, 10" Height="40" FontWeight="SemiBold" FontSize="15" Click="BookTourButtonClick"></Button>
+            <StackPanel Orientation="Horizontal" Margin="0,320">
+                <Button x:Name="logOutButton" FontSize="14" FontWeight="SemiBold" Content="Log out" Width="70" Height="30" Margin="10,0,5,10" Click="LogOutButtonClick"/>
+                <Button x:Name="exitButton" FontSize="14" FontWeight="SemiBold" Content="Exit" Width="70" Height="30" Margin="5,0,10,10" Click="ExitButtonClick"/>
+            </StackPanel>
+        </StackPanel>
+        <GroupBox x:Name ="welcome" BorderThickness="2" BorderBrush="#FF65696D" FontSize="18" FontWeight="SemiBold" Grid.Column="1" Margin="0,20,10,20">
+            <Grid Margin="0,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Row="0">
+                    <TextBox x:Name="PeopleCount" BorderBrush="#FF65696D" Foreground="LightGray" Margin="15, 5, 5, 5" Width="80" Height="20" FontSize="12" FontWeight="Normal" Text="People count" LostFocus="PeopleCountLostFocus" GotFocus="PeopleCountGotFocus"></TextBox>
+                    <TextBox x:Name="Language" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="80" Height="20" FontSize="12" FontWeight="Normal" Text="Language" GotFocus="LanguageGotFocus" LostFocus="LanguageLostFocus"></TextBox>
+                    <ComboBox x:Name="StateComboBox" SelectedItem="{Binding SelectedState, Mode=TwoWay}" ItemsSource="{Binding States, Mode=OneWay}" BorderBrush="#FF65696D" Margin="5, 5" Width="80" Height="20" FontSize="12" FontWeight="Normal" SelectionChanged="StateComboBoxSelectionChanged"/>
+                    <ComboBox x:Name="CityComboBox" SelectedItem="{Binding SelectedCity, Mode=TwoWay}" IsEnabled="false" BorderBrush="#FF65696D" Margin="5, 5" Width="80" Height="20" FontSize="12" FontWeight="Normal"/>
+                    <TextBox x:Name="Duration" BorderBrush="#FF65696D" Foreground="LightGray" Margin="5, 5" Width="80" Height="20" FontSize="12" FontWeight="Normal" Text="Duration(h)" GotFocus="DurationGotFocus" LostFocus="DurationLostFocus"></TextBox>
+                    <Button x:Name="Search" Foreground="White" Padding="0, -1, 0, 3" Content="Search" Width="125" Height="20" Margin="90, 5, 15, 5" FontSize="14" FontWeight="SemiBold" Background="#FF4C7CE6" Click="SearchButtonClick"></Button>
+                </StackPanel>
+                <DataGrid x:Name="tourSelectionTable" SelectedItem="{Binding SelectedTour}" ItemsSource="{Binding TourLocationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged }" FontSize="12" FontWeight="Normal" Grid.Row="1" BorderBrush="#FF65696D" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name"  Width="1*" Binding="{Binding Name}" />
+                        <DataGridTextColumn Header="Language" Width="1*" Binding="{Binding Language}"/>
+                        <DataGridTextColumn Header="Max guest count" Width="1.3*" Binding="{Binding MaxGuests}"/>
+                        <DataGridTextColumn Header="Start time" Width="1*" Binding="{Binding StartTime, Converter={cvt:DateTimeToDateOnlyConverter}}"/>
+                        <DataGridTextColumn Header="Duration(h)" Width="0.8*" Binding="{Binding Duration}"/>
+                        <DataGridTextColumn Header="Location" Width="1*" Binding="{Binding Location}"/>
+                        <DataGridTemplateColumn Header="More details" Width="1.1*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Margin="5" x:Name="MoreDetailsButton" Click="MoreDetailsButtonClick">Details</Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>

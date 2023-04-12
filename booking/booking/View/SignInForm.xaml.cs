@@ -1,5 +1,7 @@
 ﻿using booking.Model;
 using booking.Repository;
+using booking.View.Guest2;
+using booking.View.Guide;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -62,21 +64,31 @@ namespace booking.View
             {
                 if(user.Password == txtPassword.Password)
                 {
+
                     if (user.Role == "Owner")
                     {
-
+                        OwnerWindow win=new OwnerWindow(user.Id);
+                        win.Show();
+                        this.Close();
                     }
                     else if (user.Role == "Guest1")
                     {
-
+                        AccomodationOverview accomodationOverview = new AccomodationOverview(user.Id);
+                        accomodationOverview.Show();
+                        this.Close();
                     }
                     else if(user.Role == "Guest2")
                     {
-                        
+                        Guest2Overview guest2Window = new Guest2Overview(user);
+                        guest2Window.Show();
+                        this.Close();
                     } 
                     else if(user.Role == "Guide")
                     {
-
+                            
+                        GuideWindow guideWindow = new GuideWindow(user);
+                        guideWindow.ShowDialog();
+                        //this.Close();
                     }
                 }
                 else

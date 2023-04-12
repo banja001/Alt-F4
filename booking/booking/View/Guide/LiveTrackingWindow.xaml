@@ -1,0 +1,52 @@
+﻿<Window x:Class="booking.View.Guide.LiveTrackingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:booking.View.Guide"
+        mc:Ignorable="d"
+        Title="LiveTrackingWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DataGrid Name="ToursDG" ItemsSource="{Binding Tours}" SelectedItem="{Binding SelectedTour}" Grid.Row="0" Grid.ColumnSpan="2" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,2,0" Width="790" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False"> 
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" CanUserResize="False" Width="75"/>
+                <DataGridTextColumn Header="Location" Binding="{Binding Location.CityState}" CanUserResize="False"  Width="75"/>
+                <DataGridTextColumn Header="Start time" Binding="{Binding StartTime}" CanUserResize="False"  Width="75"/>
+                <DataGridTextColumn Header="Max guests" Binding="{Binding MaxGuests}"  Width="75"/>
+                <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" Width="75"/>
+                <DataGridTextColumn Header="Language" Binding="{Binding Language}"  Width="75"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Start tour" Name="StartTourB" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="100" Height="30" Grid.Row="2" Margin="0,10,0,0" Click="StartTour"/>
+        <Button Content="Exit" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="30" Grid.Row="2" Grid.Column="1" Margin="0,89,0,0" Click="Exit"/>
+        <Button Content="End tour" Name="CancelTourB" HorizontalAlignment="Center" IsEnabled="False" VerticalAlignment="Top" Width="100" Height="30" Grid.Row="2" Grid.Column="0" Margin="0,90,0,0" Click="CancelTour"/>
+    
+        <ListBox Name="CheckPointsLB" ItemsSource="{Binding AppointmentCheckPoints}" Grid.Row="1" Grid.Column="0" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox Name="CheckPointCHB" IsChecked="{Binding Active, Mode=TwoWay}" IsEnabled="{Binding NotChecked}" Click="CheckPointCHBClick" />
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <DataGrid Name="GuestsDG" ItemsSource="{Binding GuestsOnTour}" Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,2,0" Width="400" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Guest.User.Username}" CanUserResize="False" Width="75"/>
+                <DataGridTextColumn Header="Number Of Guests" Binding="{Binding Guest.NumberOfGuests}" CanUserResize="False"  Width="75"/>
+                <DataGridTextColumn Header="Check point" Binding="{Binding StartedCheckPoint.Name}" CanUserResize="False"  Width="75"/>
+                <DataGridCheckBoxColumn Header="Attend" Binding="{Binding Appeared}" CanUserResize="False"  Width="75"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
