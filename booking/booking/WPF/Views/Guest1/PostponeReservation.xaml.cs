@@ -52,6 +52,10 @@ namespace booking.WPF.Views.Guest1
         {
             int requestId = _reservationRequestsRepository.MakeId();
             _reservationRequestsRepository.Add(new ReservationRequests(requestId, NewDate, "Postpone"));
+
+            MessageBox.Show("Your request has been sent successfully!");
+
+            this.Close();
         }
     }
 }

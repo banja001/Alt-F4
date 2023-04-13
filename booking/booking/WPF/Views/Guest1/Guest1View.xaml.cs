@@ -1,6 +1,8 @@
 ﻿using booking.Domain.DTO;
+using booking.Domain.Model;
 using booking.DTO;
 using booking.Model;
+using booking.Repositories;
 using booking.Repository;
 using booking.View.Guest1;
 using booking.WPF.Views.Guest1;
@@ -8,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,6 +32,7 @@ namespace booking.View
         public static ObservableCollection<AccommodationLocationDTO> AccommodationDTOs { get; set; }
 
         public static ObservableCollection<ReservationAccommodationDTO> ReservationAccommodationDTOs { get; set; }
+        public static ObservableCollection<ReservationsRequestsDTO> ReservationRequestsDTOs { get; set; }
 
         public static AccommodationLocationDTO SelectedAccommodation { get; set; }
 
@@ -41,6 +45,7 @@ namespace booking.View
         private readonly LocationRepository _locationRepository;
 
         private readonly ReservedDatesRepository _reservedDatesRepository;
+        private readonly ReservationRequestsRepository _reservationRequestsRepository;
 
         public string SelectedState { get; set; }
         public string SelectedCity { get; set; }
@@ -60,11 +65,13 @@ namespace booking.View
             _accomodationRepository = new AccommodationRepository();
             _locationRepository = new LocationRepository();
             _reservedDatesRepository = new ReservedDatesRepository();
+            _reservationRequestsRepository = new ReservationRequestsRepository();            
 
             SearchedAccommodation = new SearchedAccomodationDTO();
 
             AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
             ReservationAccommodationDTOs = CreateReservationAccommodationDTOs(_reservedDatesRepository.GetAll());
+            ReservationRequestsDTOs = CreateReservationsRequestsDTOs(_reservationRequestsRepository.GetAll());
 
             States = new ObservableCollection<string>();
 
@@ -110,19 +117,36 @@ namespace booking.View
         {
             List<ReservedDates> usersReservedDates = reservedDates.Where(d => d.UserId == userId).ToList();
             ObservableCollection<ReservationAccommodationDTO> reservationAccommodationDTOs = new ObservableCollection<ReservationAccommodationDTO>();
-            Accommodation accommodation;
-            Location location;
-
+            
             foreach(var date in usersReservedDates)
             {
-                accommodation = _accomodationRepository.GetAll().Where(a => a.Id == date.AccommodationId).ToList()[0];
-                location = _locationRepository.GetAll().Where(l => l.Id == accommodation.LocationId).ToList()[0];
+                Accommodation accommodation = _accomodationRepository.GetById(date.AccommodationId);
+                Location location = _locationRepository.GetById(accommodation.LocationId);
 
                 reservationAccommodationDTOs.Add(new ReservationAccommodationDTO(accommodation, location, date));
             }
 
             return reservationAccommodationDTOs;
         }
+
+        public ObservableCollection<ReservationsRequestsDTO> CreateReservationsRequestsDTOs(List<ReservationRequests> reservationRequests)
+        {
+            ObservableCollection<ReservationsRequestsDTO> reservationRequestsDTOs = new ObservableCollection<ReservationsRequestsDTO>();
+
+            foreach(var request in reservationRequests)
+            {
+                ReservedDates reservedDate = _reservedDatesRepository.GetByID(request.ReservationId);
+
+                Accommodation accommodation = _accomodationRepository.GetById(reservedDate.AccommodationId);
+                Location location = _locationRepository.GetById(accommodation.LocationId);
+
+                reservationRequestsDTOs.Add(new ReservationsRequestsDTO(accommodation, location, request.RequestType.ToString(), "/"));
+            }
+
+            return reservationRequestsDTOs;
+        }
+
+
 
         private static AccommodationLocationDTO CreateAccommodationLocation(List<Location> locations, Accommodation accommodation)
         {

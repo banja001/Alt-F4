@@ -28,6 +28,11 @@ namespace booking.Repository
             return Locations;
         }
 
+        public Location GetById(int id)
+        {
+            return Locations.Where(l => l.Id == id).ToList()[0];
+        }
+
         public void AddLocation(Location loc)
         {
 
