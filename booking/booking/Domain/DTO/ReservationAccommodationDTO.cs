@@ -9,6 +9,7 @@ namespace booking.Domain.DTO
 {
     public class ReservationAccommodationDTO
     {
+        public int ReservationId { get; set; }
         public string AccommodationName { get; set; }
         public string Location { get; set; }
         public DateTime StartDate { get; set; }
@@ -16,12 +17,13 @@ namespace booking.Domain.DTO
 
         public ReservationAccommodationDTO() { }
 
-        public ReservationAccommodationDTO(Accommodation accommodation, Location location, DateTime startDate, DateTime endDate)
+        public ReservationAccommodationDTO(Accommodation accommodation, Location location, ReservedDates reservation)
         {
+            ReservationId = reservation.Id;
             AccommodationName = accommodation.Name;
             Location = location.State + "," + location.City;
-            StartDate = startDate;
-            EndDate = endDate;
+            StartDate = reservation.StartDate;
+            EndDate = reservation.EndDate;
         }
     }
 }

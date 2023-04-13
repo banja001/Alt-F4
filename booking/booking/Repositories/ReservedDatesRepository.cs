@@ -30,6 +30,11 @@ namespace booking.Repository
             return reservedDates.FindAll(d => d.AccommodationId == id);
         }
 
+        public ReservedDates GetByID(int id)
+        {
+            return reservedDates.Where(d => d.Id == id).ToList()[0];
+        }
+
         public int MakeId()
         {
             return reservedDates[reservedDates.Count - 1].Id + 1;

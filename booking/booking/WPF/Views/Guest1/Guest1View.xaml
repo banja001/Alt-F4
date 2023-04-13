@@ -10,7 +10,7 @@
         Title="AccomodationOverview" Height="760" Width="846" WindowStartupLocation="CenterScreen">
     <Grid>
         <TabControl>
-            <TabItem Header="Overview">
+            <TabItem Header="Overview" Height="22" Margin="-2,-2,-2,0" VerticalAlignment="Top">
                 <Grid>
                     <Label Content="Accommodation overview" FontSize="24" FontWeight="Bold" Margin="18,10,490,641"/>
                     <RadioButton Content="Overview" HorizontalAlignment="Left" Margin="19,80,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.722,0.613" IsChecked="True"/>
@@ -72,12 +72,13 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Reservations">
+            <TabItem Header="Reservations" Height="24" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
                 <Grid>
                     <GroupBox Header="All reservations" Margin="10,54,10,376">
                         <Grid>
                             <DataGrid x:Name="reservationsData"
                               ItemsSource="{Binding ReservationAccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding SelectedReservation, UpdateSourceTrigger=PropertyChanged}"
                                Height="208" 
                                VerticalAlignment="Top"
                                IsReadOnly="True"
@@ -93,7 +94,7 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <Button x:Name="bPostpone" Content="Postpone" Margin="10"/>
+                                                    <Button x:Name="bPostpone" Content="Postpone" Margin="10" Click="Postpone"/>
                                                     <Button x:Name="bCancel" Content="Cancel" Margin="10"/>
                                                 </StackPanel>
                                             </DataTemplate>

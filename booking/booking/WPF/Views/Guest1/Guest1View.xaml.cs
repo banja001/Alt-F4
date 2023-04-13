@@ -3,6 +3,7 @@ using booking.DTO;
 using booking.Model;
 using booking.Repository;
 using booking.View.Guest1;
+using booking.WPF.Views.Guest1;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,6 +31,8 @@ namespace booking.View
         public static ObservableCollection<ReservationAccommodationDTO> ReservationAccommodationDTOs { get; set; }
 
         public static AccommodationLocationDTO SelectedAccommodation { get; set; }
+
+        public static ReservationAccommodationDTO SelectedReservation { get; set; }
 
         public SearchedAccomodationDTO SearchedAccommodation { get; set; }
 
@@ -62,8 +65,6 @@ namespace booking.View
 
             AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
             ReservationAccommodationDTOs = CreateReservationAccommodationDTOs(_reservedDatesRepository.GetAll());
-
-            
 
             States = new ObservableCollection<string>();
 
@@ -117,7 +118,7 @@ namespace booking.View
                 accommodation = _accomodationRepository.GetAll().Where(a => a.Id == date.AccommodationId).ToList()[0];
                 location = _locationRepository.GetAll().Where(l => l.Id == accommodation.LocationId).ToList()[0];
 
-                reservationAccommodationDTOs.Add(new ReservationAccommodationDTO(accommodation, location, date.StartDate, date.EndDate));
+                reservationAccommodationDTOs.Add(new ReservationAccommodationDTO(accommodation, location, date));
             }
 
             return reservationAccommodationDTOs;
@@ -235,6 +236,13 @@ namespace booking.View
             AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
 
             accommodationData.ItemsSource = AccommodationDTOs;
+        }
+
+        private void Postpone(object sender, RoutedEventArgs e)
+        {
+            PostponeReservation postponeReservation = new PostponeReservation(_reservedDatesRepository.GetByID(SelectedReservation.ReservationId));
+            postponeReservation.Owner = this;
+            postponeReservation.ShowDialog();
         }
     }
 }
