@@ -1,4 +1,5 @@
-﻿using booking.DTO;
+﻿using booking.Domain.DTO;
+using booking.DTO;
 using booking.Model;
 using booking.Repository;
 using booking.View.Guest1;
@@ -22,9 +23,11 @@ namespace booking.View
     /// <summary>
     /// Interaction logic for AccomodationOverview.xaml
     /// </summary>
-    public partial class AccomodationOverview : Window
+    public partial class Guest1View : Window
     {
         public static ObservableCollection<AccommodationLocationDTO> AccommodationDTOs { get; set; }
+
+        public static ObservableCollection<ReservationAccommodationDTO> ReservationAccommodationDTOs { get; set; }
 
         public static AccommodationLocationDTO SelectedAccommodation { get; set; }
 
@@ -34,6 +37,8 @@ namespace booking.View
 
         private readonly LocationRepository _locationRepository;
 
+        private readonly ReservedDatesRepository _reservedDatesRepository;
+
         public string SelectedState { get; set; }
         public string SelectedCity { get; set; }
 
@@ -41,26 +46,31 @@ namespace booking.View
 
         private int userId;
 
-        public AccomodationOverview(int id)
+        public Guest1View(int id)
         {
             InitializeComponent();
+
             DataContext = this;
+
+            userId = id;
 
             _accomodationRepository = new AccommodationRepository();
             _locationRepository = new LocationRepository();
+            _reservedDatesRepository = new ReservedDatesRepository();
 
             SearchedAccommodation = new SearchedAccomodationDTO();
 
             AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
+            ReservationAccommodationDTOs = CreateReservationAccommodationDTOs(_reservedDatesRepository.GetAll());
 
-            userId = id;
+            
 
             States = new ObservableCollection<string>();
 
             FillStateComboBox();
             InitializeCheckBoxes();
-        }
 
+        }
         private void InitializeCheckBoxes()
         {
             CheckBoxApartment.IsChecked = true;
@@ -93,6 +103,24 @@ namespace booking.View
             }
 
             return accommodationLocations;
+        }
+
+        public ObservableCollection<ReservationAccommodationDTO> CreateReservationAccommodationDTOs(List<ReservedDates> reservedDates)
+        {
+            List<ReservedDates> usersReservedDates = reservedDates.Where(d => d.UserId == userId).ToList();
+            ObservableCollection<ReservationAccommodationDTO> reservationAccommodationDTOs = new ObservableCollection<ReservationAccommodationDTO>();
+            Accommodation accommodation;
+            Location location;
+
+            foreach(var date in usersReservedDates)
+            {
+                accommodation = _accomodationRepository.GetAll().Where(a => a.Id == date.AccommodationId).ToList()[0];
+                location = _locationRepository.GetAll().Where(l => l.Id == accommodation.LocationId).ToList()[0];
+
+                reservationAccommodationDTOs.Add(new ReservationAccommodationDTO(accommodation, location, date.StartDate, date.EndDate));
+            }
+
+            return reservationAccommodationDTOs;
         }
 
         private static AccommodationLocationDTO CreateAccommodationLocation(List<Location> locations, Accommodation accommodation)
@@ -157,7 +185,7 @@ namespace booking.View
 
         private void CheckBoxChecked(object sender, RoutedEventArgs e)
         {
-            if(SearchAccommodationButton.IsEnabled == false)
+            if (SearchAccommodationButton.IsEnabled == false)
                 SearchAccommodationButton.IsEnabled = true;
         }
 
