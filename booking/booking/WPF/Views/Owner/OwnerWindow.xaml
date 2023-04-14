@@ -36,6 +36,7 @@
         </DataGrid>
         <Button Grid.Column="1" Content="View Rating" HorizontalAlignment="Left" Margin="565,100,0,0" VerticalAlignment="Top" Height="44" Width="99" Click="View_Ratings_Click"/>
         <Label x:Name="AverageLabel" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="48,217,0,0" VerticalAlignment="Top" Width="188" Background="Gray"/>
+        <Button Grid.Column="1" Content="ReservationChange" HorizontalAlignment="Left" Margin="118,355,0,0" VerticalAlignment="Top" Click="Button_Click"/>
 
 
     </Grid>

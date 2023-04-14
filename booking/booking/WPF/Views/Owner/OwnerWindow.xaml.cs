@@ -21,6 +21,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using booking.WPF.Views.Owner;
 
 namespace booking.View
 {
@@ -178,6 +179,12 @@ namespace booking.View
         private void View_Ratings_Click(object sender, RoutedEventArgs e)
         {
             RatingView win = new RatingView(this);
+            win.ShowDialog();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ReservationChange win = new ReservationChange(this);
             win.ShowDialog();
         }
     }

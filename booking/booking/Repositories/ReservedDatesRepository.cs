@@ -34,6 +34,13 @@ namespace booking.Repository
         {
             return reservedDates.Where(d => d.Id == id).ToList()[0];
         }
+        public void Update(ReservedDates reservedDate)
+        {
+            reservedDates.Remove(reservedDates.Find(s => reservedDate.Id == s.Id));
+            reservedDates.Add(reservedDate);
+            Save();
+        }
+
 
         public int MakeId()
         {
@@ -43,6 +50,12 @@ namespace booking.Repository
         public void Add(ReservedDates reservedDate)
         {
             reservedDates.Add(reservedDate);
+            Save();
+        }
+
+        public void Remove(ReservedDates reservedDate)
+        {
+            reservedDates.Remove(reservedDate);
             Save();
         }
 
