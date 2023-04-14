@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace booking.Domain.RepositoryInterfaces
 {
-    interface IRepository
+    public interface IRepository
     {
         IEnumerable<object> GetAll();
         object GetById(int id);

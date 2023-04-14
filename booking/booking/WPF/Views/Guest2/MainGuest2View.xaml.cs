@@ -1,4 +1,5 @@
-﻿using System;
+﻿using booking.WPF.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,12 @@ namespace booking.View.Guest2.Windows
     /// </summary>
     public partial class MainGuest2View : Window
     {
+        private MainGuest2ViewModel _mainGuest2ViewModel;
         public MainGuest2View()
         {
             InitializeComponent();
+            _mainGuest2ViewModel = new MainGuest2ViewModel();
+            DataContext = _mainGuest2ViewModel;
         }
     }
 }

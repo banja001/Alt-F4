@@ -12,7 +12,6 @@ namespace booking.Injector
     {
         private static Dictionary<Type, object> _implementations = new Dictionary<Type, object>
         {
-            // treba dodati
         };
 
         public static T CreateInstance<T>()

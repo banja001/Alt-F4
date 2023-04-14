@@ -32,7 +32,6 @@
 
   <ItemGroup>
     <Folder Include="Application\UseCases\" />
-    <Folder Include="WPF\ViewModels\" />
   </ItemGroup>
 
 </Project>
