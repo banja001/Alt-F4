@@ -11,19 +11,17 @@ using System.Threading.Tasks;
 
 namespace booking.Domain.Model
 {
-    public enum RequestType { Postpone, Cancel}
+    public enum RequestType { Postpone, Cancel }//ne treba
 
     public class ReservationRequests : ISerializable
     {
         public int Id { get; set; }
         public int ReservationId { get; set; }
-
         public DateTime NewStartDate { get; set; }
         public DateTime NewEndDate { get; set; }
-
         public RequestType RequestType { get; set; }
 
-        public bool isCanceled { get; set; }
+        public bool isCanceled { get; set; }//prihvaceno, odbijeno, /
 
         public string Comment { get; set; }
 

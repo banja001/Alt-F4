@@ -77,7 +77,8 @@ namespace booking.Repositories
 
         public int MakeId()
         {
-            return reservationRequests.Count == 0 ? 1 : reservationRequests[reservationRequests.Count - 1].Id + 1;
+            return reservationRequests.Count == 0 ? 0 : reservationRequests.Max(d => d.Id) + 1;
         }
+
     }
 }

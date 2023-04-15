@@ -65,20 +65,25 @@ namespace booking.View
             _accomodationRepository = new AccommodationRepository();
             _locationRepository = new LocationRepository();
             _reservedDatesRepository = new ReservedDatesRepository();
-            _reservationRequestsRepository = new ReservationRequestsRepository();            
+            _reservationRequestsRepository = new ReservationRequestsRepository();
 
+            States = new ObservableCollection<string>();
+
+            InitialzeDTOs();
+            FillStateComboBox();
+            InitializeCheckBoxes();
+
+        }
+
+        private void InitialzeDTOs()
+        {
             SearchedAccommodation = new SearchedAccomodationDTO();
 
             AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
             ReservationAccommodationDTOs = CreateReservationAccommodationDTOs(_reservedDatesRepository.GetAll());
             ReservationRequestsDTOs = CreateReservationsRequestsDTOs(_reservationRequestsRepository.GetAll());
-
-            States = new ObservableCollection<string>();
-
-            FillStateComboBox();
-            InitializeCheckBoxes();
-
         }
+
         private void InitializeCheckBoxes()
         {
             CheckBoxApartment.IsChecked = true;
@@ -140,7 +145,9 @@ namespace booking.View
                 Accommodation accommodation = _accomodationRepository.GetById(reservedDate.AccommodationId);
                 Location location = _locationRepository.GetById(accommodation.LocationId);
 
-                reservationRequestsDTOs.Add(new ReservationsRequestsDTO(accommodation, location, request.RequestType.ToString(), "/"));
+                //ne moze isCanceled da se koristi da bi se znalo dal je prihvacena ili odbijena rezervacija jer onda ne mogu da znam samo preko False-a
+                //da li je prihvacena ili je jos vlasnik nije razmotrio
+                reservationRequestsDTOs.Add(new ReservationsRequestsDTO(accommodation, location, "Postpone", "/"));
             }
 
             return reservationRequestsDTOs;
@@ -267,6 +274,30 @@ namespace booking.View
             PostponeReservation postponeReservation = new PostponeReservation(_reservedDatesRepository.GetByID(SelectedReservation.ReservationId));
             postponeReservation.Owner = this;
             postponeReservation.ShowDialog();
+        }
+
+        private void CancelReservation(object sender, RoutedEventArgs e)
+        {
+            ReservedDates reservedDate = _reservedDatesRepository.GetByID(SelectedReservation.ReservationId);
+            AccommodationLocationDTO accomodation = AccommodationDTOs.Where(a => a.Id == reservedDate.AccommodationId).ToList()[0];
+
+            bool isMoreThan24H = accomodation.MinDaysToCancel == 0 && (SelectedReservation.StartDate - DateTime.Now).Hours >= 24;
+            bool isMoreThanMinDays = accomodation.MinDaysToCancel <= (SelectedReservation.StartDate - DateTime.Now).Days;
+
+            if (isMoreThan24H || isMoreThanMinDays)
+            {
+                _reservedDatesRepository.Delete(reservedDate);
+                MessageBox.Show("Your reservation is deleted!");
+            }
+            else
+            {
+                MessageBox.Show("You can cancle your reservation only 24h or " + accomodation.MinDaysToCancel + "days before!");
+            }
+        }
+
+        private void SfRating_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("kliknuto");
         }
     }
 }

@@ -42,6 +42,8 @@ namespace booking.View.Guest1
 
         private int userId;
 
+        public static bool childWindowClose = false;
+
         public ReserveAccommodation(int userId)
         {
             InitializeComponent();

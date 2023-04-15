@@ -1,4 +1,5 @@
-﻿using booking.Model;
+﻿using booking.Domain.Model;
+using booking.Model;
 using booking.Serializer;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ namespace booking.Repository
 
         public int MakeId()
         {
-            return reservedDates[reservedDates.Count - 1].Id + 1;
+            return reservedDates.Count == 0 ? 0 : reservedDates.Max(d => d.Id) + 1;
         }
 
         public void Add(ReservedDates reservedDate)
@@ -62,6 +63,12 @@ namespace booking.Repository
         public void Save()
         {
             serializer.ToCSV(fileName, reservedDates);
+        }
+
+        public void Delete(ReservedDates reservedDate)
+        {
+            reservedDates.Remove(reservedDate);
+            Save();
         }
         public void UpdateRating(int id)
         {
