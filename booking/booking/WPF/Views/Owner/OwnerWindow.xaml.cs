@@ -65,6 +65,8 @@ namespace booking.View
             
             CalculateAverageRating();
 
+            
+
             if (tempList.Count() != 0)
             {
                 Loaded += NotifyUser;

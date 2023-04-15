@@ -20,10 +20,10 @@ namespace booking.DTO
 
         public int MinDaysToUse { get; set; }
         public int MinDaysToCancel { get; set; }
-
+        public int AccommodationId { get; set; }
         public AccommodationLocationDTO() { }
 
-        public AccommodationLocationDTO(int id, string name, string location, string type, int maxCapacity, int minDaysToUse, int minDaysToCancel)
+        public AccommodationLocationDTO(int id, string name, string location, string type, int maxCapacity, int minDaysToUse, int minDaysToCancel, int accommodationId)
         {
             Id = id;
             Name = name;
@@ -32,6 +32,7 @@ namespace booking.DTO
             MaxCapacity = maxCapacity;
             MinDaysToUse = minDaysToUse;
             MinDaysToCancel = minDaysToCancel;
+            AccommodationId = accommodationId;
         }
     }
 }

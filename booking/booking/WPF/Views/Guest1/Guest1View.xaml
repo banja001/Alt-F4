@@ -38,11 +38,11 @@
                             <Button  x:Name="SeeAllButton" Height="20" Width="67" Content="See all" Margin="715,88,0,64" HorizontalAlignment="Left" Click="SeeAll"/>
                         </Grid>
                     </GroupBox>
-                    <Button x:Name="ReserveAccommodationButton" Width="147" Content="Reserve" HorizontalAlignment="Right" Click="ReserveAccommodations" Margin="0,300,18,373"/>
+                    <Button x:Name="ReserveAccommodationButton" Width="118" Content="Reserve" HorizontalAlignment="Right" Click="ReserveAccommodations" Margin="0,295,18,373"/>
                     <DataGrid x:Name="accommodationData"
                           ItemsSource="{Binding AccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
-                           Height="349" 
+                           Height="302" 
                            VerticalAlignment="Top"
                            IsReadOnly="True"
                            SelectionMode="Single"

@@ -47,33 +47,38 @@ namespace booking.View
         private readonly ReservedDatesRepository _reservedDatesRepository;
         private readonly ReservationRequestsRepository _reservationRequestsRepository;
         private readonly UserRepository _userRepository;
+        public List<User> users { get; set; }
         private readonly OwnerRatingRepository _ownerRatingsRepository;
         public string SelectedState { get; set; }
         public string SelectedCity { get; set; }
 
         public ObservableCollection<string> States { get; set; }
 
+        public SignInForm signInWindow { get; set; }
+
         private int userId;
 
-        public Guest1View(int id)
+        public Guest1View(int id,SignInForm sign)
         {
             InitializeComponent();
 
             DataContext = this;
 
+            signInWindow = sign;
             userId = id;
-
+            
             _accomodationRepository = new AccommodationRepository();
             _locationRepository = new LocationRepository();
             _reservedDatesRepository = new ReservedDatesRepository();
             _reservationRequestsRepository = new ReservationRequestsRepository();
-            ////////////
             _userRepository = new UserRepository();
+            users = _userRepository.GetAll();
             _ownerRatingsRepository = new OwnerRatingRepository();
-            ///////////
             SearchedAccommodation = new SearchedAccomodationDTO();
 
             AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
+            AccommodationDTOs=SortAccommodationDTOs();///////////////////////////
+
             ReservationAccommodationDTOs = CreateReservationAccommodationDTOs(_reservedDatesRepository.GetAll());
             ReservationRequestsDTOs = CreateReservationsRequestsDTOs(_reservationRequestsRepository.GetAll());
 
@@ -81,39 +86,6 @@ namespace booking.View
 
             FillStateComboBox();
             InitializeCheckBoxes();
-            ////////////////moze se prebaciti na login window
-            List<OwnerRating> ownerRatings = _ownerRatingsRepository.GetAll();
-            List<User> users = _userRepository.GetAll();
-            int sum, i;
-            int AverageRating = 0;
-            foreach(var user in users)
-            {
-                sum = 0;
-                i = 0;
-                
-                if (user.Role != "Owner") continue;
-                foreach(var rating in ownerRatings)
-                {
-                    if (rating.OwnerId != user.Id) continue;
-                    
-                    sum += rating.CleanRating + rating.KindRating;
-                    i += 1;
-                    
-                }
-                if (i == 0) AverageRating = 0;
-                else AverageRating = sum / (i * 2);
-
-                
-                _userRepository.UpdateById(user.Id, AverageRating>=4.5 && i >= 3);
-                
-            }
-
-
-
-
-             
-
-
         }
         private void InitializeCheckBoxes()
         {
@@ -191,7 +163,7 @@ namespace booking.View
             string locationCountry = locations.Find(u => u.Id == accommodation.LocationId).State;
 
             accommodationLocation = new AccommodationLocationDTO(accommodation.Id, accommodation.Name, locationCity + "," + locationCountry,
-                accommodation.Type, accommodation.MaxCapacity, accommodation.MinDaysToUse, accommodation.MinDaysToCancel);
+                accommodation.Type, accommodation.MaxCapacity, accommodation.MinDaysToUse, accommodation.MinDaysToCancel,accommodation.Id);//dodao acc id
             return accommodationLocation;
         }
 
@@ -213,9 +185,27 @@ namespace booking.View
             {
                 AddAccommodationToList(accommodation);
             }
-            List<Accommodation>accommodations= _accomodationRepository.GetAll();
-            
+            //////////////////////////////////////////////////////////////////////////////////
+            ObservableCollection<AccommodationLocationDTO> SortedAccommodationDTOs = SortAccommodationDTOs();
+            accommodationData.ItemsSource = SortedAccommodationDTOs;
+        }
 
+        private ObservableCollection<AccommodationLocationDTO> SortAccommodationDTOs()
+        {
+            List<Accommodation> accommodations = _accomodationRepository.GetAll();
+            ObservableCollection<AccommodationLocationDTO> SortedAccommodationDTOs = new ObservableCollection<AccommodationLocationDTO>();
+            bool flag;
+            Accommodation accommodation;
+            foreach (var item in AccommodationDTOs)
+            {
+                accommodation= accommodations.Find(s => s.Id == item.AccommodationId);
+                flag = users.Find(s => accommodation.OwnerId == s.Id).Super;
+                if (flag)
+                    SortedAccommodationDTOs.Insert(0, item);
+                else
+                    SortedAccommodationDTOs.Add(item);
+            }
+            return SortedAccommodationDTOs;
         }
 
         private void SetAccommodationTypes()
