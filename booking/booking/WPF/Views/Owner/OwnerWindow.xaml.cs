@@ -58,37 +58,44 @@ namespace booking.View
             DataContext = this;
             OwnerId = id;
             CreateInstances();
-            
+
             List<ReservedDates> ratingDates = PickDatesForRating();
             List<Guest1RatingDTO> tempList = GetGuestsToRate(ratingDates);
             ListToRate = new ObservableCollection<Guest1RatingDTO>(tempList);
-            int sum = 0;
-            int i = 0;
-            if (OwnerRatings.Count == 0)
-            {
-                AverageRating = 0;
-            }
-            else
-            {
-                foreach(var rating in OwnerRatings)
-                {
-                    if (rating.OwnerId == OwnerId)
-                    {
-                        
-                        sum += rating.KindRating + rating.CleanRating;
-                        i = i + 2;
-                    }
-                    
-                }
-                
-                AverageRating = sum / i;
-            }
-            AverageLabel.Content = AverageRating;
-
+            
+            CalculateAverageRating();
 
             if (tempList.Count() != 0)
             {
                 Loaded += NotifyUser;
+            }
+        }
+
+        private void CalculateAverageRating()
+        {
+            int sum = 0;
+            int i = 0;
+
+
+            foreach (var rating in OwnerRatings)
+            {
+                if (rating.OwnerId == OwnerId)
+                {
+
+                    sum += rating.KindRating + rating.CleanRating;
+                    i += 1;
+                }
+
+            }
+            if (i == 0) AverageRating = 0;
+            else AverageRating = sum / (i * 2);
+
+
+            AverageLabel.Content = AverageRating;
+            if (AverageRating >= 4.5 && i >= 3)
+            {
+                SuperOwnerLabel.Content = "Super Owner**";
+                userRepository.UpdateById(OwnerId,true);
             }
         }
 
@@ -147,7 +154,7 @@ namespace booking.View
             foreach(ReservedDates reservedDate in reservedDates)
             {
                 accommodations.Find(m => m.Id == reservedDate.AccommodationId);
-                if (DateTime.Today >= reservedDate.EndDate && DateTime.Today < reservedDate.EndDate.AddDays(5) && reservedDate.Rated==-1
+                if (DateTime.Today >= reservedDate.EndDate && DateTime.Today < reservedDate.EndDate.AddDays(5) && reservedDate.RatedGuest==-1
                     && accommodations.Find(m => m.Id == reservedDate.AccommodationId).OwnerId==OwnerId)
                 {
                     ratingDates.Add(reservedDate);

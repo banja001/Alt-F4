@@ -46,7 +46,8 @@ namespace booking.View
 
         private readonly ReservedDatesRepository _reservedDatesRepository;
         private readonly ReservationRequestsRepository _reservationRequestsRepository;
-
+        private readonly UserRepository _userRepository;
+        private readonly OwnerRatingRepository _ownerRatingsRepository;
         public string SelectedState { get; set; }
         public string SelectedCity { get; set; }
 
@@ -65,8 +66,11 @@ namespace booking.View
             _accomodationRepository = new AccommodationRepository();
             _locationRepository = new LocationRepository();
             _reservedDatesRepository = new ReservedDatesRepository();
-            _reservationRequestsRepository = new ReservationRequestsRepository();            
-
+            _reservationRequestsRepository = new ReservationRequestsRepository();
+            ////////////
+            _userRepository = new UserRepository();
+            _ownerRatingsRepository = new OwnerRatingRepository();
+            ///////////
             SearchedAccommodation = new SearchedAccomodationDTO();
 
             AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
@@ -77,6 +81,38 @@ namespace booking.View
 
             FillStateComboBox();
             InitializeCheckBoxes();
+            ////////////////moze se prebaciti na login window
+            List<OwnerRating> ownerRatings = _ownerRatingsRepository.GetAll();
+            List<User> users = _userRepository.GetAll();
+            int sum, i;
+            int AverageRating = 0;
+            foreach(var user in users)
+            {
+                sum = 0;
+                i = 0;
+                
+                if (user.Role != "Owner") continue;
+                foreach(var rating in ownerRatings)
+                {
+                    if (rating.OwnerId != user.Id) continue;
+                    
+                    sum += rating.CleanRating + rating.KindRating;
+                    i += 1;
+                    
+                }
+                if (i == 0) AverageRating = 0;
+                else AverageRating = sum / (i * 2);
+
+                
+                _userRepository.UpdateById(user.Id, AverageRating>=4.5 && i >= 3);
+                
+            }
+
+
+
+
+             
+
 
         }
         private void InitializeCheckBoxes()
@@ -177,6 +213,9 @@ namespace booking.View
             {
                 AddAccommodationToList(accommodation);
             }
+            List<Accommodation>accommodations= _accomodationRepository.GetAll();
+            
+
         }
 
         private void SetAccommodationTypes()

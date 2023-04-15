@@ -48,7 +48,7 @@ namespace booking.View.Owner
             {
                 ReservedDates res=win.reservedDates.Find(s => s.Id == OwnerRating.ReservationId);
                 if (res == null) continue;
-                else if (res.Rated == 1 && OwnerRating.OwnerId==win.OwnerId)
+                else if (res.RatedGuest == 1 && OwnerRating.OwnerId==win.OwnerId)
                 {
                     OwnerRatingDTO ow=new OwnerRatingDTO(win.users.Find(s=>s.Id==res.UserId).Username,OwnerRating.CleanRating,OwnerRating.KindRating,OwnerRating.Comment,OwnerRating.ReservationId);
                     
