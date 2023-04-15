@@ -72,49 +72,44 @@
                 <Grid>
                     <Label Content="Rate your accommodations" HorizontalAlignment="Left" Margin="19,23,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
                     <Label Content="Stayed in" HorizontalAlignment="Left" Margin="19,81,0,0" VerticalAlignment="Top"/>
-                    <ListBox HorizontalAlignment="Left" Height="134" Margin="82,82,0,0" VerticalAlignment="Top" Width="734" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+                    <ListBox Name="lbStayedIn"
+                            ItemsSource="{Binding StayedInAccommodations}" 
+                             SelectedItem="{Binding SelectedFromList, UpdateSourceTrigger=PropertyChanged}"
+                             SelectionMode="Single"
+                             HorizontalAlignment="Left" Height="134" Margin="82,82,0,0" VerticalAlignment="Top" Width="734" SelectionChanged="lbStayedIn_Selected"/>
                     <Label Content="Clean" HorizontalAlignment="Left" Margin="19,248,0,0" VerticalAlignment="Top"/>
 
                     <Label Content="Owner" HorizontalAlignment="Left" Margin="19,279,0,0" VerticalAlignment="Top"/>
                     <Label Content="Comment" HorizontalAlignment="Left" Margin="331,248,0,0" VerticalAlignment="Top"/>
-                    <RichTextBox HorizontalAlignment="Left" Height="94" Margin="406,248,0,0" VerticalAlignment="Top" Width="410">
-                        <FlowDocument>
-                            <Paragraph>
-                                <Run Text="RichTextBox"/>
-                            </Paragraph>
-                        </FlowDocument>
-                    </RichTextBox>
                     <GroupBox HorizontalAlignment="Left" Height="145" Header="Images" Margin="19,355,0,0" VerticalAlignment="Top" Width="797">
                         <Grid>
                             <Label Content="Image url" HorizontalAlignment="Left" Margin="0,10,0,82"/>
-                            <TextBox HorizontalAlignment="Left" Height="25" Margin="81,15,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="591"/>
+                            <TextBox Name="tbImageUrl" Text="{Binding ImageUrl, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="25" Margin="81,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="591"/>
                             <Label Content="Added" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <Button Content="Add" HorizontalAlignment="Left" Height="23" Margin="699,16,0,0" VerticalAlignment="Top" Width="63"/>
                             <Button Content="Remove" HorizontalAlignment="Left" Height="23" Margin="699,51,0,0" VerticalAlignment="Top" Width="63"/>
-                            <ListBox HorizontalAlignment="Left" Height="61" Margin="81,51,0,0" VerticalAlignment="Top" Width="591" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+                            <ListBox Name="lbAddedImages" 
+                                     ItemsSource="{Binding AddedImages}" 
+                                     SelectedItem="{Binding SelectedAddedImage, UpdateSourceTrigger=PropertyChanged}"
+                                     HorizontalAlignment="Left" Height="61" Margin="81,51,0,0" VerticalAlignment="Top" Width="591"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox HorizontalAlignment="Center" Height="129" Header="Renovation suggestion (optional)" Margin="0,514,0,0" VerticalAlignment="Top" Width="796">
                         <Grid>
                             <Label Content="Description" HorizontalAlignment="Left" Margin="0,0,0,80"/>
+                            <TextBox Name="txtbRenovationDescription" Text="{Binding RenovationDescription, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" HorizontalAlignment="Left" Height="52"  TextWrapping="Wrap" VerticalAlignment="Top" Width="673" Margin="89,10,0,0"/>
                             <Label Content="How urgent" HorizontalAlignment="Left" Margin="5,72,0,0" VerticalAlignment="Top"/>
-                            <RichTextBox HorizontalAlignment="Left" Height="54" Margin="89,13,0,0" VerticalAlignment="Top" Width="673">
-                                <FlowDocument>
-                                    <Paragraph>
-                                        <Run Text="RichTextBox"/>
-                                    </Paragraph>
-                                </FlowDocument>
-                            </RichTextBox>
                             <ComboBox HorizontalAlignment="Left" Height="24" Margin="89,72,0,0" VerticalAlignment="Top" Width="673"/>
                         </Grid>
                     </GroupBox>
-                    <Button Content="Submit rate" HorizontalAlignment="Left" Height="30" Margin="737,648,0,0" VerticalAlignment="Top" Width="79"/>
-                    <syncfusion:SfRating HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Top" Width="150" Margin="82,246,0,0" MouseUp="SfRating_MouseUp"/>
-                    <syncfusion:SfRating HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Top" Width="150" Margin="82,277,0,0"/>
+                    <Button Content="Submit rate" HorizontalAlignment="Left" Height="30" Margin="737,648,0,0" VerticalAlignment="Top" Width="79" Click="SubmitRate"/>
+                    <syncfusion:SfRating Name="stClean" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Top" Width="150" Margin="82,246,0,0" MouseUp="CleanStarsClick"/>
+                    <syncfusion:SfRating Name="stOwner" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Top" Width="150" Margin="82,277,0,0" MouseUp="OwnersKindnessStarsClick"/>
+                    <TextBox Name="txtbComment" Text="{Binding RatingComment, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" HorizontalAlignment="Left" Height="98" Margin="411,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="405"/>
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Reservations" Height="24" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
+            <TabItem Header="Reservations" Margin="-2,0,-2,0" Height="22" VerticalAlignment="Top">
                 <Grid>
                     <GroupBox Header="All reservations" Margin="10,54,10,376">
                         <Grid>

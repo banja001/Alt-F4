@@ -24,21 +24,23 @@ namespace booking.Model
         public int NumOfGuests { get; set; }
 
         public int UserId { get; set; }
-        public int Rated { get; set; }
+        public bool RatedByOwner { get; set; }
+
+        public bool RatedByGuest { get; set; }
 
         public ReservedDates() { }
 
-        public ReservedDates(DateTime startDate, DateTime endDate, int accommodationId, int userId = -1, int rated = -1, int id = 0, int numOfGuests = 0)
+        public ReservedDates(DateTime startDate, DateTime endDate, int accommodationId, int userId = -1, bool ratedByOwner = false, int id = 0, int numOfGuests = 0, bool ratedByGuest = false)
         { 
             Id = id;
             StartDate = startDate;
             EndDate = endDate;
             AccommodationId = accommodationId;
             UserId = userId;
-            Rated = rated;
+            RatedByOwner = ratedByOwner;
             NumOfGuests = numOfGuests;
             UserId = userId;
-            Rated = rated;
+            RatedByGuest = ratedByGuest;
         }
 
         public ReservedDates(ReservedDates reservedDate)
@@ -48,10 +50,10 @@ namespace booking.Model
             EndDate = reservedDate.EndDate;
             AccommodationId = reservedDate.AccommodationId;
             UserId = reservedDate.UserId;
-            Rated = reservedDate.Rated;
+            RatedByOwner = reservedDate.RatedByOwner;
             NumOfGuests = reservedDate.NumOfGuests;
             UserId = reservedDate.UserId;
-            Rated = reservedDate.Rated;
+            RatedByGuest = reservedDate.RatedByGuest;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -107,7 +109,7 @@ namespace booking.Model
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), StartDate.ToString("dd/MM/yyyy"), EndDate.ToString("dd/MM/yyyy"), AccommodationId.ToString(), NumOfGuests.ToString(), UserId.ToString(),
-            Rated.ToString() };
+            RatedByOwner.ToString(), RatedByOwner.ToString() };
 
             return csvValues;
         }
@@ -120,7 +122,8 @@ namespace booking.Model
             AccommodationId = Convert.ToInt32(values[3]);
             NumOfGuests = Convert.ToInt32(values[4]);
             UserId = Convert.ToInt32(values[5]);
-            Rated = Convert.ToInt32(values[6]);
+            RatedByOwner = values[6] == "true" ? true : false;
+            RatedByGuest = values[7] == "true" ? true : false;
         }
     }
 }

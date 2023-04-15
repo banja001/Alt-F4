@@ -74,7 +74,7 @@ namespace booking.Repository
         {
             ReservedDates r = reservedDates.Find(u => u.Id == id);
             reservedDates.Remove(r);
-            r.Rated++;
+            r.RatedByOwner = true;
             reservedDates.Add(r);
             serializer.ToCSV(fileName, reservedDates);
         }

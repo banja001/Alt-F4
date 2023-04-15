@@ -33,5 +33,10 @@ namespace booking.Repository
             Serializer.ToCSV(fileName, OwnerRatings);
 
         }
+
+        public int MakeId()
+        {
+            return OwnerRatings.Count == 0 ? 1 : OwnerRatings.Max(d => d.Id) + 1;
+        }
     }
 }

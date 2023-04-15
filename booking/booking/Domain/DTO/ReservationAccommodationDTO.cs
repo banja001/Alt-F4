@@ -1,4 +1,5 @@
-﻿using booking.Model;
+﻿using booking.DTO;
+using booking.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,29 @@ namespace booking.Domain.DTO
             Location = location.State + "," + location.City;
             StartDate = reservation.StartDate;
             EndDate = reservation.EndDate;
+        }
+
+        public ReservationAccommodationDTO(int reservationId, string accommodationName, string location, DateTime startDate, DateTime endDate)
+        {
+            ReservationId = reservationId;
+            AccommodationName = accommodationName;
+            Location = location;
+            StartDate = startDate;
+            EndDate = endDate;
+        }
+
+        public ReservationAccommodationDTO(ReservationAccommodationDTO reservationAccommodationDTO)
+        {
+            this.ReservationId = reservationAccommodationDTO.ReservationId;
+            this.AccommodationName = reservationAccommodationDTO.AccommodationName;
+            this.Location = reservationAccommodationDTO.Location;
+            this.StartDate = reservationAccommodationDTO.StartDate;
+            this.EndDate = reservationAccommodationDTO.EndDate;
+        }
+
+        public override string ToString()
+        {
+            return AccommodationName + "|" + Location + "|" + StartDate.ToString("dd/MM/yyyy") + "-" + EndDate.ToString("dd/MM/yyyy");
         }
     }
 }

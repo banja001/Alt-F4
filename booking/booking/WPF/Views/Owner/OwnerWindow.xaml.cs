@@ -147,7 +147,7 @@ namespace booking.View
             foreach(ReservedDates reservedDate in reservedDates)
             {
                 accommodations.Find(m => m.Id == reservedDate.AccommodationId);
-                if (DateTime.Today >= reservedDate.EndDate && DateTime.Today < reservedDate.EndDate.AddDays(5) && reservedDate.Rated==-1
+                if (DateTime.Today >= reservedDate.EndDate && DateTime.Today < reservedDate.EndDate.AddDays(5) && reservedDate.RatedByOwner==false
                     && accommodations.Find(m => m.Id == reservedDate.AccommodationId).OwnerId==OwnerId)
                 {
                     ratingDates.Add(reservedDate);

@@ -34,7 +34,13 @@ namespace booking.View
         public static ObservableCollection<ReservationAccommodationDTO> ReservationAccommodationDTOs { get; set; }
         public static ObservableCollection<ReservationsRequestsDTO> ReservationRequestsDTOs { get; set; }
 
+        public static ObservableCollection<ReservationAccommodationDTO> StayedInAccommodations { get; set; }
+
         public static AccommodationLocationDTO SelectedAccommodation { get; set; }
+        
+        public static object SelectedFromList { get; set; }
+
+        public static ReservationAccommodationDTO SelectedStayedInAccommodation { get; set; }
 
         public static ReservationAccommodationDTO SelectedReservation { get; set; }
 
@@ -46,6 +52,14 @@ namespace booking.View
 
         private readonly ReservedDatesRepository _reservedDatesRepository;
         private readonly ReservationRequestsRepository _reservationRequestsRepository;
+        private readonly OwnerRatingRepository _ownerRatingRepository;
+
+        public double CleanRating { get; set; }
+        public double OwnersKindenssRating { get; set; }
+
+        public string RatingComment { get; set; }
+
+        public string ImageUrl { get; set; }
 
         public string SelectedState { get; set; }
         public string SelectedCity { get; set; }
@@ -66,6 +80,7 @@ namespace booking.View
             _locationRepository = new LocationRepository();
             _reservedDatesRepository = new ReservedDatesRepository();
             _reservationRequestsRepository = new ReservationRequestsRepository();
+            _ownerRatingRepository = new OwnerRatingRepository();
 
             States = new ObservableCollection<string>();
 
@@ -81,6 +96,7 @@ namespace booking.View
 
             AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
             ReservationAccommodationDTOs = CreateReservationAccommodationDTOs(_reservedDatesRepository.GetAll());
+            StayedInAccommodations = new ObservableCollection<ReservationAccommodationDTO>(CreateStayedInAccommodations());
             ReservationRequestsDTOs = CreateReservationsRequestsDTOs(_reservationRequestsRepository.GetAll());
         }
 
@@ -134,6 +150,12 @@ namespace booking.View
             return reservationAccommodationDTOs;
         }
 
+        public List<ReservationAccommodationDTO> CreateStayedInAccommodations()
+        {
+            return ReservationAccommodationDTOs.Where(r => !_reservedDatesRepository.GetByID(r.ReservationId).RatedByGuest &&
+                DateTime.Now >= r.EndDate && (DateTime.Now - r.EndDate).Days <= 5).ToList();
+        }
+
         public ObservableCollection<ReservationsRequestsDTO> CreateReservationsRequestsDTOs(List<ReservationRequests> reservationRequests)
         {
             ObservableCollection<ReservationsRequestsDTO> reservationRequestsDTOs = new ObservableCollection<ReservationsRequestsDTO>();
@@ -145,8 +167,6 @@ namespace booking.View
                 Accommodation accommodation = _accomodationRepository.GetById(reservedDate.AccommodationId);
                 Location location = _locationRepository.GetById(accommodation.LocationId);
 
-                //ne moze isCanceled da se koristi da bi se znalo dal je prihvacena ili odbijena rezervacija jer onda ne mogu da znam samo preko False-a
-                //da li je prihvacena ili je jos vlasnik nije razmotrio
                 reservationRequestsDTOs.Add(new ReservationsRequestsDTO(accommodation, location, "Postpone", "/"));
             }
 
@@ -308,9 +328,47 @@ namespace booking.View
             reservationRequestsData.ItemsSource = ReservationRequestsDTOs;
         }
 
-        private void SfRating_MouseUp(object sender, MouseButtonEventArgs e)
+        private void CleanStarsClick(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("kliknuto");
+            CleanRating = stClean.Value;
+        }
+
+        private void SubmitRate(object sender, RoutedEventArgs e)
+        {
+            ReservedDates reservedDate = _reservedDatesRepository.GetByID(SelectedStayedInAccommodation.ReservationId);
+            reservedDate.RatedByGuest = true;
+            _reservedDatesRepository.Update(reservedDate);
+
+            Accommodation accommodation = _accomodationRepository.GetById(reservedDate.AccommodationId);
+
+            OwnerRating ownerRating = new OwnerRating(_ownerRatingRepository.MakeId(), accommodation.OwnerId, Convert.ToInt32(CleanRating), Convert.ToInt32(OwnersKindenssRating), RatingComment);
+
+            ownerRating.ReservationId = SelectedStayedInAccommodation.ReservationId;
+
+            _ownerRatingRepository.AddRating(ownerRating);
+
+            StayedInAccommodations.Remove(StayedInAccommodations.Where(a => a.ReservationId == SelectedStayedInAccommodation.ReservationId).ToList()[0]);
+            lbStayedIn.ItemsSource = StayedInAccommodations;
+
+            MessageBox.Show("Rating successfully added!");
+        }
+
+        private void OwnersKindnessStarsClick(object sender, MouseButtonEventArgs e)
+        {
+            OwnersKindenssRating = stOwner.Value;
+        }
+
+        private void lbStayedIn_Selected(object sender, SelectionChangedEventArgs e)
+        {
+            if (SelectedFromList != null)
+            {
+                string[] parts = SelectedFromList.ToString().Split("|");
+
+                ReservationAccommodationDTO stayedInAccommodation = StayedInAccommodations.Where(a => a.StartDate.ToString("dd/MM/yyyy") == parts[2].Split("-")[0] && a.EndDate.ToString("dd/MM/yyyy") == parts[2].Split("-")[1]
+                    && a.Location == parts[1] && a.AccommodationName == parts[0]).ToList()[0];
+
+                SelectedStayedInAccommodation = new ReservationAccommodationDTO(stayedInAccommodation);
+            }
         }
     }
 }
