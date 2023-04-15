@@ -112,7 +112,7 @@ namespace booking.WPF.Views.Owner
             
             
             UpdateObservable();
-            //requestsObservable.Remove(SelectedItem);
+            
         }
 
         private void DeclineClick(object sender, RoutedEventArgs e)

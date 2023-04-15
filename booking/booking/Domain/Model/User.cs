@@ -15,20 +15,22 @@ namespace booking.Model
         public string Password { get; set; }
         public string Role { get; set; }
 
+        public bool Super { get; set; }
         public User() 
         {
         }
 
-        public User(string username, string password, string role)
+        public User(string username, string password, string role, bool super=false)
         {
             Username = username;
             Password = password;
-            Role = role; 
+            Role = role;
+            Super = super;
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Username, Password, Role };
+            string[] csvValues = { Id.ToString(), Username, Password, Role,Super.ToString() };
             return csvValues;
         }
 
@@ -38,6 +40,7 @@ namespace booking.Model
             Username = values[1];
             Password = values[2];
             Role = values[3];
+            Super = Convert.ToBoolean(values[4]);
         }
     }
 }

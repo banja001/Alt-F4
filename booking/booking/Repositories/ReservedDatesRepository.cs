@@ -42,7 +42,7 @@ namespace booking.Repository
         }
 
 
-        public int MakeId()//Treba izmjeniti da radi preko max ida
+        public int MakeId()//Treba izmijeniti da radi preko max ida
         {
             if (reservedDates.Count == 0) return 0;
             //return reservedDates[reservedDates.Count - 1].Id + 1;
