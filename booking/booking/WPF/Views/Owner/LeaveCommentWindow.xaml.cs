@@ -19,12 +19,12 @@ namespace booking.WPF.Views.Owner
     /// <summary>
     /// Interaction logic for LeaveComment.xaml
     /// </summary>
-    public partial class LeaveComment : Window
+    public partial class LeaveCommentWindow : Window
     {
         public string Comment { get; set; }
 
-        public ReservationChange resWin;
-        public LeaveComment(ReservationChange win)
+        public ReservationChangeWindow resWin;
+        public LeaveCommentWindow(ReservationChangeWindow win)
         {
             InitializeComponent();
             DataContext = this;
@@ -34,8 +34,8 @@ namespace booking.WPF.Views.Owner
 
         private void SaveCommentClick(object sender, RoutedEventArgs e)
         {
-            ReservationRequests r=resWin.requests.Find(s=>resWin.SelectedItem.ReservationChangeId==s.ReservationId);
-            resWin.repository.UpdateCancel(r, Comment);
+            ReservationRequests request=resWin.reservationRequests.Find(s=>resWin.SelectedItem.ReservationId==s.ReservationId);
+            resWin.reservationRequestsRepository.UpdateDecline(request, Comment);
             resWin.requestsObservable.Remove(resWin.SelectedItem);
             this.Close();
 

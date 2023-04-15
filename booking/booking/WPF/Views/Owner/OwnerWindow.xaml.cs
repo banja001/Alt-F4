@@ -178,13 +178,13 @@ namespace booking.View
 
         private void View_Ratings_Click(object sender, RoutedEventArgs e)
         {
-            RatingView win = new RatingView(this);
+            RatingViewWindow win = new RatingViewWindow(this);
             win.ShowDialog();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ReservationChange win = new ReservationChange(this);
+            ReservationChangeWindow win = new ReservationChangeWindow(this);
             win.ShowDialog();
         }
     }

@@ -21,7 +21,7 @@ namespace booking.View.Owner
     /// <summary>
     /// Interaction logic for RatingView.xaml
     /// </summary>
-    public partial class RatingView : Window
+    public partial class RatingViewWindow : Window
     {
         
 
@@ -31,7 +31,7 @@ namespace booking.View.Owner
         
         public ObservableCollection<OwnerRatingDTO> OwnerRatings { get; set; }
         public OwnerRatingDTO SelectedItem { get; set; }
-        public RatingView(OwnerWindow win)
+        public RatingViewWindow(OwnerWindow win)
         {
             InitializeComponent();
             DataContext = this;

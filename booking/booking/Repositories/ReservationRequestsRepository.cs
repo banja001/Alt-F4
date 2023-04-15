@@ -46,7 +46,7 @@ namespace booking.Repositories
 
 
         }
-        public void UpdateCancel(ReservationRequests r,string comment)
+        public void UpdateDecline(ReservationRequests r,string comment)
         {
            
             reservationRequests.Remove(r);

@@ -38,7 +38,7 @@
                             <Button  x:Name="SeeAllButton" Height="20" Width="67" Content="See all" Margin="715,88,0,64" HorizontalAlignment="Left" Click="SeeAll"/>
                         </Grid>
                     </GroupBox>
-                    <Button x:Name="ReserveAccommodationButton" Height="20" Width="67" Content="Reserve" HorizontalAlignment="Right" Click="ReserveAccommodations" Margin="0,334,18,362"/>
+                    <Button x:Name="ReserveAccommodationButton" Width="147" Content="Reserve" HorizontalAlignment="Right" Click="ReserveAccommodations" Margin="0,300,18,373"/>
                     <DataGrid x:Name="accommodationData"
                           ItemsSource="{Binding AccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
