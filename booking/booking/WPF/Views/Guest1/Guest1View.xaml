@@ -39,7 +39,7 @@
                             <Button  x:Name="SeeAllButton" Height="20" Width="67" Content="See all" Margin="715,88,0,64" HorizontalAlignment="Left" Click="SeeAll"/>
                         </Grid>
                     </GroupBox>
-                    <Button x:Name="ReserveAccommodationButton" Height="20" Width="67" Content="Reserve" HorizontalAlignment="Right" Click="ReserveAccommodations" Margin="0,334,18,362"/>
+                    <Button x:Name="ReserveAccommodationButton" Width="67" Content="Reserve" HorizontalAlignment="Right" Click="ReserveAccommodations" Margin="0,330,18,340"/>
                     <DataGrid x:Name="accommodationData"
                           ItemsSource="{Binding AccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
@@ -91,6 +91,7 @@
                             <Label Content="Added" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <Button Content="Add" HorizontalAlignment="Left" Height="23" Margin="699,16,0,0" VerticalAlignment="Top" Width="63"/>
                             <Button Content="Remove" HorizontalAlignment="Left" Height="23" Margin="699,51,0,0" VerticalAlignment="Top" Width="63"/>
+                            <ListBox HorizontalAlignment="Left" Height="61" Margin="81,51,0,0" VerticalAlignment="Top" Width="591" d:ItemsSource="{d:SampleData ItemCount=5}"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox HorizontalAlignment="Center" Height="129" Header="Renovation suggestion (optional)" Margin="0,514,0,0" VerticalAlignment="Top" Width="796">
