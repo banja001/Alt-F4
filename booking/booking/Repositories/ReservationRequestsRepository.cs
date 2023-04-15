@@ -32,6 +32,11 @@ namespace booking.Repositories
             reservationRequests.Remove(r);
             Save();
         }
+        public void RemoveAllByReservationId(int id)
+        {
+            reservationRequests.RemoveAll(r => r.ReservationId == id);
+            Save();
+        }
         public List<ReservationRequests> GetPostpone()
         {
             List < ReservationRequests> list= new List<ReservationRequests>();
@@ -74,6 +79,8 @@ namespace booking.Repositories
         {
             serializer.ToCSV(fileName, reservationRequests);
         }
+
+        
 
         public int MakeId()
         {

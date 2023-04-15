@@ -287,12 +287,25 @@ namespace booking.View
             if (isMoreThan24H || isMoreThanMinDays)
             {
                 _reservedDatesRepository.Delete(reservedDate);
+                _reservationRequestsRepository.RemoveAllByReservationId(reservedDate.Id);
+
+                UpdateDataGrids();
+
                 MessageBox.Show("Your reservation is deleted!");
             }
             else
             {
                 MessageBox.Show("You can cancle your reservation only 24h or " + accomodation.MinDaysToCancel + "days before!");
             }
+        }
+
+        private void UpdateDataGrids()
+        {
+            ReservationAccommodationDTOs = CreateReservationAccommodationDTOs(_reservedDatesRepository.GetAll());
+            ReservationRequestsDTOs = CreateReservationsRequestsDTOs(_reservationRequestsRepository.GetAll());
+
+            reservationsData.ItemsSource = ReservationAccommodationDTOs;
+            reservationRequestsData.ItemsSource = ReservationRequestsDTOs;
         }
 
         private void SfRating_MouseUp(object sender, MouseButtonEventArgs e)
