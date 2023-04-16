@@ -196,7 +196,12 @@ namespace booking.View
                 accommodation= accommodations.Find(s => s.Id == item.AccommodationId);
                 flag = users.Find(s => accommodation.OwnerId == s.Id).Super;
                 if (flag)
+                {
+                    if (!item.Name.Last().Equals("*"))
+                        item.Name += "*";
                     SortedAccommodationDTOs.Insert(0, item);
+                    
+                }
                 else
                     SortedAccommodationDTOs.Add(item);
             }

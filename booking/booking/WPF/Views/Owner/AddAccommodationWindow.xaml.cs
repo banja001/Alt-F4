@@ -95,6 +95,11 @@ namespace booking.View
                 MessageBox.Show("Please enter atleast one image", "Error");
                 return false;
             }
+            if (NameTextBox.Text.Last().Equals('*'))
+            {
+                MessageBox.Show("Accommodation name cant end with *", "Error");
+                return false;
+            }
 
 
             return true;
