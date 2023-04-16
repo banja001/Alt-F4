@@ -30,28 +30,21 @@ namespace booking.WPF.Views.Owner
         public List<ReservationRequests> reservationRequests;
         public ReservationRequestsRepository reservationRequestsRepository;
         public OwnerWindow ownerWindow;
-
-        
-
         public ObservableCollection<ReservationChangeDTO> requestsObservable { get; set; }
-        
         public ReservationChangeDTO SelectedItem { get; set; }
         public ReservationChangeWindow(OwnerWindow win)
         {
             InitializeComponent();
             DataContext = this;
             ownerWindow = win;
-
             reservationRequestsRepository = new ReservationRequestsRepository();
             requestsObservable = new ObservableCollection<ReservationChangeDTO>();
-            
             UpdateObservable();
-
         }
 
         private void UpdateObservable()
         {
-            reservationRequests = reservationRequestsRepository.GetPostpone();//Treba get all
+            reservationRequests = reservationRequestsRepository.GetPostpone();//Treba get false
             requestsObservable.Clear();
             foreach (ReservationRequests resRequest in reservationRequests)
             {
@@ -61,8 +54,6 @@ namespace booking.WPF.Views.Owner
                 Accommodation reservedAccommodation = ownerWindow.accommodations.Find(s => reservedDate.AccommodationId == s.Id);
                 
                 if (reservedAccommodation.OwnerId != ownerWindow.OwnerId || resRequest.isCanceled == true) continue;
-
-
                 resTemp.RequestId = resRequest.Id;
                 resTemp.ReservationId = resRequest.ReservationId;
                 resTemp.AccommodationName = reservedAccommodation.Name;
@@ -76,7 +67,6 @@ namespace booking.WPF.Views.Owner
                 resTemp.IsTaken = rr == null ? Taken.No : Taken.Yes;
 
                 requestsObservable.Add(resTemp);
-
             }
             
         }

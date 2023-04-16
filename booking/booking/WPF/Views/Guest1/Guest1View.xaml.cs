@@ -30,25 +30,20 @@ namespace booking.View
     public partial class Guest1View : Window
     {
         public static ObservableCollection<AccommodationLocationDTO> AccommodationDTOs { get; set; }
-
         public static ObservableCollection<ReservationAccommodationDTO> ReservationAccommodationDTOs { get; set; }
         public static ObservableCollection<ReservationsRequestsDTO> ReservationRequestsDTOs { get; set; }
-
         public static AccommodationLocationDTO SelectedAccommodation { get; set; }
-
         public static ReservationAccommodationDTO SelectedReservation { get; set; }
-
         public SearchedAccomodationDTO SearchedAccommodation { get; set; }
 
         private readonly AccommodationRepository _accomodationRepository;
-
         private readonly LocationRepository _locationRepository;
-
         private readonly ReservedDatesRepository _reservedDatesRepository;
         private readonly ReservationRequestsRepository _reservationRequestsRepository;
         private readonly UserRepository _userRepository;
-        public List<User> users { get; set; }
         private readonly OwnerRatingRepository _ownerRatingsRepository;
+        public List<User> users { get; set; }
+        
         public string SelectedState { get; set; }
         public string SelectedCity { get; set; }
 
