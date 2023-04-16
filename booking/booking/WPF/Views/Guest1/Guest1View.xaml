@@ -87,10 +87,11 @@
                             <TextBox Name="tbImageUrl" Text="{Binding ImageUrl, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="25" Margin="81,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="591" TextChanged="tbImageUrl_TextChanged"/>
                             <Label Content="Added" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,45,0,0"/>
                             <Button Name="bAddImage" Content="Add" HorizontalAlignment="Left" Height="23" Margin="699,16,0,0" VerticalAlignment="Top" Width="63" Click="AddImage"/>
-                            <Button Content="Remove" HorizontalAlignment="Left" Height="23" Margin="699,51,0,0" VerticalAlignment="Top" Width="63"/>
+                            <Button Content="Remove" HorizontalAlignment="Left" Height="23" Margin="699,51,0,0" VerticalAlignment="Top" Width="63" Click="RemoveImage"/>
                             <ListView Name="lvAddedImages" 
-                                     ItemsSource="{Binding AddedImages}" 
-                                     SelectedItem="{Binding SelectedAddedImage, UpdateSourceTrigger=PropertyChanged}"
+                                     ItemsSource="{Binding AddedImages, UpdateSourceTrigger=PropertyChanged}" 
+                                     SelectedItem="{Binding SelectedAddedImages, UpdateSourceTrigger=PropertyChanged}"
+                                      SelectionMode="Extended"
                                      HorizontalAlignment="Left" Height="120" Margin="81,51,0,0" VerticalAlignment="Top" Width="591">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
@@ -109,7 +110,7 @@
                             <ComboBox HorizontalAlignment="Left" Height="24" Margin="89,72,0,0" VerticalAlignment="Top" Width="673"/>
                         </Grid>
                     </GroupBox>
-                    <Button Content="Submit rate" HorizontalAlignment="Left" Height="30" Margin="737,648,0,0" VerticalAlignment="Top" Width="79" Click="SubmitRate"/>
+                    <Button Name="bSubmitRate" Content="Submit rate" HorizontalAlignment="Left" Height="30" Margin="737,648,0,0" VerticalAlignment="Top" Width="79" Click="SubmitRate" IsEnabled="False"/>
                     <syncfusion:SfRating Name="stClean" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Top" Width="150" Margin="82,197,0,0" MouseUp="CleanStarsClick"/>
                     <syncfusion:SfRating Name="stOwner" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Top" Width="150" Margin="82,228,0,0" MouseUp="OwnersKindnessStarsClick"/>
                     <TextBox Name="txtbComment" Text="{Binding RatingComment, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" HorizontalAlignment="Left" Height="98" Margin="411,203,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="405"/>

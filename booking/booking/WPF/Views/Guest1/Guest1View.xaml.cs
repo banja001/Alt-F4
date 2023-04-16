@@ -38,7 +38,9 @@ namespace booking.View
         public static ObservableCollection<ReservationsRequestsDTO> ReservationRequestsDTOs { get; set; }
 
         public static ObservableCollection<ReservationAccommodationDTO> StayedInAccommodations { get; set; }
+        public static ObservableCollection<Image> AddedImages { get; set; }
 
+        public Image SelectedAddedImages { get; set; }
         public static AccommodationLocationDTO SelectedAccommodation { get; set; }
         
         public static object SelectedFromList { get; set; }
@@ -68,7 +70,7 @@ namespace booking.View
         public string SelectedState { get; set; }
         public string SelectedCity { get; set; }
 
-        public ObservableCollection<Image> AddedImages { get; set; }
+        
 
         public List<OwnerRatingImage> OwnerRatingImages { get; set; }
         public ObservableCollection<string> States { get; set; }
@@ -377,6 +379,7 @@ namespace booking.View
             stClean.Value = 0;
             stOwner.Value = 0;
             txtbComment.Text = "";
+            bSubmitRate.IsEnabled = false;
         }
 
         private void OwnersKindnessStarsClick(object sender, MouseButtonEventArgs e)
@@ -386,6 +389,7 @@ namespace booking.View
 
         private void lbStayedIn_Selected(object sender, SelectionChangedEventArgs e)
         {
+            bSubmitRate.IsEnabled = true;
             if (SelectedFromList != null)
             {
                 string[] parts = SelectedFromList.ToString().Split("|");
@@ -408,6 +412,13 @@ namespace booking.View
                 return;
             }
 
+            if(OwnerRatingImages.Find(i => i.Url == ImageUrl) != null)
+            {
+                AddedImages.RemoveAt(AddedImages.Count - 1);
+                tbImageUrl.Text = "";
+                MessageBox.Show("You have already added that image, please choose a different one!", "Warning");
+                return;
+            }
             OwnerRatingImages.Add(new OwnerRatingImage(-1, ImageUrl, SelectedStayedInAccommodation.ReservationId));
             tbImageUrl.Text = "";
         }
@@ -449,6 +460,18 @@ namespace booking.View
         private void tbImageUrl_TextChanged(object sender, TextChangedEventArgs e)
         {
             bAddImage.IsEnabled = true;
+        }
+
+        private void RemoveImage(object sender, RoutedEventArgs e)
+        {
+            ObservableCollection<Image> AddedImagesCpy = new ObservableCollection<Image>(AddedImages);
+            foreach(var item in lvAddedImages.SelectedItems)
+            {
+                AddedImagesCpy.Remove((Image)item);
+            }
+
+            AddedImages = AddedImagesCpy;
+            lvAddedImages.ItemsSource = AddedImages;
         }
     }
 }
