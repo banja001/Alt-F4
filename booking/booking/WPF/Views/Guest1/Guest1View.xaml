@@ -153,6 +153,7 @@
                         <Grid>
                             <DataGrid x:Name="reservationRequestsData"
                               ItemsSource="{Binding ReservationRequestsDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding SelectedReservationRequestDTO, UpdateSourceTrigger=PropertyChanged}"        
                                Height="246" 
                                VerticalAlignment="Top"
                                IsReadOnly="True"
@@ -167,7 +168,7 @@
                                     <DataGridTemplateColumn Header="Owner's comment" Width="*">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button x:Name="bViewOwnersComment" Content="View"/>
+                                                <Button x:Name="bViewOwnersComment" Content="View" Click="ViewComment"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace booking.Domain.Model
 {
     public enum RequestType { Postpone, Cancel }//ne treba
+    public enum RequestStatus { Pending, Postponed, Canceled }
 
     public class ReservationRequests : ISerializable
     {
@@ -21,14 +22,14 @@ namespace booking.Domain.Model
         public DateTime NewEndDate { get; set; }
         public RequestType RequestType { get; set; }
 
-        public bool isCanceled { get; set; }//prihvaceno, odbijeno, /
+        public RequestStatus isCanceled { get; set; }//prihvaceno, odbijeno, /
 
         public string Comment { get; set; }
 
 
         public ReservationRequests() { }
 
-        public ReservationRequests(int id, ReservedDates reservedDate, string requestType,string comment = "", bool isCanceled = false)
+        public ReservationRequests(int id, ReservedDates reservedDate, string requestType,string comment = "", RequestStatus isCanceled = RequestStatus.Pending)
         {
             Id = id;
             ReservationId = reservedDate.Id;
@@ -51,8 +52,13 @@ namespace booking.Domain.Model
             NewStartDate = DateTime.ParseExact(values[2], "dd/MM/yyyy", CultureInfo.InvariantCulture);
             NewEndDate = DateTime.ParseExact(values[3], "dd/MM/yyyy", CultureInfo.InvariantCulture);
             RequestType = values[4] == "Postpone" ? RequestType.Postpone : RequestType.Cancel;
-            isCanceled = Convert.ToBoolean(values[5]);
-            Comment= values[6];
+
+            if (values[5] == "Pending") 
+                isCanceled = RequestStatus.Pending;
+            else if (values[5] == "Postponed") 
+                isCanceled = RequestStatus.Postponed;
+            else isCanceled = RequestStatus.Canceled;
+            Comment = values[6];
         }
     }
 }

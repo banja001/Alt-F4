@@ -53,7 +53,7 @@ namespace booking.WPF.Views.Owner
                 ReservedDates reservedDate = ownerWindow.reservedDates.Find(s => resRequest.ReservationId == s.Id);
                 Accommodation reservedAccommodation = ownerWindow.accommodations.Find(s => reservedDate.AccommodationId == s.Id);
                 
-                if (reservedAccommodation.OwnerId != ownerWindow.OwnerId || resRequest.isCanceled == true) continue;
+                if (reservedAccommodation.OwnerId != ownerWindow.OwnerId || resRequest.isCanceled != RequestStatus.Pending) continue;
                 resTemp.RequestId = resRequest.Id;
                 resTemp.ReservationId = resRequest.ReservationId;
                 resTemp.AccommodationName = reservedAccommodation.Name;

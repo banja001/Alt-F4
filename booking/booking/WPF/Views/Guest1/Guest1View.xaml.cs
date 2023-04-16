@@ -48,6 +48,8 @@ namespace booking.View
         public static ReservationAccommodationDTO SelectedStayedInAccommodation { get; set; }
 
         public static ReservationAccommodationDTO SelectedReservation { get; set; }
+
+        public static ReservationsRequestsDTO SelectedReservationRequestDTO { get; set; }
         public SearchedAccomodationDTO SearchedAccommodation { get; set; }
 
         private readonly AccommodationRepository _accomodationRepository;
@@ -191,14 +193,14 @@ namespace booking.View
                 Accommodation accommodation = _accomodationRepository.GetById(reservedDate.AccommodationId);
                 Location location = _locationRepository.GetById(accommodation.LocationId);
 
-                reservationRequestsDTOs.Add(new ReservationsRequestsDTO(accommodation, location, "Postpone", "/"));
+                reservationRequestsDTOs.Add(new ReservationsRequestsDTO(accommodation, location, "Postpone", request.isCanceled.ToString(), request.Id));
             }
 
             return reservationRequestsDTOs;
         }
 
 
-
+        
         private static AccommodationLocationDTO CreateAccommodationLocation(List<Location> locations, Accommodation accommodation)
         {
             AccommodationLocationDTO accommodationLocation;
@@ -515,6 +517,15 @@ namespace booking.View
 
             AddedImages = AddedImagesCpy;
             lvAddedImages.ItemsSource = AddedImages;
+        }
+
+        private void ViewComment(object sender, RoutedEventArgs e)
+        {
+            ReservationRequests reservationRequest =_reservationRequestsRepository.GetById(SelectedReservationRequestDTO.RequestId);
+
+            if (reservationRequest.Comment == "")
+                MessageBox.Show("Owner didn't leave a comment", "Owner's comment");
+            else MessageBox.Show(reservationRequest.Comment, "Owner's comment");
         }
     }
 }

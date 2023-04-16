@@ -27,6 +27,11 @@ namespace booking.Repositories
             return reservationRequests;
         }
 
+        public ReservationRequests GetById(int id)
+        {
+            return reservationRequests.Find(r => r.Id == id);
+        }
+
         public void Remove(ReservationRequests r)
         {
             reservationRequests.Remove(r);
@@ -55,7 +60,7 @@ namespace booking.Repositories
         {
            
             reservationRequests.Remove(r);
-            r.isCanceled = true;
+            r.isCanceled = RequestStatus.Canceled;
             r.Comment = comment;
             reservationRequests.Add(r);
             Save();
@@ -64,7 +69,7 @@ namespace booking.Repositories
         public void UpdateAllow(ReservationRequests r)
         {
             reservationRequests.Remove(r);
-            r.isCanceled = true;
+            r.isCanceled = RequestStatus.Postponed;
             reservationRequests.Add(r);
             Save();
         }
@@ -79,8 +84,6 @@ namespace booking.Repositories
         {
             serializer.ToCSV(fileName, reservationRequests);
         }
-
-        
 
         public int MakeId()
         {
