@@ -1,5 +1,5 @@
 ﻿using booking.Repository;
-﻿using booking.DTO;
+using booking.DTO;
 using booking.Model;
 using booking.Repository;
 using booking.View.Owner;
@@ -22,6 +22,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using booking.WPF.Views.Owner;
+using booking.Domain.Model;
+using Repositories;
 
 namespace booking.View
 {
@@ -39,7 +41,7 @@ namespace booking.View
         public AccommodationImageRepository accommodationImageRepository;
         public List<AccommodationImage> accommodationImages;
         public LocationRepository locationRepository;
-        public List <Location> locations;
+        public List<Location> locations;
         public ReservedDatesRepository reservedDatesRepository;
         public List<ReservedDates> reservedDates;
         public Guest1RatingsRepository guest1RatingsRepository;
@@ -52,6 +54,9 @@ namespace booking.View
         public List<OwnerRating> OwnerRatings;
         public ObservableCollection<Guest1RatingDTO> ListToRate { get; set; }
         public Guest1RatingDTO SelectedItem { get; set; }
+
+        private readonly OwnerNotificationRepository _ownerNotificationRepository;
+        public static List<OwnerNotification> Notifications { get; set; }
         public OwnerWindow(int id)
         {
             InitializeComponent();
@@ -90,6 +95,25 @@ namespace booking.View
             {
                 Loaded += NotifyUser;
             }
+
+            _ownerNotificationRepository = new OwnerNotificationRepository();
+            Notifications = _ownerNotificationRepository.GetAll();
+
+            if (Notifications.Count != 0)
+            {
+                NotifyOwner();
+            }
+        }
+
+        public void NotifyOwner()
+        {
+            foreach(var notification in Notifications)
+            {
+                if(notification.OwnerId == OwnerId)
+                    MessageBox.Show(notification.ToString());
+            }
+
+            _ownerNotificationRepository.DeleteAllByOwnerId(OwnerId);
         }
 
         private List<Guest1RatingDTO> GetGuestsToRate(List<ReservedDates> ratingDates)
@@ -125,7 +149,6 @@ namespace booking.View
             OwnerRatingImages=OwnerRatingImageRepository.GetAll();
             OwnerRatingRepository=new OwnerRatingRepository();
             OwnerRatings=OwnerRatingRepository.GetAll();
-
         }
 
         private void NotifyUser(object sender, RoutedEventArgs e)

@@ -6,6 +6,7 @@ using booking.Repositories;
 using booking.Repository;
 using booking.View.Guest1;
 using booking.WPF.Views.Guest1;
+using Repositories;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -66,6 +67,8 @@ namespace booking.View
         public string RatingComment { get; set; }
 
         public string ImageUrl { get; set; }
+        private readonly OwnerNotificationRepository _ownerNotificationRepository;
+        private readonly UserRepository _userRepository;
 
         public string SelectedState { get; set; }
         public string SelectedCity { get; set; }
@@ -91,6 +94,8 @@ namespace booking.View
             _reservationRequestsRepository = new ReservationRequestsRepository();
             _ownerRatingRepository = new OwnerRatingRepository();
             _ownerRatingImageRepository = new OwnerRatingImageRepository();
+            _ownerNotificationRepository = new OwnerNotificationRepository();
+            _userRepository = new UserRepository();
 
             States = new ObservableCollection<string>();
             AddedImages = new ObservableCollection<Image>();
@@ -322,6 +327,10 @@ namespace booking.View
                 _reservationRequestsRepository.RemoveAllByReservationId(reservedDate.Id);
 
                 UpdateDataGrids();
+
+                int ownerId = _accomodationRepository.GetById(reservedDate.AccommodationId).OwnerId;
+
+                _ownerNotificationRepository.Add(new OwnerNotification(_ownerNotificationRepository.MakeId(), ownerId, accomodation, reservedDate, _userRepository.GetUserNameById(userId)));
 
                 MessageBox.Show("Your reservation is deleted!");
             }

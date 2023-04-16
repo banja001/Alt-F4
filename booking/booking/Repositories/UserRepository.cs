@@ -32,6 +32,11 @@ namespace booking.Repository
             return _users.FirstOrDefault(u => u.Username == userName);
         }
 
-        
+        public string GetUserNameById(int id)
+        {
+            _users = _serializer.FromCSV(FilePath);
+
+            return _users.Find(u => u.Id == id).Username;
+        }
     }
 }
