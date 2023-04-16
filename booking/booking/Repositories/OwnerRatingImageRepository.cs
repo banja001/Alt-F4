@@ -52,5 +52,9 @@ namespace booking.Repository
             return ownerRatingImages;
         }
         
+        public int MakeId()
+        {
+            return OwnerRatingImages.Count == 0 ? 1 : OwnerRatingImages.Max(i => i.Id) + 1;
+        }
     }
 }

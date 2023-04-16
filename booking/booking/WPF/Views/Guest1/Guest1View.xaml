@@ -76,22 +76,29 @@
                             ItemsSource="{Binding StayedInAccommodations}" 
                              SelectedItem="{Binding SelectedFromList, UpdateSourceTrigger=PropertyChanged}"
                              SelectionMode="Single"
-                             HorizontalAlignment="Left" Height="134" Margin="82,82,0,0" VerticalAlignment="Top" Width="734" SelectionChanged="lbStayedIn_Selected"/>
-                    <Label Content="Clean" HorizontalAlignment="Left" Margin="19,248,0,0" VerticalAlignment="Top"/>
+                             HorizontalAlignment="Left" Height="102" Margin="82,82,0,0" VerticalAlignment="Top" Width="734" SelectionChanged="lbStayedIn_Selected"/>
+                    <Label Content="Clean" HorizontalAlignment="Left" Margin="19,199,0,0" VerticalAlignment="Top"/>
 
-                    <Label Content="Owner" HorizontalAlignment="Left" Margin="19,279,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Comment" HorizontalAlignment="Left" Margin="331,248,0,0" VerticalAlignment="Top"/>
-                    <GroupBox HorizontalAlignment="Left" Height="145" Header="Images" Margin="19,355,0,0" VerticalAlignment="Top" Width="797">
+                    <Label Content="Owner" HorizontalAlignment="Left" Margin="19,230,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Comment" HorizontalAlignment="Left" Margin="331,199,0,0" VerticalAlignment="Top"/>
+                    <GroupBox HorizontalAlignment="Left" Height="194" Header="Images" Margin="19,306,0,0" VerticalAlignment="Top" Width="797">
                         <Grid>
                             <Label Content="Image url" HorizontalAlignment="Left" Margin="0,10,0,82"/>
-                            <TextBox Name="tbImageUrl" Text="{Binding ImageUrl, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="25" Margin="81,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="591"/>
-                            <Label Content="Added" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <Button Content="Add" HorizontalAlignment="Left" Height="23" Margin="699,16,0,0" VerticalAlignment="Top" Width="63" Click="AddImage"/>
+                            <TextBox Name="tbImageUrl" Text="{Binding ImageUrl, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="25" Margin="81,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="591" TextChanged="tbImageUrl_TextChanged"/>
+                            <Label Content="Added" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,45,0,0"/>
+                            <Button Name="bAddImage" Content="Add" HorizontalAlignment="Left" Height="23" Margin="699,16,0,0" VerticalAlignment="Top" Width="63" Click="AddImage"/>
                             <Button Content="Remove" HorizontalAlignment="Left" Height="23" Margin="699,51,0,0" VerticalAlignment="Top" Width="63"/>
-                            <ListView Name="lbAddedImages" 
+                            <ListView Name="lvAddedImages" 
                                      ItemsSource="{Binding AddedImages}" 
                                      SelectedItem="{Binding SelectedAddedImage, UpdateSourceTrigger=PropertyChanged}"
-                                     HorizontalAlignment="Left" Height="71" Margin="81,51,0,0" VerticalAlignment="Top" Width="591"/>
+                                     HorizontalAlignment="Left" Height="120" Margin="81,51,0,0" VerticalAlignment="Top" Width="591">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                            </ListView>
                         </Grid>
                     </GroupBox>
                     <GroupBox HorizontalAlignment="Center" Height="129" Header="Renovation suggestion (optional)" Margin="0,514,0,0" VerticalAlignment="Top" Width="796">
@@ -103,9 +110,9 @@
                         </Grid>
                     </GroupBox>
                     <Button Content="Submit rate" HorizontalAlignment="Left" Height="30" Margin="737,648,0,0" VerticalAlignment="Top" Width="79" Click="SubmitRate"/>
-                    <syncfusion:SfRating Name="stClean" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Top" Width="150" Margin="82,246,0,0" MouseUp="CleanStarsClick"/>
-                    <syncfusion:SfRating Name="stOwner" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Top" Width="150" Margin="82,277,0,0" MouseUp="OwnersKindnessStarsClick"/>
-                    <TextBox Name="txtbComment" Text="{Binding RatingComment, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" HorizontalAlignment="Left" Height="98" Margin="411,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="405"/>
+                    <syncfusion:SfRating Name="stClean" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Top" Width="150" Margin="82,197,0,0" MouseUp="CleanStarsClick"/>
+                    <syncfusion:SfRating Name="stOwner" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Top" Width="150" Margin="82,228,0,0" MouseUp="OwnersKindnessStarsClick"/>
+                    <TextBox Name="txtbComment" Text="{Binding RatingComment, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" HorizontalAlignment="Left" Height="98" Margin="411,203,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="405"/>
 
                 </Grid>
             </TabItem>

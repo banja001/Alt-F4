@@ -56,6 +56,7 @@ namespace booking.View
         private readonly ReservedDatesRepository _reservedDatesRepository;
         private readonly ReservationRequestsRepository _reservationRequestsRepository;
         private readonly OwnerRatingRepository _ownerRatingRepository;
+        private readonly OwnerRatingImageRepository _ownerRatingImageRepository;
 
         public double CleanRating { get; set; }
         public double OwnersKindenssRating { get; set; }
@@ -68,6 +69,8 @@ namespace booking.View
         public string SelectedCity { get; set; }
 
         public ObservableCollection<Image> AddedImages { get; set; }
+
+        public List<OwnerRatingImage> OwnerRatingImages { get; set; }
         public ObservableCollection<string> States { get; set; }
 
         private int userId;
@@ -85,9 +88,11 @@ namespace booking.View
             _reservedDatesRepository = new ReservedDatesRepository();
             _reservationRequestsRepository = new ReservationRequestsRepository();
             _ownerRatingRepository = new OwnerRatingRepository();
+            _ownerRatingImageRepository = new OwnerRatingImageRepository();
 
             States = new ObservableCollection<string>();
             AddedImages = new ObservableCollection<Image>();
+            OwnerRatingImages = new List<OwnerRatingImage>();
 
             InitialzeDTOs();
             FillStateComboBox();
@@ -352,10 +357,26 @@ namespace booking.View
 
             _ownerRatingRepository.AddRating(ownerRating);
 
+            foreach (var ownerRatingImage in OwnerRatingImages)
+            {
+                ownerRatingImage.Id = _ownerRatingImageRepository.MakeId();
+                _ownerRatingImageRepository.AddOwnerRatingImage(ownerRatingImage);
+            }
+
             StayedInAccommodations.Remove(StayedInAccommodations.Where(a => a.ReservationId == SelectedStayedInAccommodation.ReservationId).ToList()[0]);
-            lbStayedIn.ItemsSource = StayedInAccommodations;
+            ResetFormInputs();
 
             MessageBox.Show("Rating successfully added!");
+        }
+
+        private void ResetFormInputs()
+        {
+            AddedImages.Clear();
+            lvAddedImages.ItemsSource = AddedImages;
+            lbStayedIn.ItemsSource = StayedInAccommodations;
+            stClean.Value = 0;
+            stOwner.Value = 0;
+            txtbComment.Text = "";
         }
 
         private void OwnersKindnessStarsClick(object sender, MouseButtonEventArgs e)
@@ -378,20 +399,56 @@ namespace booking.View
 
         private void AddImage(object sender, RoutedEventArgs e)
         {
-            WebClient wc = new WebClient();
-            byte[] bytes = wc.DownloadData(ImageUrl);
-            MemoryStream ms = new MemoryStream(bytes);
-            ms.Dispose();
+            
+            AddedImages.Add(CreateImageFromBitMap());
+            if (!bAddImage.IsEnabled)
+            {
+                AddedImages.RemoveAt(AddedImages.Count - 1);
+                tbImageUrl.Text = "";
+                return;
+            }
 
+            OwnerRatingImages.Add(new OwnerRatingImage(-1, ImageUrl, SelectedStayedInAccommodation.ReservationId));
+            tbImageUrl.Text = "";
+        }
+
+        private Image CreateImageFromBitMap()
+        {
+            if (bAddImage.IsEnabled)
+            {
+                Image img = new Image();
+                img.Source = CreateBitmapImage();
+                img.Width = 100;
+                img.Height = 100;
+
+                return img;
+            }
+
+            return null;
+        }
+
+        private BitmapImage CreateBitmapImage()
+        {
             BitmapImage bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
-            bitmapImage.UriSource = new Uri(@ImageUrl, UriKind.Absolute);
-            bitmapImage.EndInit();
-            /*Image img = (Image)bitmapImage;
+            try
+            {
+                bitmapImage.UriSource = new Uri(@ImageUrl, UriKind.Absolute);
+                bitmapImage.EndInit();
+                return bitmapImage;
+            }
+            catch
+            {
+                MessageBox.Show("Invalid type of image url");
+                bAddImage.IsEnabled = false;
+                return null;
+            }
+            
+        }
 
-            AddedImages.Add(img);*/
-
-            lbAddedImages.ItemsSource = AddedImages;
+        private void tbImageUrl_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            bAddImage.IsEnabled = true;
         }
     }
 }

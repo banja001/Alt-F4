@@ -16,11 +16,11 @@ namespace booking.Model
 
         public OwnerRatingImage() { }
 
-        public OwnerRatingImage(int id, string url, int accomodation)
+        public OwnerRatingImage(int id, string url, int reservedDateId)//za 3. parametar je stajalo int accommodation, greska?
         {
             this.Id = id;
             this.Url = url;
-            this.RatedDatesId = accomodation;
+            this.RatedDatesId = reservedDateId;
         }
 
         public string[] ToCSV()
