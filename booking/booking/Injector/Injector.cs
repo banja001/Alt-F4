@@ -1,4 +1,5 @@
 ﻿using booking.Domain.RepositoryInterfaces;
+using booking.Repositories;
 using booking.Repository;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace booking.Injector
     {
         private static Dictionary<Type, object> _implementations = new Dictionary<Type, object>
         {
+            {typeof(IGuideRatingRepository), new GuideRatingRepository()},
+            {typeof(IGuideRatingImageRepository), new GuideRatingImageRepository() }
         };
 
         public static T CreateInstance<T>()

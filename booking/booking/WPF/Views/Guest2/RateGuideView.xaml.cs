@@ -14,24 +14,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace booking.View.Guest2.Windows
+namespace booking.WPF.Views.Guest2
 {
     /// <summary>
-    /// Interaction logic for MainGuest2View.xaml
+    /// Interaction logic for RateGuideView.xaml
     /// </summary>
-    /// 
-
-    public partial class MainGuest2View : Window
+    public partial class RateGuideView : Window
     {
-        private MainGuest2ViewModel _mainGuest2ViewModel;
-        public User User { get; set; }
-        public MainGuest2View(User user)
+        private readonly RateGuideViewModel _rateGuideViewModel;
+        public RateGuideView(Appointment selectedTour)
         {
             InitializeComponent();
-            _mainGuest2ViewModel = new MainGuest2ViewModel(user);
-            DataContext = _mainGuest2ViewModel;
-            User = user;
-            WelcomeLabel.Content = "Welcome " + User.Username;
+            _rateGuideViewModel = new RateGuideViewModel(selectedTour);
+            this.DataContext = _rateGuideViewModel;
+
         }
     }
 }

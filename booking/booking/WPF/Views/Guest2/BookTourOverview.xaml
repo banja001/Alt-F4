@@ -30,6 +30,7 @@
                     <RowDefinition Height ="1*"/>
                     <RowDefinition Height ="1*"/>
                     <RowDefinition Height ="1*"/>
+                    <RowDefinition Height ="1*"/>
                 </Grid.RowDefinitions>
                 <Label Content="Name:" Grid.Column="0" Grid.Row="0" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,5"/>
                 <TextBox IsEnabled="False" Text="{Binding Path=TourForBooking.Name, Mode=OneWay}" Grid.Column="1" Grid.Row="0" IsReadOnly="True" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,10"/>
@@ -47,6 +48,8 @@
                 <TextBox IsEnabled="False" Text="{Binding AvailableSpace, Mode=TwoWay}" Grid.Column="1" Grid.Row="6" IsReadOnly="False" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,10"/>
                 <Label Content="Number of guests:" Grid.Column="0" Grid.Row="7" FontSize="12" FontWeight="Normal" Margin="30, 20, 20, 0"/>
                 <TextBox x:Name="GuestNumberInput" Text="{Binding NumberOfGuests, Mode=TwoWay}" Grid.Column="1" Grid.Row="7" IsReadOnly="False" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,10" TextChanged="GuestNumberInputTextChanged"/>
+                <Label Content="Average guest age:" Grid.Column="0" Grid.Row="8" FontSize="12" FontWeight="Normal" Margin="30, 20, 20, 0"/>
+                <TextBox x:Name="AverageGuestAgeInput" Text="{Binding AverageGuestAge, Mode=TwoWay}" Grid.Column="1" Grid.Row="8" IsReadOnly="False" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,10" TextChanged="AverageGuestAgeInputTextChanged"/>
             </Grid>
         </GroupBox>
         <Button x:Name="ConfirmBookingButton" Grid.Row="1" Grid.Column="0" Content="Confirm" FontWeight="DemiBold" Margin="60, 15, 40, 25" Background="#FF4C7CE6" Foreground="White" Click="ConfirmBookingButtonClick"/>

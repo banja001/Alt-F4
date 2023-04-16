@@ -27,6 +27,7 @@ namespace booking.View.Guest2
         private readonly ReservationTourRepository _reservationTourRepository;
         public int NumberOfGuests { get; set; }
         public int AvailableSpace { get; set; }
+        public int AverageGuestAge { get; set; }
         public TourLocationDTO TourForBooking { get; set; }
         public User CurrentUser { get; set; }
         private bool ConfirmButtonFlag { get; set; }
@@ -59,7 +60,8 @@ namespace booking.View.Guest2
                 ReservationTour reservation = new ReservationTour(_reservationTourRepository.GetNextIndex(),
                                                                   TourForBooking.Id,
                                                                   CurrentUser.Id,
-                                                                  NumberOfGuests);
+                                                                  NumberOfGuests,
+                                                                  AverageGuestAge);
                 _reservationTourRepository.Add(reservation);
                 MessageBox.Show("Tour reserved successfully!", "Success");
 
@@ -93,6 +95,20 @@ namespace booking.View.Guest2
             Regex numberOfGuestsRegex = new Regex("^[1-9][0-9]*$");
             var GuestNumberInput = sender as TextBox;
             bool isInvalid = string.IsNullOrEmpty(GuestNumberInput.Text) || GuestNumberInput.Text.Equals("0") || !numberOfGuestsRegex.IsMatch(GuestNumberInput.Text);
+            if (isInvalid)
+            {
+                this.ConfirmBookingButton.IsEnabled = false;
+            }
+            else
+            {
+                this.ConfirmBookingButton.IsEnabled = true;
+            }
+        }
+        private void AverageGuestAgeInputTextChanged(object sender, TextChangedEventArgs e)
+        {
+            Regex averageGuestAgeRegex = new Regex("^[1-9][0-9]*$");
+            var AverageGuestAgeInput = sender as TextBox;
+            bool isInvalid = string.IsNullOrEmpty(AverageGuestAgeInput.Text) || AverageGuestAgeInput.Text.Equals("0") || !averageGuestAgeRegex.IsMatch(AverageGuestAgeInput.Text);
             if (isInvalid)
             {
                 this.ConfirmBookingButton.IsEnabled = false;
