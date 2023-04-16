@@ -26,9 +26,9 @@ namespace booking.View
     /// </summary>
     public partial class SignInForm : Window
     {
-
+        private readonly OwnerRatingRepository _ownerRatingsRepository;
         private readonly UserRepository _repository;
-
+        
         private string _userName;
 
         
@@ -57,6 +57,32 @@ namespace booking.View
             InitializeComponent();
             DataContext = this;
             _repository = new UserRepository();
+            _ownerRatingsRepository = new OwnerRatingRepository();
+            
+            Loaded += RefreshUsers;
+        }
+
+        public void RefreshUsers(object sender, RoutedEventArgs e)
+        {
+            Loaded -= RefreshUsers;
+            List<OwnerRating> ownerRatings = _ownerRatingsRepository.GetAll();
+            List<User> users = _repository.GetAll().ToList();
+            int sum, i;
+            int AverageRating = 0;
+            foreach (User user in users)
+            {
+                sum = 0;
+                i = 0;
+                if (user.Role != "Owner") continue;
+                foreach (var rating in ownerRatings)
+                {
+                    if (rating.OwnerId != user.Id) continue;
+                    sum += rating.CleanRating + rating.KindRating;
+                    i += 1;
+                }
+                AverageRating= i==0 ? 0 : sum / (i * 2);
+                _repository.UpdateById(user.Id, AverageRating >= 4.5 && i >= 3);
+            }
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
@@ -76,7 +102,7 @@ namespace booking.View
                     }
                     else if (user.Role == "Guest1")
                     {
-                        Guest1View accomodationOverview = new Guest1View(user.Id);
+                        Guest1View accomodationOverview = new Guest1View(user.Id,this);
                         accomodationOverview.Show();
                         this.Close();
                     }

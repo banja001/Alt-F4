@@ -63,33 +63,14 @@ namespace booking.View
             DataContext = this;
             OwnerId = id;
             CreateInstances();
-            
+
             List<ReservedDates> ratingDates = PickDatesForRating();
             List<Guest1RatingDTO> tempList = GetGuestsToRate(ratingDates);
             ListToRate = new ObservableCollection<Guest1RatingDTO>(tempList);
-            int sum = 0;
-            int i = 0;
-            if (OwnerRatings.Count == 0)
-            {
-                AverageRating = 0;
-            }
-            else
-            {
-                foreach(var rating in OwnerRatings)
-                {
-                    if (rating.OwnerId == OwnerId)
-                    {
-                        
-                        sum += rating.KindRating + rating.CleanRating;
-                        i = i + 2;
-                    }
-                    
-                }
-                
-                AverageRating = sum / i;
-            }
-            AverageLabel.Content = AverageRating;
+            
+            CalculateAverageRating();
 
+            
 
             if (tempList.Count() != 0)
             {
@@ -114,6 +95,34 @@ namespace booking.View
             }
 
             _ownerNotificationRepository.DeleteAllByOwnerId(OwnerId);
+        }
+
+        private void CalculateAverageRating()
+        {
+            int sum = 0;
+            int i = 0;
+
+
+            foreach (var rating in OwnerRatings)
+            {
+                if (rating.OwnerId == OwnerId)
+                {
+
+                    sum += rating.KindRating + rating.CleanRating;
+                    i += 1;
+                }
+
+            }
+            if (i == 0) AverageRating = 0;
+            else AverageRating = sum / (i * 2);
+
+
+            AverageLabel.Content = AverageRating;
+            if (AverageRating >= 4.5 && i >= 3)
+            {
+                SuperOwnerLabel.Content = "Super Owner**";
+                userRepository.UpdateById(OwnerId,true);
+            }
         }
 
         private List<Guest1RatingDTO> GetGuestsToRate(List<ReservedDates> ratingDates)
@@ -201,13 +210,13 @@ namespace booking.View
 
         private void View_Ratings_Click(object sender, RoutedEventArgs e)
         {
-            RatingView win = new RatingView(this);
+            RatingViewWindow win = new RatingViewWindow(this);
             win.ShowDialog();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ReservationChange win = new ReservationChange(this);
+            ReservationChangeWindow win = new ReservationChangeWindow(this);
             win.ShowDialog();
         }
     }

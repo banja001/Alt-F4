@@ -38,5 +38,22 @@ namespace booking.Repository
 
             return _users.Find(u => u.Id == id).Username;
         }
+        public void UpdateById(int id,bool b)
+        {
+            User u=_users.Find(u => u.Id == id);
+            if (u.Super == b)
+            {
+                return;
+            }
+            else
+            {
+                _users.Remove(u);
+                u.Super = b;
+                _users.Add(u);
+                _serializer.ToCSV(FilePath, _users);
+            }
+        }
+
+        
     }
 }

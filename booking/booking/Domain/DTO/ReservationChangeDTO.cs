@@ -10,7 +10,7 @@ namespace booking.Domain.DTO
     public class ReservationChangeDTO
     {
         public int RequestId { get; set; }
-        public int ReservationChangeId { get; set; }
+        public int ReservationId { get; set; }
         public string AccommodationName{get;set;}
         public DateTime OldStartDate { get;set;}
 
@@ -22,7 +22,7 @@ namespace booking.Domain.DTO
 
         public ReservationChangeDTO(int id, string accommodationName, DateTime oldStartDate, DateTime oldNewDate, DateTime newStartDate, DateTime newEndDate, Taken isTaken, int requestId)
         {
-            ReservationChangeId = id;
+            ReservationId = id;
             AccommodationName = accommodationName;
             OldStartDate = oldStartDate;
             OldEndDate = oldNewDate;

@@ -43,7 +43,7 @@
                     <DataGrid x:Name="accommodationData"
                           ItemsSource="{Binding AccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
-                           Height="349" 
+                           Height="302" 
                            VerticalAlignment="Top"
                            IsReadOnly="True"
                            SelectionMode="Single"
