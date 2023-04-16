@@ -13,6 +13,7 @@
             <RowDefinition Height="0.5*"/>
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
@@ -28,30 +29,38 @@
             <Label FontSize="15" Content="4" Margin="0,0,40,0" Foreground="White"/>
             <Label FontSize="15" Content="5" Margin="0,0,40,0" Foreground="White"/>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <RadioButton Margin="10,0,40,0"/>
-            <RadioButton Margin="0,0,40,0"/>
-            <RadioButton Margin="0,0,40,0"/>
-            <RadioButton Margin="0,0,40,0"/>
-            <RadioButton Margin="0,0,40,0"/>
+            <StackPanel x:Name="TourKnowledgePanel" Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <RadioButton Name="Knowledge1" Margin="10,0,40,0"/>
+            <RadioButton Name="Knowledge2" Margin="0,0,40,0"/>
+            <RadioButton Name="Knowledge3" Margin="0,0,40,0"/>
+            <RadioButton Name="Knowledge4" Margin="0,0,40,0"/>
+            <RadioButton Name="Knowledge5" Margin="0,0,40,0"/>
         </StackPanel>
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <RadioButton Margin="10,0,40,0"/>
-            <RadioButton Margin="0,0,40,0"/>
-            <RadioButton Margin="0,0,40,0"/>
-            <RadioButton Margin="0,0,40,0"/>
-            <RadioButton Margin="0,0,40,0"/>
+        <StackPanel x:Name="LanguageKnowledgePanel" Grid.Row="2" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <RadioButton Name="Language1" Margin="10,0,40,0"/>
+            <RadioButton Name="Language2" Margin="0,0,40,0"/>
+            <RadioButton Name="Language3" Margin="0,0,40,0"/>
+            <RadioButton Name="Language4" Margin="0,0,40,0"/>
+            <RadioButton Name="Language5" Margin="0,0,40,0"/>
         </StackPanel>
-        <Label Grid.Row="1" Grid.Column="0" Foreground="White" FontSize="16" Margin="50,0,0,0" Content="Tour Knowledge:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <StackPanel x:Name="TourEnjoymentPanel" Grid.Row="3" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <RadioButton Name="Enjoyment1" Margin="10,0,40,0"/>
+                <RadioButton Name="Enjoyment2" Margin="0,0,40,0"/>
+                <RadioButton Name="Enjoyment3" Margin="0,0,40,0"/>
+                <RadioButton Name="Enjoyment4" Margin="0,0,40,0"/>
+                <RadioButton Name="Enjoyment5" Margin="0,0,40,0"/>
+            </StackPanel>
+            <Label Grid.Row="1" Grid.Column="0" Foreground="White" FontSize="16" Margin="50,0,0,0" Content="Tour Knowledge:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Label Grid.Row="2" Grid.Column="0" Foreground="White" FontSize="16" Margin="50,0,0,0" Content="Language Knowledge:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Grid.Row="3" Grid.Column="0" Foreground="White" FontSize="16" Margin="50,20,0,0" Content="Additional comment:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="" Margin="20,25,20,20"/>
-        <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Label Grid.Row="3" Grid.Column="0" Foreground="White" FontSize="16" Margin="50,0,0,0" Content="Tour enjoyment:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label Grid.Row="4" Grid.Column="0" Foreground="White" FontSize="16" Margin="50,20,0,0" Content="Additional comment:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding Comment}" Grid.Row="4" Grid.Column="1" Margin="20,25,20,20"/>
+        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
             <Button Height="25" FontSize="12" Content="Add photo" Width="100" Margin="0,20,10,0"/>
-            <Button Height="25" Width="100" Content="Submit" Foreground="White" Margin="10,20,0,0" Background="#6191da"/>
+            <Button Command="{Binding SubmitCommand}" Height="25" Width="100" Content="Submit" Foreground="White" Margin="10,20,0,0" Background="#6191da"/>
         </StackPanel>
-        <StackPanel Grid.Row="4" Grid.Column="0" Orientation="Vertical">
-            <Label Grid.Row="4" Grid.Column="0" Foreground="White" FontSize="16" Margin="50,15,0,0" Content="Add your photos:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Vertical">
+            <Label Grid.Row="5" Grid.Column="0" Foreground="White" FontSize="16" Margin="50,15,0,0" Content="Add your photos:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <TextBox Margin="20,0,20,0" Text="{Binding ImageUrl}"/>
             </StackPanel>
     </Grid>

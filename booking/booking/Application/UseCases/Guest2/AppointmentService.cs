@@ -19,6 +19,11 @@ namespace booking.application.UseCases.Guest2
             _reservationTourRepository = new ReservationTourRepository();
             _tourAttendanceRepository = new TourAttendanceRepository(); 
         }
+        public void Update(Appointment appointment)
+        {
+            _appointmentRepository.Upadte(appointment);
+        }
+
         public List<Appointment> GetCompletedAppointmentByGuest2(User guest2)
         {
             List<ReservationTour> reservedTours = _reservationTourRepository.GetAll().FindAll(r => r.User.Id == guest2.Id);

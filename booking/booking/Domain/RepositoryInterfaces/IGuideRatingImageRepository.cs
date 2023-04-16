@@ -8,5 +8,6 @@ namespace booking.Domain.RepositoryInterfaces
 {
     public interface IGuideRatingImageRepository : IRepository
     {
+        public int MakeID();
     }
 }
