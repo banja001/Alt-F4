@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace booking.Repositories
 {
-    public class GuideRatingRepository : IGuideRatingImageRepository
+    public class GuideRatingRepository : IGuideRatingRepository
     {
         private List<GuideRating> _guideRatings;
         private Serializer<GuideRating> _serializer;

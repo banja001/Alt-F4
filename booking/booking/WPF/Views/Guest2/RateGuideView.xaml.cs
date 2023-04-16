@@ -25,7 +25,7 @@ namespace booking.WPF.Views.Guest2
         public RateGuideView(Appointment selectedTour)
         {
             InitializeComponent();
-            _rateGuideViewModel = new RateGuideViewModel(selectedTour);
+            _rateGuideViewModel = new RateGuideViewModel(selectedTour, TourKnowledgePanel, LanguageKnowledgePanel, TourEnjoymentPanel);
             this.DataContext = _rateGuideViewModel;
 
         }

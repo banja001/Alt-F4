@@ -5,6 +5,7 @@ using booking.View.Owner;
 using booking.WPF.Views.Guest2;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace booking.WPF.ViewModels
     {
         public ICommand RateGuideCommand => new RelayCommand(RateGuide);
 
-        public List<Appointment> CompletedTours { get; set; }
+        public ObservableCollection<Appointment> CompletedTours { get; set; }
         public Appointment SelectedTour { get; set; }
         private User User { get; set; }
 
@@ -27,7 +28,7 @@ namespace booking.WPF.ViewModels
             User = user;
             _appointmentService = new AppointmentService();
             SelectedTour = new Appointment();
-            CompletedTours = _appointmentService.GetCompletedAppointmentByGuest2(User);
+            CompletedTours = new ObservableCollection<Appointment>(_appointmentService.GetCompletedAppointmentByGuest2(User));
         }
 
         private void RateGuide()

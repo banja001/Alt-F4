@@ -1,4 +1,5 @@
-﻿using booking.Serializer;
+﻿using booking.Model;
+using booking.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +14,18 @@ namespace booking.Domain.Model
         public int TourKnowledge { get; set; }
         public int LanguageKnowledge { get; set; }
         public int TourEnjoyment { get; set; }
-        public int ReservationTourId { get; set; }  
+        public string Comment { get; set; }
+        public int AppointmentId { get; set; }  
 
         public GuideRating() { }
-        public GuideRating(int id, int tourKnowledge, int languageKnowledge, int tourEnjoyment, int reservationTourId)
+        public GuideRating(int id, int tourKnowledge, int languageKnowledge, int tourEnjoyment, int appointmentId, string comment)
         {
             Id = id;
             TourKnowledge = tourKnowledge;
             LanguageKnowledge = languageKnowledge;
             TourEnjoyment = tourEnjoyment;
-            ReservationTourId = reservationTourId;
+            AppointmentId = appointmentId;
+            Comment = comment;
         }
 
         public void FromCSV(string[] values)
@@ -31,7 +34,8 @@ namespace booking.Domain.Model
             TourKnowledge = int.Parse(values[1]);
             LanguageKnowledge = int.Parse(values[2]);
             TourEnjoyment = int.Parse(values[3]);
-            ReservationTourId = int.Parse(values[4]);
+            AppointmentId = int.Parse(values[4]);
+            Comment = values[5];
         }
 
         public string[] ToCSV()
@@ -42,7 +46,8 @@ namespace booking.Domain.Model
                 TourKnowledge.ToString(),
                 LanguageKnowledge.ToString(),
                 TourEnjoyment.ToString(),
-                ReservationTourId.ToString()
+                AppointmentId.ToString(),
+                Comment.ToString()
             };
             return cssValues;
         }
