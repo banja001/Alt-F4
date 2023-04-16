@@ -13,10 +13,10 @@ namespace booking.Domain.Model
         public string Url { get; set; }
         public int GuideRatingId { get; set; }
 
-        GuideRatingImage() 
+        public GuideRatingImage() 
         {
         }
-        GuideRatingImage(int id, string url, int guideRatingId)
+        public GuideRatingImage(int id, string url, int guideRatingId)
         {
             Id = id;
             this.Url = url;

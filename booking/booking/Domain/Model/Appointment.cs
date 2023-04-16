@@ -16,6 +16,7 @@ namespace booking.Model
         public Tour Tour { get; set; }
         public User Guide { get; set; }
         public bool Active { get; set; }
+        public bool IsRated { get; set; }
 
         public Appointment(int id, DateAndTime start, DateAndTime end, int tourId, int guideId, bool active)
         {
@@ -27,6 +28,7 @@ namespace booking.Model
             Tour.Id = tourId;
             Guide.Id = guideId;
             Active = active;
+            IsRated = false;
         }
 
         public Appointment()
@@ -39,7 +41,7 @@ namespace booking.Model
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Start.ToString(), End.ToString(), Tour.Id.ToString(), Guide.Id.ToString(), Active.ToString() };
+            string[] csvValues = { Id.ToString(), Start.ToString(), End.ToString(), Tour.Id.ToString(), Guide.Id.ToString(), Active.ToString(), IsRated.ToString() };
             return csvValues;
         }
 
@@ -55,6 +57,7 @@ namespace booking.Model
             this.Tour.Id = int.Parse(values[3]);
             this.Guide.Id= int.Parse(values[4]);
             this.Active = bool.Parse(values[5]);
+            this.IsRated = bool.Parse(values[6]);
         }
         
         
