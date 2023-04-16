@@ -9,8 +9,11 @@ using booking.WPF.Views.Guest1;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.NetworkInformation;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -64,6 +67,7 @@ namespace booking.View
         public string SelectedState { get; set; }
         public string SelectedCity { get; set; }
 
+        public ObservableCollection<Image> AddedImages { get; set; }
         public ObservableCollection<string> States { get; set; }
 
         private int userId;
@@ -83,6 +87,7 @@ namespace booking.View
             _ownerRatingRepository = new OwnerRatingRepository();
 
             States = new ObservableCollection<string>();
+            AddedImages = new ObservableCollection<Image>();
 
             InitialzeDTOs();
             FillStateComboBox();
@@ -369,6 +374,24 @@ namespace booking.View
 
                 SelectedStayedInAccommodation = new ReservationAccommodationDTO(stayedInAccommodation);
             }
+        }
+
+        private void AddImage(object sender, RoutedEventArgs e)
+        {
+            WebClient wc = new WebClient();
+            byte[] bytes = wc.DownloadData(ImageUrl);
+            MemoryStream ms = new MemoryStream(bytes);
+            ms.Dispose();
+
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri(@ImageUrl, UriKind.Absolute);
+            bitmapImage.EndInit();
+            /*Image img = (Image)bitmapImage;
+
+            AddedImages.Add(img);*/
+
+            lbAddedImages.ItemsSource = AddedImages;
         }
     }
 }

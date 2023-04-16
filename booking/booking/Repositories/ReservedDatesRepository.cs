@@ -37,8 +37,10 @@ namespace booking.Repository
         }
         public void Update(ReservedDates reservedDate)
         {
-            reservedDates.Remove(reservedDates.Find(s => reservedDate.Id == s.Id));
-            reservedDates.Add(reservedDate);
+            /*reservedDates.Remove(reservedDates.Find(s => reservedDate.Id == s.Id));
+            reservedDates.Add(reservedDate);*/
+
+            reservedDates[reservedDates.FindIndex(s => reservedDate.Id == s.Id)] = reservedDate;
             Save();
         }
 

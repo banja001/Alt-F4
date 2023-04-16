@@ -109,7 +109,7 @@ namespace booking.Model
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), StartDate.ToString("dd/MM/yyyy"), EndDate.ToString("dd/MM/yyyy"), AccommodationId.ToString(), NumOfGuests.ToString(), UserId.ToString(),
-            RatedByOwner.ToString(), RatedByOwner.ToString() };
+            RatedByOwner.ToString().ToLower(), RatedByGuest.ToString().ToLower() };
 
             return csvValues;
         }
