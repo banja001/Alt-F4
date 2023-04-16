@@ -24,7 +24,7 @@ namespace booking.Repositories
 
         public List<ReservationRequests> GetAll()
         {
-            return reservationRequests;
+            return serializer.FromCSV(fileName);//nije lose ovako svuda raditi, zbog kasnijih update-ova dataGrida/listView-a i ostalog
         }
 
         public ReservationRequests GetById(int id)

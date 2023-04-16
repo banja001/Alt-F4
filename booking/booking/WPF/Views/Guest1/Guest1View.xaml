@@ -165,7 +165,7 @@
                                     <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False" Width="*"/>
                                     <DataGridTextColumn Header="Request" Binding="{Binding Request}" CanUserResize="False" Width="*"/>
                                     <DataGridTextColumn Header="Status" Binding="{Binding Status}" CanUserResize="False" Width="*"/>
-                                    <DataGridTemplateColumn Header="Owner's comment" Width="*">
+                                    <DataGridTemplateColumn x:Name="dgbViewOwnersComment" Header="Owner's comment" Width="*">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button x:Name="bViewOwnersComment" Content="View" Click="ViewComment"/>

@@ -51,7 +51,7 @@ namespace booking.WPF.Views.Guest1
         private void Send(object sender, RoutedEventArgs e)
         {
             int requestId = _reservationRequestsRepository.MakeId();
-            _reservationRequestsRepository.Add(new ReservationRequests(requestId, NewDate, "Postpone"));
+            _reservationRequestsRepository.Add(new ReservationRequests(requestId, NewDate, "Pending"));
 
 
             MessageBox.Show("Your request has been sent successfully!");

@@ -346,6 +346,8 @@ namespace booking.View
             PostponeReservation postponeReservation = new PostponeReservation(_reservedDatesRepository.GetByID(SelectedReservation.ReservationId));
             postponeReservation.Owner = this;
             postponeReservation.ShowDialog();
+
+            UpdateDataGrids();
         }
 
         private void CancelReservation(object sender, RoutedEventArgs e)
@@ -522,6 +524,18 @@ namespace booking.View
         private void ViewComment(object sender, RoutedEventArgs e)
         {
             ReservationRequests reservationRequest =_reservationRequestsRepository.GetById(SelectedReservationRequestDTO.RequestId);
+
+            if(reservationRequest.isCanceled == RequestStatus.Postponed)
+            {
+                MessageBox.Show("Your request has been confirmed");
+                return;
+            }
+            else 
+                if(reservationRequest.isCanceled == RequestStatus.Pending)
+                {
+                    MessageBox.Show("Your request is still pending");
+                    return;
+                }
 
             if (reservationRequest.Comment == "")
                 MessageBox.Show("Owner didn't leave a comment", "Owner's comment");
