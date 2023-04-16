@@ -30,8 +30,4 @@
     <Resource Include="Resources\Icons\whiteTraveler.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Application\UseCases\" />
-  </ItemGroup>
-
 </Project>
