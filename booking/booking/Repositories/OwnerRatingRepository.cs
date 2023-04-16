@@ -23,7 +23,7 @@ namespace booking.Repository
 
         public List<OwnerRating> GetAll()
         {
-            return OwnerRatings;
+            return Serializer.FromCSV(fileName);
         }
 
         public void AddRating(OwnerRating acci)

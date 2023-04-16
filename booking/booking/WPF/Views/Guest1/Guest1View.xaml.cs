@@ -244,7 +244,7 @@ namespace booking.View
             foreach (var item in AccommodationDTOs)
             {
                 accommodation= accommodations.Find(s => s.Id == item.AccommodationId);
-                flag = users.Find(s => accommodation.OwnerId == s.Id).Super;
+                flag = _userRepository.GetAll().Find(s => accommodation.OwnerId == s.Id).Super;
                 if (flag)
                 {
                     if (!item.Name.Last().Equals("*"))
@@ -415,6 +415,10 @@ namespace booking.View
             ResetFormInputs();
 
             MessageBox.Show("Rating successfully added!");
+            signInWindow.RefreshUsers();
+            AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
+            AccommodationDTOs = SortAccommodationDTOs();
+            accommodationData.ItemsSource = AccommodationDTOs;
         }
 
         private void ResetFormInputs()

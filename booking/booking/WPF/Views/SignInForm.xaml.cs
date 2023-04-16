@@ -26,9 +26,9 @@ namespace booking.View
     /// </summary>
     public partial class SignInForm : Window
     {
-        private readonly OwnerRatingRepository _ownerRatingsRepository;
-        private readonly UserRepository _repository;
         
+        private readonly UserRepository _repository;
+        private readonly OwnerRatingRepository _ownerRatingsRepository;
         private string _userName;
 
         
@@ -58,13 +58,14 @@ namespace booking.View
             DataContext = this;
             _repository = new UserRepository();
             _ownerRatingsRepository = new OwnerRatingRepository();
-            
-            Loaded += RefreshUsers;
+            RefreshUsers();
+            //Loaded += RefreshUsers;
         }
 
-        public void RefreshUsers(object sender, RoutedEventArgs e)
+        public void RefreshUsers()//object sender, RoutedEventArgs e)
         {
-            Loaded -= RefreshUsers;
+            //Loaded -= RefreshUsers;
+             
             List<OwnerRating> ownerRatings = _ownerRatingsRepository.GetAll();
             List<User> users = _repository.GetAll().ToList();
             int sum, i;

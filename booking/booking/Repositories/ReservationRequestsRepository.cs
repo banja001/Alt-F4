@@ -24,12 +24,14 @@ namespace booking.Repositories
 
         public List<ReservationRequests> GetAll()
         {
+
             return serializer.FromCSV(fileName);//nije lose ovako svuda raditi, zbog kasnijih update-ova dataGrida/listView-a i ostalog
         }
 
         public ReservationRequests GetById(int id)
         {
             return reservationRequests.Find(r => r.Id == id);
+
         }
 
         public void Remove(ReservationRequests r)

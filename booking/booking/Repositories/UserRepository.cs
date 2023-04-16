@@ -23,7 +23,7 @@ namespace booking.Repository
         }
         public List<User> GetAll()
         {
-            return _users;
+            return _serializer.FromCSV(FilePath);
         }
 
         public User GetByUsername(string userName)
