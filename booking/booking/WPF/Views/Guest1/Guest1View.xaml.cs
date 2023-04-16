@@ -382,6 +382,7 @@ namespace booking.View
 
         private void ResetFormInputs()
         {
+            OwnerRatingImages.Clear();
             AddedImages.Clear();
             lvAddedImages.ItemsSource = AddedImages;
             lbStayedIn.ItemsSource = StayedInAccommodations;
