@@ -10,8 +10,10 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Button Name="AddTourB" Content="Add Tour" Width="150" Height="30" Click="AddTour"  Grid.Column="0"/>
         <Button Name="LiveTrackingTourB" Content="Live Tracking Tour" Width="150" Height="30" Click="LiveTrackingTour"  Grid.Column="1"/>
+        <Button Name="ShowReviews" Content="Show Reviews" Width="150" Height="30"  Grid.Column="2" Click="ShowReviews_Click"/>
     </Grid>
 </Window>
