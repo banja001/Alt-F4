@@ -64,5 +64,10 @@ namespace booking.Repositories
         {
             return _guideRatings.Find(g => g.Id == guideRating.Id).Id;
         }
+
+        IEnumerable<GuideRating> IGuideRatingRepository.GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

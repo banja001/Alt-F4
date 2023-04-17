@@ -1,8 +1,11 @@
-﻿using booking.DTO;
+﻿using application.UseCases;
+using booking.DTO;
 using booking.Model;
 using booking.Repository;
+using Domain.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -30,11 +33,21 @@ namespace booking.View.Guest2
         public int AverageGuestAge { get; set; }
         public TourLocationDTO TourForBooking { get; set; }
         public User CurrentUser { get; set; }
+        public string SelectedVoucher { get; set; } 
         private bool ConfirmButtonFlag { get; set; }
+
+        public ObservableCollection<Voucher> Vouchers { get; set; }
+        private readonly VoucherService _voucherService;
         
         public BookTourOverview(Guest2Overview guest2Overview, User user)
         {
             InitializeComponent();
+            _voucherService = new VoucherService();
+            _voucherService.GenerateNewVouchersByGuest2(user);
+            Vouchers = new ObservableCollection<Voucher>(_voucherService.GetUsableVouchersByGuest2(user));
+
+            InitializeVoucherComboBox();
+
             this.DataContext = this;
             this.TourForBooking = guest2Overview.SelectedTour;
             _reservationTourRepository = new ReservationTourRepository();
@@ -57,6 +70,12 @@ namespace booking.View.Guest2
             Guest2Overview parentWindow = new Guest2Overview(CurrentUser);
             if (CheckAvailability())
             {
+                if(SelectedVoucher != null)
+                {
+                    Voucher usedVoucher = Vouchers.ToList().Find(v => v.Id.ToString() == SelectedVoucher);
+                    usedVoucher.IsUsed = true;
+                    _voucherService.Update(usedVoucher);
+                }
                 ReservationTour reservation = new ReservationTour(_reservationTourRepository.GetNextIndex(),
                                                                   TourForBooking.Id,
                                                                   CurrentUser.Id,
@@ -126,6 +145,15 @@ namespace booking.View.Guest2
                 Guest2Overview parentWindow = new Guest2Overview(CurrentUser);
                 parentWindow.Show();
             }
+        }
+        private void InitializeVoucherComboBox()
+        {
+            List<string> voucherIds = new List<string>();
+            foreach (var voucher in Vouchers)
+            {
+                voucherIds.Add(voucher.Id.ToString());
+            }
+            VouchersComboBox.ItemsSource = voucherIds;
         }
     }
 }

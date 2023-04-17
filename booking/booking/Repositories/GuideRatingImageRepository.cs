@@ -58,5 +58,10 @@ namespace booking.Repositories
             else
                 return 1;
         }
+
+        IEnumerable<GuideRatingImage> IGuideRatingImageRepository.GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

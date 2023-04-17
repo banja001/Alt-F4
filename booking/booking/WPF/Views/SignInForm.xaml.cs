@@ -82,9 +82,6 @@ namespace booking.View
                     }
                     else if(user.Role == "Guest2")
                     {
-                        //Guest2Overview guest2Window = new Guest2Overview(user);
-                        //guest2Window.Show();
-
                         MainGuest2View mainWindow = new MainGuest2View(user);
                         mainWindow.Show();
                         this.Close();
