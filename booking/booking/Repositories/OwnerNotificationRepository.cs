@@ -1,6 +1,7 @@
 ﻿using booking.Domain.Model;
 using booking.Model;
 using booking.Serializer;
+using Domain.RepositoryInterfaces;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace Repositories
 {
-    public class OwnerNotificationRepository
+    public class OwnerNotificationRepository : IOwnerNotificationRepository
     {
         private List<OwnerNotification> ownerNotifications;
         private Serializer<OwnerNotification> serializer;
@@ -19,16 +20,22 @@ namespace Repositories
         public OwnerNotificationRepository()
         {
             serializer = new Serializer<OwnerNotification>();
+            Load();
+        }
+
+        public void Load()
+        {
             ownerNotifications = serializer.FromCSV(fileName);
         }
 
         public List<OwnerNotification> GetAll()
         {
-            return ownerNotifications;
+            return serializer.FromCSV(fileName);
         }
 
         public void Add(OwnerNotification notification)
         {
+            Load();
             ownerNotifications.Add(notification);
             Save();
         }
@@ -40,12 +47,13 @@ namespace Repositories
 
         public void DeleteAllByOwnerId(int id)
         {
-            ownerNotifications = ownerNotifications.Where(n => n.OwnerId != id).ToList();
+            ownerNotifications = GetAll().Where(n => n.OwnerId != id).ToList();
             Save();
         }
 
         public int MakeId()
         {
+            Load();
             return ownerNotifications.Count == 0 ? 1 : ownerNotifications.Max(n => n.Id) + 1;
         }
     }

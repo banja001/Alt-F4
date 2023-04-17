@@ -1,5 +1,7 @@
-﻿using booking.Domain.RepositoryInterfaces;
+﻿using booking.Repositories;
 using booking.Repository;
+using Domain.RepositoryInterfaces;
+using Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +14,11 @@ namespace booking.Injector
     {
         private static Dictionary<Type, object> _implementations = new Dictionary<Type, object>
         {
-            // treba dodati
+            {typeof(IGuest1NotificationsRepository), new Guest1NotificationsRepository() },
+            {typeof(IOwnerNotificationRepository), new OwnerNotificationRepository() },
+            {typeof(IOwnerRatingImageRepository), new OwnerRatingImageRepository() },
+            {typeof(IReservationRequestsRepository), new ReservationRequestsRepository() },
+            {typeof(IReservedDatesRepository), new ReservedDatesRepository() }
         };
 
         public static T CreateInstance<T>()

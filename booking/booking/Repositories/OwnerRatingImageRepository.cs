@@ -1,6 +1,7 @@
 ﻿using booking.DTO;
 using booking.Model;
 using booking.Serializer;
+using Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace booking.Repository
 {
-    public class OwnerRatingImageRepository
+    public class OwnerRatingImageRepository : IOwnerRatingImageRepository
     {
         private List<OwnerRatingImage> OwnerRatingImages;
         private Serializer<OwnerRatingImage> Serializer;
@@ -18,26 +19,33 @@ namespace booking.Repository
         public readonly string fileName = "../../../Resources/Data/ownerratingimages.csv";
         public OwnerRatingImageRepository()
         {
-
-
             Serializer = new Serializer<OwnerRatingImage>();
+            Load();
+        }
+
+        public void Load()
+        {
             OwnerRatingImages = Serializer.FromCSV(fileName);
         }
 
         public List<OwnerRatingImage> GetAll()
         {
-            return OwnerRatingImages;
+            return Serializer.FromCSV(fileName);
         }
 
         public void AddOwnerRatingImage(OwnerRatingImage acci)
         {
-
+            Load();
             OwnerRatingImages.Add(acci);
-            Serializer.ToCSV(fileName, OwnerRatingImages);
+            Save();
+        }
 
+        public void Save()
+        {
+            Serializer.ToCSV(fileName, OwnerRatingImages);
         }
         
-        public List<OwnerRatingImage> Get(int ReservedDatesId)
+        public List<OwnerRatingImage> GetByReservedDatesId(int ReservedDatesId)
         {
             List<OwnerRatingImage> ownerRatingImages = new List<OwnerRatingImage>();
 
@@ -54,6 +62,7 @@ namespace booking.Repository
         
         public int MakeId()
         {
+            Load();
             return OwnerRatingImages.Count == 0 ? 1 : OwnerRatingImages.Max(i => i.Id) + 1;
         }
     }

@@ -139,7 +139,7 @@ namespace booking.View
                     + "has been " + reservationRequest.isCanceled.ToString());
             }
 
-            _guest1NotificationsRepository.RemoveByGuest1I(userId);
+            _guest1NotificationsRepository.RemoveByGuest1Id(userId);
             Loaded -= NotifyGuest1;
         }
 

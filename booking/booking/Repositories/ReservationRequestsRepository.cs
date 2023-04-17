@@ -1,6 +1,7 @@
 ﻿using booking.Domain.DTO;
 using booking.Domain.Model;
 using booking.Serializer;
+using Domain.RepositoryInterfaces;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace booking.Repositories
 {
-    public class ReservationRequestsRepository
+    public class ReservationRequestsRepository: IReservationRequestsRepository
     {
         private List<ReservationRequests> reservationRequests;
         private Serializer<ReservationRequests> serializer;
@@ -19,33 +20,39 @@ namespace booking.Repositories
         public ReservationRequestsRepository()
         {
             serializer = new Serializer<ReservationRequests>();
+            Load();
+        }
+        public void Load()
+        {
             reservationRequests = serializer.FromCSV(fileName);
         }
 
         public List<ReservationRequests> GetAll()
         {
-
-            return serializer.FromCSV(fileName);//nije lose ovako svuda raditi, zbog kasnijih update-ova dataGrida/listView-a i ostalog
+            return serializer.FromCSV(fileName);
         }
 
         public ReservationRequests GetById(int id)
         {
+            Load();
             return reservationRequests.Find(r => r.Id == id);
-
         }
 
         public void Remove(ReservationRequests r)
         {
+            Load();
             reservationRequests.Remove(r);
             Save();
         }
         public void RemoveAllByReservationId(int id)
         {
+            Load();
             reservationRequests.RemoveAll(r => r.ReservationId == id);
             Save();
         }
         public List<ReservationRequests> GetPostpone()
         {
+            Load();
             List < ReservationRequests> list= new List<ReservationRequests>();
             foreach (ReservationRequests res in reservationRequests)
             {
@@ -60,7 +67,7 @@ namespace booking.Repositories
         }
         public void UpdateDecline(ReservationRequests r,string comment)
         {
-           
+            Load();
             reservationRequests.Remove(r);
             r.isCanceled = RequestStatus.Canceled;
             r.Comment = comment;
@@ -70,6 +77,7 @@ namespace booking.Repositories
 
         public void UpdateAllow(ReservationRequests r)
         {
+            Load();
             reservationRequests.Remove(r);
             r.isCanceled = RequestStatus.Postponed;
             reservationRequests.Add(r);
@@ -78,6 +86,7 @@ namespace booking.Repositories
 
         public void Add(ReservationRequests reservationRequest)
         {
+            Load();
             reservationRequests.Add(reservationRequest);
             Save();
         }

@@ -1,5 +1,6 @@
 ﻿using booking.Serializer;
 using Domain.Model;
+using Domain.RepositoryInterfaces;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace Repositories
 {
-    public class Guest1NotificationsRepository
+    public class Guest1NotificationsRepository : IGuest1NotificationsRepository
     {
         private List<Guest1Notifications> guest1Notifications;
         private Serializer<Guest1Notifications> serializer;
@@ -18,31 +19,33 @@ namespace Repositories
         public Guest1NotificationsRepository()
         {
             serializer = new Serializer<Guest1Notifications>();
-            
+            Load();
         }
-
-        public List<Guest1Notifications> GetAll()
+        public void Load()
         {
             guest1Notifications = serializer.FromCSV(fileName);
-            return guest1Notifications;
+        }
+        public List<Guest1Notifications> GetAll()
+        {
+            return serializer.FromCSV(fileName);
         }
 
         public List<Guest1Notifications> GetAllByGuest1Id(int id)
         {
-            guest1Notifications = serializer.FromCSV(fileName);
+            Load();
             return guest1Notifications.FindAll(x => x.Guest1Id == id);
         }
 
-        public void RemoveByGuest1I(int id)
+        public void RemoveByGuest1Id(int id)
         {
-            guest1Notifications = serializer.FromCSV(fileName);
+            Load();
             guest1Notifications = guest1Notifications.Where(n => n.Guest1Id != id).ToList();
             Save();
         }
 
         public void Add(Guest1Notifications notification)
         {
-            guest1Notifications = serializer.FromCSV(fileName);
+            Load();
             guest1Notifications.Add(notification);
             Save();
         }
@@ -54,7 +57,7 @@ namespace Repositories
 
         public int MakeId()
         {
-            guest1Notifications = serializer.FromCSV(fileName);
+            Load();
             return guest1Notifications.Count == 0 ? 0 : guest1Notifications.Max(n => n.Id) + 1;
         }
     }
