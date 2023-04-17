@@ -61,7 +61,7 @@
         </StackPanel>
         <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Vertical">
             <Label Grid.Row="5" Grid.Column="0" Foreground="White" FontSize="16" Margin="50,15,0,0" Content="Add your photos:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <TextBox Margin="20,0,20,0" Text="{Binding ImageUrl, Mode=TwoWay}"/>
+                <TextBox Margin="20,0,20,0" Text="{Binding ImageUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
     </Grid>
 </Border>

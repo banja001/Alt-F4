@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace booking.application.UseCases.Guest2
+namespace booking.application.UseCases
 {
     public class AppointmentService
     {
