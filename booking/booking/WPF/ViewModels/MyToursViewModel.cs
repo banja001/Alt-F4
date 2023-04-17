@@ -1,4 +1,4 @@
-﻿using booking.application.UseCases;
+﻿using booking.application.UseCases.Guest2;
 using booking.Commands;
 using booking.Model;
 using booking.View.Owner;
