@@ -24,7 +24,7 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" FontSize="28" Width="200" Height="50" Margin="10,15,302,42" >Choose year:</Label>
             <ComboBox Grid.Column="0" Height="50" FontSize="28" ItemsSource="{Binding Years}"   SelectedItem="{Binding SelectedYear}" Margin="210,15,55,42"/>
-            <Button Grid.Column="1" FontSize="20" Command="{Binding ShowCommand}"  Grid.Row="0" Content="Find tour" Margin="10,22,344,42" />
+            <Button Grid.Column="1" FontSize="20" Command="{Binding FindCommand}"  Grid.Row="0" Content="Find tour" Margin="10,22,344,42" />
 
         </Grid>
 
@@ -56,7 +56,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Height="40" Width="150" FontSize="20" >Show statistics</Button>
-            <Button Grid.Column="1" Height="40" Width="150" FontSize="20">Show reviews</Button>
+            <Button Grid.Column="1" Height="40" Width="150" FontSize="20" Command="{Binding ShowCommand}" >Show reviews</Button>
 
         </Grid>
     </Grid>
