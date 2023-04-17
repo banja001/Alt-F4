@@ -82,11 +82,11 @@ namespace booking.View
 
             if (Notifications.Count != 0)
             {
-                NotifyOwner();
+                Loaded += NotifyOwner; //ako ovako ostavim, kao da sam pregazila onda njegov NotifyUser iz nekog razloga
             }
         }
 
-        public void NotifyOwner()
+        public void NotifyOwner(object sender, RoutedEventArgs e)
         {
             foreach(var notification in Notifications)
             {
@@ -95,6 +95,8 @@ namespace booking.View
             }
 
             _ownerNotificationRepository.DeleteAllByOwnerId(OwnerId);
+
+            Loaded -= NotifyOwner;
         }
 
         private void CalculateAverageRating()

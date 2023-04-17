@@ -6,6 +6,7 @@ using booking.Repositories;
 using booking.Repository;
 using booking.View.Guest1;
 using booking.WPF.Views.Guest1;
+using Domain.Model;
 using Repositories;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,7 @@ namespace booking.View
         private readonly ReservationRequestsRepository _reservationRequestsRepository;
         private readonly OwnerRatingRepository _ownerRatingRepository;
         private readonly OwnerRatingImageRepository _ownerRatingImageRepository;
+        private readonly Guest1NotificationsRepository _guest1NotificationsRepository;
 
         public double CleanRating { get; set; }
         public double OwnersKindenssRating { get; set; }
@@ -81,6 +83,8 @@ namespace booking.View
 
         private int userId;
 
+        private List<Guest1Notifications> guest1Notifications;
+
         public Guest1View(int id,SignInForm sign)
         {
             InitializeComponent();
@@ -98,6 +102,8 @@ namespace booking.View
             _ownerRatingImageRepository = new OwnerRatingImageRepository();
             _ownerNotificationRepository = new OwnerNotificationRepository();
             _userRepository = new UserRepository();
+            _guest1NotificationsRepository = new Guest1NotificationsRepository();
+
             users = _userRepository.GetAll();
             SearchedAccommodation = new SearchedAccomodationDTO();
 
@@ -110,10 +116,31 @@ namespace booking.View
             States = new ObservableCollection<string>();
             AddedImages = new ObservableCollection<Image>();
             OwnerRatingImages = new List<OwnerRatingImage>();
+            guest1Notifications = _guest1NotificationsRepository.GetAllByGuest1Id(userId);
 
             InitialzeDTOs();
             FillStateComboBox();
             InitializeCheckBoxes();
+
+            if(guest1Notifications.Count != 0)
+            {
+                Loaded += NotifyGuest1;
+            }
+        }
+        
+        private void NotifyGuest1(object sender, RoutedEventArgs e)
+        {
+            foreach(var notification in guest1Notifications)
+            {
+                ReservationRequests reservationRequest = _reservationRequestsRepository.GetById(notification.RequestId);
+
+                MessageBox.Show("Your reservation for " + reservationRequest.NewStartDate.ToString("dd/MM/yyyy") + " - "
+                    + reservationRequest.NewEndDate.ToString("dd/MM/yyyy")
+                    + "has been " + reservationRequest.isCanceled.ToString());
+            }
+
+            _guest1NotificationsRepository.RemoveByGuest1I(userId);
+            Loaded -= NotifyGuest1;
         }
 
         private void InitialzeDTOs()

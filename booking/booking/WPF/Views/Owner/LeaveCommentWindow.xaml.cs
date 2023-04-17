@@ -24,18 +24,21 @@ namespace booking.WPF.Views.Owner
         public string Comment { get; set; }
 
         public ReservationChangeWindow resWin;
-        public LeaveCommentWindow(ReservationChangeWindow win)
+
+        private ReservationRequests reservationRequest;
+        public LeaveCommentWindow(ReservationChangeWindow win, ReservationRequests reservationRequest)
         {
             InitializeComponent();
             DataContext = this;
             resWin = win;
-
+            this.reservationRequest = reservationRequest;
         }
 
         private void SaveCommentClick(object sender, RoutedEventArgs e)
         {
             ReservationRequests request=resWin.reservationRequests.Find(s=>resWin.SelectedItem.ReservationId==s.ReservationId);
             resWin.reservationRequestsRepository.UpdateDecline(request, Comment);
+            resWin.AddGuest1Notification(reservationRequest);
             resWin.requestsObservable.Remove(resWin.SelectedItem);
             this.Close();
 

@@ -2,7 +2,10 @@
 using booking.Domain.Model;
 using booking.Model;
 using booking.Repositories;
+using booking.Repository;
 using booking.View;
+using Domain.Model;
+using Repositories;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,9 +32,11 @@ namespace booking.WPF.Views.Owner
     {
         public List<ReservationRequests> reservationRequests;
         public ReservationRequestsRepository reservationRequestsRepository;
+        private readonly ReservedDatesRepository _reservedDatesRepository;
         public OwnerWindow ownerWindow;
         public ObservableCollection<ReservationChangeDTO> requestsObservable { get; set; }
         public ReservationChangeDTO SelectedItem { get; set; }
+        private readonly Guest1NotificationsRepository _guest1NotificationsRepository;
         public ReservationChangeWindow(OwnerWindow win)
         {
             InitializeComponent();
@@ -39,6 +44,8 @@ namespace booking.WPF.Views.Owner
             ownerWindow = win;
             reservationRequestsRepository = new ReservationRequestsRepository();
             requestsObservable = new ObservableCollection<ReservationChangeDTO>();
+            _guest1NotificationsRepository = new Guest1NotificationsRepository();
+            _reservedDatesRepository = new ReservedDatesRepository();
             UpdateObservable();
         }
 
@@ -75,8 +82,8 @@ namespace booking.WPF.Views.Owner
         {
             if (SelectedItem == null) return;
 
-            ReservedDates reservation=ownerWindow.reservedDates.Find(s => s.Id==SelectedItem.ReservationId);
-            Accommodation accommodation = ownerWindow.accommodations.Find(s => s.Id==reservation.AccommodationId);
+            ReservedDates reservation = ownerWindow.reservedDates.Find(s => s.Id == SelectedItem.ReservationId);
+            Accommodation accommodation = ownerWindow.accommodations.Find(s => s.Id == reservation.AccommodationId);
 
             List<ReservedDates> reservedDatesForDeletion = ownerWindow.reservedDates.FindAll(s => !(s.EndDate < SelectedItem.NewStartDate) && !(s.StartDate > SelectedItem.NewEndDate) && (s.AccommodationId == accommodation.Id)
             && (SelectedItem.ReservationId != s.Id));
@@ -86,32 +93,39 @@ namespace booking.WPF.Views.Owner
             reservation.EndDate = SelectedItem.NewEndDate;
             ownerWindow.reservedDatesRepository.Update(reservation);
 
-            foreach(ReservedDates res in reservedDatesForDeletion)
+            foreach (ReservedDates res in reservedDatesForDeletion)
             {
-                
+
                 ownerWindow.reservedDatesRepository.Remove(res);
-                List<ReservationRequests>requestsToDelete=reservationRequests.FindAll(s => res.Id == s.ReservationId);
-                foreach(var request in requestsToDelete)
+                List<ReservationRequests> requestsToDelete = reservationRequests.FindAll(s => res.Id == s.ReservationId);
+                foreach (var request in requestsToDelete)
                     reservationRequestsRepository.Remove(request);
-                    
-                    
+
+
             }
 
-           
-            reservationRequestsRepository.UpdateAllow( reservationRequests.Find(s=>SelectedItem.RequestId==s.Id));
-            
-            
+            ReservationRequests reservationRequst = reservationRequests.Find(s => SelectedItem.RequestId == s.Id);
+            reservationRequestsRepository.UpdateAllow(reservationRequst);//izbaceno samo u prom gore
+
             UpdateObservable();
-            
+
+            //ovde
+            AddGuest1Notification(reservationRequst);
+        }
+
+        public void AddGuest1Notification(ReservationRequests reservationRequst)
+        {
+            int id = _guest1NotificationsRepository.MakeId();
+            _guest1NotificationsRepository.Add(new Guest1Notifications(id, _reservedDatesRepository.GetByID(reservationRequst.ReservationId).UserId, reservationRequst.Id));
         }
 
         private void DeclineClick(object sender, RoutedEventArgs e)
         {
             if (SelectedItem == null) return;
 
-            LeaveCommentWindow win = new LeaveCommentWindow(this);
+            ReservationRequests reservationRequst = reservationRequests.Find(s => SelectedItem.RequestId == s.Id);
+            LeaveCommentWindow win = new LeaveCommentWindow(this, reservationRequst);
             win.ShowDialog();
-
         }
     }
 }

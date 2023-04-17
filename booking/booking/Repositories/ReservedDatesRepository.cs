@@ -40,7 +40,7 @@ namespace booking.Repository
             /*reservedDates.Remove(reservedDates.Find(s => reservedDate.Id == s.Id));
             reservedDates.Add(reservedDate);*/
 
-            reservedDates[reservedDates.FindIndex(s => reservedDate.Id == s.Id)] = reservedDate;
+            reservedDates[reservedDates.FindIndex(s => reservedDate.Id == s.Id)] = reservedDate; //bolje ovako da ne bi ponovo upisivao na kraj fajla
             Save();
         }
 
