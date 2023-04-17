@@ -11,13 +11,13 @@ namespace booking.View.Owner
     /// </summary>
     public partial class AddAccommodationImageWindow : Window
     {
-        private AccommodationImageRepository accommodationImageRepository;
+        
         private List<string> accommodationImages;
-        public AddAccommodationImageWindow(AccommodationImageRepository acci,List<string> images)
+        
+        public AddAccommodationImageWindow(List<string> images)
         {
             InitializeComponent();
             DataContext = this;
-            accommodationImageRepository = acci;
             accommodationImages = images;  
 
         }

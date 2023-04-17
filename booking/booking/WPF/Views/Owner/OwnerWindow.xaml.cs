@@ -24,6 +24,7 @@ using System.Windows.Shapes;
 using booking.WPF.Views.Owner;
 using booking.Domain.Model;
 using Repositories;
+using application.UseCases;
 
 namespace booking.View
 {
@@ -38,9 +39,9 @@ namespace booking.View
 
         public AccommodationRepository accommodationRepository;
         public List<Accommodation> accommodations;
-        public AccommodationImageRepository accommodationImageRepository;
+        public AccommodationImageService accommodationImageService;
         public List<AccommodationImage> accommodationImages;
-        public LocationRepository locationRepository;
+        public LocationService locationService;
         public List<Location> locations;
         public ReservedDatesRepository reservedDatesRepository;
         public List<ReservedDates> reservedDates;
@@ -65,6 +66,7 @@ namespace booking.View
             CreateInstances();
 
             List<ReservedDates> ratingDates = PickDatesForRating();
+
             List<Guest1RatingDTO> tempList = GetGuestsToRate(ratingDates);
             ListToRate = new ObservableCollection<Guest1RatingDTO>(tempList);
             
@@ -146,10 +148,10 @@ namespace booking.View
             users = userRepository.GetAll();
             accommodationRepository = new AccommodationRepository();
             accommodations = accommodationRepository.GetAll();
-            accommodationImageRepository = new AccommodationImageRepository();
-            accommodationImages = accommodationImageRepository.GetAll();
-            locationRepository = new LocationRepository();
-            locations = locationRepository.GetAll();
+            accommodationImageService = new AccommodationImageService(this);
+            accommodationImages = accommodationImageService.GetAll();
+            locationService = new LocationService(this);
+            locations = locationService.GetAll();
             reservedDatesRepository = new ReservedDatesRepository();
             reservedDates = reservedDatesRepository.GetAll();
             guest1RatingsRepository = new Guest1RatingsRepository();
@@ -186,14 +188,11 @@ namespace booking.View
                 }
 
             }
-
             return ratingDates;
         }
 
         private void RateGuests_Click(object sender, RoutedEventArgs e)
         {
-            
-            
             if (SelectedItem == null)
             {
                 MessageBox.Show("No selected items","Error");

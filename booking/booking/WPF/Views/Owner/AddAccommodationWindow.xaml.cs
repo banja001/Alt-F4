@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -30,8 +31,6 @@ namespace booking.View
         private List<string> accommodationImagesUrl;
         public OwnerWindow ownerWindow;
         public List<string> StateList;
-        
-        
         public AddAccommodationWindow(OwnerWindow win)
         {
             InitializeComponent();
@@ -39,31 +38,10 @@ namespace booking.View
             ownerWindow = win;
             accommodationImagesUrl = new List<string>();
             StateList = new List<string>();
-
-            InitializeStateList();
+            StateList=ownerWindow.locationService.InitializeStateList(StateList);
             StateComboBox.ItemsSource = StateList;
-            
-            
-
-
         }
-
-        private void InitializeStateList()
-        {
-            foreach (Location loc in ownerWindow.locations)
-            {
-
-                if (StateList.Find(m => m == loc.State) == null)
-
-                {
-                    StateList.Add(loc.State);
-                }
-
-            }
-        }
-
         public Regex intRegex = new Regex("^[0-9]{1,4}$");
-
         private bool isValid()
         {
             if (string.IsNullOrEmpty(StateComboBox.Text) || string.IsNullOrEmpty(CityComboBox.Text) || string.IsNullOrEmpty(NameTextBox.Text) || string.IsNullOrEmpty(TypeComboBox.Text) ||
@@ -104,7 +82,6 @@ namespace booking.View
 
             return true;
         }
-
         private void Confirm(object sender, RoutedEventArgs e)
         {
 
@@ -113,54 +90,37 @@ namespace booking.View
                 return;
             }
 
-            string State = StateComboBox.Text;
-            string City = CityComboBox.Text;
-            int locid = ownerWindow.locations.Find(m => m.State == State && m.City == City).Id;
-            int accid = ownerWindow.accommodations.Count() == 0 ? 0 : ownerWindow.accommodations.Max(a => a.Id) + 1;
-            Accommodation a = new Accommodation(accid, ownerWindow.OwnerId, NameTextBox.Text, locid, TypeComboBox.Text, Convert.ToInt32(MaxVisitorsTextBox.Text), Convert.ToInt32(MinDaysToUseTextBox.Text), Convert.ToInt32(DaysToCancelTextBox.Text));
-            ownerWindow.accommodationRepository.AddAccommodation(a);
-            AddImage(a);
+            Accommodation a = AddAccommodation();
+            ownerWindow.accommodationRepository.Add(a);
+            ownerWindow.accommodationImageService.AddImages(a, accommodationImagesUrl);
             this.Close();
         }
-        private void AddImage(Accommodation a)
-        {
-            foreach (string url in accommodationImagesUrl)
-            {
-                AccommodationImage image;
-                if (ownerWindow.accommodationImages.Count() == 0)
-                {
 
-                    image = new AccommodationImage(0, url, a.Id);
-                }
-                else
-                {
-                    image = new AccommodationImage(ownerWindow.accommodationImages.Max(a => a.Id) + 1, url, a.Id);
-                }
-                ownerWindow.accommodationImageRepository.AddAccommodationImage(image);
-            }
+        private Accommodation AddAccommodation()
+        {
+            string State = StateComboBox.Text;
+            string City = CityComboBox.Text;
+            int locid = ownerWindow.locationService.GetLocationId(State, City);
+            int accid = ownerWindow.accommodations.Count() == 0 ? 0 : ownerWindow.accommodations.Max(a => a.Id) + 1;
+            Accommodation a = new Accommodation(accid, ownerWindow.OwnerId, NameTextBox.Text, locid, TypeComboBox.Text, Convert.ToInt32(MaxVisitorsTextBox.Text), Convert.ToInt32(MinDaysToUseTextBox.Text), Convert.ToInt32(DaysToCancelTextBox.Text));
+            return a;
         }
+
         private void AddImageClick(object sender, RoutedEventArgs e)
         {
             
-            AddAccommodationImageWindow win = new AddAccommodationImageWindow(ownerWindow.accommodationImageRepository,accommodationImagesUrl);
+            AddAccommodationImageWindow win = new AddAccommodationImageWindow(accommodationImagesUrl);
             win.ShowDialog();
 
         }
-
         private void StateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            List<string> CityList=new List<string>();
-            CityComboBox.SelectedItem=null;
-            foreach (var loc in ownerWindow.locations)
-            {
-                if (StateComboBox.SelectedItem.ToString() == loc.State)
-                {
-                    CityList.Add(loc.City);
-                }
-            }
+            List<string> CityList = new List<string>();
+            CityComboBox.SelectedItem = null;
+            string SelectedState = StateComboBox.SelectedItem.ToString();
+            CityList=ownerWindow.locationService.FillCityList(CityList,SelectedState);
             CityComboBox.ItemsSource = CityList;
         }
-
         private void RemoveImageClick(object sender, RoutedEventArgs e)
         {
             if (accommodationImagesUrl.Count() > 0)

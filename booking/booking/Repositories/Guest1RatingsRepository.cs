@@ -1,5 +1,6 @@
 ﻿using booking.Model;
 using booking.Serializer;
+using Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace booking.Repository
 {
-    public class Guest1RatingsRepository
+    public class Guest1RatingsRepository: IGuest1RatingsRepository
     {
         private List<Guest1Rating> Guest1Ratings;
         private Serializer<Guest1Rating> Serializer;
@@ -26,7 +27,7 @@ namespace booking.Repository
             return Guest1Ratings;
         }
 
-        public void AddRating(Guest1Rating acci)
+        public void Add(Guest1Rating acci)
         {
 
             Guest1Ratings.Add(acci);

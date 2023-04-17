@@ -11,10 +11,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.RepositoryInterfaces;
 
 namespace booking.Repository
 {
-    public class AccommodationRepository
+    public class AccommodationRepository: IAccommodationRepository
     {
         private List<Accommodation> accommodations;
         private Serializer<Accommodation> serializer;
@@ -37,7 +38,7 @@ namespace booking.Repository
             return accommodations.Where(a => a.Id == id).ToList()[0];
         }
 
-        public void AddAccommodation(Accommodation acc)
+        public void Add(Accommodation acc)
         {
 
             accommodations.Add(acc);
