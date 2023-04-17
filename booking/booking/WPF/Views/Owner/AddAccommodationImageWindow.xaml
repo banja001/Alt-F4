@@ -9,9 +9,9 @@
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Label Content="Image url" HorizontalAlignment="Left" Margin="146,0,0,0" VerticalAlignment="Center" Height="38" Width="129"/>
-        <TextBox Name="UrlTextBox" HorizontalAlignment="Left" Margin="312,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
-        <Button Content="Add Image" HorizontalAlignment="Left" Margin="225,276,0,0" VerticalAlignment="Top" Height="31" Width="93" Click="ConfirmImageClick"/>
-        <Button Content="Cancel" HorizontalAlignment="Center" Margin="0,276,0,0" VerticalAlignment="Top" Width="111" Height="31" Click="CancelImageClick"/>
+        <TextBox Name="UrlTextBox" HorizontalAlignment="Left" Margin="312,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Text="{Binding Url}"/>
+        <Button Content="Add Image" Command="{Binding ConfirmImageCommand}" HorizontalAlignment="Left" Margin="225,276,0,0" VerticalAlignment="Top" Height="31" Width="93" />
+        <Button Content="Cancel" Command="{Binding CloseWindowCommand}" HorizontalAlignment="Center" Margin="0,276,0,0" VerticalAlignment="Top" Width="111" Height="31" />
 
     </Grid>
 </Window>
