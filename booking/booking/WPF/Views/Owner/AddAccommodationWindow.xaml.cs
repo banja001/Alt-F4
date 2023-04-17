@@ -38,7 +38,7 @@ namespace booking.View
             ownerWindow = win;
             accommodationImagesUrl = new List<string>();
             StateList = new List<string>();
-            StateList=ownerWindow.locationService.InitializeStateList(StateList);
+            StateList=ownerWindow.locationService.InitializeStateList(StateList,ownerWindow.locations);
             StateComboBox.ItemsSource = StateList;
         }
         public Regex intRegex = new Regex("^[0-9]{1,4}$");
@@ -91,8 +91,8 @@ namespace booking.View
             }
 
             Accommodation a = AddAccommodation();
-            ownerWindow.accommodationRepository.Add(a);
-            ownerWindow.accommodationImageService.AddImages(a, accommodationImagesUrl);
+            ownerWindow.accommodationService.Add(a);
+            ownerWindow.accommodationImageService.AddImages(a, accommodationImagesUrl,ownerWindow.accommodationImages);
             this.Close();
         }
 
@@ -100,7 +100,7 @@ namespace booking.View
         {
             string State = StateComboBox.Text;
             string City = CityComboBox.Text;
-            int locid = ownerWindow.locationService.GetLocationId(State, City);
+            int locid = ownerWindow.locationService.GetLocationId(State, City,ownerWindow.locations);
             int accid = ownerWindow.accommodations.Count() == 0 ? 0 : ownerWindow.accommodations.Max(a => a.Id) + 1;
             Accommodation a = new Accommodation(accid, ownerWindow.OwnerId, NameTextBox.Text, locid, TypeComboBox.Text, Convert.ToInt32(MaxVisitorsTextBox.Text), Convert.ToInt32(MinDaysToUseTextBox.Text), Convert.ToInt32(DaysToCancelTextBox.Text));
             return a;
@@ -114,11 +114,11 @@ namespace booking.View
 
         }
         private void StateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        { 
             List<string> CityList = new List<string>();
             CityComboBox.SelectedItem = null;
             string SelectedState = StateComboBox.SelectedItem.ToString();
-            CityList=ownerWindow.locationService.FillCityList(CityList,SelectedState);
+            CityList=ownerWindow.locationService.FillCityList(CityList,SelectedState,ownerWindow.locations);
             CityComboBox.ItemsSource = CityList;
         }
         private void RemoveImageClick(object sender, RoutedEventArgs e)

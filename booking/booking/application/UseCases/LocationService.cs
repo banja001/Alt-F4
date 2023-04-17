@@ -11,10 +11,10 @@ namespace application.UseCases
     public class LocationService
     {
         private ILocationRepository locationRepository;
-        private OwnerWindow ownerWindow;
-        public LocationService(OwnerWindow ow)
+        
+        public LocationService()
         {
-            ownerWindow = ow;
+            
             locationRepository = Injector.CreateInstance<ILocationRepository>();
         }
 
@@ -23,9 +23,9 @@ namespace application.UseCases
             return locationRepository.GetAll();
         }
 
-        public List<string> InitializeStateList(List<string> StateList)
+        public List<string> InitializeStateList(List<string> StateList,List<Location> locations)
         {
-            foreach (Location loc in ownerWindow.locations)
+            foreach (Location loc in locations)
             {
 
                 if (StateList.Find(m => m == loc.State) == null)
@@ -38,14 +38,14 @@ namespace application.UseCases
             return StateList;
         }
 
-        public int GetLocationId(string State, string City)
+        public int GetLocationId(string State, string City, List<Location> locations)
         {
-            return ownerWindow.locations.Find(m => m.State == State && m.City == City).Id;
+            return locations.Find(m => m.State == State && m.City == City).Id;
         }
 
-        public List<string> FillCityList(List<string> CityList, string SelectedState)
+        public List<string> FillCityList(List<string> CityList, string SelectedState, List<Location> locations)
         {
-            foreach (var loc in ownerWindow.locations)
+            foreach (var loc in locations)
             {
                 if (SelectedState == loc.State)
                 {
@@ -53,6 +53,20 @@ namespace application.UseCases
                 }
             }
             return CityList;
+        }
+
+        public Location GetById(int id)
+        {
+            return locationRepository.GetById(id);
+        }
+
+        public int MakeID()
+        {
+            return locationRepository.MakeID();
+        }
+        public void Add(Location loc)
+        {
+            locationRepository.Add(loc);
         }
 
     }

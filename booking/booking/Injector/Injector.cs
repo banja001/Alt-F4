@@ -14,7 +14,9 @@ namespace booking.Injector
         private static Dictionary<Type, object> _implementations = new Dictionary<Type, object>
         {
             {typeof(ILocationRepository), new LocationRepository()},
-            {typeof(IAccommodationImageRepository), new AccommodationImageRepository()}
+            {typeof(IAccommodationImageRepository), new AccommodationImageRepository()},
+            {typeof(IAccommodationRepository), new AccommodationRepository()},
+            {typeof(IUserRepository), new UserRepository()}
             // treba dodati
         };
 

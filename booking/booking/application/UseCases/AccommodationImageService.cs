@@ -1,4 +1,5 @@
-﻿using booking.Injector;
+﻿using booking.DTO;
+using booking.Injector;
 using booking.Model;
 using booking.View;
 using Domain.RepositoryInterfaces;
@@ -12,12 +13,12 @@ namespace application.UseCases
     public class AccommodationImageService
     {
         private IAccommodationImageRepository accommodationImageRepository;
-        private OwnerWindow ownerWindow;
+        
 
-        public AccommodationImageService(OwnerWindow ow)
+        public AccommodationImageService()
         {
             this.accommodationImageRepository = Injector.CreateInstance<IAccommodationImageRepository>();
-            this.ownerWindow = ow;
+            
         }
 
         public List<AccommodationImage> GetAll()
@@ -29,22 +30,26 @@ namespace application.UseCases
             accommodationImageRepository.Add(acci);
         }
 
-        public void AddImages(Accommodation a, List<string> accommodationImagesUrl)
+        public void AddImages(Accommodation a, List<string> accommodationImagesUrl,List<AccommodationImage> accommodationImages)
         {
             foreach (string url in accommodationImagesUrl)
             {
                 AccommodationImage image;
-                if (ownerWindow.accommodationImages.Count() == 0)
+                if (accommodationImages.Count() == 0)
                 {
 
                     image = new AccommodationImage(0, url, a.Id);
                 }
                 else
                 {
-                    image = new AccommodationImage(ownerWindow.accommodationImages.Max(a => a.Id) + 1, url, a.Id);
+                    image = new AccommodationImage(accommodationImages.Max(a => a.Id) + 1, url, a.Id);
                 }
                 accommodationImageRepository.Add(image);
             }
+        }
+        public List<AccommodationImage> Get(AccommodationLocationDTO accommodation)
+        {
+            return accommodationImageRepository.Get(accommodation);
         }
 
     }
