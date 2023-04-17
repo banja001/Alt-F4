@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace booking.application.UseCases.Guest2
+namespace booking.application.UseCases
 {
     public class AppointmentService
     {
@@ -17,7 +17,7 @@ namespace booking.application.UseCases.Guest2
         {
             _appointmentRepository = new AppointmentRepository();
             _reservationTourRepository = new ReservationTourRepository();
-            _tourAttendanceRepository = new TourAttendanceRepository(); 
+            _tourAttendanceRepository = new TourAttendanceRepository();
         }
         public void Update(Appointment appointment)
         {
@@ -40,7 +40,7 @@ namespace booking.application.UseCases.Guest2
 
             foreach (var reservedTour in reservedTours)
             {
-                completedAppointments.AddRange(appointments.FindAll(a => (reservedTour.Tour.Id == a.Tour.Id) && !a.Active));
+                completedAppointments.AddRange(appointments.FindAll(a => reservedTour.Tour.Id == a.Tour.Id && !a.Active));
                 completedAppointments = completedAppointments.Distinct().ToList();
             }
             return completedAppointments;
@@ -50,7 +50,7 @@ namespace booking.application.UseCases.Guest2
             foreach (var attendance in attendances)
             {
                 Appointment visitedAppointment = completedAppointments.Find(c => c.Tour.Id == attendance.Guest.Tour.Id);
-                if ((visitedAppointment != null) && attendance.Appeared)
+                if (visitedAppointment != null && attendance.Appeared)
                     continue;
                 completedAppointments.Remove(visitedAppointment);
             }
