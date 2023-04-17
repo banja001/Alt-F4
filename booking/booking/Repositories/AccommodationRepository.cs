@@ -32,6 +32,11 @@ namespace booking.Repository
             return accommodations;
         }
 
+        public Accommodation GetById(int id)
+        {
+            return accommodations.Where(a => a.Id == id).ToList()[0];
+        }
+
         public void AddAccommodation(Accommodation acc)
         {
 
