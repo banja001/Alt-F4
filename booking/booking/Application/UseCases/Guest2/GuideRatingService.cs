@@ -18,9 +18,20 @@ namespace booking.application.UseCases.Guest2
         {
             _guideRatingRepository = Injector.Injector.CreateInstance<IGuideRatingRepository>();
         }
-        public void AddRating(int tourKnowledge, int languageKnowledge, int tourEnjoyment, int appointmentId, string comment)
+        public GuideRating AddRating(int tourKnowledge, int languageKnowledge, int tourEnjoyment, int appointmentId, string comment)
         {
-            _guideRatingRepository.Add(new GuideRating(_guideRatingRepository.MakeID(), tourKnowledge, languageKnowledge, tourEnjoyment, appointmentId, comment));
+            GuideRating guideRating = new GuideRating(_guideRatingRepository.MakeID(),
+                                                        tourKnowledge,
+                                                        languageKnowledge,
+                                                        tourEnjoyment,
+                                                        appointmentId,
+                                                        comment);
+            _guideRatingRepository.Add(guideRating);
+            return guideRating;
+        }
+        public int GetGuideRatingId(GuideRating guideRating)
+        {
+            return _guideRatingRepository.GetIdOf(guideRating);
         }
     }
 }

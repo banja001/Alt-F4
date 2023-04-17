@@ -17,9 +17,12 @@ namespace booking.application.UseCases.Guest2
         {
             _guideRatingImageRepository = Injector.Injector.CreateInstance<IGuideRatingImageRepository>();
         }
-        public void AddImage(string url, GuideRating guideRating)
+        public void AddImagesByGuideRatingId(List<GuideRatingImage> guideRatingImages, int guideRatingId)
         {
-            _guideRatingImageRepository.Add(new GuideRatingImage(_guideRatingImageRepository.MakeID(), url, guideRating.Id));
+            foreach (var guideRatingImage in guideRatingImages)
+            {
+                _guideRatingImageRepository.Add(new GuideRatingImage(_guideRatingImageRepository.MakeID(), guideRatingImage.Url, guideRatingId));
+            }
         }
     }
 }
