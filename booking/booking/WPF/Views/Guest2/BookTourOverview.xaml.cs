@@ -70,17 +70,20 @@ namespace booking.View.Guest2
             Guest2Overview parentWindow = new Guest2Overview(CurrentUser);
             if (CheckAvailability())
             {
+                int usedVoucherId = -1;
                 if(SelectedVoucher != null)
                 {
                     Voucher usedVoucher = Vouchers.ToList().Find(v => v.Id.ToString() == SelectedVoucher);
                     usedVoucher.IsUsed = true;
                     _voucherService.Update(usedVoucher);
+                    usedVoucherId = usedVoucher.Id;
                 }
                 ReservationTour reservation = new ReservationTour(_reservationTourRepository.GetNextIndex(),
                                                                   TourForBooking.Id,
                                                                   CurrentUser.Id,
                                                                   NumberOfGuests,
-                                                                  AverageGuestAge);
+                                                                  AverageGuestAge,
+                                                                  usedVoucherId);
                 _reservationTourRepository.Add(reservation);
                 MessageBox.Show("Tour reserved successfully!", "Success");
 
