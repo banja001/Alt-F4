@@ -39,7 +39,7 @@ namespace booking.WPF.ViewModels
             }
             else 
             {
-                var rateGuideWindow = new RateGuideView(SelectedTour);
+                var rateGuideWindow = new RateGuideView(SelectedTour, User);
                 rateGuideWindow.Show();
             }
             

@@ -1,0 +1,35 @@
+﻿<Window x:Class="booking.WPF.Views.Guide.ShowReviewsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:booking.WPF.Views.Guide"
+        mc:Ignorable="d"
+        Title="ShowReviewsWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <DataGrid Name="AllComments" ItemsSource="{Binding AllComments}" Grid.Row="0" AutoGenerateColumns="False" IsReadOnly="True" Margin="40,40,40,40" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Tour name" Binding="{Binding TourName}" CanUserResize="False" Width="75"/>
+                <DataGridTextColumn Header="Guest name" Binding="{Binding CheckPoint}" CanUserResize="False"  Width="75"/>
+                <DataGridTextColumn Header="Check point" Binding="{Binding CheckPoint}" CanUserResize="False"  Width="75"/>
+                <DataGridTextColumn Header="Average rating" Binding="{Binding Rating.TourKnowledge}"  Width="75"/>
+                <DataGridTextColumn Header="Comment" Binding="{Binding Rating.Comment}" CanUserResize="False"  Width="75"/>
+                <DataGridCheckBoxColumn Header="Valid" Binding="{Binding IsValid}"  Width="75"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Height="40" Width="150" FontSize="15" >Show full comment</Button>
+            <Button Grid.Column="1" Height="40" Width="150" FontSize="15">Cancel</Button>
+        </Grid>
+        
+    </Grid>
+
+</Window>

@@ -28,8 +28,10 @@ namespace booking.WPF.ViewModels
         private StackPanel _tourEnjoymentPanel;
         private StackPanel _languageKnowledgePanel;
         private StackPanel _tourKnowledgePanel;
+        public User Guest { get; set; }
+
         public RateGuideViewModel(Appointment selectedTour, StackPanel tourKnowledgePanel, StackPanel languageKnowledgePanel,
-                                    StackPanel tourEnjoymentPanel)
+                                    StackPanel tourEnjoymentPanel, User guest)
         {
             SelectedTour = selectedTour;
             _guideRatingImageService = new GuideRatingImageService();
@@ -43,7 +45,7 @@ namespace booking.WPF.ViewModels
             _tourEnjoymentPanel = tourEnjoymentPanel as StackPanel;
             _languageKnowledgePanel = languageKnowledgePanel as StackPanel;
             _tourKnowledgePanel = tourKnowledgePanel as StackPanel;
-
+            Guest = guest;
         }
         private void Submit()
         {
@@ -62,7 +64,8 @@ namespace booking.WPF.ViewModels
                                               int.Parse(languageKnowledgeButton.Name.ToString().Substring(8)),
                                               int.Parse(tourEnjoymentButton.Name.ToString().Substring(9)),
                                               SelectedTour.Id,
-                                              Comment.ToString());
+                                              Comment.ToString(),
+                                              Guest.Id);
                 SelectedTour.IsRated = true;
                 _appointmentService.Update(SelectedTour);
                 MessageBox.Show("Successfully rated a tour!", "Confirm", MessageBoxButton.OK);

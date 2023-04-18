@@ -11,6 +11,7 @@ using booking.application.UseCases;
 using booking.Commands;
 using booking.Domain.DTO;
 using booking.Model;
+using booking.WPF.Views.Guide;
 
 namespace booking.WPF.ViewModels
 {
@@ -39,7 +40,21 @@ namespace booking.WPF.ViewModels
         public ICommand FindCommand => new RelayCommand(FindMostVisitedTour);
         public void Show()
         {
-            
+            try
+            {
+                if (SelectedTour != null && !string.IsNullOrEmpty( SelectedTour.Name))
+                {
+                    ShowReviewsWindow showReviews = new ShowReviewsWindow(Guide, SelectedTour);
+                    showReviews.ShowDialog();
+                }
+                else
+                    MessageBox.Show("Select tour!","Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                throw;
+            }
         }
 
         public void FindMostVisitedTour()
