@@ -147,3 +147,6 @@
 147|Muzej|True|False|32|5
 148|Neki point|True|False|32|1
 149|Jos meki|True|False|32|2
+150|Muzej|True|False|33|5
+151|Neki point|False|True|33|1
+152|Jos meki|False|True|33|2
