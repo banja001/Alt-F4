@@ -27,6 +27,7 @@ namespace booking.Repository
 
         public List<ReservationTour> GetAll()
         {
+            reservations = serializer.FromCSV(fileName);
             return reservations;
         }
         public int GetNextIndex()

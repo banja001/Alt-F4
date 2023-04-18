@@ -40,6 +40,7 @@ namespace booking.Repositories
 
         public IEnumerable<GuideRating> GetAll()
         {
+            _guideRatings = _serializer.FromCSV(fileName);
             return _guideRatings.ToList();
         }
 

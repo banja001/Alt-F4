@@ -23,6 +23,7 @@ namespace booking.Repository
         }
         public List<Appointment> FindAll()
         {
+            appointments = serializer.FromCSV(fileName);
             return appointments;
         }
         public void Save(List<Appointment> appointmentsForSave)

@@ -23,6 +23,7 @@ namespace booking.Repository
         }
         public List<Tour> FindAll()
         {
+            tours = serializer.FromCSV(fileName);
             return tours;
         }
         public void Add(Tour tour)

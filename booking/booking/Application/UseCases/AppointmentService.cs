@@ -199,7 +199,8 @@ namespace booking.application.UseCases
         {
             foreach (var ta in tourAttendances)
             {
-                ta.Guest=_reservationTourRepository.GetAll().Find(rtr=>rtr.Id==ta.Guest.Id);
+                if(ta.Guest!=null)
+                    ta.Guest=_reservationTourRepository.GetAll().Find(rtr=>rtr.Id==ta.Guest.Id);
             }
 
         }
