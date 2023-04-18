@@ -64,5 +64,12 @@ namespace booking.Repositories
         {
             return _guideRatings.Find(g => g.Id == guideRating.Id).Id;
         }
+
+        public void Update(GuideRating guideRating)
+        {
+            int idx = _guideRatings.FindIndex(a => a.Id == guideRating.Id);
+            _guideRatings[idx] = guideRating;
+            _serializer.ToCSV(fileName, _guideRatings);
+        }
     }
 }

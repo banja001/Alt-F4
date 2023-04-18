@@ -38,6 +38,7 @@ namespace booking.WPF.ViewModels
 
         public ICommand ShowCommand => new RelayCommand(Show);
         public ICommand FindCommand => new RelayCommand(FindMostVisitedTour);
+        
         public void Show()
         {
             try
@@ -71,5 +72,6 @@ namespace booking.WPF.ViewModels
             }
         }
         
+
     }
 }

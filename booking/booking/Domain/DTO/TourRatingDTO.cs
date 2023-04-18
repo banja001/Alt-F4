@@ -13,7 +13,6 @@ namespace booking.Domain.DTO
 
         public string TourName { get; set; }
         public string CheckPoint { get; set; }
-        public bool IsValid { get; set; }
         public GuideRating Rating { get; set; }
         public double AverageRating { get; set; }
         public string GuestName { get; set; }
@@ -21,14 +20,12 @@ namespace booking.Domain.DTO
 
         public TourRatingDTO()
         {
-            IsValid = true;
         }
 
-        public TourRatingDTO(string tourName, string checkPoint, bool isValid, GuideRating rating, double averageRating, int appointmentId,string guestName)
+        public TourRatingDTO(string tourName, string checkPoint, GuideRating rating, double averageRating, int appointmentId,string guestName)
         {
             TourName = tourName;
             CheckPoint = checkPoint;
-            IsValid = isValid;
             Rating = rating;
             AverageRating = averageRating;
             AppointmentId = appointmentId;

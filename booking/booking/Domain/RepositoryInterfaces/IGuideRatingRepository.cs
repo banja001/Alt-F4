@@ -11,5 +11,6 @@ namespace booking.Domain.RepositoryInterfaces
     {
         public int MakeID();
         public int GetIdOf(GuideRating guideRating);
+        public void Update(GuideRating guideRating);
     }
 }
