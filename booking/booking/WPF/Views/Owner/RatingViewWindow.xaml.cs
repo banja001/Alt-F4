@@ -73,16 +73,13 @@ namespace booking.View.Owner
             win.OwnerRatingImages = win.OwnerRatingImageRepository.GetByReservedDatesId(a);
             ShowImage();
         }
-
         public void SetImageSource(string url)
         {
-
             BitmapImage bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
             bitmapImage.UriSource = new Uri(@url, UriKind.Absolute);
             bitmapImage.EndInit();
             OwnerImage.Source = bitmapImage;
-
         }
         public void ShowImage()
         {

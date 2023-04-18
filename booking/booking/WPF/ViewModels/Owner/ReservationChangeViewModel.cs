@@ -77,18 +77,15 @@ namespace WPF.ViewModels.Owner
             if (SelectedItem == null) return;
             ReservedDates reservation = ownerWindow.reservedDates.Find(s => s.Id == SelectedItem.ReservationId);
             Accommodation accommodation = ownerWindow.accommodations.Find(s => s.Id == reservation.AccommodationId);
-
             List<ReservedDates> reservedDatesForDeletion = ownerWindow.reservedDates.FindAll(s => !(s.EndDate < SelectedItem.NewStartDate) && !(s.StartDate > SelectedItem.NewEndDate) && (s.AccommodationId == accommodation.Id) && (SelectedItem.ReservationId != s.Id));
 
             reservation.StartDate = SelectedItem.NewStartDate;
             reservation.EndDate = SelectedItem.NewEndDate;
             ownerWindow.reservedDatesRepository.Update(reservation);
-
             DeleteUnwantedReservationsAndRequests(reservedDatesForDeletion);
 
             ReservationRequests reservationRequst = reservationRequests.Find(s => SelectedItem.RequestId == s.Id);
             reservationRequestsService.UpdateAllow(reservationRequests.Find(s => SelectedItem.RequestId == s.Id));
-
 
             UpdateObservable();
             AddGuest1Notification(reservationRequst);

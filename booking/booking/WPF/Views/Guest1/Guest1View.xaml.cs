@@ -109,6 +109,8 @@ namespace booking.View
 
             AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
             AccommodationDTOs=SortAccommodationDTOs();///////////////////////////
+            accommodationData.ItemsSource=AccommodationDTOs;
+
 
             ReservationAccommodationDTOs = CreateReservationAccommodationDTOs(_reservedDatesRepository.GetAll());
             ReservationRequestsDTOs = CreateReservationsRequestsDTOs(_reservationRequestsRepository.GetAll());

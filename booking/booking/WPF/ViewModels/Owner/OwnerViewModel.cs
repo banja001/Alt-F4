@@ -23,7 +23,7 @@ namespace WPF.ViewModels.Owner
     public class OwnerViewModel:BaseViewModel
     {
         public int OwnerId { get; set; }
-        public int AverageRating { get; set; }
+        public double AverageRating { get; set; }
 
         public AccommodationService accommodationService;
         public List<Accommodation> accommodations;
@@ -67,9 +67,6 @@ namespace WPF.ViewModels.Owner
             ListToRate = new ObservableCollection<Guest1RatingDTO>(tempList);
 
             CalculateAverageRating();//ova
-
-
-
             if (tempList.Count() != 0)
             {
                 ownerWindow.Loaded += NotifyUser;
@@ -96,10 +93,8 @@ namespace WPF.ViewModels.Owner
 
         private void CalculateAverageRating()
         {
-            int sum = 0;
+            double sum = 0;
             int i = 0;
-
-
             foreach (var rating in OwnerRatings)
             {
                 if (rating.OwnerId == OwnerId)
@@ -108,12 +103,9 @@ namespace WPF.ViewModels.Owner
                     sum += rating.KindRating + rating.CleanRating;
                     i += 1;
                 }
-
             }
             if (i == 0) AverageRating = 0;
-            else AverageRating = sum / (i * 2);
-
-
+            else AverageRating =sum / (i * 2);
             ownerWindow.AverageLabel.Content = AverageRating;
             if (AverageRating >= 4.5 && i >= 3)
             {

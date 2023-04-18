@@ -68,8 +68,8 @@ namespace booking.View
              
             List<OwnerRating> ownerRatings = _ownerRatingsRepository.GetAll();
             List<User> users = _repository.GetAll().ToList();
-            int sum, i;
-            int AverageRating = 0;
+            double sum, i;
+            double AverageRating = 0;
             foreach (User user in users)
             {
                 sum = 0;

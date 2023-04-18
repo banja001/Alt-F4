@@ -7,5 +7,6 @@ namespace WPF.ViewModels.Owner
 {
     public class RatingViewViewModel:BaseViewModel
     {
+
     }
 }
