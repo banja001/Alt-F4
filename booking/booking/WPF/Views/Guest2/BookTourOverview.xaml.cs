@@ -101,7 +101,8 @@ namespace booking.View.Guest2
                     parentWindow.FilterByLocation(TourForBooking.Location);
                     parentWindow.tourSelectionTable.ItemsSource = parentWindow.TourLocationDTOs;
                     parentWindow.Show();
-                    this.Close();
+                    ConfirmButtonFlag = true;
+                    Close();
                 }
             }
         }

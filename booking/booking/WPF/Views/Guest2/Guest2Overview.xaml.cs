@@ -59,6 +59,7 @@ namespace booking.View.Guest2
             currentUser = user;
             FillStateComboBox();
             RemoveFullTours();
+            RemoveFormerTours();
 
             _tourAttendanceRepository= new TourAttendanceRepository();
             _appointmentCheckPointRepository = new AppointmentCheckPointRepository();
@@ -158,7 +159,16 @@ namespace booking.View.Guest2
             else
                 MessageBox.Show("Niste izabrali turu koju zelite da rezervisete!");
         }
-
+        public void RemoveFormerTours()
+        {
+            foreach (TourLocationDTO tour in TourLocationDTOs.ToList<TourLocationDTO>())
+            {
+                if(tour.StartTime.Date < DateTime.Now)
+                {
+                    TourLocationDTOs.Remove(tour);
+                }
+            }
+        }
         public void RemoveFullTours() 
         {
             foreach (TourLocationDTO tour in TourLocationDTOs.ToList<TourLocationDTO>())
@@ -273,8 +283,8 @@ namespace booking.View.Guest2
         public void FilterByLocation(string formattedLocation)
         {
             Location location = new Location();
-            location.State = formattedLocation.Split(",")[0];
-            location.City = formattedLocation.Split(",")[1];
+            location.State = formattedLocation.Split(",")[1];
+            location.City = formattedLocation.Split(",")[0];
 
             if (!location.State.Equals(""))
             {
