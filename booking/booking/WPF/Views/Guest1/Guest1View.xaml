@@ -10,8 +10,8 @@
         
         Title="AccomodationOverview" Height="760" Width="846" WindowStartupLocation="CenterScreen">
     <Grid>
-        <TabControl>
-            <TabItem Header="Overview" Height="22" Margin="-2,-2,-2,0" VerticalAlignment="Top">
+        <TabControl Name="tabControl">
+            <TabItem Name="tabItemOverview" Header="Overview" Height="22" Margin="-2,-2,-2,0" VerticalAlignment="Top">
                 <Grid>
                     <Label Content="Accommodation overview" FontSize="24" FontWeight="Bold" Margin="18,10,490,641"/>
                     <RadioButton Content="Overview" HorizontalAlignment="Left" Margin="19,80,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.722,0.613" IsChecked="True"/>
@@ -68,7 +68,7 @@
                     <Label Content="Accommodations" HorizontalAlignment="Left" Margin="10,334,0,0" VerticalAlignment="Top" Height="28"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Rate" Margin="-2,-2,-2,2">
+            <TabItem Name="tabItemRate" Header="Rate" Margin="-2,-2,-2,2">
                 <Grid>
                     <Label Content="Rate your accommodations" HorizontalAlignment="Left" Margin="19,23,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
                     <Label Content="Stayed in" HorizontalAlignment="Left" Margin="19,81,0,0" VerticalAlignment="Top"/>
@@ -117,7 +117,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Reservations"  Margin="-2,0,-2,0" Height="22" VerticalAlignment="Top">
+            <TabItem Name="tabItemReservations" Header="Reservations" Margin="-2,0,-2,0" Height="22" VerticalAlignment="Top">
                 <Grid>
                     <GroupBox Header="All reservations" Margin="10,54,10,376">
                         <Grid>
@@ -139,8 +139,13 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <Button x:Name="bPostpone" Content="Postpone" Margin="10" Click="Postpone"/>
-                                                    <Button x:Name="bCancel" Content="Cancel" Margin="10" Click="CancelReservation" />
+                                                    <Button x:Name="bPostpone" Command="{Binding Path=DataContext.PostponeReservationCommand,       
+                                                         RelativeSource= {RelativeSource FindAncestor,
+                                                         AncestorType={x:Type DataGrid}}}" 
+                                                         Content="Postpone" Margin="10"/>
+                                                    <Button x:Name="bCancel" Command="{Binding Path=DataContext.CancelReservationCommand,       
+                                                         RelativeSource= {RelativeSource FindAncestor,
+                                                         AncestorType={x:Type DataGrid}}}" Content="Cancel" Margin="10" />
                                                 </StackPanel>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
@@ -180,7 +185,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Forums">
+            <TabItem Name="tabItemForums" Header="Forums">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>

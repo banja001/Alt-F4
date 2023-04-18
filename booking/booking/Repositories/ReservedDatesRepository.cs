@@ -81,9 +81,10 @@ namespace booking.Repository
         public void Delete(ReservedDates reservedDate)
         {
             Load();
-            reservedDates.Remove(reservedDate);
+            reservedDates.Remove(reservedDates.Find(d => d.Id == reservedDate.Id));
             Save();
         }
+
         public void UpdateRating(int id)
         {
             Load();
