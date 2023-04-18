@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Xml.Linq;
 
 namespace booking.Model
@@ -16,7 +17,7 @@ namespace booking.Model
 
         public OwnerRatingImage() { }
 
-        public OwnerRatingImage(int id, string url, int reservedDateId)//za 3. parametar je stajalo int accommodation, greska?
+        public OwnerRatingImage(int id, string url, int reservedDateId)
         {
             this.Id = id;
             this.Url = url;

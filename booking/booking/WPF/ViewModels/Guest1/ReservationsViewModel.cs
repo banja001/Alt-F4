@@ -7,6 +7,7 @@ using booking.DTO;
 using booking.Model;
 using booking.Repositories;
 using booking.Repository;
+using booking.View;
 using booking.WPF.Views.Guest1;
 using Domain.RepositoryInterfaces;
 using Repositories;
@@ -26,6 +27,7 @@ namespace WPF.ViewModels.Guest1
         public static ObservableCollection<ReservationsRequestsDTO> ReservationRequestsDTOs { get; set; }
 
         public static ReservationAccommodationDTO SelectedReservation { get; set; }
+        public static ReservationsRequestsDTO SelectedReservationRequestDTO { get; set; }
 
         private readonly ReservationService _reservationService;
         private readonly ReservedDatesService _reservedDatesService;
@@ -36,12 +38,15 @@ namespace WPF.ViewModels.Guest1
 
         public ICommand PostponeReservationCommand => new RelayCommand(PostponeReservation);
         public ICommand CancelReservationCommand => new RelayCommand(CancelReservation);
+        public ICommand ViewCommentCommand => new RelayCommand(ViewComment);
 
         private int userId;
+        private Guest1View guest1ViewWindow;
 
-        public ReservationsViewModel(int userId)
+        public ReservationsViewModel(int userId, Guest1View guest1View)
         {
             this.userId = userId;
+            this.guest1ViewWindow = guest1View;
 
             _reservationService = new ReservationService();
             _reservedDatesService = new ReservedDatesService();
@@ -71,6 +76,9 @@ namespace WPF.ViewModels.Guest1
         {
             ReservationRequestsDTOs = _reservationService.CreateReservationsRequestsDTOs();
             ReservationAccommodationDTOs = _reservationService.CreateReservationAccommodationDTOs(userId);
+
+            guest1ViewWindow.reservationsData.ItemsSource = ReservationAccommodationDTOs;
+            guest1ViewWindow.reservationRequestsData.ItemsSource = ReservationRequestsDTOs;
         }
 
         private void CancelReservation()
@@ -96,6 +104,27 @@ namespace WPF.ViewModels.Guest1
             {
                 MessageBox.Show("You can cancle your reservation only 24h or " + accomodation.MinDaysToCancel + "days before!");
             }
+        }
+
+        private void ViewComment()
+        {
+            ReservationRequests reservationRequest = _reservationRequestsService.GetById(SelectedReservationRequestDTO.RequestId);
+
+            if (reservationRequest.isCanceled == RequestStatus.Postponed)
+            {
+                MessageBox.Show("Your request has been confirmed");
+                return;
+            }
+            else
+                if (reservationRequest.isCanceled == RequestStatus.Pending)
+            {
+                MessageBox.Show("Your request is still pending");
+                return;
+            }
+
+            if (reservationRequest.Comment == "")
+                MessageBox.Show("Owner didn't leave a comment", "Owner's comment");
+            else MessageBox.Show(reservationRequest.Comment, "Owner's comment");
         }
     }
 }

@@ -37,17 +37,11 @@ namespace booking.View
     {
         public static ObservableCollection<AccommodationLocationDTO> AccommodationDTOs { get; set; }
 
-        public static ObservableCollection<ReservationAccommodationDTO> StayedInAccommodations { get; set; }
-        public static ObservableCollection<Image> AddedImages { get; set; }
-
         public Image SelectedAddedImages { get; set; }
         public static AccommodationLocationDTO SelectedAccommodation { get; set; }
         
-        public static object SelectedFromList { get; set; }
-
-        public static ReservationAccommodationDTO SelectedStayedInAccommodation { get; set; }
-
-        public static ReservationsRequestsDTO SelectedReservationRequestDTO { get; set; }
+        
+        
         public SearchedAccomodationDTO SearchedAccommodation { get; set; }
 
         private readonly AccommodationRepository _accomodationRepository;
@@ -58,12 +52,7 @@ namespace booking.View
         private readonly OwnerRatingImageRepository _ownerRatingImageRepository;
         private readonly Guest1NotificationsRepository _guest1NotificationsRepository;
 
-        public double CleanRating { get; set; }
-        public double OwnersKindenssRating { get; set; }
-
-        public string RatingComment { get; set; }
-
-        public string ImageUrl { get; set; }
+        
         private readonly OwnerNotificationRepository _ownerNotificationRepository;
         private readonly UserRepository _userRepository;
         public List<User> users { get; set; }
@@ -71,9 +60,6 @@ namespace booking.View
         public string SelectedState { get; set; }
         public string SelectedCity { get; set; }
 
-        
-
-        public List<OwnerRatingImage> OwnerRatingImages { get; set; }
         public ObservableCollection<string> States { get; set; }
 
         public SignInForm signInWindow { get; set; }
@@ -83,21 +69,22 @@ namespace booking.View
         private List<Guest1Notifications> guest1Notifications;
 
         private ReservationsViewModel _reservationViewModel;
+        private RateAccommodationAndOwnerViewModel _rateAccommodationAndOwner;
 
         public Guest1View(int id,SignInForm sign)
         {
             InitializeComponent();
             userId = id;
 
-            _reservationViewModel = new ReservationsViewModel(userId);
+            _reservationViewModel = new ReservationsViewModel(userId, this);
+            _rateAccommodationAndOwner = new RateAccommodationAndOwnerViewModel(userId, this);
 
-            tabItemReservations.DataContext = _reservationViewModel;
             tabItemOverview.DataContext = this;
-            tabItemRate.DataContext = this;
+            tabItemRate.DataContext = _rateAccommodationAndOwner;
+            tabItemReservations.DataContext = _reservationViewModel;
             tabItemForums.DataContext = this;
 
             signInWindow = sign;
-            
             
             _accomodationRepository = new AccommodationRepository();
             _locationRepository = new LocationRepository();
@@ -113,23 +100,18 @@ namespace booking.View
             SearchedAccommodation = new SearchedAccomodationDTO();
 
             AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
-            AccommodationDTOs=SortAccommodationDTOs();///////////////////////////
+            AccommodationDTOs = SortAccommodationDTOs();
             accommodationData.ItemsSource=AccommodationDTOs;
 
 
             States = new ObservableCollection<string>();
-            AddedImages = new ObservableCollection<Image>();
-            OwnerRatingImages = new List<OwnerRatingImage>();
             guest1Notifications = _guest1NotificationsRepository.GetAllByGuest1Id(userId);
 
             InitializeDTOs();
             FillStateComboBox();
             InitializeCheckBoxes();
 
-            if(guest1Notifications.Count != 0)
-            {
-                Loaded += NotifyGuest1;
-            }
+            Guest1ViewViewModel guest1ViewViewModel = new Guest1ViewViewModel(userId);
         }
         
         private void NotifyGuest1(object sender, RoutedEventArgs e)
@@ -188,12 +170,7 @@ namespace booking.View
             return accommodationLocations;
         }
 
-        public List<ReservationAccommodationDTO> CreateStayedInAccommodations()
-        {
-            return null;
-           /* return ReservationAccommodationDTOs.Where(r => !_reservedDatesRepository.GetById(r.ReservationId).RatedByGuest &&
-                DateTime.Now >= r.EndDate && (DateTime.Now - r.EndDate).Days <= 5).ToList();*/
-        }        
+              
         private static AccommodationLocationDTO CreateAccommodationLocation(List<Location> locations, Accommodation accommodation)
         {
             AccommodationLocationDTO accommodationLocation;
@@ -201,7 +178,7 @@ namespace booking.View
             string locationCountry = locations.Find(u => u.Id == accommodation.LocationId).State;
 
             accommodationLocation = new AccommodationLocationDTO(accommodation.Id, accommodation.Name, locationCity + "," + locationCountry,
-                accommodation.Type, accommodation.MaxCapacity, accommodation.MinDaysToUse, accommodation.MinDaysToCancel,accommodation.Id);//dodao acc id
+                accommodation.Type, accommodation.MaxCapacity, accommodation.MinDaysToUse, accommodation.MinDaysToCancel,accommodation.Id);
             return accommodationLocation;
         }
 
@@ -223,12 +200,12 @@ namespace booking.View
             {
                 AddAccommodationToList(accommodation);
             }
-            //////////////////////////////////////////////////////////////////////////////////
+            
             ObservableCollection<AccommodationLocationDTO> SortedAccommodationDTOs = SortAccommodationDTOs();
             accommodationData.ItemsSource = SortedAccommodationDTOs;
         }
 
-        private ObservableCollection<AccommodationLocationDTO> SortAccommodationDTOs()
+        public ObservableCollection<AccommodationLocationDTO> SortAccommodationDTOs()
         {
             List<Accommodation> accommodations = _accomodationRepository.GetAll();
             ObservableCollection<AccommodationLocationDTO> SortedAccommodationDTOs = new ObservableCollection<AccommodationLocationDTO>();
@@ -333,165 +310,31 @@ namespace booking.View
 
             accommodationData.ItemsSource = AccommodationDTOs;
         }
-
+        /////////////////
         private void CleanStarsClick(object sender, MouseButtonEventArgs e)
         {
-            CleanRating = stClean.Value;
+            RateAccommodationAndOwnerViewModel.CleanRating = stClean.Value;
         }
 
-        private void SubmitRate(object sender, RoutedEventArgs e)
+        public void ResetFormInputs()
         {
-            ReservedDates reservedDate = _reservedDatesRepository.GetById(SelectedStayedInAccommodation.ReservationId);
-            reservedDate.RatedByGuest = true;
-            _reservedDatesRepository.Update(reservedDate);
-
-            Accommodation accommodation = _accomodationRepository.GetById(reservedDate.AccommodationId);
-
-            OwnerRating ownerRating = new OwnerRating(_ownerRatingRepository.MakeId(), accommodation.OwnerId, Convert.ToInt32(CleanRating), Convert.ToInt32(OwnersKindenssRating), RatingComment);
-
-            ownerRating.ReservationId = SelectedStayedInAccommodation.ReservationId;
-
-            _ownerRatingRepository.Add(ownerRating);
-
-            foreach (var ownerRatingImage in OwnerRatingImages)
-            {
-                ownerRatingImage.Id = _ownerRatingImageRepository.MakeId();
-                _ownerRatingImageRepository.Add(ownerRatingImage);
-            }
-
-            StayedInAccommodations.Remove(StayedInAccommodations.Where(a => a.ReservationId == SelectedStayedInAccommodation.ReservationId).ToList()[0]);
-            ResetFormInputs();
-
-            MessageBox.Show("Rating successfully added!");
-            signInWindow.RefreshUsers();
-            AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
-            AccommodationDTOs = SortAccommodationDTOs();
-            accommodationData.ItemsSource = AccommodationDTOs;
-        }
-
-        private void ResetFormInputs()
-        {
-            OwnerRatingImages.Clear();
-            AddedImages.Clear();
-            lvAddedImages.ItemsSource = AddedImages;
-            lbStayedIn.ItemsSource = StayedInAccommodations;
             stClean.Value = 0;
             stOwner.Value = 0;
             txtbComment.Text = "";
             bSubmitRate.IsEnabled = false;
         }
-
         private void OwnersKindnessStarsClick(object sender, MouseButtonEventArgs e)
         {
-            OwnersKindenssRating = stOwner.Value;
+            RateAccommodationAndOwnerViewModel.OwnersKindenssRating = stOwner.Value;
         }
-
-        private void lbStayedIn_Selected(object sender, SelectionChangedEventArgs e)
-        {
-            bSubmitRate.IsEnabled = true;
-            if (SelectedFromList != null)
-            {
-                string[] parts = SelectedFromList.ToString().Split("|");
-
-                ReservationAccommodationDTO stayedInAccommodation = StayedInAccommodations.Where(a => a.StartDate.ToString("dd/MM/yyyy") == parts[2].Split("-")[0] && a.EndDate.ToString("dd/MM/yyyy") == parts[2].Split("-")[1]
-                    && a.Location == parts[1] && a.AccommodationName == parts[0]).ToList()[0];
-
-                SelectedStayedInAccommodation = new ReservationAccommodationDTO(stayedInAccommodation);
-            }
-        }
-
-        private void AddImage(object sender, RoutedEventArgs e)
-        {
-            
-            AddedImages.Add(CreateImageFromBitMap());
-            if (!bAddImage.IsEnabled)
-            {
-                AddedImages.RemoveAt(AddedImages.Count - 1);
-                tbImageUrl.Text = "";
-                return;
-            }
-
-            if(OwnerRatingImages.Find(i => i.Url == ImageUrl) != null)
-            {
-                AddedImages.RemoveAt(AddedImages.Count - 1);
-                tbImageUrl.Text = "";
-                MessageBox.Show("You have already added that image, please choose a different one!", "Warning");
-                return;
-            }
-            OwnerRatingImages.Add(new OwnerRatingImage(-1, ImageUrl, SelectedStayedInAccommodation.ReservationId));
-            tbImageUrl.Text = "";
-        }
-
-        private Image CreateImageFromBitMap()
-        {
-            if (bAddImage.IsEnabled)
-            {
-                Image img = new Image();
-                img.Source = CreateBitmapImage();
-                img.Width = 100;
-                img.Height = 100;
-
-                return img;
-            }
-
-            return null;
-        }
-
-        private BitmapImage CreateBitmapImage()
-        {
-            BitmapImage bitmapImage = new BitmapImage();
-            bitmapImage.BeginInit();
-            try
-            {
-                bitmapImage.UriSource = new Uri(@ImageUrl, UriKind.Absolute);
-                bitmapImage.EndInit();
-                return bitmapImage;
-            }
-            catch
-            {
-                MessageBox.Show("Invalid type of image url");
-                bAddImage.IsEnabled = false;
-                return null;
-            }
-            
-        }
-
         private void tbImageUrl_TextChanged(object sender, TextChangedEventArgs e)
         {
             bAddImage.IsEnabled = true;
         }
 
-        private void RemoveImage(object sender, RoutedEventArgs e)
+        public void ClearImgUrlTextBox()
         {
-            ObservableCollection<Image> AddedImagesCpy = new ObservableCollection<Image>(AddedImages);
-            foreach(var item in lvAddedImages.SelectedItems)
-            {
-                AddedImagesCpy.Remove((Image)item);
-            }
-
-            AddedImages = AddedImagesCpy;
-            lvAddedImages.ItemsSource = AddedImages;
-        }
-
-        private void ViewComment(object sender, RoutedEventArgs e)
-        {
-            ReservationRequests reservationRequest =_reservationRequestsRepository.GetById(SelectedReservationRequestDTO.RequestId);
-
-            if(reservationRequest.isCanceled == RequestStatus.Postponed)
-            {
-                MessageBox.Show("Your request has been confirmed");
-                return;
-            }
-            else 
-                if(reservationRequest.isCanceled == RequestStatus.Pending)
-                {
-                    MessageBox.Show("Your request is still pending");
-                    return;
-                }
-
-            if (reservationRequest.Comment == "")
-                MessageBox.Show("Owner didn't leave a comment", "Owner's comment");
-            else MessageBox.Show(reservationRequest.Comment, "Owner's comment");
+            tbImageUrl.Text = "";
         }
     }
 }
