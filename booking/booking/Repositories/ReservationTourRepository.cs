@@ -67,5 +67,11 @@ namespace booking.Repository
             }
             return null;
         }
+
+        public void Delete(ReservationTour reservation)
+        {
+            reservations.Remove(reservations.Find(r=>r.Id==reservation.Id));
+            serializer.ToCSV(fileName, reservations);
+        }
     }
 }

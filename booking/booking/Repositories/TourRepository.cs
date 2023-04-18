@@ -34,5 +34,11 @@ namespace booking.Repository
         {
             return tours[tours.Count - 1].Id + 1;
         }
+
+        public void Delete(Tour tour)
+        {
+            tours.Remove(tours.Find(t => t.Id == tour.Id));
+            serializer.ToCSV(fileName, tours);
+        }
     }
 }

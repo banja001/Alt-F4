@@ -64,7 +64,7 @@ namespace booking.View.Guest2
             _appointmentCheckPointRepository = new AppointmentCheckPointRepository();
 
             welcome.Header = "Welcome " + currentUser.Username.ToString();
-            FindAnswer();
+            //FindAnswer();
         }
         private void FillStateComboBox()
         {
@@ -303,25 +303,6 @@ namespace booking.View.Guest2
         {
             this.Close();
         }
-        public void FindAnswer()
-        {
-            foreach (Answer a in _answerRepository.FindAll())
-            {
-                int userIdInAnswer = _reservationTourRepository.GetById(_tourAttendanceRepository.GetById(a.User.Id).Guest.Id).User.Id;
-
-                if (userIdInAnswer == currentUser.Id)
-                {
-
-                    AppointmentCheckPoint currentCheckPoint = _appointmentCheckPointRepository.FindAll().Find(chepo => chepo.Id == a.AppointmentCheckPoint.Id);
-                   if(a.HaveToAnswer)
-                       if( MessageBox.Show("Are you on check point " + currentCheckPoint.Name + "?","Confirmation",MessageBoxButton.YesNo)==MessageBoxResult.Yes )
-                       {
-                            a.HaveToAnswer = false;
-                            a.AppointmentCheckPoint= currentCheckPoint;
-                            _answerRepository.SaveOneInFile(a);
-                       }
-                }
-            }
-        }
+        
     }
 }

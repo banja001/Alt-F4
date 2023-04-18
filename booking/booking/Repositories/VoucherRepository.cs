@@ -66,10 +66,12 @@ namespace Repositories
         public bool Contains(object entity)
         {
             Voucher voucher = entity as Voucher;
-            foreach(Voucher v in _vouchers)
+            _vouchers = _serializer.FromCSV(fileName);
+            foreach (Voucher v in _vouchers)
             {
                 bool isUnique = (voucher.ObtainDate.Date != v.ObtainDate.Date) || (voucher.GuideId != v.GuideId) || (voucher.Guest2Id != v.Guest2Id);
-                if (!isUnique)
+                bool isGivenByGuide = v.GuideId>0;
+                if (!isUnique && !isGivenByGuide)
                     return true;
             }
             return false;

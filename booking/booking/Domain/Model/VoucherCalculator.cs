@@ -34,7 +34,7 @@ namespace Domain.Model
 
                     Voucher possibleVoucher = new Voucher(-1,
                                                           youngestAppointment.End,
-                                                          youngestAppointment.Guide.Id,
+                                                          -1,
                                                           guest2.Id,
                                                           expirationDate,
                                                           false);

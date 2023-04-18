@@ -55,5 +55,11 @@ namespace booking.View.Guide
                 throw;
             }
         }
+
+        private void ShowUnfinishedTours_Click(object sender, RoutedEventArgs e)
+        {
+            TourCancellation tourCancellation=new TourCancellation(Guide);
+            tourCancellation.ShowDialog();
+        }
     }
 }
