@@ -59,5 +59,10 @@ namespace booking.Repositories
             else
                 return 1;
         }
+
+        public int GetIdOf(GuideRating guideRating)
+        {
+            return _guideRatings.Find(g => g.Id == guideRating.Id).Id;
+        }
     }
 }

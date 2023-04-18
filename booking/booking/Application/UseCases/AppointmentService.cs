@@ -6,9 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using booking.Domain.DTO;
-using booking.Domain.Model;
 using booking.Model;
-using booking.Repositories;
 using booking.Repository;
 
 namespace booking.application.UseCases
@@ -18,16 +16,14 @@ namespace booking.application.UseCases
         private readonly AppointmentRepository _appointmentRepository;  
         private readonly TourRepository _tourRepository;
         private readonly ReservationTourRepository _reservationTourRepository;
-        private readonly TourAttendanceRepository _tourAttendanceRepository;
         private readonly LocationRepository _locationRepository;
-        private readonly GuideRatingRepository _guideRatingRepository;
+        private readonly TourAttendanceRepository _tourAttendanceRepository;
         public AppointmentService()
         {
             _appointmentRepository = new AppointmentRepository();
             _tourRepository = new TourRepository();
             _reservationTourRepository= new ReservationTourRepository();
             _locationRepository= new LocationRepository();
-            _guideRatingRepository= new GuideRatingRepository();
             _tourAttendanceRepository = new TourAttendanceRepository();
         }
 
@@ -54,7 +50,7 @@ namespace booking.application.UseCases
                     appointment.Tour = _tourRepository.FindAll().Find(t=>t.Id==appointment.Tour.Id);
                     appointment.Tour.Location =
                         _locationRepository.GetAll().Find(l => l.Id == appointment.Tour.Location.Id);
-                    AppointmentGuestsDTO FinishedTour=new AppointmentGuestsDTO(appointment.Tour.Name,appointment.Tour.Location,appointment.Tour.Language,appointment.Start,guestsNumber,appointment.Id);
+                    AppointmentGuestsDTO FinishedTour=new AppointmentGuestsDTO(appointment.Tour.Name,appointment.Tour.Location,appointment.Tour.Language,appointment.Start,guestsNumber);
                     FinishedTours.Add(FinishedTour);
                 }
 
@@ -94,43 +90,6 @@ namespace booking.application.UseCases
             years.Clear();
             return distinctYears;
         }
-
-        public Appointment FindAppointment(int appointmentId)
-        {
-            Appointment appointment =
-                _appointmentRepository.FindAll().Find(a => a.Id == appointmentId);
-            
-            return appointment;
-        }
-
-        public List<GuideRating> FindComments(Appointment appointment)
-        {
-            List<GuideRating>reviews=new List<GuideRating>();
-            foreach (GuideRating ratings in _guideRatingRepository.GetAll())
-            {
-                reviews.Add(ratings);
-            }
-
-            return reviews.FindAll(r => r.AppointmentId == appointment.Id);
-        }
-
-
-        public List<TourRatingDTO> MakeTourRatings(ObservableCollection<GuideRating> guideRatings, AppointmentGuestsDTO appointment )
-        {
-            List<TourRatingDTO> ratings = new List<TourRatingDTO>();
-            foreach (var guideRating in guideRatings)
-            {
-                TourRatingDTO tourRating = new TourRatingDTO();
-                tourRating.Rating = guideRating;
-                tourRating.TourName=appointment.Name;
-                tourRating.AppointmentId=appointment.AppointmentId;
-                //tourRating.CheckPoint = _tourAttendanceRepository.GetAll()
-                //  .Find(ta => ta.Guest.Tour.Id == _appointmentRepository.FindAll().Find(a=>a.Id == appointment.AppointmentId).Tour.Id).StartedCheckPoint.Id.ToString();
-                tourRating.CheckPoint = _tourAttendanceRepository.GetAll().Find(ta => ta.Guest.Id == tourRating.Rating.GuestId).StartedCheckPoint.Id.ToString();
-                ratings.Add(tourRating); 
-            }
-
-            return ratings;
         public void Update(Appointment appointment)
         {
             _appointmentRepository.Upadte(appointment);
