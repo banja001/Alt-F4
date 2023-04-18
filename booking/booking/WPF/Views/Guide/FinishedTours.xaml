@@ -55,8 +55,8 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Height="40" Width="150" FontSize="20" >Show statistics</Button>
-            <Button Grid.Column="1" Height="40" Width="150" FontSize="20" Command="{Binding ShowCommand}" >Show reviews</Button>
+            <Button Grid.Column="0" Height="40" Width="150" FontSize="20" Command="{Binding ShowStatisticsCommand}">Show statistics</Button>
+            <Button Grid.Column="1" Height="40" Width="150" FontSize="20" Command="{Binding ShowReviewsCommand}" >Show reviews</Button>
 
         </Grid>
     </Grid>

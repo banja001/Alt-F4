@@ -22,10 +22,10 @@ namespace booking.WPF.Views.Guest2
     public partial class RateGuideView : Window
     {
         private readonly RateGuideViewModel _rateGuideViewModel;
-        public RateGuideView(Appointment selectedTour)
+        public RateGuideView(Appointment selectedTour, User guest)
         {
             InitializeComponent();
-            _rateGuideViewModel = new RateGuideViewModel(selectedTour, TourKnowledgePanel, LanguageKnowledgePanel, TourEnjoymentPanel);
+            _rateGuideViewModel = new RateGuideViewModel(selectedTour, TourKnowledgePanel, LanguageKnowledgePanel, TourEnjoymentPanel, guest);
             this.DataContext = _rateGuideViewModel;
 
         }

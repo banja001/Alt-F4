@@ -106,7 +106,22 @@ namespace booking.DTO
         }
         public List<TourImage> Images { get; set; }
 
-        public TourLocationDTO() { }
+        public TourLocationDTO() 
+        {
+            Images = new List<TourImage>();
+            startTime = new DateTime();
+        }
+        public TourLocationDTO(Appointment appointment, Tour tour, Location location)
+        {
+            Id = appointment.Tour.Id;
+            Name = tour.Name;
+            Description = tour.Description;
+            Language = tour.Language;
+            Location = location.State + "," + location.City;
+            MaxGuests = tour.MaxGuests;
+            Duration = tour.Duration;
+            startTime = appointment.Start.Date;
+        }
         public TourLocationDTO(int id, string name, string description, string location, string language, int maxGuests, DateTime startTime, double duration, List<TourImage> tourImages)
         {
             this.Location = location;
