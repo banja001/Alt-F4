@@ -16,9 +16,23 @@
                 <ColumnDefinition Width="5*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
+            
+            <StackPanel Orientation="Vertical">
+                <Label FontSize="14" Content="Active tour" Foreground="White" VerticalAlignment="Center" Margin="20,10,0,0"/>
+                <StackPanel Orientation="Horizontal">
+                    <DataGrid Margin="20,5,25,20" Height="50" Width="350" x:Name="ActiveTourTable" ItemsSource="{Binding ActiveTour}" FontSize="12" FontWeight="Normal" BorderBrush="White" AutoGenerateColumns="False" IsHitTestVisible="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Voucher Id"  Width="1*" Binding="{Binding Id}" />
+                            <DataGridTextColumn Header="Usable until"  Width="1*" Binding="{Binding ExpirationDate.Date, Converter={cvt:DateTimeToDateOnlyConverter}}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button  Background="#6191da" FontSize="14" Foreground="White" Content="Join tour" Grid.Row="1" Grid.Column="1" Width="150" Height="25" Margin="5,5,20,20" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+            
             <StackPanel Grid.Column="1">
                 <Label FontSize="14" Content="Available vouchers" Foreground="White" VerticalAlignment="Center" Margin="30,10,0,0"/>
-                <DataGrid Margin="30,5,30,0" Height="150" x:Name="VouchersTable" ItemsSource="{Binding Vouchers}" FontSize="12" FontWeight="Normal" BorderBrush="White" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True">
+                <DataGrid Margin="30,5,30,0" Height="150" x:Name="VouchersTable" ItemsSource="{Binding Vouchers}" FontSize="12" FontWeight="Normal" BorderBrush="White" AutoGenerateColumns="False" IsHitTestVisible="False" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Voucher Id"  Width="1*" Binding="{Binding Id}" />
                         <DataGridTextColumn Header="Usable until"  Width="1*" Binding="{Binding ExpirationDate.Date, Converter={cvt:DateTimeToDateOnlyConverter}}"/>
