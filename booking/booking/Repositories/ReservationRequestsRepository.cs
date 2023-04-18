@@ -50,13 +50,13 @@ namespace booking.Repositories
             reservationRequests.RemoveAll(r => r.ReservationId == id);
             Save();
         }
-        public List<ReservationRequests> GetPostpone()
+        public List<ReservationRequests> GetPending()
         {
-            Load();
+            
             List < ReservationRequests> list= new List<ReservationRequests>();
             foreach (ReservationRequests res in reservationRequests)
             {
-                if (res.RequestType == RequestType.Postpone)
+                if (res.isCanceled == RequestStatus.Pending)
                 {
                     list.Add(res);
                 }

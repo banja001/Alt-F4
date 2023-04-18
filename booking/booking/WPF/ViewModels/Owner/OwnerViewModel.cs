@@ -31,12 +31,15 @@ namespace WPF.ViewModels.Owner
         public List<AccommodationImage> accommodationImages;
         public LocationService locationService;
         public List<Location> locations;
+
         public ReservedDatesRepository reservedDatesRepository;
         public List<ReservedDates> reservedDates;
         public Guest1RatingsRepository guest1RatingsRepository;
         public List<Guest1Rating> guest1Ratings;
+
         public UserService userService;
         public List<User> users;
+
         public OwnerRatingImageRepository OwnerRatingImageRepository;
         public List<OwnerRatingImage> OwnerRatingImages;
         public OwnerRatingRepository OwnerRatingRepository;
@@ -58,12 +61,12 @@ namespace WPF.ViewModels.Owner
             ownerWindow = ow;
             CreateInstances();
 
-            List<ReservedDates> ratingDates = PickDatesForRating();
+            List<ReservedDates> ratingDates = PickDatesForRating();//ova
 
-            List<Guest1RatingDTO> tempList = GetGuestsToRate(ratingDates);
+            List<Guest1RatingDTO> tempList = GetGuestsToRate(ratingDates);//ova
             ListToRate = new ObservableCollection<Guest1RatingDTO>(tempList);
 
-            CalculateAverageRating();
+            CalculateAverageRating();//ova
 
 
 
@@ -88,7 +91,6 @@ namespace WPF.ViewModels.Owner
                 if (notification.OwnerId == OwnerId)
                     MessageBox.Show(notification.ToString());
             }
-
             _ownerNotificationRepository.DeleteAllByOwnerId(OwnerId);
         }
 

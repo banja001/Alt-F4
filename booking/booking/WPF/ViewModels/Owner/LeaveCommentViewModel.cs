@@ -29,7 +29,7 @@ namespace WPF.ViewModels.Owner
         private void SaveCommentClick()
         {
             ReservationRequests request = resVM.reservationRequests.Find(s => resVM.SelectedItem.ReservationId == s.ReservationId);
-            resVM.reservationRequestsRepository.UpdateDecline(request, Comment);
+            resVM.reservationRequestsService.UpdateDecline(request, Comment);
             resVM.AddGuest1Notification(reservationRequest);
             resVM.requestsObservable.Remove(resVM.SelectedItem);
             this.CloseCurrentWindow();

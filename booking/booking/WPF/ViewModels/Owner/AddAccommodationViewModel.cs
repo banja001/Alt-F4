@@ -27,7 +27,7 @@ namespace WPF.ViewModels.Owner
     {
         
         private List<string> accommodationImagesUrl;
-        public OwnerViewModel ownerWindow;
+        public OwnerViewModel ownerViewModel;
         //public List<string> StateList;
 
         public string State { get; set; }
@@ -44,7 +44,7 @@ namespace WPF.ViewModels.Owner
         public List<string> StateList { get; set; }
         public ICommand ConfirmCommand => new RelayCommand(Confirm);
         public ICommand AddImageCommand => new RelayCommand(AddImageClick);
-        public ICommand ComboboxSelectionChangedCommand => new RelayCommand(StateComboBox_SelectionChanged);
+        //public ICommand ComboboxSelectionChangedCommand => new RelayCommand(StateComboBox_SelectionChanged);
         public ICommand RemoveImageCommand => new RelayCommand(RemoveImageClick);
 
         
@@ -53,7 +53,7 @@ namespace WPF.ViewModels.Owner
         public AddAccommodationViewModel(OwnerViewModel ownerWindow)
         {
             this.accommodationImagesUrl = new List<string>();
-            this.ownerWindow = ownerWindow;
+            this.ownerViewModel = ownerWindow;
             StateList = ownerWindow.locationService.InitializeStateList(new List<string>(), ownerWindow.locations);
 
         }
@@ -108,16 +108,16 @@ namespace WPF.ViewModels.Owner
             }
 
             Accommodation a = AddAccommodation();
-            ownerWindow.accommodationService.Add(a);
-            ownerWindow.accommodationImageService.AddImages(a, accommodationImagesUrl, ownerWindow.accommodationImages);
+            ownerViewModel.accommodationService.Add(a);
+            ownerViewModel.accommodationImageService.AddImages(a, accommodationImagesUrl, ownerViewModel.accommodationImages);
             this.CloseCurrentWindow();
         }
 
         private Accommodation AddAccommodation()
         {
-            int locid = ownerWindow.locationService.GetLocationId(State, City, ownerWindow.locations);
-            int accid = ownerWindow.accommodations.Count() == 0 ? 0 : ownerWindow.accommodations.Max(a => a.Id) + 1;
-            Accommodation a = new Accommodation(accid, ownerWindow.OwnerId, Name, locid, Type, Convert.ToInt32(MaxVisitors), Convert.ToInt32(MinDaysToUse), Convert.ToInt32(DaysToCancel));
+            int locid = ownerViewModel.locationService.GetLocationId(State, City, ownerViewModel.locations);
+            int accid = ownerViewModel.accommodations.Count() == 0 ? 0 : ownerViewModel.accommodations.Max(a => a.Id) + 1;
+            Accommodation a = new Accommodation(accid, ownerViewModel.OwnerId, Name, locid, Type, Convert.ToInt32(MaxVisitors), Convert.ToInt32(MinDaysToUse), Convert.ToInt32(DaysToCancel));
             return a;
         }
 
@@ -129,14 +129,15 @@ namespace WPF.ViewModels.Owner
             
 
         }
+        /*
         private void StateComboBox_SelectionChanged()
         {
             List<string> CityList = new List<string>();
             SelectedItemCity = null;
             string SelectedState = SelectedItemState.ToString();
-            CityList = ownerWindow.locationService.FillCityList(CityList, SelectedState, ownerWindow.locations);
+            CityList = ownerViewModel.locationService.FillCityList(CityList, SelectedState, ownerViewModel.locations);
             //CityComboBox.ItemsSource = CityList;
-        }
+        }*/
         private void RemoveImageClick()
         {
             if (accommodationImagesUrl.Count() > 0)

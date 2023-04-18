@@ -37,9 +37,9 @@ namespace booking.application.usecases
             _reservationRequestsRepository.RemoveAllByReservationId(id);
         }
 
-        public List<ReservationRequests> GetPostpone()
+        public List<ReservationRequests> GetPending()
         {
-            return _reservationRequestsRepository.GetPostpone();
+            return _reservationRequestsRepository.GetPending();
         }
         public void UpdateDecline(ReservationRequests r, string comment)
         {

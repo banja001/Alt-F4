@@ -12,7 +12,7 @@ namespace Domain.RepositoryInterfaces
         public ReservationRequests GetById(int id);
         public void Remove(ReservationRequests r);
         public void RemoveAllByReservationId(int id);
-        public List<ReservationRequests> GetPostpone();
+        public List<ReservationRequests> GetPending();
         public void UpdateDecline(ReservationRequests r, string comment);
         public void UpdateAllow(ReservationRequests r);
         public void Add(ReservationRequests reservationRequest);
