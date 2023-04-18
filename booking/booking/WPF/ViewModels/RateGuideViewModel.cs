@@ -82,7 +82,8 @@ namespace booking.WPF.ViewModels
                                                                 int.Parse(languageKnowledgeButton.Name.ToString().Substring(8)),
                                                                 int.Parse(tourEnjoymentButton.Name.ToString().Substring(9)),
                                                                 SelectedTour.Id,
-                                                                Comment.ToString());
+                                                                Comment.ToString(),
+                                                                Guest.Id);
             SelectedTour.IsRated = true;
             _appointmentService.Update(SelectedTour);
             if(_guideRatingImages.Count > 0)
