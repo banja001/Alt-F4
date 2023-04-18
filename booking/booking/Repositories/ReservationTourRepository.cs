@@ -8,10 +8,11 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.RepositoryInterfaces;
 
 namespace booking.Repository
 {
-    public class ReservationTourRepository
+    public class ReservationTourRepository:IReservationTourRepository
     {
         private List<ReservationTour> reservations;
         private Serializer<ReservationTour> serializer;

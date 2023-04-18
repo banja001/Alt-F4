@@ -6,16 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using booking.Model;
+using Domain.RepositoryInterfaces;
 
 namespace booking.application.UseCases
 {
     public class TourService
     {
-        private readonly TourRepository _tourRepository;
+        private readonly ITourRepository _tourRepository;
         private readonly LocationRepository _locationRepository;
         public TourService()
         {
-            _tourRepository = new TourRepository();
+            _tourRepository = Injector.Injector.CreateInstance<ITourRepository>();
             _locationRepository = new LocationRepository();
         }
 

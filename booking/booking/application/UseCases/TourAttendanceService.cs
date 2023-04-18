@@ -3,17 +3,19 @@ using booking.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Domain.RepositoryInterfaces;
+using booking.Injector;
 
 namespace application.UseCases
 {
     public class TourAttendanceService
     {
-        private readonly TourAttendanceRepository _tourAttendanceRepository;
-        private readonly ReservationTourRepository _reservationTourRepository;
+        private readonly ITourAttendanceRepository _tourAttendanceRepository;
+        private readonly IReservationTourRepository _reservationTourRepository;
         public TourAttendanceService()
         {
-            _tourAttendanceRepository = new TourAttendanceRepository();
-            _reservationTourRepository = new ReservationTourRepository();
+            _tourAttendanceRepository = Injector.CreateInstance<ITourAttendanceRepository>();
+            _reservationTourRepository = Injector.CreateInstance<IReservationTourRepository>();
         }
         public void Add(TourAttendance tourAttendance, Appointment appointment)
         {

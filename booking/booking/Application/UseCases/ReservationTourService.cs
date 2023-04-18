@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using booking.Injector;
 using booking.Model;
 using booking.Repository;
 using Domain.Model;
+using Domain.RepositoryInterfaces;
 using Repositories;
 
 namespace application.UseCases
 {
     public class ReservationTourService
     {
-        private readonly ReservationTourRepository _reservationTourRepository;
-        private readonly TourRepository _tourRepository;
-        private readonly VoucherRepository _voucherRepository;
+        private readonly IReservationTourRepository _reservationTourRepository;
+        private readonly IVoucherRepository _voucherRepository;
         public ReservationTourService()
         {
-            _reservationTourRepository= new ReservationTourRepository();
-            _tourRepository= new TourRepository();
-            _voucherRepository= new VoucherRepository();
+            _reservationTourRepository = Injector.CreateInstance<IReservationTourRepository>();
+            _voucherRepository = Injector.CreateInstance<IVoucherRepository>(); ;
         }
 
         public void GiveVouchers(Tour tour,User guide)
