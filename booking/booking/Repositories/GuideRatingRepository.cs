@@ -68,6 +68,11 @@ namespace booking.Repositories
         IEnumerable<GuideRating> IGuideRatingRepository.GetAll()
         {
             throw new NotImplementedException();
+        public void Update(GuideRating guideRating)
+        {
+            int idx = _guideRatings.FindIndex(a => a.Id == guideRating.Id);
+            _guideRatings[idx] = guideRating;
+            _serializer.ToCSV(fileName, _guideRatings);
         }
     }
 }

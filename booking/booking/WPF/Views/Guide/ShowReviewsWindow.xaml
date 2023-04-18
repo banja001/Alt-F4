@@ -11,14 +11,14 @@
             <RowDefinition Height="5*"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid Name="AllComments" ItemsSource="{Binding AllComments}" Grid.Row="0" AutoGenerateColumns="False" IsReadOnly="True" Margin="40,40,40,40" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
+        <DataGrid Name="AllCommentsDataGrid" ItemsSource="{Binding AllComments}" SelectedItem="{Binding SelectedComment}" Grid.Row="0" AutoGenerateColumns="False" IsReadOnly="True" Margin="40,40,40,40" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False" Width="720">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Tour name" Binding="{Binding TourName}" CanUserResize="False" Width="75"/>
-                <DataGridTextColumn Header="Guest name" Binding="{Binding CheckPoint}" CanUserResize="False"  Width="75"/>
+                <DataGridTextColumn Header="Guest name" Binding="{Binding GuestName}" CanUserResize="False"  Width="75"/>
                 <DataGridTextColumn Header="Check point" Binding="{Binding CheckPoint}" CanUserResize="False"  Width="75"/>
-                <DataGridTextColumn Header="Average rating" Binding="{Binding Rating.TourKnowledge}"  Width="75"/>
+                <DataGridTextColumn Header="Average rating" Binding="{Binding AverageRating}"  Width="75"/>
                 <DataGridTextColumn Header="Comment" Binding="{Binding Rating.Comment}" CanUserResize="False"  Width="75"/>
-                <DataGridCheckBoxColumn Header="Valid" Binding="{Binding IsValid}"  Width="75"/>
+                <DataGridCheckBoxColumn Header="Valid" Binding="{Binding Rating.IsValid}"  Width="75"/>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="1">
@@ -26,8 +26,8 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Height="40" Width="150" FontSize="15" >Show full comment</Button>
-            <Button Grid.Column="1" Height="40" Width="150" FontSize="15">Cancel</Button>
+            <Button Grid.Column="0" Height="40" Width="150" FontSize="15" Command="{Binding ShowCommand}" >Show full comment</Button>
+            <Button Grid.Column="1" Height="40" Width="150" FontSize="15" Command="{Binding ExitWindowCommand}">Cancel</Button>
         </Grid>
         
     </Grid>
