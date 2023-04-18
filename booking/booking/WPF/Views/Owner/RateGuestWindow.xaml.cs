@@ -27,7 +27,7 @@ namespace booking.View.Owner
     public partial class RateGuestWindow : Window
     {
         
-        public RateGuestWindow(OwnerWindow win)
+        public RateGuestWindow(OwnerViewModel win)
         {
             InitializeComponent();
             this.DataContext = new RateGuestViewModel(win);
