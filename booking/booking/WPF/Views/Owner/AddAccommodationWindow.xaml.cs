@@ -28,27 +28,15 @@ namespace booking.View
     /// </summary>
     public partial class AddAccommodationWindow : Window
     {
-
-        //private List<string> accommodationImagesUrl;
         public OwnerViewModel ownerWindow;
-        
 
-        //public List<string> StateList;
         public AddAccommodationWindow(OwnerViewModel win)
         {
             InitializeComponent();
             DataContext = new AddAccommodationViewModel(win);
            
-            ownerWindow = win; 
-            /*
-            accommodationImagesUrl = new List<string>();
-            StateList = new List<string>();
-            StateList=ownerWindow.locationService.InitializeStateList(StateList,ownerWindow.locations);
-            StateComboBox.ItemsSource = StateList;*/
-            
+            ownerWindow = win;            
         }
-
-        
 
         private void StateComboBox_SelectionChanged(object sender, RoutedEventArgs e)
         {

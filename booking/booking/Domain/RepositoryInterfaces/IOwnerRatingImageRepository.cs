@@ -9,7 +9,7 @@ namespace Domain.RepositoryInterfaces
     {
         public void Load();
         public List<OwnerRatingImage> GetAll();
-        public void AddOwnerRatingImage(OwnerRatingImage acci);
+        public void Add(OwnerRatingImage acci);
         public List<OwnerRatingImage> GetByReservedDatesId(int ReservedDatesId);
         public void Save();
         public int MakeId();

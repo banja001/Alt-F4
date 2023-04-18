@@ -33,7 +33,7 @@ namespace booking.Repository
             return Serializer.FromCSV(fileName);
         }
 
-        public void AddOwnerRatingImage(OwnerRatingImage acci)
+        public void Add(OwnerRatingImage acci)
         {
             Load();
             OwnerRatingImages.Add(acci);

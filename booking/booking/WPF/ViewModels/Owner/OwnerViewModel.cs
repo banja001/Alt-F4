@@ -32,7 +32,7 @@ namespace WPF.ViewModels.Owner
         public LocationService locationService;
         public List<Location> locations;
 
-        public ReservedDatesRepository reservedDatesRepository;
+        public ReservedDatesService reservedDatesService;
         public List<ReservedDates> reservedDates;
         public Guest1RatingsRepository guest1RatingsRepository;
         public List<Guest1Rating> guest1Ratings;
@@ -141,8 +141,8 @@ namespace WPF.ViewModels.Owner
             locationService = new LocationService();
             locations = locationService.GetAll();
 
-            reservedDatesRepository = new ReservedDatesRepository();
-            reservedDates = reservedDatesRepository.GetAll();
+            reservedDatesService = new ReservedDatesService();
+            reservedDates = reservedDatesService.GetAll();
             guest1RatingsRepository = new Guest1RatingsRepository();
             guest1Ratings = guest1RatingsRepository.GetAll();
             OwnerRatingImageRepository = new OwnerRatingImageRepository();

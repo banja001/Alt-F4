@@ -81,7 +81,7 @@ namespace WPF.ViewModels.Owner
 
             reservation.StartDate = SelectedItem.NewStartDate;
             reservation.EndDate = SelectedItem.NewEndDate;
-            ownerWindow.reservedDatesRepository.Update(reservation);
+            ownerWindow.reservedDatesService.Update(reservation);
             DeleteUnwantedReservationsAndRequests(reservedDatesForDeletion);
 
             ReservationRequests reservationRequst = reservationRequests.Find(s => SelectedItem.RequestId == s.Id);
@@ -95,7 +95,7 @@ namespace WPF.ViewModels.Owner
         {
             foreach (ReservedDates res in reservedDatesForDeletion)
             {
-                ownerWindow.reservedDatesRepository.Remove(res);
+                ownerWindow.reservedDatesService.Remove(res);
                 List<ReservationRequests> requestsToDelete = reservationRequests.FindAll(s => res.Id == s.ReservationId);
                 foreach (var request in requestsToDelete)
                     reservationRequestsService.Remove(request);

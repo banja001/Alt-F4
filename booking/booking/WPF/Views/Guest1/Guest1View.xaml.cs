@@ -351,12 +351,12 @@ namespace booking.View
 
             ownerRating.ReservationId = SelectedStayedInAccommodation.ReservationId;
 
-            _ownerRatingRepository.AddRating(ownerRating);
+            _ownerRatingRepository.Add(ownerRating);
 
             foreach (var ownerRatingImage in OwnerRatingImages)
             {
                 ownerRatingImage.Id = _ownerRatingImageRepository.MakeId();
-                _ownerRatingImageRepository.AddOwnerRatingImage(ownerRatingImage);
+                _ownerRatingImageRepository.Add(ownerRatingImage);
             }
 
             StayedInAccommodations.Remove(StayedInAccommodations.Where(a => a.ReservationId == SelectedStayedInAccommodation.ReservationId).ToList()[0]);

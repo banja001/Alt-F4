@@ -81,7 +81,7 @@ namespace WPF.ViewModels.Owner
         {
             Guest1Rating guestrating = new Guest1Rating(id, guestid, cleanliness, rules, comment);
             ownerWindow.guest1RatingsRepository.Add(guestrating);
-            ownerWindow.reservedDatesRepository.UpdateRating(ownerWindow.SelectedItem.DateId);
+            ownerWindow.reservedDatesService.UpdateRating(ownerWindow.SelectedItem.DateId);
             ownerWindow.ListToRate.Remove(ownerWindow.SelectedItem);
         }
     }

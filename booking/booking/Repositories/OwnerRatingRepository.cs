@@ -32,7 +32,7 @@ namespace booking.Repository
             return Serializer.FromCSV(fileName);
         }
 
-        public void AddRating(OwnerRating acci)
+        public void Add(OwnerRating acci)
         {
             Load();
             OwnerRatings.Add(acci);

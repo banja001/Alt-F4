@@ -9,7 +9,7 @@ namespace Domain.RepositoryInterfaces
     {
         public void Load();
         public List<OwnerRating> GetAll();
-        public void AddRating(OwnerRating acci);
+        public void Add(OwnerRating acci);
         public void Save();
         public int MakeId();
     }

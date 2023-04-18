@@ -6,10 +6,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
-
 namespace WPF.ViewModels.Owner
 {
-    public class AddAccommodationImageViewModel: BaseViewModel
+    public class AddAccommodationImageViewModel:BaseViewModel
     {
         private List<string> accommodationImages;
         public string Url{get;set;}
