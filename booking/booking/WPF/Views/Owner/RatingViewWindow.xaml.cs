@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF.ViewModels.Owner;
 
 namespace booking.View.Owner
 {
@@ -27,11 +28,12 @@ namespace booking.View.Owner
 
         private int ActiveImageIndx;
 
-        private OwnerWindow win;
+        private OwnerViewModel win;
         
+
         public ObservableCollection<OwnerRatingDTO> OwnerRatings { get; set; }
         public OwnerRatingDTO SelectedItem { get; set; }
-        public RatingViewWindow(OwnerWindow win)
+        public RatingViewWindow(OwnerViewModel win)
         {
             InitializeComponent();
             DataContext = this;
@@ -61,6 +63,8 @@ namespace booking.View.Owner
             }
             
         }
+
+        
 
         public void DatagridSelectionChange(object sender, RoutedEventArgs e)
         {

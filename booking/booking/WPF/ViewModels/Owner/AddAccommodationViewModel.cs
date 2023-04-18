@@ -27,7 +27,7 @@ namespace WPF.ViewModels.Owner
     {
         
         private List<string> accommodationImagesUrl;
-        public OwnerWindow ownerWindow;
+        public OwnerViewModel ownerWindow;
         //public List<string> StateList;
 
         public string State { get; set; }
@@ -50,7 +50,7 @@ namespace WPF.ViewModels.Owner
         
         public Regex intRegex = new Regex("^[0-9]{1,4}$");
 
-        public AddAccommodationViewModel(OwnerWindow ownerWindow)
+        public AddAccommodationViewModel(OwnerViewModel ownerWindow)
         {
             this.accommodationImagesUrl = new List<string>();
             this.ownerWindow = ownerWindow;

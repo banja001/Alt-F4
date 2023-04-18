@@ -18,11 +18,11 @@ namespace WPF.ViewModels.Owner
 
         public string Comment { get; set; }
 
-        OwnerWindow ownerWindow;
+        OwnerViewModel ownerWindow;
 
         public ICommand AddRatingCommand => new RelayCommand(AddRating_Click);
 
-        public RateGuestViewModel(OwnerWindow ownerWindow)
+        public RateGuestViewModel(OwnerViewModel ownerWindow)
         {
             this.SelectedCleanRadiobutton = new bool[] { false, false, false, false, false };
             this.SelectedRulesRadiobutton = new bool[] { false, false, false, false, false };

@@ -12,8 +12,8 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="797*"/>
         </Grid.ColumnDefinitions>
-        <Button Content="Add" HorizontalAlignment="Left" Margin="29,34,0,0" VerticalAlignment="Top" Height="32" Width="136" Click="AddAccommodation" Grid.Column="1"/>
-        <Button Name="RateGuests" Content="Rate guests" HorizontalAlignment="Left" Margin="571,228,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.842,-1.682" Height="24" Width="78" Click="RateGuests_Click" Grid.Column="1">
+        <Button Content="Add" Command="{Binding AddAccommodationCommand}" HorizontalAlignment="Left" Margin="29,34,0,0" VerticalAlignment="Top" Height="32" Width="136"  Grid.Column="1"/>
+        <Button Name="RateGuests" Command="{Binding RateGuestsCommand}" Content="Rate guests" HorizontalAlignment="Left" Margin="571,228,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.842,-1.682" Height="24" Width="78"  Grid.Column="1">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -34,9 +34,9 @@
                 <DataGridTextColumn Header="End date" Width="90" Binding="{Binding EndDate}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Column="1" Content="View Rating" HorizontalAlignment="Left" Margin="565,100,0,0" VerticalAlignment="Top" Height="44" Width="99" Click="View_Ratings_Click"/>
+        <Button Grid.Column="1" Command="{Binding ViewRatingsCommand}" Content="View Rating" HorizontalAlignment="Left" Margin="565,100,0,0" VerticalAlignment="Top" Height="44" Width="99" />
         <Label x:Name="AverageLabel" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="48,217,0,0" VerticalAlignment="Top" Width="188" Background="Gray"/>
-        <Button Grid.Column="1" Content="ReservationChange" HorizontalAlignment="Left" Margin="118,355,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button Grid.Column="1" Command="{Binding ReservationChangeCommand}" Content="ReservationChange" HorizontalAlignment="Left" Margin="118,355,0,0" VerticalAlignment="Top" />
         <Label x:Name="SuperOwnerLabel" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="48,267,0,0" VerticalAlignment="Top" Width="188" Background="Gray"/>
 
 

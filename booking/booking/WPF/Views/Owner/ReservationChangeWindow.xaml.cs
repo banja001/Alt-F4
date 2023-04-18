@@ -32,7 +32,7 @@ namespace booking.WPF.Views.Owner
     public partial class ReservationChangeWindow : Window
     {
        
-        public ReservationChangeWindow(OwnerWindow win)
+        public ReservationChangeWindow(OwnerViewModel win)
         {
             InitializeComponent();
             ReservationChangeViewModel rVM=new ReservationChangeViewModel(win,this);

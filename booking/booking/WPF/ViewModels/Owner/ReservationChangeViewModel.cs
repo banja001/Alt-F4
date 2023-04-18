@@ -22,7 +22,7 @@ namespace WPF.ViewModels.Owner
     {
         public List<ReservationRequests> reservationRequests;
         
-        public OwnerWindow ownerWindow;
+        public OwnerViewModel ownerWindow;
 
         public ReservationRequestsRepository reservationRequestsRepository;
         public ObservableCollection<ReservationChangeDTO> requestsObservable { get; set; }
@@ -34,7 +34,7 @@ namespace WPF.ViewModels.Owner
         public ICommand AllowCommand => new RelayCommand(AllowClick);
 
         public ICommand DeclineCommand => new RelayCommand(DeclineClick);
-        public ReservationChangeViewModel(OwnerWindow ownerWindow,ReservationChangeWindow res)
+        public ReservationChangeViewModel(OwnerViewModel ownerWindow,ReservationChangeWindow res)
         {
             this.ownerWindow = ownerWindow;
             this.reservationChangeWindow = res;
