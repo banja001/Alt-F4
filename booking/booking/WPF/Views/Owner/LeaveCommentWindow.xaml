@@ -8,7 +8,7 @@
         Title="LeaveComment" Height="749" Width="430">
     <Grid Margin="0,10,0,252">
         <TextBox HorizontalAlignment="Center" Name="CommentTextBox" Margin="0,103,0,0" TextWrapping="Wrap" Text="{Binding Path=Comment}" VerticalAlignment="Top" Width="368" Height="224"/>
-        <Button Content="save" HorizontalAlignment="Center" Margin="0,354,0,0" VerticalAlignment="Top" Height="39" Width="78" Click="SaveCommentClick"/>
+        <Button Content="save" Command="{Binding SaveCommentCommand}" HorizontalAlignment="Center" Margin="0,354,0,0" VerticalAlignment="Top" Height="39" Width="78" />
 
 
     </Grid>

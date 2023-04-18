@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF.ViewModels.Owner;
 
 namespace booking.WPF.Views.Owner
 {
@@ -21,24 +22,15 @@ namespace booking.WPF.Views.Owner
     /// </summary>
     public partial class LeaveCommentWindow : Window
     {
-        public string Comment { get; set; }
-
-        public ReservationChangeWindow resWin;
+        
         public LeaveCommentWindow(ReservationChangeWindow win)
         {
             InitializeComponent();
-            DataContext = this;
-            resWin = win;
+            DataContext = new LeaveCommentViewModel(win);
+            
 
         }
 
-        private void SaveCommentClick(object sender, RoutedEventArgs e)
-        {
-            ReservationRequests request=resWin.reservationRequests.Find(s=>resWin.SelectedItem.ReservationId==s.ReservationId);
-            resWin.reservationRequestsRepository.UpdateDecline(request, Comment);
-            resWin.requestsObservable.Remove(resWin.SelectedItem);
-            this.Close();
-
-        }
+        
     }
 }
