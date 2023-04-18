@@ -19,7 +19,7 @@ namespace booking.Injector
             {typeof(IOwnerNotificationRepository), new OwnerNotificationRepository() },
             {typeof(IOwnerRatingImageRepository), new OwnerRatingImageRepository() },
             {typeof(IReservationRequestsRepository), new ReservationRequestsRepository() },
-            {typeof(IReservedDatesRepository), new ReservedDatesRepository() }
+            {typeof(IReservedDatesRepository), new ReservedDatesRepository() },
             {typeof(IGuideRatingRepository), new GuideRatingRepository()},
             {typeof(IGuideRatingImageRepository), new GuideRatingImageRepository() }
         };

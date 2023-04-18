@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace booking.Domain.RepositoryInterfaces
 {
-    public interface IGuideRatingImageRepository : IRepository
+    public interface IGuideRatingImageRepository
     {
         public int MakeID();
+        public void Add(object entity);
     }
 }

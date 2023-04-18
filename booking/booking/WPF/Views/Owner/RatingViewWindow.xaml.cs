@@ -66,7 +66,7 @@ namespace booking.View.Owner
         {
             ActiveImageIndx = 0;
             int a = SelectedItem.ReservationId;
-            win.OwnerRatingImages = win.OwnerRatingImageRepository.Get(a);
+            win.OwnerRatingImages = win.OwnerRatingImageRepository.GetByReservedDatesId(a);
             ShowImage();
         }
 

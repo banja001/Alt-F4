@@ -3,11 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:booking.View.Guest2.Windows" xmlns:viewmodels="clr-namespace:booking.WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainGuest2ViewModel}"
+        xmlns:local="clr-namespace:booking.View.Guest2.Windows" xmlns:viewmodels="clr-namespace:booking.WPF.ViewModels" 
         mc:Ignorable="d"
         Height="700" Width="1250" AllowsTransparency="True" Background="Transparent" WindowStyle="None"
        WindowStartupLocation="CenterScreen"
        DataContext="{Binding MainGuest2ViewModel}">
+    <!--:DataContext="{d:DesignInstance Type=viewmodels:MainGuest2ViewModel}" stajalo na liniji 6--> 
     <Border CornerRadius="10" BorderBrush="#91AFDD" BorderThickness="4">
         <Grid Background="#91AFDD">
             <Grid.ColumnDefinitions>

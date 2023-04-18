@@ -205,7 +205,7 @@ namespace booking.View
 
         public List<ReservationAccommodationDTO> CreateStayedInAccommodations()
         {
-            return ReservationAccommodationDTOs.Where(r => !_reservedDatesRepository.GetByID(r.ReservationId).RatedByGuest &&
+            return ReservationAccommodationDTOs.Where(r => !_reservedDatesRepository.GetById(r.ReservationId).RatedByGuest &&
                 DateTime.Now >= r.EndDate && (DateTime.Now - r.EndDate).Days <= 5).ToList();
         }
 
@@ -215,7 +215,7 @@ namespace booking.View
 
             foreach(var request in reservationRequests)
             {
-                ReservedDates reservedDate = _reservedDatesRepository.GetByID(request.ReservationId);
+                ReservedDates reservedDate = _reservedDatesRepository.GetById(request.ReservationId);
 
                 Accommodation accommodation = _accomodationRepository.GetById(reservedDate.AccommodationId);
                 Location location = _locationRepository.GetById(accommodation.LocationId);
@@ -370,7 +370,7 @@ namespace booking.View
 
         private void Postpone(object sender, RoutedEventArgs e)
         {
-            PostponeReservation postponeReservation = new PostponeReservation(_reservedDatesRepository.GetByID(SelectedReservation.ReservationId));
+            PostponeReservation postponeReservation = new PostponeReservation(_reservedDatesRepository.GetById(SelectedReservation.ReservationId));
             postponeReservation.Owner = this;
             postponeReservation.ShowDialog();
 
@@ -379,7 +379,7 @@ namespace booking.View
 
         private void CancelReservation(object sender, RoutedEventArgs e)
         {
-            ReservedDates reservedDate = _reservedDatesRepository.GetByID(SelectedReservation.ReservationId);
+            ReservedDates reservedDate = _reservedDatesRepository.GetById(SelectedReservation.ReservationId);
             AccommodationLocationDTO accomodation = AccommodationDTOs.Where(a => a.Id == reservedDate.AccommodationId).ToList()[0];
 
             bool isMoreThan24H = accomodation.MinDaysToCancel == 0 && (SelectedReservation.StartDate - DateTime.Now).Hours >= 24;
@@ -420,7 +420,7 @@ namespace booking.View
 
         private void SubmitRate(object sender, RoutedEventArgs e)
         {
-            ReservedDates reservedDate = _reservedDatesRepository.GetByID(SelectedStayedInAccommodation.ReservationId);
+            ReservedDates reservedDate = _reservedDatesRepository.GetById(SelectedStayedInAccommodation.ReservationId);
             reservedDate.RatedByGuest = true;
             _reservedDatesRepository.Update(reservedDate);
 

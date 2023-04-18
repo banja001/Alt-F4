@@ -12,9 +12,7 @@
         <Calendar Name="cNewStartDate" SelectedDate="{Binding Path=NewDate.StartDate}" HorizontalAlignment="Left" Margin="128,116,0,0" VerticalAlignment="Top"/>
         <Label Content="New end date" HorizontalAlignment="Left" Margin="352,116,0,0" VerticalAlignment="Top"/>
         <Calendar Name="cNewEndDate" SelectedDate="{Binding Path=NewDate.EndDate}" HorizontalAlignment="Left" Margin="456,116,0,0" VerticalAlignment="Top"/>
-        <Button Content="Send" Name="bSend" HorizontalAlignment="Left" Height="30" Margin="557,315,0,0" VerticalAlignment="Top" Width="78" Click="Send"/>
-        <Button Content="Cancel" x:Name="bCancel" HorizontalAlignment="Left" Height="30" Margin="456,315,0,0" VerticalAlignment="Top" Width="78" Click="Cancel"/>
-
-
+        <Button Command="{Binding SendPostponeRequestCommand}" Content="Send" Name="bSend" HorizontalAlignment="Left" Height="30" Margin="557,315,0,0" VerticalAlignment="Top" Width="78"/>
+        <Button Command="{Binding CloseCommand}" Content="Cancel" x:Name="bCancel" HorizontalAlignment="Left" Height="30" Margin="456,315,0,0" VerticalAlignment="Top" Width="78"/>
     </Grid>
 </Window>

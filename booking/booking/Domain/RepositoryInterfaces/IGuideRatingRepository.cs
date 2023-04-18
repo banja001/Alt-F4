@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace booking.Domain.RepositoryInterfaces
 {
-    public interface IGuideRatingRepository : IRepository
+    public interface IGuideRatingRepository
     {
         public int MakeID();
         public int GetIdOf(GuideRating guideRating);
+        public void Add(object entity);
+
     }
 }

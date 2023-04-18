@@ -116,7 +116,7 @@ namespace booking.WPF.Views.Owner
         public void AddGuest1Notification(ReservationRequests reservationRequst)
         {
             int id = _guest1NotificationsRepository.MakeId();
-            _guest1NotificationsRepository.Add(new Guest1Notifications(id, _reservedDatesRepository.GetByID(reservationRequst.ReservationId).UserId, reservationRequst.Id));
+            _guest1NotificationsRepository.Add(new Guest1Notifications(id, _reservedDatesRepository.GetById(reservationRequst.ReservationId).UserId, reservationRequst.Id));
         }
 
         private void DeclineClick(object sender, RoutedEventArgs e)

@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF.ViewModels.Guest1;
 
 namespace booking.WPF.Views.Guest1
 {
@@ -22,42 +23,20 @@ namespace booking.WPF.Views.Guest1
     /// </summary>
     public partial class PostponeReservation : Window
     {
-        public ReservedDates NewDate { get; set; }
-
-        private readonly ReservationRequestsRepository _reservationRequestsRepository;
+        private PostponeReservationViewModel _viewModel;
         public PostponeReservation(ReservedDates reservation)
         {
             InitializeComponent();
+            _viewModel = new PostponeReservationViewModel(reservation);
+            DataContext = _viewModel;
 
-            DataContext = this;
-
-            NewDate = new ReservedDates(reservation);
-            SetCalendarDates();
-
-            _reservationRequestsRepository = new ReservationRequestsRepository();
+            SetCalendarDates(reservation);
         }
 
-        private void SetCalendarDates()
+        private void SetCalendarDates(ReservedDates reservation)//moze li ovo ovde da ostane, posto viewModel ne treba da se bavi izgledom
         {
-            cNewStartDate.DisplayDate = NewDate.StartDate;
-            cNewEndDate.DisplayDate = NewDate.EndDate;
-        }
-
-        private void Cancel(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void Send(object sender, RoutedEventArgs e)
-        {
-            int requestId = _reservationRequestsRepository.MakeId();
-            _reservationRequestsRepository.Add(new ReservationRequests(requestId, NewDate, "Pending"));
-
-
-            MessageBox.Show("Your request has been sent successfully!");
-
-
-            this.Close();
+            cNewStartDate.DisplayDate = reservation.StartDate;
+            cNewEndDate.DisplayDate = reservation.EndDate;
         }
     }
 }
