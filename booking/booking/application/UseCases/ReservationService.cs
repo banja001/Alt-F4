@@ -61,9 +61,5 @@ namespace booking.application.usecases
 
             return reservationAccommodationDTOs;
         }
-
-        
-
-
     }
 }

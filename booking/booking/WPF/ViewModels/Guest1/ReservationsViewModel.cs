@@ -61,7 +61,7 @@ namespace WPF.ViewModels.Guest1
         private void InitializeDTOs()
         {
             ReservationRequestsDTOs = _reservationService.CreateReservationsRequestsDTOs();
-            ReservationAccommodationDTOs = _reservationService.CreateReservationAccommodationDTOs(userId);
+            SetReservationAccommodationDTOs();
         }
 
         private void PostponeReservation()
@@ -75,10 +75,16 @@ namespace WPF.ViewModels.Guest1
         private void UpdateDataGrids()
         {
             ReservationRequestsDTOs = _reservationService.CreateReservationsRequestsDTOs();
-            ReservationAccommodationDTOs = _reservationService.CreateReservationAccommodationDTOs(userId);
+            SetReservationAccommodationDTOs();
 
             guest1ViewWindow.reservationsData.ItemsSource = ReservationAccommodationDTOs;
             guest1ViewWindow.reservationRequestsData.ItemsSource = ReservationRequestsDTOs;
+        }
+
+        private void SetReservationAccommodationDTOs()
+        {
+            ObservableCollection<ReservationAccommodationDTO> reservationAccommodations = _reservationService.CreateReservationAccommodationDTOs(userId);
+            ReservationAccommodationDTOs = new ObservableCollection<ReservationAccommodationDTO>(reservationAccommodations.Where(d => d.StartDate > DateTime.Now));
         }
 
         private void CancelReservation()

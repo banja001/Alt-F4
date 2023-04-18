@@ -198,9 +198,9 @@ namespace WPF.ViewModels.Guest1
 
         private void RemoveImage()
         {
-            AddedImages.Remove((Image)guest1ViewWindow.lvAddedImages.SelectedItem);
             OwnerRatingImages.RemoveAt(guest1ViewWindow.lvAddedImages.SelectedIndex);
-
+            AddedImages.Remove((Image)guest1ViewWindow.lvAddedImages.SelectedItem);
+           
             guest1ViewWindow.lvAddedImages.ItemsSource = AddedImages;
         }
 
