@@ -4,6 +4,7 @@ using booking.application.UseCases.Guest2;
 using booking.Commands;
 using booking.DTO;
 using booking.Model;
+using booking.Repository;
 using booking.View.Owner;
 using booking.WPF.Views.Guest2;
 using Domain.Model;
@@ -27,15 +28,18 @@ namespace booking.WPF.ViewModels
         public ObservableCollection<TourLocationDTO> ActiveTour { get; set; }
         public AppointmentCheckPoint CurrentCheckpoint { get; set; }
         public Appointment SelectedTour { get; set; }
+        public Appointment ActiveAppointment { get; set; }
         private User User { get; set; }
 
         private readonly AppointmentService _appointmentService;
         private readonly VoucherService _voucherService;
         private readonly AppointmentCheckpointService _appointmentCheckpointService;
+        private readonly TourAttendanceService _tourAttendanceService;
         public MyToursViewModel(User user) 
         {
             User = user;
             _appointmentService = new AppointmentService();
+            _tourAttendanceService = new TourAttendanceService();
             _voucherService = new VoucherService();
             _appointmentCheckpointService = new AppointmentCheckpointService();
             _voucherService.GenerateNewVouchersByGuest2(user);
@@ -43,8 +47,9 @@ namespace booking.WPF.ViewModels
             CompletedTours = new ObservableCollection<Appointment>(_appointmentService.GetCompletedAppointmentByGuest2(User));
             Vouchers = new ObservableCollection<Voucher>(_voucherService.GetUsableVouchersByGuest2(user));
             var activeTour = _appointmentService.GetActiveAppointmentByGuest2(user).ToList();
+            ActiveAppointment = activeTour[0];
             ActiveTour = new ObservableCollection<TourLocationDTO>(_appointmentService.MakeToursFrom(activeTour));
-            CurrentCheckpoint = _appointmentCheckpointService.GetCurrentCheckpointFor(activeTour[0]);
+            CurrentCheckpoint = _appointmentCheckpointService.GetCurrentCheckpointFor(ActiveAppointment);
         }
 
         private void RateGuide()
@@ -62,7 +67,9 @@ namespace booking.WPF.ViewModels
         }
         private void JoinActiveTour()
         {
-
+            var tourAttendance = new TourAttendance(-1, User.Id, CurrentCheckpoint.Id, true);
+            _tourAttendanceService.Add(tourAttendance, ActiveAppointment);
+            MessageBox.Show("Successfully joined a tour!", "Success", MessageBoxButton.OK);
         }
     }
 }
