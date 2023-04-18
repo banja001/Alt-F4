@@ -48,6 +48,11 @@ namespace WPF.ViewModels.Owner
             this.viewWindow = viewWindow;
 
             OwnerRatings = new ObservableCollection<OwnerRatingDTO>();
+            AddRatingsToView();
+        }
+
+        private void AddRatingsToView()
+        {
             foreach (OwnerRating OwnerRating in win.OwnerRatings)
             {
                 ReservedDates res = win.reservedDates.Find(s => s.Id == OwnerRating.ReservationId);
@@ -55,9 +60,6 @@ namespace WPF.ViewModels.Owner
                 else if (res.RatedByOwner == true && res.RatedByGuest == true && OwnerRating.OwnerId == win.OwnerId)
                 {
                     OwnerRatingDTO ow = new OwnerRatingDTO(win.users.Find(s => s.Id == res.UserId).Username, OwnerRating.CleanRating, OwnerRating.KindRating, OwnerRating.Comment, OwnerRating.ReservationId);
-
-
-
                     OwnerRatings.Add(ow);
                 }
             }
