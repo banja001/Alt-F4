@@ -12,6 +12,7 @@ using booking.Commands;
 using booking.Domain.DTO;
 using booking.Model;
 using booking.WPF.Views.Guide;
+using WPF.Views.Guide;
 
 namespace booking.WPF.ViewModels
 {
@@ -36,10 +37,11 @@ namespace booking.WPF.ViewModels
             Guide = guide;
         }
 
-        public ICommand ShowCommand => new RelayCommand(Show);
+        public ICommand ShowReviewsCommand => new RelayCommand(ShowReviews);
+        public ICommand ShowStatisticsCommand => new RelayCommand(ShowStatistics);
         public ICommand FindCommand => new RelayCommand(FindMostVisitedTour);
         
-        public void Show()
+        public void ShowReviews()
         {
             try
             {
@@ -50,6 +52,25 @@ namespace booking.WPF.ViewModels
                 }
                 else
                     MessageBox.Show("Select tour!","Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                throw;
+            }
+        }
+
+        public void ShowStatistics()
+        {
+            try
+            {
+                if (SelectedTour != null && !string.IsNullOrEmpty(SelectedTour.Name))
+                {
+                    ShowStatisticsWindow showStatistics = new ShowStatisticsWindow(SelectedTour);
+                    showStatistics.ShowDialog();
+                }
+                else
+                    MessageBox.Show("Select tour!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             catch (Exception exception)
             {
@@ -71,7 +92,7 @@ namespace booking.WPF.ViewModels
                 throw;
             }
         }
-        
+
 
     }
 }

@@ -15,6 +15,7 @@ namespace booking.Model
         public int NumberOfGuests { get; set; }
 
         public int AverageGuestAge { get; set; }
+        public int VoucherId { get; set; }
 
 
         public ReservationTour() 
@@ -23,7 +24,7 @@ namespace booking.Model
             this.Tour = new Tour();
         }
 
-        public ReservationTour(int id, int tourId, int userId, int numberOfGuests, int averageGuestAge)
+        public ReservationTour(int id, int tourId, int userId, int numberOfGuests, int averageGuestAge, int voucherId)
         {
             this.User = new User();
             this.Tour = new Tour();
@@ -33,6 +34,7 @@ namespace booking.Model
             this.User.Id = userId;
             this.NumberOfGuests = numberOfGuests;
             this.AverageGuestAge = averageGuestAge;
+            this.VoucherId = voucherId;
         }   
 
         public void FromCSV(string[] values)
@@ -42,11 +44,12 @@ namespace booking.Model
             this.User.Id = int.Parse(values[2]);
             this.NumberOfGuests = int.Parse(values[3]);
             this.AverageGuestAge = int.Parse(values[4]);
+            this.VoucherId = int.Parse(values[5]);
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Tour.Id.ToString(), User.Id.ToString(), NumberOfGuests.ToString(), AverageGuestAge.ToString() };
+            string[] csvValues = { Id.ToString(), Tour.Id.ToString(), User.Id.ToString(), NumberOfGuests.ToString(), AverageGuestAge.ToString(), VoucherId.ToString() };
             return csvValues;
         }
     }
