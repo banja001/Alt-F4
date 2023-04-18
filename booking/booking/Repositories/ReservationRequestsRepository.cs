@@ -67,7 +67,6 @@ namespace booking.Repositories
         }
         public void UpdateDecline(ReservationRequests r,string comment)
         {
-            Load();
             reservationRequests.Remove(r);
             r.isCanceled = RequestStatus.Canceled;
             r.Comment = comment;
@@ -77,7 +76,6 @@ namespace booking.Repositories
 
         public void UpdateAllow(ReservationRequests r)
         {
-            Load();
             reservationRequests.Remove(r);
             r.isCanceled = RequestStatus.Postponed;
             reservationRequests.Add(r);

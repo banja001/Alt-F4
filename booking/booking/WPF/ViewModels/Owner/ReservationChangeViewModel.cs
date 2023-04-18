@@ -1,4 +1,6 @@
-﻿using booking.Commands;
+﻿using application.UseCases;
+using booking.application.usecases;
+using booking.Commands;
 using booking.Domain.DTO;
 using booking.Domain.Model;
 using booking.Model;
@@ -6,6 +8,7 @@ using booking.Repositories;
 using booking.View;
 using booking.WPF.ViewModels;
 using booking.WPF.Views.Owner;
+using Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,6 +29,8 @@ namespace WPF.ViewModels.Owner
         public ReservationChangeDTO SelectedItem { get; set; }
 
         public ReservationChangeWindow reservationChangeWindow;
+
+        public NotificationsService _notificationsService { get; set; }
         public ICommand AllowCommand => new RelayCommand(AllowClick);
 
         public ICommand DeclineCommand => new RelayCommand(DeclineClick);
@@ -35,6 +40,7 @@ namespace WPF.ViewModels.Owner
             this.reservationChangeWindow = res;
             reservationRequestsRepository = new ReservationRequestsRepository();
             requestsObservable = new ObservableCollection<ReservationChangeDTO>();
+            _notificationsService = new NotificationsService();
             UpdateObservable();
         }
 
@@ -93,12 +99,17 @@ namespace WPF.ViewModels.Owner
 
             }
 
-
+            ReservationRequests reservationRequst = reservationRequests.Find(s => SelectedItem.RequestId == s.Id);
             reservationRequestsRepository.UpdateAllow(reservationRequests.Find(s => SelectedItem.RequestId == s.Id));
 
 
             UpdateObservable();
+            AddGuest1Notification(reservationRequst);
+        }
 
+        public void AddGuest1Notification(ReservationRequests reservationRequst)
+        {
+            _notificationsService.AddGuest1Notification(reservationRequst);
         }
 
         private void DeclineClick()

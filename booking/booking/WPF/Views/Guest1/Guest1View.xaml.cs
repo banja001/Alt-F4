@@ -148,9 +148,9 @@ namespace booking.View
             SearchedAccommodation = new SearchedAccomodationDTO();
 
             AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
-            ReservationAccommodationDTOs = CreateReservationAccommodationDTOs(_reservedDatesRepository.GetAll());
+            ReservationAccommodationDTOs = CreateReservationAccommodationDTOs(_reservedDatesRepository.GetAll());//
             StayedInAccommodations = new ObservableCollection<ReservationAccommodationDTO>(CreateStayedInAccommodations());
-            ReservationRequestsDTOs = CreateReservationsRequestsDTOs(_reservationRequestsRepository.GetAll());
+            ReservationRequestsDTOs = CreateReservationsRequestsDTOs(_reservationRequestsRepository.GetAll());//
         }
 
         private void InitializeCheckBoxes()

@@ -33,7 +33,7 @@ namespace booking.WPF.Views.Guest1
             SetCalendarDates(reservation);
         }
 
-        private void SetCalendarDates(ReservedDates reservation)//moze li ovo ovde da ostane, posto viewModel ne treba da se bavi izgledom
+        private void SetCalendarDates(ReservedDates reservation)
         {
             cNewStartDate.DisplayDate = reservation.StartDate;
             cNewEndDate.DisplayDate = reservation.EndDate;
