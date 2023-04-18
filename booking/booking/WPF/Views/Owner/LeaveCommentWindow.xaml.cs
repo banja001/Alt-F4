@@ -23,10 +23,11 @@ namespace booking.WPF.Views.Owner
     public partial class LeaveCommentWindow : Window
     {
         
-        public LeaveCommentWindow(ReservationChangeWindow win)
+
+        public LeaveCommentWindow(ReservationChangeViewModel res)
         {
             InitializeComponent();
-            DataContext = new LeaveCommentViewModel(win);
+            DataContext = new LeaveCommentViewModel(res);
             
 
         }

@@ -19,8 +19,8 @@
                 <DataGridTextColumn Header="Taken" Width="70" Binding="{Binding IsTaken}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Allow" HorizontalAlignment="Left" Margin="192,626,0,0" VerticalAlignment="Top" Height="45" Width="99" Click="AllowClick"/>
-        <Button Content="Decline" HorizontalAlignment="Left" Margin="314,628,0,0" VerticalAlignment="Top" Click="DeclineClick" RenderTransformOrigin="-0.04,-1.2" Height="42" Width="87"/>
+        <Button Content="Allow" Command="{Binding AllowCommand}" HorizontalAlignment="Left" Margin="192,626,0,0" VerticalAlignment="Top" Height="45" Width="99" />
+        <Button Content="Decline" Command="{Binding DeclineCommand}" HorizontalAlignment="Left" Margin="314,628,0,0" VerticalAlignment="Top"  RenderTransformOrigin="-0.04,-1.2" Height="42" Width="87"/>
 
     </Grid>
 </Window>

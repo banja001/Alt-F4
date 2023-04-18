@@ -17,19 +17,18 @@ namespace WPF.ViewModels.Owner
 
         public string Comment { get; set; }
 
-        public ReservationChangeWindow resWin;
-
+        public ReservationChangeViewModel resVM { get; set; }
         public ICommand SaveCommentCommand => new RelayCommand(SaveCommentClick);
-        public LeaveCommentViewModel(ReservationChangeWindow resWin)
+        public LeaveCommentViewModel(ReservationChangeViewModel res)
         {
-            this.resWin = resWin;
+            this.resVM = res;
         }
 
         private void SaveCommentClick()
         {
-            ReservationRequests request = resWin.reservationRequests.Find(s => resWin.SelectedItem.ReservationId == s.ReservationId);
-            resWin.reservationRequestsRepository.UpdateDecline(request, Comment);
-            resWin.requestsObservable.Remove(resWin.SelectedItem);
+            ReservationRequests request = resVM.reservationRequests.Find(s => resVM.SelectedItem.ReservationId == s.ReservationId);
+            resVM.reservationRequestsRepository.UpdateDecline(request, Comment);
+            resVM.requestsObservable.Remove(resVM.SelectedItem);
             this.CloseCurrentWindow();
 
         }
