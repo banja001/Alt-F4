@@ -1,6 +1,7 @@
 ﻿using booking.DTO;
 using booking.Model;
 using booking.Serializer;
+using Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace booking.Repository
 {
-    public class AccommodationImageRepository
+    public class AccommodationImageRepository: IAccommodationImageRepository
     {
         private List<AccommodationImage> AccommodationImages;
         private Serializer<AccommodationImage> Serializer;
@@ -29,7 +30,7 @@ namespace booking.Repository
             return AccommodationImages;
         }
 
-        public void AddAccommodationImage(AccommodationImage acci)
+        public void Add(AccommodationImage acci)
         {
 
             AccommodationImages.Add(acci);

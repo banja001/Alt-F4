@@ -21,7 +21,12 @@ namespace booking.Injector
             {typeof(IReservationRequestsRepository), new ReservationRequestsRepository() },
             {typeof(IReservedDatesRepository), new ReservedDatesRepository() },
             {typeof(IGuideRatingRepository), new GuideRatingRepository()},
-            {typeof(IGuideRatingImageRepository), new GuideRatingImageRepository() }
+            {typeof(IGuideRatingImageRepository), new GuideRatingImageRepository() },
+            {typeof(ILocationRepository), new LocationRepository()},
+            {typeof(IAccommodationImageRepository), new AccommodationImageRepository()},
+            {typeof(IAccommodationRepository), new AccommodationRepository()},
+            {typeof(IUserRepository), new UserRepository()}
+            // treba dodati
         };
 
         public static T CreateInstance<T>()

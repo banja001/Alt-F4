@@ -16,22 +16,22 @@
         <Label Content="Min days for reservation" HorizontalAlignment="Left" Margin="99,275,0,0" VerticalAlignment="Top"/>
         <Label Content="Num of days before u can cancel" HorizontalAlignment="Left" Margin="75,322,0,0" VerticalAlignment="Top"/>
         <Label Content="Images" HorizontalAlignment="Left" Margin="140,367,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="NameTextBox" HorizontalAlignment="Left" Margin="400,78,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <ComboBox Name="TypeComboBox" HorizontalAlignment="Left" Margin="400,188,0,0" VerticalAlignment="Top" Width="120">
+        <TextBox Name="NameTextBox" Text="{Binding Name}" HorizontalAlignment="Left" Margin="400,78,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <ComboBox Name="TypeComboBox" Text="{Binding Type}" HorizontalAlignment="Left" Margin="400,188,0,0" VerticalAlignment="Top" Width="120">
             <ComboBoxItem Content="Apartment"></ComboBoxItem>
             <ComboBoxItem Content="House"></ComboBoxItem>
             <ComboBoxItem Content="Cabin"></ComboBoxItem>
         </ComboBox>
-        <TextBox Name="MaxVisitorsTextBox" HorizontalAlignment="Left" Margin="400,236,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="MinDaysToUseTextBox" HorizontalAlignment="Left" Margin="400,288,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="DaysToCancelTextBox" HorizontalAlignment="Left" Margin="400,335,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120"/>
-        <Button Content="confirm" HorizontalAlignment="Left" Margin="658,96,0,0" VerticalAlignment="Top" Width="60" Height="36" Click="Confirm"/>
-        <Button Content="+" HorizontalAlignment="Left" Margin="400,372,0,0" VerticalAlignment="Top" Height="31" Width="41" Click="AddImageClick"/>
-        <Button Name="removeImageButton" Content="-" HorizontalAlignment="Left" Margin="460,372,0,0" VerticalAlignment="Top" Height="31" Width="41" Click="RemoveImageClick"/>
+        <TextBox Name="MaxVisitorsTextBox" Text="{Binding MaxVisitors}" HorizontalAlignment="Left" Margin="400,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="MinDaysToUseTextBox" Text="{Binding MinDaysToUse}" HorizontalAlignment="Left" Margin="400,288,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="DaysToCancelTextBox" Text="{Binding DaysToCancel}" HorizontalAlignment="Left" Margin="400,335,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button Content="confirm" Command="{Binding ConfirmCommand}" HorizontalAlignment="Left" Margin="658,96,0,0" VerticalAlignment="Top" Width="60" Height="36"/>
+        <Button Content="+" Command="{Binding AddImageCommand}" HorizontalAlignment="Left" Margin="400,372,0,0" VerticalAlignment="Top" Height="31" Width="41"/>
+        <Button Name="removeImageButton" Command="{Binding RemoveImageCommand}" Content="-" HorizontalAlignment="Left" Margin="460,372,0,0" VerticalAlignment="Top" Height="31" Width="41"/>
         <Label Content="Grad" HorizontalAlignment="Left" Margin="522,114,0,0" VerticalAlignment="Top"/>
         <Label Content="Drzava" HorizontalAlignment="Left" Margin="358,114,0,0" VerticalAlignment="Top"/>
-        <ComboBox Name="StateComboBox"  HorizontalAlignment="Left" Margin="321,148,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="StateComboBox_SelectionChanged"/>
-        <ComboBox Name="CityComboBox" HorizontalAlignment="Left" Margin="480,148,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox Name="StateComboBox" Text="{Binding State}"  ItemsSource="{Binding StateList}" SelectedItem="{Binding SelectedItemState}" HorizontalAlignment="Left" Margin="321,148,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="StateComboBox_SelectionChanged" />
+        <ComboBox Name="CityComboBox" Text="{Binding City}" ItemsSource="{Binding CityList,Mode=TwoWay}" SelectedItem="{Binding SelectedItemCity}" HorizontalAlignment="Left" Margin="480,148,0,0" VerticalAlignment="Top" Width="120"/>
         
     </Grid>
 </Window>

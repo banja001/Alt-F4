@@ -58,7 +58,7 @@ namespace booking.View.Guide
                     Tour.Location.Id = _locationRepository.MakeID();
                     _checkPointRepository.AddRange(ObservableToList(CheckPointsForListBox));
                     _tourImageRepository.AddRange(TourImages);
-                    _locationRepository.AddLocation(Tour.Location);
+                    _locationRepository.Add(Tour.Location);
                     _tourRepository.Add(Tour);
                     MessageBox.Show("Tour is addded!");
                     this.Close();

@@ -22,8 +22,8 @@
         <Label Content="Comment" HorizontalAlignment="Left" Margin="32,186,0,0" VerticalAlignment="Top"/>
         <Label Content="Respecting the &#xD;&#xA;rules of the guest" HorizontalAlignment="Left" Margin="200,29,0,0" VerticalAlignment="Top" Height="49" Width="101"/>
         <Label Content="Cleanliness of&#xD;&#xA;the guest" HorizontalAlignment="Left" Margin="32,33,0,0" VerticalAlignment="Top" Height="49" Width="94"/>
-        <TextBox Name="CommentTextBox" HorizontalAlignment="Left" Margin="46,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="294" Height="148"/>
-        <Button Content="Confirm" HorizontalAlignment="Left" Margin="294,384,0,0" VerticalAlignment="Top" Height="28" Width="68" Click="AddRating_Click"/>
+        <TextBox Name="CommentTextBox" Text="{Binding Comment}" HorizontalAlignment="Left" Margin="46,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="294" Height="148"/>
+        <Button Content="Confirm" Command="{Binding AddRatingCommand}" HorizontalAlignment="Left" Margin="294,384,0,0" VerticalAlignment="Top" Height="28" Width="68" />
 
     </Grid>
 </Window>

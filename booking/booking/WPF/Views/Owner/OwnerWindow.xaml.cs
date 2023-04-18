@@ -24,6 +24,7 @@ using System.Windows.Shapes;
 using booking.WPF.Views.Owner;
 using booking.Domain.Model;
 using Repositories;
+using application.UseCases;
 
 namespace booking.View
 {
@@ -36,17 +37,17 @@ namespace booking.View
         public int AverageRating { get; set; }
 
 
-        public AccommodationRepository accommodationRepository;
+        public AccommodationService accommodationService;
         public List<Accommodation> accommodations;
-        public AccommodationImageRepository accommodationImageRepository;
+        public AccommodationImageService accommodationImageService;
         public List<AccommodationImage> accommodationImages;
-        public LocationRepository locationRepository;
+        public LocationService locationService;
         public List<Location> locations;
         public ReservedDatesRepository reservedDatesRepository;
         public List<ReservedDates> reservedDates;
         public Guest1RatingsRepository guest1RatingsRepository;
         public List<Guest1Rating> guest1Ratings;
-        public UserRepository userRepository;
+        public UserService userService;
         public List<User> users;
         public OwnerRatingImageRepository OwnerRatingImageRepository;
         public List<OwnerRatingImage> OwnerRatingImages;
@@ -65,6 +66,7 @@ namespace booking.View
             CreateInstances();
 
             List<ReservedDates> ratingDates = PickDatesForRating();
+
             List<Guest1RatingDTO> tempList = GetGuestsToRate(ratingDates);
             ListToRate = new ObservableCollection<Guest1RatingDTO>(tempList);
             
@@ -123,7 +125,7 @@ namespace booking.View
             if (AverageRating >= 4.5 && i >= 3)
             {
                 SuperOwnerLabel.Content = "Super Owner**";
-                userRepository.UpdateById(OwnerId,true);
+                userService.UpdateById(OwnerId,true);
             }
         }
 
@@ -144,14 +146,16 @@ namespace booking.View
         }
         private void CreateInstances()
         {
-            userRepository = new UserRepository();
-            users = userRepository.GetAll();
-            accommodationRepository = new AccommodationRepository();
-            accommodations = accommodationRepository.GetAll();
-            accommodationImageRepository = new AccommodationImageRepository();
-            accommodationImages = accommodationImageRepository.GetAll();
-            locationRepository = new LocationRepository();
-            locations = locationRepository.GetAll();
+            userService = new UserService();
+            users = userService.GetAll();
+
+            accommodationService = new AccommodationService();
+            accommodations = accommodationService.GetAll();
+            accommodationImageService = new AccommodationImageService();
+            accommodationImages = accommodationImageService.GetAll();
+            locationService = new LocationService();
+            locations = locationService.GetAll();
+
             reservedDatesRepository = new ReservedDatesRepository();
             reservedDates = reservedDatesRepository.GetAll();
             guest1RatingsRepository = new Guest1RatingsRepository();
@@ -188,14 +192,11 @@ namespace booking.View
                 }
 
             }
-
             return ratingDates;
         }
 
         private void RateGuests_Click(object sender, RoutedEventArgs e)
         {
-            
-            
             if (SelectedItem == null)
             {
                 MessageBox.Show("No selected items","Error");

@@ -1,5 +1,6 @@
 ﻿using booking.Model;
 using booking.Serializer;
+using Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace booking.Repository
 {
-    public class LocationRepository
+    public class LocationRepository: ILocationRepository
     {
 
         private List<Location> Locations;
@@ -33,7 +34,7 @@ namespace booking.Repository
             return Locations.Where(l => l.Id == id).ToList()[0];
         }
 
-        public void AddLocation(Location loc)
+        public void Add(Location loc)
         {
 
             Locations.Add(loc);
