@@ -112,7 +112,7 @@ namespace booking.View
                         //Guest2Overview guest2Window = new Guest2Overview(user);
                         //guest2Window.Show();
 
-                        MainGuest2View mainWindow = new MainGuest2View();
+                        MainGuest2View mainWindow = new MainGuest2View(user);
                         mainWindow.Show();
                         this.Close();
                     } 

@@ -44,5 +44,11 @@ namespace booking.Repository
         {
             return 1;
         }
+        public void Upadte(Appointment appointment)
+        {
+            int idx = appointments.FindIndex(a => a.Id == appointment.Id);
+            appointments[idx] = appointment;
+            serializer.ToCSV(fileName, appointments);
+        }
     }
 }

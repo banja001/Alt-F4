@@ -1,4 +1,6 @@
-﻿using System;
+﻿using booking.Model;
+using booking.WPF.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +19,19 @@ namespace booking.View.Guest2.Windows
     /// <summary>
     /// Interaction logic for MainGuest2View.xaml
     /// </summary>
+    /// 
+
     public partial class MainGuest2View : Window
     {
-        public MainGuest2View()
+        private MainGuest2ViewModel _mainGuest2ViewModel;
+        public User User { get; set; }
+        public MainGuest2View(User user)
         {
             InitializeComponent();
+            _mainGuest2ViewModel = new MainGuest2ViewModel(user);
+            DataContext = _mainGuest2ViewModel;
+            User = user;
+            WelcomeLabel.Content = "Welcome " + User.Username;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using booking.Repositories;
+﻿using booking.Domain.RepositoryInterfaces;
+using booking.Repositories;
 using booking.Repository;
 using Domain.RepositoryInterfaces;
 using Repositories;
@@ -19,6 +20,8 @@ namespace booking.Injector
             {typeof(IOwnerRatingImageRepository), new OwnerRatingImageRepository() },
             {typeof(IReservationRequestsRepository), new ReservationRequestsRepository() },
             {typeof(IReservedDatesRepository), new ReservedDatesRepository() }
+            {typeof(IGuideRatingRepository), new GuideRatingRepository()},
+            {typeof(IGuideRatingImageRepository), new GuideRatingImageRepository() }
         };
 
         public static T CreateInstance<T>()

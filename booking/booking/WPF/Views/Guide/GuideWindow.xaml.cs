@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using booking.WPF.Views.Guide;
 
 namespace booking.View.Guide
 {
@@ -38,6 +39,21 @@ namespace booking.View.Guide
             
             LiveTrackingWindow liveTrackingWindow=new LiveTrackingWindow(Guide);
             liveTrackingWindow.ShowDialog();
+        }
+
+        private void ShowReviews_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                ShowReviews showReviews = new ShowReviews(Guide);
+                showReviews.ShowDialog();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                throw;
+            }
         }
     }
 }

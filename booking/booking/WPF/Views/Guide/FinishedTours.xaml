@@ -1,0 +1,63 @@
+﻿<Window x:Class="booking.WPF.Views.Guide.ShowReviews"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:booking.WPF.Views.Guide"
+        xmlns:viewModels="clr-namespace:booking.WPF.ViewModels"
+        mc:Ignorable="d"
+        Title="ShowReviews" Height="768" Width="1024">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" FontSize="28" Width="200" Height="50" Margin="10,15,302,42" >Choose year:</Label>
+            <ComboBox Grid.Column="0" Height="50" FontSize="28" ItemsSource="{Binding Years}"   SelectedItem="{Binding SelectedYear}" Margin="210,15,55,42"/>
+            <Button Grid.Column="1" FontSize="20" Command="{Binding FindCommand}"  Grid.Row="0" Content="Find tour" Margin="10,22,344,42" />
+
+        </Grid>
+
+        <Label Grid.Row="1" FontSize="40" Width="550" Height="75">Most visited tour in that year:</Label>
+        <DataGrid Name="MostVisitedTourInThatYear" ItemsSource="{Binding MostVisitedTour}" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,2,0" Width="790" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" CanUserResize="False" Width="75"/>
+                <DataGridTextColumn Header="State" Binding="{Binding Location.State}" CanUserResize="False"  Width="75"/>
+                <DataGridTextColumn Header="City" Binding="{Binding Location.City}" CanUserResize="False"  Width="75"/>
+                <DataGridTextColumn Header="Language" Binding="{Binding Language}"  Width="75"/>
+                <DataGridTextColumn Header="Start time" Binding="{Binding StartTime}" CanUserResize="False"  Width="75"/>
+                <DataGridTextColumn Header="Number of guests" Binding="{Binding NumberOfGuests}"  Width="75"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Grid.Row="3" FontSize="40" Width="340" Height="75">All finished tours:</Label>
+        <DataGrid Name="AllTours" ItemsSource="{Binding FinishedTours}" SelectedItem="{Binding SelectedTour}" Grid.Row="3" Grid.RowSpan="4" AutoGenerateColumns="False" IsReadOnly="True" Margin="116,92,118,107" Width="790" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" CanUserResize="False" Width="75"/>
+                <DataGridTextColumn Header="State" Binding="{Binding Location.State}" CanUserResize="False"  Width="75"/>
+                <DataGridTextColumn Header="City" Binding="{Binding Location.City}" CanUserResize="False"  Width="75"/>
+                <DataGridTextColumn Header="Language" Binding="{Binding Language}"  Width="75"/>
+                <DataGridTextColumn Header="Start time" Binding="{Binding StartTime}" CanUserResize="False"  Width="75"/>
+                <DataGridTextColumn Header="Number of guests" Binding="{Binding NumberOfGuests}"  Width="75"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Height="40" Width="150" FontSize="20" >Show statistics</Button>
+            <Button Grid.Column="1" Height="40" Width="150" FontSize="20" Command="{Binding ShowCommand}" >Show reviews</Button>
+
+        </Grid>
+    </Grid>
+</Window>
