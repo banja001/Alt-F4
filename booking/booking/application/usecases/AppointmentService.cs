@@ -10,6 +10,7 @@ using booking.Domain.Model;
 using booking.Model;
 using booking.Repositories;
 using booking.Repository;
+using Domain.DTO;
 
 namespace booking.application.UseCases
 {
@@ -150,12 +151,12 @@ namespace booking.application.UseCases
         }
 
         public void Update(Appointment appointment)
-            {
+        {
                 _appointmentRepository.Upadte(appointment);
-            }
+        }
 
-            public List<Appointment> GetCompletedAppointmentByGuest2(User guest2)
-            {
+        public List<Appointment> GetCompletedAppointmentByGuest2(User guest2)
+        {
                 List<ReservationTour> reservedTours =
                     _reservationTourRepository.GetAll().FindAll(r => r.User.Id == guest2.Id);
                 List<Appointment> appointments = _appointmentRepository.FindAll().FindAll(a => !a.IsRated);
@@ -165,11 +166,11 @@ namespace booking.application.UseCases
                 var completedAppointments = GetAllCompletedAppointments(reservedTours, appointments);
 
                 return GetVisitedAppointments(attendances, completedAppointments);
-            }
+        }
 
-            public List<Appointment> GetAllCompletedAppointments(List<ReservationTour> reservedTours,
+        public List<Appointment> GetAllCompletedAppointments(List<ReservationTour> reservedTours,
                 List<Appointment> appointments)
-            {
+        {
                 var completedAppointments = new List<Appointment>();
 
                 foreach (var reservedTour in reservedTours)
@@ -180,11 +181,11 @@ namespace booking.application.UseCases
                 }
 
                 return completedAppointments;
-            }
+        }
 
-            public List<Appointment> GetVisitedAppointments(List<TourAttendance> attendances,
+        public List<Appointment> GetVisitedAppointments(List<TourAttendance> attendances,
                 List<Appointment> completedAppointments)
-            {
+        {
                 foreach (var attendance in attendances)
                 {
                     Appointment visitedAppointment =
@@ -195,7 +196,49 @@ namespace booking.application.UseCases
                 }
 
                 return completedAppointments;
-            }
         }
-    
+
+        public AppointmentStatisticsDTO MakeAppointmentStatisticsDTO(int appId )
+        {
+            List<TourAttendance> tourAttendances = _tourAttendanceRepository.GetAll();
+            FindCheckPoint(tourAttendances);
+            FindUsers(tourAttendances);
+            List<ReservationTour> reservation = _reservationTourRepository.GetAll();
+            AppointmentStatisticsDTO appointmentStatistics = new AppointmentStatisticsDTO();
+            appointmentStatistics.TotalGuests = FindNumberOfGuestsInAppointment(tourAttendances,appId);
+            appointmentStatistics.CalculateGuestsUnder18(tourAttendances,reservation, appId);
+            appointmentStatistics.CalculateGuestsBetween18And50(tourAttendances,reservation, appId);
+            appointmentStatistics.CalculateGuestsAbove50(tourAttendances,reservation, appId);
+            appointmentStatistics.CalculateNumberOfGuestsWithVoucher(tourAttendances,reservation, appId);
+            return appointmentStatistics;
+        }
+        public int FindNumberOfGuestsInAppointment(List<TourAttendance> tourAttendances, int appId)
+        {
+            int numberOfGuests = 0;
+            foreach (var ta in tourAttendances)
+            {
+                if (ta.StartedCheckPoint.AppointmentId ==appId )
+                    numberOfGuests += ta.Guest.NumberOfGuests;
+            }
+
+            return numberOfGuests;
+        }
+        public void FindUsers(List<TourAttendance> tourAttendances)
+        {
+            foreach (var ta in tourAttendances)
+            {
+                ta.Guest=_reservationTourRepository.GetAll().Find(rtr=>rtr.Id==ta.Guest.Id);
+            }
+
+        }
+        public void FindCheckPoint(List<TourAttendance> tourAttendances)
+        {
+            foreach (var ta in tourAttendances)
+            {
+                ta.StartedCheckPoint = _appointmentCheckPointRepository.FindAll()
+                    .Find(cha => cha.Id == ta.StartedCheckPoint.Id);
+            }
+
+        }
+    }
 }

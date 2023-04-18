@@ -7,6 +7,42 @@
         mc:Ignorable="d"
         Title="ShowStatisticsWindow" Height="600" Width="450">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Height="50" HorizontalAlignment="Left" >
+            <Label FontSize="20">Number of guests:</Label>
+            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.TotalGuests}" ></Label>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Height="50" HorizontalAlignment="Left" >
+            <Label FontSize="20">Number of guests under 18 years:</Label>
+            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.GuestsUnder18}" ></Label>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Height="50" HorizontalAlignment="Left" >
+            <Label FontSize="20">Number of guests between 18 and 50 years:</Label>
+            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.GuestsBetween18And50}" ></Label>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Height="50" HorizontalAlignment="Left" >
+            <Label FontSize="20">Number of guests above 50:</Label>
+            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.GuestsAbove50}" ></Label>
+        </StackPanel>
+        <StackPanel Grid.Row="5" Orientation="Horizontal" Height="50" HorizontalAlignment="Left" >
+            <Label FontSize="20"> Number of guests with voucher:</Label>
+            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.GuestsWithVoucher}" ></Label>
+            <Label FontSize="20">%</Label>
+        </StackPanel>
+        <StackPanel Grid.Row="6" Orientation="Horizontal" Height="50" HorizontalAlignment="Left" >
+            <Label FontSize="20">Number of guests without voucher:</Label>
+            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.GuestsWithoutVoucher}" ></Label>
+            <Label FontSize="20">%</Label>
+        </StackPanel>
     </Grid>
 </Window>
