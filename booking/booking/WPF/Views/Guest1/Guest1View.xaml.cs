@@ -1,11 +1,16 @@
-﻿using booking.DTO;
+﻿using booking.Domain.DTO;
+using booking.Domain.Model;
+using booking.DTO;
 using booking.Model;
+using booking.Repositories;
 using booking.Repository;
 using booking.View.Guest1;
+using booking.WPF.Views.Guest1;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,17 +27,25 @@ namespace booking.View
     /// <summary>
     /// Interaction logic for AccomodationOverview.xaml
     /// </summary>
-    public partial class AccomodationOverview : Window
+    public partial class Guest1View : Window
     {
         public static ObservableCollection<AccommodationLocationDTO> AccommodationDTOs { get; set; }
 
+        public static ObservableCollection<ReservationAccommodationDTO> ReservationAccommodationDTOs { get; set; }
+        public static ObservableCollection<ReservationsRequestsDTO> ReservationRequestsDTOs { get; set; }
+
         public static AccommodationLocationDTO SelectedAccommodation { get; set; }
+
+        public static ReservationAccommodationDTO SelectedReservation { get; set; }
 
         public SearchedAccomodationDTO SearchedAccommodation { get; set; }
 
         private readonly AccommodationRepository _accomodationRepository;
 
         private readonly LocationRepository _locationRepository;
+
+        private readonly ReservedDatesRepository _reservedDatesRepository;
+        private readonly ReservationRequestsRepository _reservationRequestsRepository;
 
         public string SelectedState { get; set; }
         public string SelectedCity { get; set; }
@@ -41,24 +54,34 @@ namespace booking.View
 
         private int userId;
 
-        public AccomodationOverview(int id)
+        public Guest1View(int id)
         {
             InitializeComponent();
+
             DataContext = this;
-
-            _accomodationRepository = new AccommodationRepository();
-            _locationRepository = new LocationRepository();
-
-            SearchedAccommodation = new SearchedAccomodationDTO();
-
-            AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
 
             userId = id;
 
+            _accomodationRepository = new AccommodationRepository();
+            _locationRepository = new LocationRepository();
+            _reservedDatesRepository = new ReservedDatesRepository();
+            _reservationRequestsRepository = new ReservationRequestsRepository();
+
             States = new ObservableCollection<string>();
 
+            InitialzeDTOs();
             FillStateComboBox();
             InitializeCheckBoxes();
+
+        }
+
+        private void InitialzeDTOs()
+        {
+            SearchedAccommodation = new SearchedAccomodationDTO();
+
+            AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
+            ReservationAccommodationDTOs = CreateReservationAccommodationDTOs(_reservedDatesRepository.GetAll());
+            ReservationRequestsDTOs = CreateReservationsRequestsDTOs(_reservationRequestsRepository.GetAll());
         }
 
         private void InitializeCheckBoxes()
@@ -94,6 +117,43 @@ namespace booking.View
 
             return accommodationLocations;
         }
+
+        public ObservableCollection<ReservationAccommodationDTO> CreateReservationAccommodationDTOs(List<ReservedDates> reservedDates)
+        {
+            List<ReservedDates> usersReservedDates = reservedDates.Where(d => d.UserId == userId).ToList();
+            ObservableCollection<ReservationAccommodationDTO> reservationAccommodationDTOs = new ObservableCollection<ReservationAccommodationDTO>();
+            
+            foreach(var date in usersReservedDates)
+            {
+                Accommodation accommodation = _accomodationRepository.GetById(date.AccommodationId);
+                Location location = _locationRepository.GetById(accommodation.LocationId);
+
+                reservationAccommodationDTOs.Add(new ReservationAccommodationDTO(accommodation, location, date));
+            }
+
+            return reservationAccommodationDTOs;
+        }
+
+        public ObservableCollection<ReservationsRequestsDTO> CreateReservationsRequestsDTOs(List<ReservationRequests> reservationRequests)
+        {
+            ObservableCollection<ReservationsRequestsDTO> reservationRequestsDTOs = new ObservableCollection<ReservationsRequestsDTO>();
+
+            foreach(var request in reservationRequests)
+            {
+                ReservedDates reservedDate = _reservedDatesRepository.GetByID(request.ReservationId);
+
+                Accommodation accommodation = _accomodationRepository.GetById(reservedDate.AccommodationId);
+                Location location = _locationRepository.GetById(accommodation.LocationId);
+
+                //ne moze isCanceled da se koristi da bi se znalo dal je prihvacena ili odbijena rezervacija jer onda ne mogu da znam samo preko False-a
+                //da li je prihvacena ili je jos vlasnik nije razmotrio
+                reservationRequestsDTOs.Add(new ReservationsRequestsDTO(accommodation, location, "Postpone", "/"));
+            }
+
+            return reservationRequestsDTOs;
+        }
+
+
 
         private static AccommodationLocationDTO CreateAccommodationLocation(List<Location> locations, Accommodation accommodation)
         {
@@ -157,7 +217,7 @@ namespace booking.View
 
         private void CheckBoxChecked(object sender, RoutedEventArgs e)
         {
-            if(SearchAccommodationButton.IsEnabled == false)
+            if (SearchAccommodationButton.IsEnabled == false)
                 SearchAccommodationButton.IsEnabled = true;
         }
 
@@ -207,6 +267,50 @@ namespace booking.View
             AccommodationDTOs = CreateAccomodationDTOs(_accomodationRepository.GetAll());
 
             accommodationData.ItemsSource = AccommodationDTOs;
+        }
+
+        private void Postpone(object sender, RoutedEventArgs e)
+        {
+            PostponeReservation postponeReservation = new PostponeReservation(_reservedDatesRepository.GetByID(SelectedReservation.ReservationId));
+            postponeReservation.Owner = this;
+            postponeReservation.ShowDialog();
+        }
+
+        private void CancelReservation(object sender, RoutedEventArgs e)
+        {
+            ReservedDates reservedDate = _reservedDatesRepository.GetByID(SelectedReservation.ReservationId);
+            AccommodationLocationDTO accomodation = AccommodationDTOs.Where(a => a.Id == reservedDate.AccommodationId).ToList()[0];
+
+            bool isMoreThan24H = accomodation.MinDaysToCancel == 0 && (SelectedReservation.StartDate - DateTime.Now).Hours >= 24;
+            bool isMoreThanMinDays = accomodation.MinDaysToCancel <= (SelectedReservation.StartDate - DateTime.Now).Days;
+
+            if (isMoreThan24H || isMoreThanMinDays)
+            {
+                _reservedDatesRepository.Delete(reservedDate);
+                _reservationRequestsRepository.RemoveAllByReservationId(reservedDate.Id);
+
+                UpdateDataGrids();
+
+                MessageBox.Show("Your reservation is deleted!");
+            }
+            else
+            {
+                MessageBox.Show("You can cancle your reservation only 24h or " + accomodation.MinDaysToCancel + "days before!");
+            }
+        }
+
+        private void UpdateDataGrids()
+        {
+            ReservationAccommodationDTOs = CreateReservationAccommodationDTOs(_reservedDatesRepository.GetAll());
+            ReservationRequestsDTOs = CreateReservationsRequestsDTOs(_reservationRequestsRepository.GetAll());
+
+            reservationsData.ItemsSource = ReservationAccommodationDTOs;
+            reservationRequestsData.ItemsSource = ReservationRequestsDTOs;
+        }
+
+        private void SfRating_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("kliknuto");
         }
     }
 }

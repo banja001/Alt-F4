@@ -59,6 +59,7 @@ namespace booking.View.Guest1
             MessageBox.Show("Your reservation has been successfully made!");
 
             this.Close();
+            ReserveAccommodation.childWindowClose = true;
         }
 
         private void SetSelectedDatesParameters()

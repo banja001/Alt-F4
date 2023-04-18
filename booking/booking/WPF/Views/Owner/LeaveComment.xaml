@@ -1,0 +1,15 @@
+﻿<Window x:Class="booking.WPF.Views.Owner.LeaveComment"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:booking.WPF.Views.Owner"
+        mc:Ignorable="d"
+        Title="LeaveComment" Height="749" Width="430">
+    <Grid Margin="0,10,0,252">
+        <TextBox HorizontalAlignment="Center" Name="CommentTextBox" Margin="0,103,0,0" TextWrapping="Wrap" Text="{Binding Path=Comment}" VerticalAlignment="Top" Width="368" Height="224"/>
+        <Button Content="save" HorizontalAlignment="Center" Margin="0,354,0,0" VerticalAlignment="Top" Height="39" Width="78" Click="SaveCommentClick"/>
+
+
+    </Grid>
+</Window>

@@ -1,5 +1,7 @@
 ﻿using booking.application.UseCases.Guest2;
+using booking.application.UseCases;
 using booking.Commands;
+using booking.Domain.Model;
 using booking.Model;
 using System;
 using System.Collections.Generic;
@@ -25,6 +27,8 @@ namespace booking.WPF.ViewModels
         public string ImageUrl { get; set; }
         public string Comment { get; set; }
 
+        private List<GuideRatingImage> _guideRatingImages;
+
         private StackPanel _tourEnjoymentPanel;
         private StackPanel _languageKnowledgePanel;
         private StackPanel _tourKnowledgePanel;
@@ -37,11 +41,8 @@ namespace booking.WPF.ViewModels
             _guideRatingImageService = new GuideRatingImageService();
             _guideRatingService = new GuideRatingService();
             _appointmentService = new AppointmentService();
+            _guideRatingImages = new List<GuideRatingImage>();
 
-            /*_tourKnowledgeButton = tourKnowledgePanel.Children.OfType<RadioButton>().FirstOrDefault(r => r.IsChecked == true);
-            _languageKnowledgeButton = languageKnowledgePanel.Children.OfType<RadioButton>().FirstOrDefault(r => r.IsChecked == true);
-            _tourEnjoymentButton = tourEnjoymentPanel.Children.OfType<RadioButton>().FirstOrDefault(r => r.IsChecked == true);
-            */
             _tourEnjoymentPanel = tourEnjoymentPanel as StackPanel;
             _languageKnowledgePanel = languageKnowledgePanel as StackPanel;
             _tourKnowledgePanel = tourKnowledgePanel as StackPanel;
@@ -60,25 +61,32 @@ namespace booking.WPF.ViewModels
             }
             else
             {
-                _guideRatingService.AddRating(int.Parse(tourKnowledgeButton.Name.ToString().Substring(9)),
-                                              int.Parse(languageKnowledgeButton.Name.ToString().Substring(8)),
-                                              int.Parse(tourEnjoymentButton.Name.ToString().Substring(9)),
-                                              SelectedTour.Id,
-                                              Comment.ToString(),
-                                              Guest.Id);
-                SelectedTour.IsRated = true;
-                _appointmentService.Update(SelectedTour);
+                SaveGuideRating(tourKnowledgeButton, languageKnowledgeButton, tourEnjoymentButton);
                 MessageBox.Show("Successfully rated a tour!", "Confirm", MessageBoxButton.OK);
+                this.CloseCurrentWindow();
 
             }
         }
         private void AddPhoto()
         {
-            
+            _guideRatingImages.Add(new GuideRatingImage(ImageUrl));
+            ImageUrl = "";
         }
         private void ExitWindow()
         {
             this.CloseCurrentWindow();
+        }
+        private void SaveGuideRating(RadioButton tourKnowledgeButton, RadioButton languageKnowledgeButton, RadioButton tourEnjoymentButton)
+        {
+            var guideRating = _guideRatingService.AddRating(int.Parse(tourKnowledgeButton.Name.ToString().Substring(9)),
+                                                                int.Parse(languageKnowledgeButton.Name.ToString().Substring(8)),
+                                                                int.Parse(tourEnjoymentButton.Name.ToString().Substring(9)),
+                                                                SelectedTour.Id,
+                                                                Comment.ToString());
+            SelectedTour.IsRated = true;
+            _appointmentService.Update(SelectedTour);
+            if(_guideRatingImages.Count > 0)
+                _guideRatingImageService.AddImagesByGuideRatingId(_guideRatingImages, guideRating.Id);
         }
     }
 }

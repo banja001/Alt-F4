@@ -1,0 +1,185 @@
+﻿<Window x:Class="booking.View.Guest1View"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:booking.View"
+        xmlns:cvt="clr-namespace:booking.Converter"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+        mc:Ignorable="d"
+        
+        Title="AccomodationOverview" Height="760" Width="846" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Overview" Height="22" Margin="-2,-2,-2,0" VerticalAlignment="Top">
+                <Grid>
+                    <Label Content="Accommodation overview" FontSize="24" FontWeight="Bold" Margin="18,10,490,641"/>
+                    <RadioButton Content="Overview" HorizontalAlignment="Left" Margin="19,80,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.722,0.613" IsChecked="True"/>
+                    <RadioButton Content="Anywhere, anytime" HorizontalAlignment="Left" Margin="105,80,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.722,0.613"/>
+                    <GroupBox HorizontalAlignment="Center" Height="195" Header="Search" Margin="0,100,0,0" VerticalAlignment="Top" Width="804">
+                        <Grid>
+                            <CheckBox x:Name="CheckBoxApartment"  Content="Apartment" HorizontalAlignment="Left" VerticalAlignment="Top" Unchecked="CheckBoxUnchecked" Checked="CheckBoxChecked" Margin="10,15,0,0"/>
+                            <CheckBox x:Name="CheckBoxHouse" Content="House" HorizontalAlignment="Left" VerticalAlignment="Top" Unchecked="CheckBoxUnchecked" Checked="CheckBoxChecked" Margin="108,15,0,0"/>
+                            <CheckBox x:Name="CheckBoxCabin" Content="Cabin" HorizontalAlignment="Left" VerticalAlignment="Top" Unchecked="CheckBoxUnchecked" Checked="CheckBoxChecked" Margin="182,15,0,0"/>
+
+                            <Label Height="30" Content="Name" Margin="10,47,735,95"/>
+                            <Label Height="30" Content="State" Margin="312,47,442,95"/>
+                            <Label Height="30" Content="Guests" Margin="10,83,732,59"/>
+                            <Label Height="30" Content="Days" Margin="312,83,442,59"/>
+                            <Label Content="City" Margin="483,47,275,95"/>
+
+                            <TextBox x:Name="tSearchBarName" Height="20" Text="{Binding SearchedAccommodation.Name, UpdateSourceTrigger=PropertyChanged}" Margin="57,49,486,103"/>
+                            <ComboBox x:Name="StateComboBox" Width="118" Height="20" HorizontalAlignment="Left" ItemsSource="{Binding States, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedState}" SelectionChanged="StateSelectionChanged" Margin="350,49,0,103"/>
+                            <ComboBox x:Name="CityComboBox" Width="140"  Height="20" HorizontalAlignment="Right" SelectedItem="{Binding SelectedCity}" IsEnabled="False" Margin="0,49,132,103"/>
+
+                            <TextBox x:Name="tSearchBarNumberOfGuests" Height="20" Text="{Binding SearchedAccommodation.NumOfGuests, UpdateSourceTrigger=PropertyChanged}" TextChanged="ChangedNumbersOf" Margin="58,88,485,64"/>
+                            <TextBox x:Name="tSearchBarNumberOfDays" Height="20" Text="{Binding SearchedAccommodation.NumOfDays, UpdateSourceTrigger=PropertyChanged}" TextChanged="ChangedNumbersOf" Margin="355,88,132,64"/>
+
+                            <Button x:Name="SearchAccommodationButton" Height="20" Width="67" Content="Search" Margin="715,49,0,103" HorizontalAlignment="Left" Click="SearchAccommodations"/>
+                            <Button  x:Name="SeeAllButton" Height="20" Width="67" Content="See all" Margin="715,88,0,64" HorizontalAlignment="Left" Click="SeeAll"/>
+                        </Grid>
+                    </GroupBox>
+                    <Button x:Name="ReserveAccommodationButton" Width="67" Content="Reserve" HorizontalAlignment="Right" Click="ReserveAccommodations" Margin="0,330,18,340"/>
+                    <DataGrid x:Name="accommodationData"
+                          ItemsSource="{Binding AccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                          SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
+                           Height="349" 
+                           VerticalAlignment="Top"
+                           IsReadOnly="True"
+                           SelectionMode="Single"
+                           CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
+                           ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Margin="-2,367,0,0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" CanUserResize="False"  Width="180"/>
+                            <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False" Width="180"/>
+                            <DataGridTextColumn Header="Type" Binding="{Binding Type}" CanUserResize="False" Width="70"/>
+                            <DataGridTextColumn Header="Max capacity" Binding="{Binding MaxCapacity}" Width="100"/>
+                            <DataGridTextColumn Header="Min days to use" Binding="{Binding MinDaysToUse}" Width="100"/>
+                            <DataGridTextColumn Header="Min days to cancel" Binding="{Binding MinDaysToCancel}" Width="120"/>
+                            <DataGridTemplateColumn Header="Images" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="ImagesButton" Click="OpenImages" Content="View" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Label Content="Accommodations" HorizontalAlignment="Left" Margin="10,334,0,0" VerticalAlignment="Top" Height="28"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Rate" Margin="-2,-2,-2,2">
+                <Grid>
+                    <Label Content="Rate your accommodations" HorizontalAlignment="Left" Margin="19,23,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
+                    <Label Content="Stayed in" HorizontalAlignment="Left" Margin="19,81,0,0" VerticalAlignment="Top"/>
+                    <ListBox HorizontalAlignment="Left" Height="134" Margin="82,82,0,0" VerticalAlignment="Top" Width="734" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+                    <Label Content="Clean" HorizontalAlignment="Left" Margin="19,248,0,0" VerticalAlignment="Top"/>
+
+                    <Label Content="Owner" HorizontalAlignment="Left" Margin="19,279,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Comment" HorizontalAlignment="Left" Margin="331,248,0,0" VerticalAlignment="Top"/>
+                    <RichTextBox HorizontalAlignment="Left" Height="94" Margin="406,248,0,0" VerticalAlignment="Top" Width="410">
+                        <FlowDocument>
+                            <Paragraph>
+                                <Run Text="RichTextBox"/>
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+                    <GroupBox HorizontalAlignment="Left" Height="145" Header="Images" Margin="19,355,0,0" VerticalAlignment="Top" Width="797">
+                        <Grid>
+                            <Label Content="Image url" HorizontalAlignment="Left" Margin="0,10,0,82"/>
+                            <TextBox HorizontalAlignment="Left" Height="25" Margin="81,15,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="591"/>
+                            <Label Content="Added" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <Button Content="Add" HorizontalAlignment="Left" Height="23" Margin="699,16,0,0" VerticalAlignment="Top" Width="63"/>
+                            <Button Content="Remove" HorizontalAlignment="Left" Height="23" Margin="699,51,0,0" VerticalAlignment="Top" Width="63"/>
+                            <ListBox HorizontalAlignment="Left" Height="61" Margin="81,51,0,0" VerticalAlignment="Top" Width="591" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox HorizontalAlignment="Center" Height="129" Header="Renovation suggestion (optional)" Margin="0,514,0,0" VerticalAlignment="Top" Width="796">
+                        <Grid>
+                            <Label Content="Description" HorizontalAlignment="Left" Margin="0,0,0,80"/>
+                            <Label Content="How urgent" HorizontalAlignment="Left" Margin="5,72,0,0" VerticalAlignment="Top"/>
+                            <RichTextBox HorizontalAlignment="Left" Height="54" Margin="89,13,0,0" VerticalAlignment="Top" Width="673">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <Run Text="RichTextBox"/>
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                            <ComboBox HorizontalAlignment="Left" Height="24" Margin="89,72,0,0" VerticalAlignment="Top" Width="673"/>
+                        </Grid>
+                    </GroupBox>
+                    <Button Content="Submit rate" HorizontalAlignment="Left" Height="30" Margin="737,648,0,0" VerticalAlignment="Top" Width="79"/>
+                    <syncfusion:SfRating HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Top" Width="150" Margin="82,246,0,0" MouseUp="SfRating_MouseUp"/>
+                    <syncfusion:SfRating HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Top" Width="150" Margin="82,277,0,0"/>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Reservations" Height="24" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
+                <Grid>
+                    <GroupBox Header="All reservations" Margin="10,54,10,376">
+                        <Grid>
+                            <DataGrid x:Name="reservationsData"
+                              ItemsSource="{Binding ReservationAccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding SelectedReservation, UpdateSourceTrigger=PropertyChanged}"
+                               Height="208" 
+                               VerticalAlignment="Top"
+                               IsReadOnly="True"
+                               SelectionMode="Single"
+                               CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
+                               ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Margin="10,24,10,0">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Accommodation" Binding="{Binding AccommodationName}" CanUserResize="False"  Width="180"/>
+                                    <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False" Width="180"/>
+                                    <DataGridTextColumn Header="Start date" Binding="{Binding StartDate, Converter={cvt:DateTimeToDateOnlyConverter}}" CanUserResize="False" Width="*"/>
+                                    <DataGridTextColumn Header="End Date" Binding="{Binding EndDate, Converter={cvt:DateTimeToDateOnlyConverter}}" CanUserResize="False" Width="*"/>
+                                    <DataGridTemplateColumn Header="Reservation options" Width="*">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <Button x:Name="bPostpone" Content="Postpone" Margin="10" Click="Postpone"/>
+                                                    <Button x:Name="bCancel" Content="Cancel" Margin="10" Click="CancelReservation" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Header="Reservation requests" Margin="10,358,10,10">
+                        <Grid>
+                            <DataGrid x:Name="reservationRequestsData"
+                              ItemsSource="{Binding ReservationRequestsDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                               Height="246" 
+                               VerticalAlignment="Top"
+                               IsReadOnly="True"
+                               SelectionMode="Single"
+                               CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
+                               ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Margin="10,55,10,0">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Accommodation" Binding="{Binding AccommodationName}" CanUserResize="False"  Width="*"/>
+                                    <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False" Width="*"/>
+                                    <DataGridTextColumn Header="Request" Binding="{Binding Request}" CanUserResize="False" Width="*"/>
+                                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" CanUserResize="False" Width="*"/>
+                                    <DataGridTemplateColumn Header="Owner's comment" Width="*">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="bViewOwnersComment" Content="View"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Button Content="Report" HorizontalAlignment="Left" Margin="718,24,0,0" VerticalAlignment="Top" Width="63" Height="26"/>
+                        </Grid>
+                    </GroupBox>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Forums">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

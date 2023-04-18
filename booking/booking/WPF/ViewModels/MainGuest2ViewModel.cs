@@ -39,7 +39,6 @@ namespace booking.WPF.ViewModels
                     case "MyTours":
                         var tourWindow = new Guest2Overview(User);
                         tourWindow.Show();
-                        UserControlInstance = new MyToursView(User);
                         break;
 
                     default:

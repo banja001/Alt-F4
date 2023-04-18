@@ -22,6 +22,10 @@ namespace booking.Domain.Model
             this.Url = url;
             GuideRatingId = guideRatingId;
         }
+        public GuideRatingImage(string url)
+        {
+            this.Url = url;
+        }
 
         public string[] ToCSV()
         {
