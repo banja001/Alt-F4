@@ -62,11 +62,8 @@ namespace booking.application.UseCases
                 {
                     guestsNumber = FindNumberOfGuests(appointment.Tour.Id);
                     appointment.Tour = _tourRepository.FindAll().Find(t => t.Id == appointment.Tour.Id);
-                    appointment.Tour.Location =
-                        _locationRepository.GetAll().Find(l => l.Id == appointment.Tour.Location.Id);
-                    AppointmentGuestsDTO FinishedTour = new AppointmentGuestsDTO(appointment.Tour.Name,
-                        appointment.Tour.Location, appointment.Tour.Language, appointment.Start, guestsNumber,
-                        appointment.Id);
+                    appointment.Tour.Location =_locationRepository.GetAll().Find(l => l.Id == appointment.Tour.Location.Id);
+                    AppointmentGuestsDTO FinishedTour = new AppointmentGuestsDTO(appointment.Tour.Name,appointment.Tour.Location, appointment.Tour.Language, appointment.Start, guestsNumber, appointment.Id);
                     FinishedTours.Add(FinishedTour);
                 }
 
@@ -140,10 +137,8 @@ namespace booking.application.UseCases
                 tourRating.Rating = guideRating;
                 tourRating.TourName = appointment.Name;
                 tourRating.AppointmentId = appointment.AppointmentId;
-                int checkPointId = _tourAttendanceRepository.GetAll()
-                    .Find(ta => ta.Guest.Id == tourRating.Rating.GuestId).StartedCheckPoint.Id;
-                tourRating.CheckPoint =
-                    _appointmentCheckPointRepository.FindAll().Find(cp => cp.Id == checkPointId).Name;
+                int checkPointId = _tourAttendanceRepository.GetAll().Find(ta => ta.Guest.Id == tourRating.Rating.GuestId).StartedCheckPoint.Id;
+                tourRating.CheckPoint = _appointmentCheckPointRepository.FindAll().Find(cp => cp.Id == checkPointId).Name;
                 tourRating.GuestName = _userRepository.GetAll().Find(cp => cp.Id == tourRating.Rating.GuestId).Username;
                 tourRating.CalculateAverageRating();
                 tourRating.Rating = guideRating;
@@ -177,13 +172,20 @@ namespace booking.application.UseCases
             FindUsers(tourAttendances);
             List<ReservationTour> reservation = _reservationTourRepository.GetAll();
             AppointmentStatisticsDTO appointmentStatistics = new AppointmentStatisticsDTO();
-            appointmentStatistics.TotalGuests = FindNumberOfGuestsInAppointment(tourAttendances,appId);
-            appointmentStatistics.CalculateGuestsUnder18(tourAttendances,reservation, appId);
-            appointmentStatistics.CalculateGuestsBetween18And50(tourAttendances,reservation, appId);
-            appointmentStatistics.CalculateGuestsAbove50(tourAttendances,reservation, appId);
-            appointmentStatistics.CalculateNumberOfGuestsWithVoucher(tourAttendances,reservation, appId);
+            CalculateStatistics(appId, appointmentStatistics, tourAttendances, reservation);
             return appointmentStatistics;
         }
+
+        private void CalculateStatistics(int appId, AppointmentStatisticsDTO appointmentStatistics, List<TourAttendance> tourAttendances,
+            List<ReservationTour> reservation)
+        {
+            appointmentStatistics.TotalGuests = FindNumberOfGuestsInAppointment(tourAttendances, appId);
+            appointmentStatistics.CalculateGuestsUnder18(tourAttendances, reservation, appId);
+            appointmentStatistics.CalculateGuestsBetween18And50(tourAttendances, reservation, appId);
+            appointmentStatistics.CalculateGuestsAbove50(tourAttendances, reservation, appId);
+            appointmentStatistics.CalculateNumberOfGuestsWithVoucher(tourAttendances, reservation, appId);
+        }
+
         public int FindNumberOfGuestsInAppointment(List<TourAttendance> tourAttendances, int appId)
         {
             int numberOfGuests = 0;
