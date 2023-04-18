@@ -40,7 +40,7 @@ namespace booking.Repositories
 
         public void Remove(ReservationRequests r)
         {
-            Load();
+            //Load();
             reservationRequests.Remove(r);
             Save();
         }

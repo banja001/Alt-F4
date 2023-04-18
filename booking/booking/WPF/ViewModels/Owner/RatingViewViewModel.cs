@@ -17,7 +17,7 @@ namespace WPF.ViewModels.Owner
     {
 
         private int ActiveImageIndx;
-
+        public string Comment { get; set; }
         private OwnerViewModel win;
         public RatingViewWindow viewWindow;
         public ObservableCollection<OwnerRatingDTO> OwnerRatings { get; set; }

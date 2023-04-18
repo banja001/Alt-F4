@@ -110,8 +110,8 @@ namespace WPF.ViewModels.Owner
         private void DeclineClick()
         {
             if (SelectedItem == null) return;
-
-            LeaveCommentWindow win = new LeaveCommentWindow(this);
+            ReservationRequests reservationRequst = reservationRequests.Find(s => SelectedItem.RequestId == s.Id);
+            LeaveCommentWindow win = new LeaveCommentWindow(this, reservationRequst);
             win.ShowDialog();
 
         }

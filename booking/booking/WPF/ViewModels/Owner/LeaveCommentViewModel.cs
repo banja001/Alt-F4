@@ -20,11 +20,12 @@ namespace WPF.ViewModels.Owner
         public ReservationChangeViewModel resVM { get; set; }
         private ReservationRequests reservationRequest;
         public ICommand SaveCommentCommand => new RelayCommand(SaveCommentClick);
-        public LeaveCommentViewModel(ReservationChangeViewModel res)
+        public LeaveCommentViewModel(ReservationChangeViewModel res,ReservationRequests r)
         {
             this.resVM = res;
-            this.reservationRequest = reservationRequest;
+            this.reservationRequest = r;
         }
+        
 
         private void SaveCommentClick()
         {

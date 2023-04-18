@@ -45,11 +45,12 @@ namespace booking.Repository
         }
         public void Update(ReservedDates reservedDate)
         {
-            /*reservedDates.Remove(reservedDates.Find(s => reservedDate.Id == s.Id));
-            reservedDates.Add(reservedDate);*/
-            Load();
-            reservedDates[reservedDates.FindIndex(s => reservedDate.Id == s.Id)] = reservedDate; //bolje ovako da ne bi ponovo upisivao na kraj fajla
+            reservedDates.Remove(reservedDates.Find(s => reservedDate.Id == s.Id));
+            reservedDates.Add(reservedDate);
             Save();
+            /*Load();
+            reservedDates[reservedDates.FindIndex(s => reservedDate.Id == s.Id)] = reservedDate; //bolje ovako da ne bi ponovo upisivao na kraj fajla
+            */
         }
 
 
@@ -68,7 +69,7 @@ namespace booking.Repository
 
         public void Remove(ReservedDates reservedDate)
         {
-            Load();
+            //Load();
             reservedDates.Remove(reservedDate);
             Save();
         }
@@ -87,7 +88,7 @@ namespace booking.Repository
 
         public void UpdateRating(int id)
         {
-            Load();
+            //Load();
             ReservedDates r = reservedDates.Find(u => u.Id == id);
             reservedDates.Remove(r);
             r.RatedByOwner = true;
