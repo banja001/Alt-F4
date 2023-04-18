@@ -17,7 +17,11 @@ namespace booking.Injector
         {
             {typeof(IGuideRatingRepository), new GuideRatingRepository()},
             {typeof(IGuideRatingImageRepository), new GuideRatingImageRepository() },
-            {typeof(IVoucherRepository), new VoucherRepository() }
+            {typeof(IVoucherRepository), new VoucherRepository() },
+            {typeof(IAppointmentRepository), new AppointmentRepository() },
+            {typeof(ITourRepository), new TourRepository() },
+            {typeof(ITourAttendanceRepository), new TourAttendanceRepository() },
+            {typeof(IReservationTourRepository), new ReservationTourRepository() }
         };
 
         public static T CreateInstance<T>()

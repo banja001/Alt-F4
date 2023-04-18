@@ -38,7 +38,7 @@ namespace booking.Repositories
             _serializer.ToCSV(fileName, _guideRatings);
         }
 
-        public IEnumerable<object> GetAll()
+        public IEnumerable<GuideRating> GetAll()
         {
             return _guideRatings.ToList();
         }
@@ -64,11 +64,7 @@ namespace booking.Repositories
         {
             return _guideRatings.Find(g => g.Id == guideRating.Id).Id;
         }
-
-        IEnumerable<GuideRating> IGuideRatingRepository.GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public void Update(GuideRating guideRating)
         {

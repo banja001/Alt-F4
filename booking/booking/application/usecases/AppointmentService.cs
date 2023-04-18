@@ -7,34 +7,36 @@ using System.Text;
 using System.Threading.Tasks;
 using booking.Domain.DTO;
 using booking.Domain.Model;
+using booking.Domain.RepositoryInterfaces;
 using booking.DTO;
 using booking.Model;
 using booking.Repositories;
 using booking.Repository;
 using Domain.DTO;
+using Domain.RepositoryInterfaces;
 
 namespace booking.application.UseCases
 {
     public class AppointmentService
     {
-        private readonly AppointmentRepository _appointmentRepository;
-        private readonly TourRepository _tourRepository;
-        private readonly ReservationTourRepository _reservationTourRepository;
-        private readonly TourAttendanceRepository _tourAttendanceRepository;
+        private readonly IAppointmentRepository _appointmentRepository;
+        private readonly ITourRepository _tourRepository;
+        private readonly IReservationTourRepository _reservationTourRepository;
+        private readonly ITourAttendanceRepository _tourAttendanceRepository;
         private readonly LocationRepository _locationRepository;
-        private readonly GuideRatingRepository _guideRatingRepository;
+        private readonly IGuideRatingRepository _guideRatingRepository;
         private readonly AppointmentCheckPointRepository _appointmentCheckPointRepository;
         private readonly UserRepository _userRepository;
 
         public AppointmentService()
         {
-            _appointmentRepository = new AppointmentRepository();
-            _tourRepository = new TourRepository();
-            _reservationTourRepository = new ReservationTourRepository();
+            _appointmentRepository = Injector.Injector.CreateInstance<IAppointmentRepository>();
+            _tourRepository = Injector.Injector.CreateInstance<ITourRepository>();
+            _reservationTourRepository = Injector.Injector.CreateInstance<IReservationTourRepository>();
             _locationRepository = new LocationRepository();
-            _guideRatingRepository = new GuideRatingRepository();
-            _tourAttendanceRepository = new TourAttendanceRepository();
-            _appointmentCheckPointRepository= new AppointmentCheckPointRepository();
+            _guideRatingRepository = Injector.Injector.CreateInstance<IGuideRatingRepository>();
+            _tourAttendanceRepository = Injector.Injector.CreateInstance<ITourAttendanceRepository>();
+            _appointmentCheckPointRepository = new AppointmentCheckPointRepository();
             _userRepository= new UserRepository();
         }
 
