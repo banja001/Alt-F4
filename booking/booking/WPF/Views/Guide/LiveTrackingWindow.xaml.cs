@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using application.UseCases;
 
 namespace booking.View.Guide
 {
@@ -30,6 +31,7 @@ namespace booking.View.Guide
         private CheckPointRepository _checkPointRepository { get; set; }
         private AppointmentCheckPointRepository _appointmentCheckPointRepository { get; set; }
         private TourAttendanceRepository _tourattendanceRepository { get; set; }
+        private AppointmentCheckpointService _appointmentCheckpointService;
         private UserRepository _userRepository { get; set; }
         private AnswerRepository _answerRepository { get; set; }
         public List<Location> Locations { get; set; }
@@ -57,6 +59,7 @@ namespace booking.View.Guide
             ShowAppointment();
             FindAppropriateLocation();
             LooksOfDataGrid(ToursDG);
+
         }
 
         private void InitializeRepositories()
@@ -70,6 +73,7 @@ namespace booking.View.Guide
             _tourattendanceRepository = new TourAttendanceRepository();
             _answerRepository = new AnswerRepository();
             _appointmentCheckPointRepository = new AppointmentCheckPointRepository();
+            _appointmentCheckpointService = new AppointmentCheckpointService();
         }
 
         private void ShowTours()
@@ -163,20 +167,19 @@ namespace booking.View.Guide
         public void FindGuests()
         {
             GuestsOnTour.Clear();
-            // Treba se promeniti za guest2 active tour tracking 
-            List<ReservationTour> AllReservationTours = _reservationTourRepository.GetAll();
-            foreach (ReservationTour rt in AllReservationTours)
+            List<TourAttendance> allAttendances = _tourattendanceRepository.GetAll();
+            foreach (var ta in allAttendances)
             {
-                if (rt.Tour.Id == SelectedTour.Id)
-                {
-                    TourAttendance newTourAttendence= new TourAttendance(_tourattendanceRepository.MakeID() + GuestsOnTour.Count, rt.Id, AppointmentCheckPoints[0].Id,true);
-                    newTourAttendence.Guest = AllReservationTours.Find(tr=> tr.Id==newTourAttendence.Guest.Id);
-                    newTourAttendence.Guest.User=AllReservationTours.Find(tr => tr.User.Id == newTourAttendence.Guest.User.Id).User;
-                    newTourAttendence.Guest.User.Username= _userRepository.GetAll().Find(u => u.Id == newTourAttendence.Guest.User.Id).Username;
-                    newTourAttendence.StartedCheckPoint = AppointmentCheckPoints[0];
-                    _tourattendanceRepository.Add(newTourAttendence);
-                    GuestsOnTour.Add(newTourAttendence);
-                }
+                ta.Guest = _reservationTourRepository.GetAll().Find(rt => rt.Id == ta.Guest.Id);
+                ta.Guest.User = _userRepository.GetAll().Find(u => u.Id == ta.Guest.User.Id);
+                ta.StartedCheckPoint = _appointmentCheckPointRepository.FindAll()
+                    .Find(ach => ach.Id == ta.StartedCheckPoint.Id);
+            }
+            
+            foreach (var ta in allAttendances)
+            {
+                if(ta.Guest.Tour.Id==CurrentAppointment.Tour.Id)
+                    GuestsOnTour.Add(ta);
             }
         }
 
