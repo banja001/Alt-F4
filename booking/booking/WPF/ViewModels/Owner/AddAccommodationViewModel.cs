@@ -50,11 +50,11 @@ namespace WPF.ViewModels.Owner
         
         public Regex intRegex = new Regex("^[0-9]{1,4}$");
 
-        public AddAccommodationViewModel(OwnerViewModel ownerWindow)
+        public AddAccommodationViewModel(OwnerViewModel ownerViewModel)
         {
             this.accommodationImagesUrl = new List<string>();
-            this.ownerViewModel = ownerWindow;
-            StateList = ownerWindow.locationService.InitializeStateList(new List<string>(), ownerWindow.locations);
+            this.ownerViewModel = ownerViewModel;
+            StateList = ownerViewModel.locationService.InitializeStateList(new List<string>(), ownerViewModel.locations);
 
         }
         

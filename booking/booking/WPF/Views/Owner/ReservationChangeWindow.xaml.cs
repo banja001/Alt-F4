@@ -35,7 +35,7 @@ namespace booking.WPF.Views.Owner
         public ReservationChangeWindow(OwnerViewModel win)
         {
             InitializeComponent();
-            ReservationChangeViewModel rVM=new ReservationChangeViewModel(win,this);
+            ReservationChangeViewModel rVM=new ReservationChangeViewModel(win);
             DataContext = rVM;
             
 
