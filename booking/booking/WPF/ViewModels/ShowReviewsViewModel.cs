@@ -18,13 +18,14 @@ using WPF.Views.Guide;
 
 namespace booking.WPF.ViewModels
 {
-    class ShowReviewsViewModel
+    class ShowReviewsViewModel:BaseViewModel
     {
         public ObservableCollection<GuideRating> AllCommentsForThatTour { get; set; }
         private readonly AppointmentService _appointmentService;
         public TourRatingDTO SelectedComment { get; set; }
         public ObservableCollection<TourRatingDTO> AllComments { get; set; }
         public ICommand ShowCommand => new RelayCommand(Show);
+        public ICommand ExitWindowCommand => new RelayCommand(ExitWindow);
         public User Guide { get; set; }
 
         public ShowReviewsViewModel(User guide, AppointmentGuestsDTO appointment)
@@ -46,6 +47,7 @@ namespace booking.WPF.ViewModels
                 {
                     SelectedCommentWindow showComment = new SelectedCommentWindow(SelectedComment, Guide);
                     showComment.ShowDialog();
+                    ExitWindow();
                 }
                 else
                     MessageBox.Show("Select tour!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -55,6 +57,10 @@ namespace booking.WPF.ViewModels
                 Console.WriteLine(exception);
                 throw;
             }
+        }
+        private void ExitWindow()
+        {
+            this.CloseCurrentWindow();
         }
     }
 }
