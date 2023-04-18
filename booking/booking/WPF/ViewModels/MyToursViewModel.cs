@@ -2,6 +2,7 @@
 using booking.application.UseCases;
 using booking.application.UseCases.Guest2;
 using booking.Commands;
+using booking.DTO;
 using booking.Model;
 using booking.View.Owner;
 using booking.WPF.Views.Guest2;
@@ -20,8 +21,10 @@ namespace booking.WPF.ViewModels
     public class MyToursViewModel : BaseViewModel
     {
         public ICommand RateGuideCommand => new RelayCommand(RateGuide);
+        public ICommand JoinActiveTourCommand => new RelayCommand(JoinActiveTour);
         public ObservableCollection<Voucher> Vouchers { get; set; }
         public ObservableCollection<Appointment> CompletedTours { get; set; }
+        public ObservableCollection<TourLocationDTO> ActiveTour { get; set; }
         public Appointment SelectedTour { get; set; }
         private User User { get; set; }
 
@@ -36,11 +39,13 @@ namespace booking.WPF.ViewModels
             SelectedTour = new Appointment();
             CompletedTours = new ObservableCollection<Appointment>(_appointmentService.GetCompletedAppointmentByGuest2(User));
             Vouchers = new ObservableCollection<Voucher>(_voucherService.GetUsableVouchersByGuest2(user));
+            var activeTour = _appointmentService.GetActiveAppointmentByGuest2(user).ToList();
+            ActiveTour = new ObservableCollection<TourLocationDTO>(_appointmentService.MakeToursFrom(activeTour));
         }
 
         private void RateGuide()
         {
-            if(SelectedTour.Start.Time == null) // ???
+            if(SelectedTour.Start.Time == null) 
             {
                 MessageBox.Show("You need to select a tour!", "Alert", MessageBoxButton.OK);
             }
@@ -50,6 +55,10 @@ namespace booking.WPF.ViewModels
                 rateGuideWindow.Show();
             }
             
+        }
+        private void JoinActiveTour()
+        {
+
         }
     }
 }

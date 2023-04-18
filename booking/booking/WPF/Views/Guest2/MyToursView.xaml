@@ -20,13 +20,17 @@
             <StackPanel Orientation="Vertical">
                 <Label FontSize="14" Content="Active tour" Foreground="White" VerticalAlignment="Center" Margin="20,10,0,0"/>
                 <StackPanel Orientation="Horizontal">
-                    <DataGrid Margin="20,5,25,20" Height="50" Width="350" x:Name="ActiveTourTable" ItemsSource="{Binding ActiveTour}" FontSize="12" FontWeight="Normal" BorderBrush="White" AutoGenerateColumns="False" IsHitTestVisible="False" IsReadOnly="True">
+                    <DataGrid Margin="20,5,25,20" Height="50" Width="400" x:Name="ActiveTourTable" ItemsSource="{Binding ActiveTour}" FontSize="12" FontWeight="Normal" BorderBrush="White" AutoGenerateColumns="False" IsHitTestVisible="False" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Voucher Id"  Width="1*" Binding="{Binding Id}" />
-                            <DataGridTextColumn Header="Usable until"  Width="1*" Binding="{Binding ExpirationDate.Date, Converter={cvt:DateTimeToDateOnlyConverter}}"/>
+                            <DataGridTextColumn Header="Name"  Width="1*" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="Language" Width="1*" Binding="{Binding Language}"/>
+                            <DataGridTextColumn Header="Max guest count" Width="1.3*" Binding="{Binding MaxGuests}"/>
+                            <DataGridTextColumn Header="Start time" Width="1*" Binding="{Binding StartTime, Converter={cvt:DateTimeToDateOnlyConverter}}"/>
+                            <DataGridTextColumn Header="Duration(h)" Width="0.8*" Binding="{Binding Duration}"/>
+                            <DataGridTextColumn Header="Location" Width="1*" Binding="{Binding Location}"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button  Background="#6191da" FontSize="14" Foreground="White" Content="Join tour" Grid.Row="1" Grid.Column="1" Width="150" Height="25" Margin="5,5,20,20" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
+                    <Button Command="{Binding JoinActiveTourCommand}" Background="#6191da" FontSize="14" Foreground="White" Content="Join tour" Grid.Row="1" Grid.Column="1" Width="100" Height="25" Margin="5,5,20,20" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
                 </StackPanel>
             </StackPanel>
             
