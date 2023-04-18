@@ -67,7 +67,7 @@ namespace WPF.ViewModels.Owner
         {
             ActiveImageIndx = 0;
             int a = SelectedItem.ReservationId;
-            win.OwnerRatingImages = win.OwnerRatingImageRepository.GetByReservedDatesId(a);
+            win.OwnerRatingImages = win.OwnerRatingImageService.GetByReservedDatesId(a);
             ShowImage();
         }
         public void SetImageSource(string url)

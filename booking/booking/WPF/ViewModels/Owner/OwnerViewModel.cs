@@ -34,20 +34,20 @@ namespace WPF.ViewModels.Owner
 
         public ReservedDatesService reservedDatesService;
         public List<ReservedDates> reservedDates;
-        public Guest1RatingsRepository guest1RatingsRepository;
+        public Guest1RatingsService guest1RatingsService;
         public List<Guest1Rating> guest1Ratings;
 
         public UserService userService;
         public List<User> users;
 
-        public OwnerRatingImageRepository OwnerRatingImageRepository;
+        public OwnerRatingImageService OwnerRatingImageService;
         public List<OwnerRatingImage> OwnerRatingImages;
-        public OwnerRatingRepository OwnerRatingRepository;
+        public OwnerRatingService OwnerRatingService;
         public List<OwnerRating> OwnerRatings;
         public ObservableCollection<Guest1RatingDTO> ListToRate { get; set; }
         public Guest1RatingDTO SelectedItem { get; set; }
 
-        private readonly OwnerNotificationRepository _ownerNotificationRepository;
+        private readonly OwnerNotificationsService _ownerNotificationService;
         public static List<OwnerNotification> Notifications { get; set; }
         public OwnerWindow ownerWindow;
         
@@ -72,8 +72,8 @@ namespace WPF.ViewModels.Owner
                 ownerWindow.Loaded += NotifyUser;
             }
 
-            _ownerNotificationRepository = new OwnerNotificationRepository();
-            Notifications = _ownerNotificationRepository.GetAll();
+            _ownerNotificationService = new OwnerNotificationsService();
+            Notifications = _ownerNotificationService.GetAll();
 
             if (Notifications.Count != 0)
             {
@@ -88,7 +88,7 @@ namespace WPF.ViewModels.Owner
                 if (notification.OwnerId == OwnerId)
                     MessageBox.Show(notification.ToString());
             }
-            _ownerNotificationRepository.DeleteAllByOwnerId(OwnerId);
+            _ownerNotificationService.DeleteAllByOwnerId(OwnerId);
         }
 
         private void CalculateAverageRating()
@@ -143,12 +143,12 @@ namespace WPF.ViewModels.Owner
 
             reservedDatesService = new ReservedDatesService();
             reservedDates = reservedDatesService.GetAll();
-            guest1RatingsRepository = new Guest1RatingsRepository();
-            guest1Ratings = guest1RatingsRepository.GetAll();
-            OwnerRatingImageRepository = new OwnerRatingImageRepository();
-            OwnerRatingImages = OwnerRatingImageRepository.GetAll();
-            OwnerRatingRepository = new OwnerRatingRepository();
-            OwnerRatings = OwnerRatingRepository.GetAll();
+            guest1RatingsService = new Guest1RatingsService();
+            guest1Ratings = guest1RatingsService.GetAll();
+            OwnerRatingImageService = new OwnerRatingImageService();
+            OwnerRatingImages = OwnerRatingImageService.GetAll();
+            OwnerRatingService = new OwnerRatingService();
+            OwnerRatings = OwnerRatingService.GetAll();
         }
 
         private void NotifyUser(object sender, RoutedEventArgs e)
