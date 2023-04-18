@@ -11,7 +11,11 @@ namespace booking.Domain.RepositoryInterfaces
     {
         public int MakeID();
         public int GetIdOf(GuideRating guideRating);
-        public void Add(object entity);
-
+        IEnumerable<GuideRating> GetAll();
+        object GetById(int id);
+        void Save();
+        void Delete(int id);
+        void Add(object entity);
+        public void Update(GuideRating guideRating);
     }
 }

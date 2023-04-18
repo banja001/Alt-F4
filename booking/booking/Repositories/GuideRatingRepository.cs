@@ -38,8 +38,9 @@ namespace booking.Repositories
             _serializer.ToCSV(fileName, _guideRatings);
         }
 
-        public IEnumerable<object> GetAll()
+        public IEnumerable<GuideRating> GetAll()
         {
+            _guideRatings = _serializer.FromCSV(fileName);
             return _guideRatings.ToList();
         }
 
@@ -63,6 +64,14 @@ namespace booking.Repositories
         public int GetIdOf(GuideRating guideRating)
         {
             return _guideRatings.Find(g => g.Id == guideRating.Id).Id;
+        }
+        
+
+        public void Update(GuideRating guideRating)
+        {
+            int idx = _guideRatings.FindIndex(a => a.Id == guideRating.Id);
+            _guideRatings[idx] = guideRating;
+            _serializer.ToCSV(fileName, _guideRatings);
         }
     }
 }

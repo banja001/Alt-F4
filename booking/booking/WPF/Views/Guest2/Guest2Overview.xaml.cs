@@ -59,12 +59,13 @@ namespace booking.View.Guest2
             currentUser = user;
             FillStateComboBox();
             RemoveFullTours();
+            RemoveFormerTours();
 
             _tourAttendanceRepository= new TourAttendanceRepository();
             _appointmentCheckPointRepository = new AppointmentCheckPointRepository();
 
             welcome.Header = "Welcome " + currentUser.Username.ToString();
-            FindAnswer();
+            //FindAnswer();
         }
         private void FillStateComboBox()
         {
@@ -158,7 +159,16 @@ namespace booking.View.Guest2
             else
                 MessageBox.Show("Niste izabrali turu koju zelite da rezervisete!");
         }
-
+        public void RemoveFormerTours()
+        {
+            foreach (TourLocationDTO tour in TourLocationDTOs.ToList<TourLocationDTO>())
+            {
+                if(tour.StartTime.Date < DateTime.Now)
+                {
+                    TourLocationDTOs.Remove(tour);
+                }
+            }
+        }
         public void RemoveFullTours() 
         {
             foreach (TourLocationDTO tour in TourLocationDTOs.ToList<TourLocationDTO>())
@@ -173,7 +183,6 @@ namespace booking.View.Guest2
 
         private void StateComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // kada korisnik pretrazi, vraca se index combobox-ova na -1, pa treba pokriti exception
             if (StateComboBox.SelectedIndex != -1)
             {
                 CityComboBox.IsEnabled = true;
@@ -196,7 +205,6 @@ namespace booking.View.Guest2
             {
                 MessageBox.Show("Invalid search format!", "Format warning");
 
-                // Resetuj sva polja za pretrazivanje na default za novi pokusaj
                 PeopleCount.Text = "People count";
                 Language.Text = "Language";
                 Duration.Text = "Duration(h)";
@@ -214,7 +222,6 @@ namespace booking.View.Guest2
 
         private void FilterTable()
         { 
-            // Kada se filtriria datagrid, mora filtrirati u odnosu na sve slobodne ture
             TourLocationDTOs = new ObservableCollection<TourLocationDTO>(CreateTourDTOs());
             RemoveFullTours();
 
@@ -253,8 +260,6 @@ namespace booking.View.Guest2
             Regex peopleCountRegex = new Regex("^[1-9][0-9]*$");
             Regex languageRegex = new Regex("^[A-ZČĆŠĐŽ]*[a-zčćšđž]*$");
             Regex durationRegex = new Regex("^[1-9][0-9]*$");
-            /* State and City are already valid because customer doesn't enter them explicitly */
-
 
             bool validPeopleCount = peopleCountRegex.IsMatch(PeopleCount.Text) || (PeopleCount.Text.Equals("People count"));
             bool validDuration = durationRegex.IsMatch(Duration.Text) || (Duration.Text.Equals("Duration(h)"));
@@ -265,10 +270,7 @@ namespace booking.View.Guest2
         }
 
         public void FilterByPeopleCount(int peopleCount)
-        {   // U slucaju da je korisnik hteo da pregleda ture na osnovu slobodnog mesta:
-            // List<TourLocationDTO> localDTOs = TourLocationDTOs.Where(t => t.MaxGuests - _reservationTourRepository.GetNumberOfGuestsForTourId(t.Id) >= peopleCount).ToList();
-            
-            // Pregled tura na osnovu maksimalnog kapaciteta ture:
+        {   
             List<TourLocationDTO> localDTOs = TourLocationDTOs.Where(t => t.MaxGuests >= peopleCount).ToList();
             TourLocationDTOs = new ObservableCollection<TourLocationDTO>(localDTOs);
             
@@ -281,8 +283,8 @@ namespace booking.View.Guest2
         public void FilterByLocation(string formattedLocation)
         {
             Location location = new Location();
-            location.State = formattedLocation.Split(",")[0];
-            location.City = formattedLocation.Split(",")[1];
+            location.State = formattedLocation.Split(",")[1];
+            location.City = formattedLocation.Split(",")[0];
 
             if (!location.State.Equals(""))
             {
@@ -311,25 +313,6 @@ namespace booking.View.Guest2
         {
             this.Close();
         }
-        public void FindAnswer()
-        {
-            foreach (Answer a in _answerRepository.FindAll())
-            {
-                int userIdInAnswer = _reservationTourRepository.GetById(_tourAttendanceRepository.GetById(a.User.Id).Guest.Id).User.Id;
-
-                if (userIdInAnswer == currentUser.Id)
-                {
-
-                    AppointmentCheckPoint currentCheckPoint = _appointmentCheckPointRepository.FindAll().Find(chepo => chepo.Id == a.AppointmentCheckPoint.Id);
-                   if(a.HaveToAnswer)
-                       if( MessageBox.Show("Are you on check point " + currentCheckPoint.Name + "?","Confirmation",MessageBoxButton.YesNo)==MessageBoxResult.Yes )
-                       {
-                            a.HaveToAnswer = false;
-                            a.AppointmentCheckPoint= currentCheckPoint;
-                            _answerRepository.SaveOneInFile(a);
-                       }
-                }
-            }
-        }
+        
     }
 }

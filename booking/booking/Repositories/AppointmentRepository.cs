@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.RepositoryInterfaces;
 
 namespace booking.Repository
 {
-    internal class AppointmentRepository
+    internal class AppointmentRepository:IAppointmentRepository
     {
         private List<Appointment> appointments;
         private Serializer<Appointment> serializer;
@@ -22,6 +23,7 @@ namespace booking.Repository
         }
         public List<Appointment> FindAll()
         {
+            appointments = serializer.FromCSV(fileName);
             return appointments;
         }
         public void Save(List<Appointment> appointmentsForSave)

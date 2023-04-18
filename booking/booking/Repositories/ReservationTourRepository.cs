@@ -8,10 +8,11 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.RepositoryInterfaces;
 
 namespace booking.Repository
 {
-    public class ReservationTourRepository
+    public class ReservationTourRepository:IReservationTourRepository
     {
         private List<ReservationTour> reservations;
         private Serializer<ReservationTour> serializer;
@@ -26,6 +27,7 @@ namespace booking.Repository
 
         public List<ReservationTour> GetAll()
         {
+            reservations = serializer.FromCSV(fileName);
             return reservations;
         }
         public int GetNextIndex()
@@ -66,6 +68,12 @@ namespace booking.Repository
                     return reservation;
             }
             return null;
+        }
+
+        public void Delete(ReservationTour reservation)
+        {
+            reservations.Remove(reservations.Find(r=>r.Id==reservation.Id));
+            serializer.ToCSV(fileName, reservations);
         }
     }
 }

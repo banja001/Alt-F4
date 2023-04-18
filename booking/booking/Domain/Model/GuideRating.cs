@@ -15,10 +15,12 @@ namespace booking.Domain.Model
         public int LanguageKnowledge { get; set; }
         public int TourEnjoyment { get; set; }
         public string Comment { get; set; }
-        public int AppointmentId { get; set; }  
+        public int AppointmentId { get; set; } 
+        public int GuestId { get; set; }
+        public bool IsValid { get; set; }
 
         public GuideRating() { }
-        public GuideRating(int id, int tourKnowledge, int languageKnowledge, int tourEnjoyment, int appointmentId, string comment)
+        public GuideRating(int id, int tourKnowledge, int languageKnowledge, int tourEnjoyment, int appointmentId, string comment, int guestId, bool isValid)
         {
             Id = id;
             TourKnowledge = tourKnowledge;
@@ -26,6 +28,8 @@ namespace booking.Domain.Model
             TourEnjoyment = tourEnjoyment;
             AppointmentId = appointmentId;
             Comment = comment;
+            GuestId = guestId;
+            IsValid = isValid;
         }
 
         public void FromCSV(string[] values)
@@ -36,6 +40,8 @@ namespace booking.Domain.Model
             TourEnjoyment = int.Parse(values[3]);
             AppointmentId = int.Parse(values[4]);
             Comment = values[5];
+            GuestId = int.Parse(values[6]);
+            IsValid = bool.Parse(values[7]);
         }
 
         public string[] ToCSV()
@@ -47,7 +53,9 @@ namespace booking.Domain.Model
                 LanguageKnowledge.ToString(),
                 TourEnjoyment.ToString(),
                 AppointmentId.ToString(),
-                Comment.ToString()
+                Comment.ToString(),
+                GuestId.ToString(),
+                IsValid.ToString()
             };
             return cssValues;
         }

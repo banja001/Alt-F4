@@ -32,27 +32,31 @@
                     <RowDefinition Height ="1*"/>
                     <RowDefinition Height ="1*"/>
                 </Grid.RowDefinitions>
-                <Label Content="Name:" Grid.Column="0" Grid.Row="0" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,5"/>
-                <TextBox IsEnabled="False" Text="{Binding Path=TourForBooking.Name, Mode=OneWay}" Grid.Column="1" Grid.Row="0" IsReadOnly="True" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,10"/>
-                <Label Content="Description:" Grid.Column="0" Grid.Row="1" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,5"/>
-                <TextBlock Foreground="Gray" Text="{Binding TourForBooking.Description, Mode=OneWay}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="1" IsEnabled="False" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,0"/>
-                <Label Content="Start Time:" Grid.Column="0" Grid.Row="2" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,5"/>
-                <TextBox IsEnabled="False" Text="{Binding TourForBooking.StartTime, Mode=OneWay}" Grid.Column="1" Grid.Row="2" IsReadOnly="True" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,10"/>
-                <Label Content="Duration(h):" Grid.Column="0" Grid.Row="3" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,5"/>
-                <TextBox IsEnabled="False" Text="{Binding TourForBooking.Duration, Mode=OneWay}" Grid.Column="1" Grid.Row="3" IsReadOnly="True" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,10"/>
-                <Label Content="Location:" Grid.Column="0" Grid.Row="4" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,5"/>
-                <TextBox IsEnabled="False" Text="{Binding TourForBooking.Location, Mode=OneWay}" Grid.Column="1" Grid.Row="4" IsReadOnly="True" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,10"/>
-                <Label Content="Language:" Grid.Column="0" Grid.Row="5" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,5"/>
-                <TextBox IsEnabled="False" Text="{Binding TourForBooking.Language, Mode=OneWay}" Grid.Column="1" Grid.Row="5" IsReadOnly="True" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,10"/>
-                <Label Content="Available space:" Grid.Column="0" Grid.Row="6" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,5"/>
-                <TextBox IsEnabled="False" Text="{Binding AvailableSpace, Mode=TwoWay}" Grid.Column="1" Grid.Row="6" IsReadOnly="False" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,10"/>
-                <Label Content="Number of guests:" Grid.Column="0" Grid.Row="7" FontSize="12" FontWeight="Normal" Margin="30, 20, 20, 0"/>
-                <TextBox x:Name="GuestNumberInput" Text="{Binding NumberOfGuests, Mode=TwoWay}" Grid.Column="1" Grid.Row="7" IsReadOnly="False" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,10" TextChanged="GuestNumberInputTextChanged"/>
-                <Label Content="Average guest age:" Grid.Column="0" Grid.Row="8" FontSize="12" FontWeight="Normal" Margin="30, 20, 20, 0"/>
-                <TextBox x:Name="AverageGuestAgeInput" Text="{Binding AverageGuestAge, Mode=TwoWay}" Grid.Column="1" Grid.Row="8" IsReadOnly="False" FontSize="12" FontWeight="Normal" Margin="30, 20, 20 ,10" TextChanged="AverageGuestAgeInputTextChanged"/>
+                <Label Content="Name:" Grid.Column="0" Grid.Row="0" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,0"/>
+                <TextBox IsEnabled="False" Text="{Binding Path=TourForBooking.Name, Mode=OneWay}" Grid.Column="1" Grid.Row="0" IsReadOnly="True" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
+                <Label Content="Description:" Grid.Column="0" Grid.Row="1" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,0"/>
+                <TextBlock Foreground="Gray" Text="{Binding TourForBooking.Description, Mode=OneWay}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="1" IsEnabled="False" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
+                <Label Content="Start Time:" Grid.Column="0" Grid.Row="2" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,0"/>
+                <TextBox IsEnabled="False" Text="{Binding TourForBooking.StartTime, Mode=OneWay}" Grid.Column="1" Grid.Row="2" IsReadOnly="True" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
+                <Label Content="Duration(h):" Grid.Column="0" Grid.Row="3" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,0"/>
+                <TextBox IsEnabled="False" Text="{Binding TourForBooking.Duration, Mode=OneWay}" Grid.Column="1" Grid.Row="3" IsReadOnly="True" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
+                <Label Content="Location:" Grid.Column="0" Grid.Row="4" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,0"/>
+                <TextBox IsEnabled="False" Text="{Binding TourForBooking.Location, Mode=OneWay}" Grid.Column="1" Grid.Row="4" IsReadOnly="True" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
+                <Label Content="Language:" Grid.Column="0" Grid.Row="5" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,0"/>
+                <TextBox IsEnabled="False" Text="{Binding TourForBooking.Language, Mode=OneWay}" Grid.Column="1" Grid.Row="5" IsReadOnly="True" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
+                <Label Content="Available space:" Grid.Column="0" Grid.Row="6" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,0"/>
+                <TextBox IsEnabled="False" Text="{Binding AvailableSpace, Mode=TwoWay}" Grid.Column="1" Grid.Row="6" IsReadOnly="False" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
+                <Label Content="Number of guests:" Grid.Column="0" Grid.Row="7" FontSize="12" FontWeight="Normal" Margin="30, 10, 20, 0"/>
+                <TextBox x:Name="GuestNumberInput" Text="{Binding NumberOfGuests, Mode=TwoWay}" Grid.Column="1" Grid.Row="7" IsReadOnly="False" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20" TextChanged="GuestNumberInputTextChanged"/>
+                <Label Content="Average guest age:" Grid.Column="0" Grid.Row="8" FontSize="12" FontWeight="Normal" Margin="30, 10, 20, 0"/>
+                <TextBox x:Name="AverageGuestAgeInput" Text="{Binding AverageGuestAge, Mode=TwoWay}" Grid.Column="1" Grid.Row="8" IsReadOnly="False" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20" TextChanged="AverageGuestAgeInputTextChanged"/>
             </Grid>
         </GroupBox>
         <Button x:Name="ConfirmBookingButton" Grid.Row="1" Grid.Column="0" Content="Confirm" FontWeight="DemiBold" Margin="60, 15, 40, 25" Background="#FF4C7CE6" Foreground="White" Click="ConfirmBookingButtonClick"/>
-        <Button x:Name="CancelBookingButton" Grid.Row="1" Grid.Column="1" Content="Cancel" FontWeight="DemiBold" Margin="40, 15, 60, 25" Click="CancelBookingButtonClick"/>
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <Button x:Name="CancelBookingButton" Content="Cancel" FontWeight="DemiBold" Margin="40, 15, 60, 0" Click="CancelBookingButtonClick"/>
+            <ComboBox x:Name="VouchersComboBox" SelectedItem="{Binding SelectedVoucher}" Margin="40,10,60,0" VerticalAlignment="Top"/>
+        </StackPanel>
+        
     </Grid>
 </Window>
