@@ -163,6 +163,7 @@ namespace booking.View.Guide
         public void FindGuests()
         {
             GuestsOnTour.Clear();
+            // Treba se promeniti za guest2 active tour tracking 
             List<ReservationTour> AllReservationTours = _reservationTourRepository.GetAll();
             foreach (ReservationTour rt in AllReservationTours)
             {
