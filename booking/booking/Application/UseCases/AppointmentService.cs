@@ -21,6 +21,8 @@ namespace booking.application.UseCases
         private readonly TourAttendanceRepository _tourAttendanceRepository;
         private readonly LocationRepository _locationRepository;
         private readonly GuideRatingRepository _guideRatingRepository;
+        private readonly AppointmentCheckPointRepository _appointmentCheckPointRepository;
+        private readonly UserRepository _userRepository;
 
         public AppointmentService()
         {
@@ -30,6 +32,8 @@ namespace booking.application.UseCases
             _locationRepository = new LocationRepository();
             _guideRatingRepository = new GuideRatingRepository();
             _tourAttendanceRepository = new TourAttendanceRepository();
+            _appointmentCheckPointRepository= new AppointmentCheckPointRepository();
+            _userRepository= new UserRepository();
         }
 
         public int FindNumberOfGuests(int tourID)
@@ -132,10 +136,13 @@ namespace booking.application.UseCases
                 tourRating.Rating = guideRating;
                 tourRating.TourName = appointment.Name;
                 tourRating.AppointmentId = appointment.AppointmentId;
-                //tourRating.CheckPoint = _tourAttendanceRepository.GetAll()
-                //  .Find(ta => ta.Guest.Tour.Id == _appointmentRepository.FindAll().Find(a=>a.Id == appointment.AppointmentId).Tour.Id).StartedCheckPoint.Id.ToString();
-                tourRating.CheckPoint = _tourAttendanceRepository.GetAll()
-                    .Find(ta => ta.Guest.Id == tourRating.Rating.GuestId).StartedCheckPoint.Id.ToString();
+                int checkPointId = _tourAttendanceRepository.GetAll()
+                    .Find(ta => ta.Guest.Id == tourRating.Rating.GuestId).StartedCheckPoint.Id;
+                tourRating.CheckPoint =
+                    _appointmentCheckPointRepository.FindAll().Find(cp => cp.Id == checkPointId).Name;
+                tourRating.GuestName = _userRepository.GetAll().Find(cp => cp.Id == tourRating.Rating.GuestId).Username;
+                tourRating.CalculateAverageRating();
+                tourRating.Rating = guideRating;
                 ratings.Add(tourRating);
             }
 

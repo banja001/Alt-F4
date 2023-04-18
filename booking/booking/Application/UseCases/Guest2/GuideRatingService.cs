@@ -26,7 +26,8 @@ namespace booking.application.UseCases.Guest2
                                                         tourEnjoyment,
                                                         appointmentId,
                                                         comment,
-                                                        guest2Id);
+                                                        guest2Id,
+                                                        true);
             _guideRatingRepository.Add(guideRating);
             return guideRating;
         }
