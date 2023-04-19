@@ -113,21 +113,6 @@ namespace booking.View
 
             Guest1ViewViewModel guest1ViewViewModel = new Guest1ViewViewModel(userId);
         }
-        
-        private void NotifyGuest1(object sender, RoutedEventArgs e)
-        {
-            foreach(var notification in guest1Notifications)
-            {
-                ReservationRequests reservationRequest = _reservationRequestsRepository.GetById(notification.RequestId);
-
-                MessageBox.Show("Your reservation for " + reservationRequest.NewStartDate.ToString("dd/MM/yyyy") + " - "
-                    + reservationRequest.NewEndDate.ToString("dd/MM/yyyy")
-                    + "has been " + reservationRequest.isCanceled.ToString());
-            }
-
-            _guest1NotificationsRepository.RemoveByGuest1Id(userId);
-            Loaded -= NotifyGuest1;
-        }
 
         private void InitializeDTOs()
         {
@@ -310,11 +295,6 @@ namespace booking.View
 
             accommodationData.ItemsSource = AccommodationDTOs;
         }
-        /////////////////
-        private void CleanStarsClick(object sender, MouseButtonEventArgs e)
-        {
-            RateAccommodationAndOwnerViewModel.CleanRating = stClean.Value;
-        }
 
         public void ResetFormInputs()
         {
@@ -323,10 +303,7 @@ namespace booking.View
             txtbComment.Text = "";
             bSubmitRate.IsEnabled = false;
         }
-        private void OwnersKindnessStarsClick(object sender, MouseButtonEventArgs e)
-        {
-            RateAccommodationAndOwnerViewModel.OwnersKindenssRating = stOwner.Value;
-        }
+        
         private void tbImageUrl_TextChanged(object sender, TextChangedEventArgs e)
         {
             bAddImage.IsEnabled = true;
@@ -335,6 +312,15 @@ namespace booking.View
         public void ClearImgUrlTextBox()
         {
             tbImageUrl.Text = "";
+        }
+
+        private void CleanStarsClick(object sender, MouseButtonEventArgs e)
+        {
+            RateAccommodationAndOwnerViewModel.CleanRating = stClean.Value;
+        }
+        private void OwnersKindnessStarsClick(object sender, MouseButtonEventArgs e)
+        {
+            RateAccommodationAndOwnerViewModel.OwnersKindenssRating = stOwner.Value;
         }
     }
 }
