@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF.Views.Owner;
 
 namespace booking.View
 {
@@ -97,7 +98,8 @@ namespace booking.View
 
                     if (user.Role == "Owner")
                     {
-                        OwnerWindow win=new OwnerWindow(user.Id);
+                        //OwnerWindow win=new OwnerWindow(user.Id);
+                        MainWindow win = new MainWindow();
                         win.Show();
                         this.Close();
                     }

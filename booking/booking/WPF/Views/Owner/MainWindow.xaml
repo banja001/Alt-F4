@@ -1,0 +1,26 @@
+﻿<Window x:Class="WPF.Views.Owner.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF.Views.Owner" xmlns:booking="clr-namespace:booking"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="749" Width="430">
+    <Grid Background="Black">
+        <Grid Background="Red" Margin="0,0,0,630">
+            <booking:DropdownMenu Margin="368,30,16,30">
+                <booking:DropdownMenu.Resources>
+                    <Style TargetType="Button">
+                        
+                        <Setter Property="Padding" Value="20 10"/>
+                        
+                    </Style>
+                </booking:DropdownMenu.Resources>
+                <StackPanel>
+                    <Button Content="Add"></Button>
+                    <Button Content="Delete"></Button>
+                </StackPanel>
+            </booking:DropdownMenu>
+        </Grid>
+    </Grid>
+</Window>
