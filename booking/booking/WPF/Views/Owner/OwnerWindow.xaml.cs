@@ -32,13 +32,14 @@ namespace booking.View
     /// <summary>
     /// Interaction logic for OwnerWindow.xaml
     /// </summary>
-    public partial class OwnerWindow : Window
+    public partial class OwnerWindow : Page
     {
-        
+        public OwnerViewModel OwnerModel;
         public OwnerWindow(int id)
         {
             InitializeComponent();
-            DataContext = new OwnerViewModel(id,this);
+            OwnerModel = new OwnerViewModel(id,this);
+            DataContext = OwnerModel;
             
         }
 

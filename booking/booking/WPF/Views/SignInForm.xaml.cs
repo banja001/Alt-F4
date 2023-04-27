@@ -99,7 +99,7 @@ namespace booking.View
                     if (user.Role == "Owner")
                     {
                         //OwnerWindow win=new OwnerWindow(user.Id);
-                        MainWindow win = new MainWindow();
+                        MainWindow win = new MainWindow(user.Id);
                         win.Show();
                         this.Close();
                     }

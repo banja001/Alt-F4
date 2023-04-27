@@ -1,4 +1,4 @@
-﻿<Window x:Class="booking.View.OwnerWindow"
+﻿<Page x:Class="booking.View.OwnerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:booking.View" xmlns:booking="clr-namespace:booking"
         mc:Ignorable="d"
         Title="OwnerWindow" Height="749" Width="400"
-        WindowStartupLocation="CenterScreen">
-    <Grid Margin="0,97,0,0">
+        >
+    <Grid Margin="0,0,0,108">
 
 
         <Button Content="Add" Command="{Binding AddAccommodationCommand}" HorizontalAlignment="Left" Margin="23,124,0,0" VerticalAlignment="Top" Height="32" Width="136"/>
@@ -39,4 +39,4 @@
 
 
     </Grid>
-</Window>
+</Page>

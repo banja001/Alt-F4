@@ -57,16 +57,17 @@ namespace WPF.ViewModels.Owner
         public ICommand ViewRatingsCommand => new RelayCommand(View_Ratings_Click);
         public OwnerViewModel(int id,OwnerWindow ow)
         {
+            
             OwnerId = id;
             ownerWindow = ow;
             CreateInstances();
 
-            List<ReservedDates> ratingDates = PickDatesForRating();//ova
+            List<ReservedDates> ratingDates = PickDatesForRating();
 
-            List<Guest1RatingDTO> tempList = GetGuestsToRate(ratingDates);//ova
+            List<Guest1RatingDTO> tempList = GetGuestsToRate(ratingDates);
             ListToRate = new ObservableCollection<Guest1RatingDTO>(tempList);
 
-            CalculateAverageRating();//ova
+            CalculateAverageRating();
             if (tempList.Count() != 0)
             {
                 ownerWindow.Loaded += NotifyUser;
@@ -161,7 +162,7 @@ namespace WPF.ViewModels.Owner
         private void AddAccommodation()
         {
             AddAccommodationWindow win = new AddAccommodationWindow(this);
-            win.ShowDialog();
+            //win.ShowDialog();
         }
 
         public List<ReservedDates> PickDatesForRating()

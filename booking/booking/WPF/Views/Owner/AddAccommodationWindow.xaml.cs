@@ -26,7 +26,7 @@ namespace booking.View
     /// <summary>
     /// Interaction logic for AddAccommodationWindow.xaml
     /// </summary>
-    public partial class AddAccommodationWindow : Window
+    public partial class AddAccommodationWindow : Page
     {
         public OwnerViewModel ownerWindow;
 

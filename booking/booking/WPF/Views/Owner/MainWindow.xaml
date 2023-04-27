@@ -17,10 +17,13 @@
                     </Style>
                 </booking:DropdownMenu.Resources>
                 <StackPanel>
-                    <Button Content="Add"></Button>
-                    <Button Content="Delete"></Button>
+                    <Button Content="Owner" Click="Button_Click"></Button>
+                    <Button Content="Add Accommodation" Click="Button_Click_1"></Button>
                 </StackPanel>
             </booking:DropdownMenu>
         </Grid>
+        <Frame x:Name="Main" Margin="0,52,0,0"/>
+
+
     </Grid>
 </Window>
