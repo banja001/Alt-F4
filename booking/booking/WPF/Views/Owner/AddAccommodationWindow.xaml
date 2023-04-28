@@ -5,66 +5,102 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.View"
         mc:Ignorable="d"
-        Title="AddAccommodationWindow" Height="749" Width="400"
+        Title="AddAccommodationWindow" Height="641" Width="400"
        >
 
-    <Grid Margin="0,0,0,108" >
+    <Grid >
         <Grid.Resources>
-            <Style TargetType="Label">
-                <Setter Property="Foreground" Value="White"/>
+            <Style TargetType="Line">
+                <Setter Property="Stretch" Value="Fill"/>
+                <Setter Property="Stroke" Value="#E69138"/>
+                <Setter Property="Width" Value="370"/>
+                <Setter Property="StrokeThickness" Value="2"/>
+                <Setter Property="StrokeStartLineCap" Value="Triangle"/>
+                <Setter Property="StrokeEndLineCap" Value="Triangle"/>
             </Style>
+            <Style TargetType="Button">
+                <Setter Property="BorderBrush" Value="#447782"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="Background" Value="#447782"/>
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="LightGray"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="BorderBrush" Value="#447782"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="Width" Value="120"/>
+                <Setter Property="Height" Value="20"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+            <Style TargetType="ComboBox">
+                <Setter Property="BorderBrush" Value="#447782"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="Width" Value="120"/>
+                <Setter Property="Height" Value="20"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
         </Grid.Resources>
         <Grid.RowDefinitions>
 
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="Auto" MinHeight="182"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Accommodation Name" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Label Content="Location" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"  HorizontalAlignment="Center"  VerticalAlignment="Center" />
-        <Label Content="Type" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Label Content="Max visitors" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
-        <Label Content="Min days for reservation" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <Label Content="Num of days before u can cancel" Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2"  HorizontalAlignment="Center"  VerticalAlignment="Center"/>
-        <Label Content="Images" Grid.Row="12" Grid.ColumnSpan="2" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
-        <TextBox  Name="NameTextBox" Grid.Row="2" Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Width="82" Height="26"/>
-        <ComboBox Grid.Column="1" Grid.Row="2" Name="TypeComboBox" Text="{Binding Type}" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="81" Height="32">
+        <Label Content="Accommodation Name" Grid.Column="0" Grid.Row="1" />
+        <Label Content="Location" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"   />
+        <Label Content="Type" Grid.Column="1" Grid.Row="1" />
+        <Label Content="Max visitors" Grid.Column="1" Grid.Row="6"/>
+        <Label Content="Min days for reservation" Grid.Column="0" Grid.Row="6" />
+        <Label Content="Num of days before u can cancel" Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" />
+        <Label Content="Images" Grid.Row="12" Grid.ColumnSpan="2" />
+        <TextBox  Name="NameTextBox" Grid.Row="2" Text="{Binding Name}" TextWrapping="Wrap" />
+        <ComboBox Grid.Column="1" Grid.Row="2" Name="TypeComboBox" Text="{Binding Type}">
             <ComboBoxItem Content="Apartment"></ComboBoxItem>
             <ComboBoxItem Content="House"></ComboBoxItem>
             <ComboBoxItem Content="Cabin"></ComboBoxItem>
         </ComboBox>
-        <TextBox Name="MaxVisitorsTextBox" Grid.Column="1" Grid.Row="7" Text="{Binding MaxVisitors}" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="82" Height="26"/>
-        <TextBox Name="MinDaysToUseTextBox" Grid.Column="0" Grid.Row="7" Text="{Binding MinDaysToUse}" HorizontalAlignment="Center"  TextWrapping="Wrap"  VerticalAlignment="Center" Width="82" Height="26"/>
-        <TextBox Name="DaysToCancelTextBox" Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Text="{Binding DaysToCancel}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="82" Height="26" />
-        <Button Content="confirm" Grid.Row="16" Command="{Binding ConfirmCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="40" Height="36"/>
-        <Button Content="+" Grid.Row="14"  Command="{Binding AddImageCommand}" HorizontalAlignment="Left" VerticalAlignment="Center" Height="31" Width="42" Margin="130,0,0,0" />
-        <Button Name="removeImageButton" Grid.Row="14" Grid.Column="1"  Command="{Binding RemoveImageCommand}" Content="-" HorizontalAlignment="Left"  VerticalAlignment="Center" Height="27" Width="33" Margin="28,0,0,0" />
-        <ComboBox Name="StateComboBox" Grid.Row="5" Text="{Binding State}"  ItemsSource="{Binding StateList}" SelectedItem="{Binding SelectedItemState}" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="80" SelectionChanged="StateComboBox_SelectionChanged" Height="32"  />
-        <ComboBox Name="CityComboBox" Grid.Row="5" Grid.Column="1" Text="{Binding City}" ItemsSource="{Binding CityList,Mode=TwoWay}" SelectedItem="{Binding SelectedItemCity}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="81" Height="32"/>
-        <Label Content="Add Accommodation" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center"/>
-        <Line Stretch="Fill" Stroke="White" Width="370" X2="1" StrokeThickness="3"  Grid.Row="3" Grid.ColumnSpan="2"></Line>
-        <Line Stretch="Fill" Stroke="White" Width="370" X2="1" StrokeThickness="3"  Grid.Row="8" Grid.ColumnSpan="2"></Line>
-        <Line Stretch="Fill" Stroke="White" Width="370" X2="1" StrokeThickness="3"  Grid.Row="11" Grid.ColumnSpan="2"></Line>
-        <TextBox Name="ImageTextbox" Grid.Row="13" Grid.ColumnSpan="2" TextWrapping="Wrap" Height="26"  Width="120"/>
-        <Button Content="Cancel" HorizontalAlignment="Center"  Grid.Row="16" Grid.Column="1" VerticalAlignment="Center"/>
+        <TextBox Name="MaxVisitorsTextBox" Grid.Column="1" Grid.Row="7" Text="{Binding MaxVisitors}"   TextWrapping="Wrap" />
+        <TextBox Name="MinDaysToUseTextBox" Grid.Column="0" Grid.Row="7" Text="{Binding MinDaysToUse}"   TextWrapping="Wrap" />
+        <TextBox Name="DaysToCancelTextBox" Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Text="{Binding DaysToCancel}" TextWrapping="Wrap" />
+        <Button Content="confirm" Grid.Row="16" Command="{Binding ConfirmCommand}" Width="150" Height="30" BorderBrush="Black"/>
+        <Button Content="+" Grid.Row="14"  Command="{Binding AddImageCommand}" Height="30" Width="30" Margin="130,0,0,0" Background="Gray"/>
+        <Button Name="removeImageButton" Grid.Row="14" Grid.Column="1"  Command="{Binding RemoveImageCommand}" Content="-" Height="30" Width="30" Margin="-130,0,0,0" Background="Gray"/>
+        <ComboBox Name="StateComboBox" Grid.Row="5" Text="{Binding State}"  ItemsSource="{Binding StateList}" SelectedItem="{Binding SelectedItemState}" SelectionChanged="StateComboBox_SelectionChanged"  />
+        <ComboBox Name="CityComboBox" Grid.Row="5" Grid.Column="1" Text="{Binding City}" ItemsSource="{Binding CityList,Mode=TwoWay}" SelectedItem="{Binding SelectedItemCity}" />
+        <Label Content="Add Accommodation" Grid.Row="0" Grid.ColumnSpan="2" FontSize="17" Foreground="#E69138"/>
+        <Line X2="1"  Grid.Row="3" Grid.ColumnSpan="2"/>
+        <Line X2="1"  Grid.Row="8" Grid.ColumnSpan="2"/>
+        <Line X2="1"  Grid.Row="11" Grid.ColumnSpan="2"/>
+        <TextBox Name="ImageTextbox" Grid.Row="13" Grid.ColumnSpan="2" TextWrapping="Wrap" />
+        <Button Content="Cancel"  Grid.Row="16" Grid.Column="1" Width="150" Height="30" BorderBrush="Black"/>
+        <Image HorizontalAlignment="Left" Height="150" Grid.Row="15" Grid.ColumnSpan="2" Grid.Column="0" VerticalAlignment="Top" Width="150" Margin="123,5,0,0" />
+        <Button Content="&gt;&gt;" Background="Gray" HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1" VerticalAlignment="Center" Height="100"/>
+        <Button Content="&lt;&lt;" Background="Gray" HorizontalAlignment="Center" Grid.Row="15" Grid.Column="0" VerticalAlignment="Center" Height="100"/>
     </Grid>
 </Page>

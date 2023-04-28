@@ -44,5 +44,21 @@ namespace WPF.Views.Owner
         {
             Main.Content=new AddAccommodationWindow(OwnerModel);
         }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            if (Main.NavigationService.CanGoBack)
+            {
+                Main.NavigationService.GoBack();
+            }
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            if (Main.NavigationService.CanGoForward)
+            {
+                Main.NavigationService.GoForward();
+            }
+        }
     }
 }
