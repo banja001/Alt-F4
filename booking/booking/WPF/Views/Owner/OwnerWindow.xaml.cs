@@ -26,6 +26,7 @@ using booking.Domain.Model;
 using Repositories;
 using application.UseCases;
 using WPF.ViewModels.Owner;
+using WPF.Views.Owner;
 
 namespace booking.View
 {
@@ -35,10 +36,10 @@ namespace booking.View
     public partial class OwnerWindow : Page
     {
         public OwnerViewModel OwnerModel;
-        public OwnerWindow(int id)
+        public OwnerWindow(int id,MainWindow mainWindow)
         {
             InitializeComponent();
-            OwnerModel = new OwnerViewModel(id,this);
+            OwnerModel = new OwnerViewModel(id,this,mainWindow);
             DataContext = OwnerModel;
             
         }

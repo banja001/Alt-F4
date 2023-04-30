@@ -24,7 +24,7 @@ namespace booking.View.Owner
     /// <summary>
     /// Interaction logic for RateGuestWindow.xaml
     /// </summary>
-    public partial class RateGuestWindow : Window
+    public partial class RateGuestWindow : Page
     {
         
         public RateGuestWindow(OwnerViewModel win)

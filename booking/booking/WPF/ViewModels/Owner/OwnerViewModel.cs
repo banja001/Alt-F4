@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using WPF.Views.Owner;
 
 namespace WPF.ViewModels.Owner
 {
@@ -55,9 +56,11 @@ namespace WPF.ViewModels.Owner
         public ICommand RateGuestsCommand => new RelayCommand(RateGuests_Click);
         public ICommand ReservationChangeCommand => new RelayCommand(Button_Click);
         public ICommand ViewRatingsCommand => new RelayCommand(View_Ratings_Click);
-        public OwnerViewModel(int id,OwnerWindow ow)
+
+        public MainWindow mainWindow;
+        public OwnerViewModel(int id,OwnerWindow ow,MainWindow m)
         {
-            
+            mainWindow = m;
             OwnerId = id;
             ownerWindow = ow;
             CreateInstances();
@@ -189,9 +192,8 @@ namespace WPF.ViewModels.Owner
             }
             else
             {
-
                 RateGuestWindow win = new RateGuestWindow(this);
-                win.ShowDialog();
+                mainWindow.Main.Content = win;
 
             }
 
