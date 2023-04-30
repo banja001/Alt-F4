@@ -10,42 +10,11 @@
 
     <Grid >
         <Grid.Resources>
-            <Style TargetType="Line">
-                <Setter Property="Stretch" Value="Fill"/>
-                <Setter Property="Stroke" Value="#E69138"/>
-                <Setter Property="Width" Value="370"/>
-                <Setter Property="StrokeThickness" Value="2"/>
-                <Setter Property="StrokeStartLineCap" Value="Triangle"/>
-                <Setter Property="StrokeEndLineCap" Value="Triangle"/>
-            </Style>
-            <Style TargetType="Button">
-                <Setter Property="BorderBrush" Value="#447782"/>
-                <Setter Property="BorderThickness" Value="1.5"/>
-                <Setter Property="Background" Value="#447782"/>
-            </Style>
-            <Style TargetType="Label">
-                <Setter Property="Foreground" Value="LightGray"/>
-                <Setter Property="FontSize" Value="14"/>
-                <Setter Property="HorizontalAlignment" Value="Center"/>
-                <Setter Property="VerticalAlignment" Value="Center"/>
-            </Style>
-            <Style TargetType="TextBox">
-                <Setter Property="BorderBrush" Value="#447782"/>
-                <Setter Property="BorderThickness" Value="1.5"/>
-                <Setter Property="Width" Value="120"/>
-                <Setter Property="Height" Value="20"/>
-                <Setter Property="HorizontalAlignment" Value="Center"/>
-                <Setter Property="VerticalAlignment" Value="Center"/>
-            </Style>
-            <Style TargetType="ComboBox">
-                <Setter Property="BorderBrush" Value="#447782"/>
-                <Setter Property="BorderThickness" Value="1.5"/>
-                <Setter Property="Width" Value="120"/>
-                <Setter Property="Height" Value="20"/>
-                <Setter Property="HorizontalAlignment" Value="Center"/>
-                <Setter Property="VerticalAlignment" Value="Center"/>
-            </Style>
-
+            <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
+            <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
+            <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
+            <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxOwner}"/>
+            <Style TargetType="ComboBox" BasedOn="{StaticResource ComboBoxOwner}"/>
         </Grid.Resources>
         <Grid.RowDefinitions>
 
@@ -88,7 +57,7 @@
         <TextBox Name="MaxVisitorsTextBox" Grid.Column="1" Grid.Row="7" Text="{Binding MaxVisitors}"   TextWrapping="Wrap" />
         <TextBox Name="MinDaysToUseTextBox" Grid.Column="0" Grid.Row="7" Text="{Binding MinDaysToUse}"   TextWrapping="Wrap" />
         <TextBox Name="DaysToCancelTextBox" Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Text="{Binding DaysToCancel}" TextWrapping="Wrap" />
-        <Button Content="confirm" Grid.Row="16" Command="{Binding ConfirmCommand}" Width="150" Height="30" BorderBrush="Black"/>
+        <Button Content="confirm" Grid.Row="16" Command="{Binding ConfirmCommand}" Width="150" Height="30" />
         <Button Content="+" Grid.Row="14"  Command="{Binding AddImageCommand}" Height="30" Width="30" Margin="130,0,0,0" Background="Gray"/>
         <Button Name="removeImageButton" Grid.Row="14" Grid.Column="1"  Command="{Binding RemoveImageCommand}" Content="-" Height="30" Width="30" Margin="-130,0,0,0" Background="Gray"/>
         <ComboBox Name="StateComboBox" Grid.Row="5" Text="{Binding State}"  ItemsSource="{Binding StateList}" SelectedItem="{Binding SelectedItemState}" SelectionChanged="StateComboBox_SelectionChanged"/>
@@ -100,7 +69,7 @@
         <TextBox Name="ImageTextbox" Grid.Row="13" Grid.ColumnSpan="2" TextWrapping="Wrap" />
         <Button Content="Cancel"  Grid.Row="16" Grid.Column="1" Width="150" Height="30" BorderBrush="Black"/>
         <Image HorizontalAlignment="Left" Height="150" Grid.Row="15" Grid.ColumnSpan="2" Grid.Column="0" VerticalAlignment="Top" Width="150" Margin="123,5,0,0" />
-        <Button Content="&gt;&gt;" Background="Gray" HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1" VerticalAlignment="Center" Height="100"/>
-        <Button Content="&lt;&lt;" Background="Gray" HorizontalAlignment="Center" Grid.Row="15" Grid.Column="0" VerticalAlignment="Center" Height="100"/>
+        <Button Content="&gt;&gt;" Background="Gray" HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1" VerticalAlignment="Center" Height="110" Width="20"/>
+        <Button Content="&lt;&lt;" Background="Gray" HorizontalAlignment="Center" Grid.Row="15" Grid.Column="0" VerticalAlignment="Center" Height="110" Width="20"/>
     </Grid>
 </Page>

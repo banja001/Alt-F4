@@ -5,26 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.View" xmlns:booking="clr-namespace:booking"
         mc:Ignorable="d"
-        Title="OwnerWindow" Height="749" Width="400"
+        Title="OwnerWindow" Height="641" Width="400"
         >
-    <Grid Margin="0,0,0,108">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
+            <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
+            <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="3.5*"/>
+            
+            <RowDefinition Height="0.25*"/>
+            <RowDefinition Height="1*"/>
+
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.25*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Content="Add" Command="{Binding AddAccommodationCommand}" HorizontalAlignment="Left" Margin="-685,66,0,0" VerticalAlignment="Top" Height="32" Width="136"/>
+        <Button Name="RateGuests" Command="{Binding RateGuestsCommand}" Content="Rate" FontSize="17" Width="100" Grid.Row="5" Grid.Column="1"/>
 
 
-        <Button Content="Add" Command="{Binding AddAccommodationCommand}" HorizontalAlignment="Left" Margin="23,124,0,0" VerticalAlignment="Top" Height="32" Width="136"/>
-        <Button Name="RateGuests" Command="{Binding RateGuestsCommand}" Content="Rate guests" HorizontalAlignment="Left" Margin="189,174,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.842,-1.682" Height="24" Width="78">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="0.362"/>
-                    <TranslateTransform X="0.334" Y="-0.659"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
 
         <DataGrid x:Name="DataGridRaatings" ItemsSource="{Binding ListToRate, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
-                  IsReadOnly="True" AutoGenerateColumns="False" Margin="10,232,81,51" >
+                  IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="6" Grid.ColumnSpan="2" Width="360" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Guest" Width="90" Binding="{Binding GuestName}"/>
                 <DataGridTextColumn Header="Accommodation" Width="120" Binding="{Binding AccommodationName}"/>
@@ -32,11 +47,27 @@
                 <DataGridTextColumn Header="End date" Width="90" Binding="{Binding EndDate}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Command="{Binding ViewRatingsCommand}" Content="View Rating" HorizontalAlignment="Left" Margin="182,124,0,0" VerticalAlignment="Top" Height="44" Width="99" />
-        <Label x:Name="AverageLabel" Content="" HorizontalAlignment="Left" Margin="23,31,0,0" VerticalAlignment="Top" Width="188" Background="Gray"/>
-        <Button Command="{Binding ReservationChangeCommand}" Content="ReservationChange" HorizontalAlignment="Left" Margin="23,172,0,0" VerticalAlignment="Top" />
-        <Label x:Name="SuperOwnerLabel" Content="" HorizontalAlignment="Left" Margin="23,75,0,0" VerticalAlignment="Top" Width="188" Background="Gray"/>
+        <Button Command="{Binding ViewRatingsCommand}" Content="View Rating" HorizontalAlignment="Left" Margin="-526,66,0,0" VerticalAlignment="Top" Height="44" Width="99" />
+        <Label x:Name="AverageLabel" Content="" HorizontalAlignment="Left" Margin="-668,-54,0,0" VerticalAlignment="Top" Width="188" Background="Gray"/>
+        <Button Command="{Binding ReservationChangeCommand}" Content="ReservationChange" HorizontalAlignment="Left" Margin="-685,114,0,0" VerticalAlignment="Top" />
+        <Label x:Name="SuperOwnerLabel" Content="" HorizontalAlignment="Left" Margin="-685,17,0,0" VerticalAlignment="Top" Width="188" Background="Gray"/>
+        <Label Content="Best locations&#10;(most booked)" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2"/>
+        <Line X2="1"  Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Line X2="1"  Grid.Row="4" Grid.ColumnSpan="2"/>
+        <Label Content="Worst locations&#xA;(least booked)" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
+        <Label Content="Sremski Karlovci"  Grid.Row="3" Foreground="Green" FontSize="17"/>
+        <Label Content="Bijeljina"  Grid.Row="3" Foreground="Red" FontSize="17" Grid.Column="1" />
+        <Label Content="Rate Guests"  Grid.Row="5" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="14,0,0,0" FontSize="17" FontWeight="Bold" />
+        <Label Content="Please select guest to rate"  Grid.Row="5" Margin="0,31,0,0" VerticalAlignment="Top" />
+        <Label Content="Owner info:" HorizontalAlignment="Left" Margin="-424,8,0,0" Grid.Row="3" VerticalAlignment="Top" FontWeight="Bold" Foreground="#E69138" FontSize="20"/>
 
-
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2.5*"/>
+                <RowDefinition Height="2.5*"/>
+                <RowDefinition Height="2.5*"/>
+                <RowDefinition Height="2.5*"/>
+            </Grid.RowDefinitions>
+        </Grid>
     </Grid>
 </Page>
