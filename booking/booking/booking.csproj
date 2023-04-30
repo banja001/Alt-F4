@@ -20,8 +20,6 @@
     <None Remove="Resources\Icons\whiteRequest.png" />
     <None Remove="Resources\Icons\whiteStatistics.png" />
     <None Remove="Resources\Icons\whiteTraveler.png" />
-    <None Remove="WPF\Views\Owner\back_icon.png" />
-    <None Remove="WPF\Views\Owner\forward_icon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,8 +28,6 @@
     <Resource Include="Resources\Icons\whiteRequest.png" />
     <Resource Include="Resources\Icons\whiteStatistics.png" />
     <Resource Include="Resources\Icons\whiteTraveler.png" />
-    <Resource Include="WPF\Views\Owner\back_icon.png" />
-    <Resource Include="WPF\Views\Owner\forward_icon.png" />
   </ItemGroup>
 
   <ItemGroup>

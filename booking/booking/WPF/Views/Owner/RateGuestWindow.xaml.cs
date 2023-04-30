@@ -31,8 +31,9 @@ namespace booking.View.Owner
         {
             InitializeComponent();
             this.DataContext = new RateGuestViewModel(win);
-            
-            
+            NameLabel.Content += win.SelectedItem.GuestName;
+            AccommodationLabel.Content += win.SelectedItem.AccommodationName;
+            DateLabel.Content += win.SelectedItem.StartDate.ToString("dd/MM/yyyy") + "-" + win.SelectedItem.EndDate.ToString("dd/MM/yyyy");
         }
 
 
