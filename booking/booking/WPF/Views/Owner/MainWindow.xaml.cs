@@ -45,7 +45,7 @@ namespace WPF.Views.Owner
             Main.Content=new AddAccommodationWindow(OwnerModel);
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void BackClick(object sender, RoutedEventArgs e)
         {
             if (Main.NavigationService.CanGoBack)
             {
@@ -53,7 +53,7 @@ namespace WPF.Views.Owner
             }
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void ForwardClick(object sender, RoutedEventArgs e)
         {
             if (Main.NavigationService.CanGoForward)
             {

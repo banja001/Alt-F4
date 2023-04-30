@@ -91,7 +91,7 @@
         <Button Content="confirm" Grid.Row="16" Command="{Binding ConfirmCommand}" Width="150" Height="30" BorderBrush="Black"/>
         <Button Content="+" Grid.Row="14"  Command="{Binding AddImageCommand}" Height="30" Width="30" Margin="130,0,0,0" Background="Gray"/>
         <Button Name="removeImageButton" Grid.Row="14" Grid.Column="1"  Command="{Binding RemoveImageCommand}" Content="-" Height="30" Width="30" Margin="-130,0,0,0" Background="Gray"/>
-        <ComboBox Name="StateComboBox" Grid.Row="5" Text="{Binding State}"  ItemsSource="{Binding StateList}" SelectedItem="{Binding SelectedItemState}" SelectionChanged="StateComboBox_SelectionChanged"  />
+        <ComboBox Name="StateComboBox" Grid.Row="5" Text="{Binding State}"  ItemsSource="{Binding StateList}" SelectedItem="{Binding SelectedItemState}" SelectionChanged="StateComboBox_SelectionChanged"/>
         <ComboBox Name="CityComboBox" Grid.Row="5" Grid.Column="1" Text="{Binding City}" ItemsSource="{Binding CityList,Mode=TwoWay}" SelectedItem="{Binding SelectedItemCity}" />
         <Label Content="Add Accommodation" Grid.Row="0" Grid.ColumnSpan="2" FontSize="17" Foreground="#E69138"/>
         <Line X2="1"  Grid.Row="3" Grid.ColumnSpan="2"/>
