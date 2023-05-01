@@ -38,6 +38,9 @@ namespace WPF.ViewModels.Owner
         public string MinDaysToUse { get; set; }
         public string DaysToCancel { get; set; }
 
+        private string image;
+        public string ImageUrl {get;set;}
+
         public string SelectedItemCity { get; set; }
         public string SelectedItemState { get; set; }
         
@@ -124,8 +127,18 @@ namespace WPF.ViewModels.Owner
         private void AddImageClick()
         {
 
-            AddAccommodationImageWindow win = new AddAccommodationImageWindow(accommodationImagesUrl);
-            win.ShowDialog();
+            //AddAccommodationImageWindow win = new AddAccommodationImageWindow(accommodationImagesUrl);
+            //win.ShowDialog();
+            if (string.IsNullOrEmpty(ImageUrl))
+            {
+                MessageBox.Show("Please enter atleast one image", "Error");
+                
+            }
+            else
+            {
+                accommodationImagesUrl.Add(ImageUrl);
+                ImageUrl = "";
+            }
             
 
         }
