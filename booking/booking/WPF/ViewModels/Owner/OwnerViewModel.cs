@@ -202,7 +202,7 @@ namespace WPF.ViewModels.Owner
         private void View_Ratings_Click()
         {
             RatingViewWindow win = new RatingViewWindow(this);
-            win.ShowDialog();
+            //win.ShowDialog();
         }
 
         private void Button_Click()

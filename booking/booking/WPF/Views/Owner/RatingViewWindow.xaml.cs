@@ -22,7 +22,7 @@ namespace booking.View.Owner
     /// <summary>
     /// Interaction logic for RatingView.xaml
     /// </summary>
-    public partial class RatingViewWindow : Window
+    public partial class RatingViewWindow : Page
     {
         
 

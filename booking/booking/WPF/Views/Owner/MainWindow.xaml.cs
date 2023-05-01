@@ -1,4 +1,5 @@
 ﻿using booking.View;
+using booking.View.Owner;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -59,6 +60,11 @@ namespace WPF.Views.Owner
             {
                 Main.NavigationService.GoForward();
             }
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new RatingViewWindow(OwnerModel);
         }
     }
 }
