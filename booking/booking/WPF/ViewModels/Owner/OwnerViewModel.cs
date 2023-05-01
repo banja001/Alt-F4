@@ -208,7 +208,7 @@ namespace WPF.ViewModels.Owner
         private void Button_Click()
         {
             ReservationChangeWindow win = new ReservationChangeWindow(this);
-            win.ShowDialog();
+            //win.ShowDialog();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using booking.View;
 using booking.View.Owner;
+using booking.WPF.Views.Owner;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -65,6 +66,11 @@ namespace WPF.Views.Owner
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             Main.Content = new RatingViewWindow(OwnerModel);
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new ReservationChangeWindow(OwnerModel);
         }
     }
 }

@@ -45,7 +45,7 @@
         <Line X2="1"  Grid.Row="2" Grid.ColumnSpan="2"/>
         <Label Content="Comment:" Grid.Row="3" FontSize="17" Foreground="#E69138" FontWeight="Bold" VerticalAlignment="Bottom"/>
         <Grid DataContext="{Binding ElementName=dgrMain,Path=SelectedItem}" Grid.Row="4" Grid.ColumnSpan="2" >
-            <TextBlock  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="{Binding Path=Comment}" VerticalAlignment="Center" Height="137" Width="330"/>
+            <TextBlock Foreground="LightGray" HorizontalAlignment="Center"  TextWrapping="Wrap" Text="{Binding Path=Comment}" VerticalAlignment="Center" Height="137" Width="330"/>
 
             <Label Content="" Name="NoImagesLabel" Margin="182,323,182,366"/>
 

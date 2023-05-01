@@ -1,15 +1,34 @@
-﻿<Window x:Class="booking.WPF.Views.Owner.ReservationChangeWindow"
+﻿<Page x:Class="booking.WPF.Views.Owner.ReservationChangeWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.WPF.Views.Owner"
         mc:Ignorable="d"
-        Title="ReservationChange" Height="749" Width="430">
+        Title="ReservationChange" Height="641" Width="400">
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
+            <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="1*"/>
+            
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Pick a reservation change" Grid.ColumnSpan="2" HorizontalAlignment="Left" FontSize="17" Foreground="#E69138" Padding="10" Margin="15,0,0,0"/>
+
         <DataGrid x:Name="ReservationChangeGrid" ItemsSource="{Binding requestsObservable, UpdateSourceTrigger=PropertyChanged}" 
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
-                  IsReadOnly="True" AutoGenerateColumns="False" Margin="10,105,10,145" >
+                  IsReadOnly="True" AutoGenerateColumns="False" 
+                  Grid.Row="1" Grid.ColumnSpan="2" Width="350">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Accommodation" Width="70" Binding="{Binding AccommodationName}"/>
                 <DataGridTextColumn Header="Old Start Date" Width="70" Binding="{Binding OldStartDate}"/>
@@ -19,8 +38,8 @@
                 <DataGridTextColumn Header="Taken" Width="70" Binding="{Binding IsTaken}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Allow" Command="{Binding AllowCommand}" HorizontalAlignment="Left" Margin="192,626,0,0" VerticalAlignment="Top" Height="45" Width="99" />
-        <Button Content="Decline" Command="{Binding DeclineCommand}" HorizontalAlignment="Left" Margin="314,628,0,0" VerticalAlignment="Top"  RenderTransformOrigin="-0.04,-1.2" Height="42" Width="87"/>
+        <Button Content="Allow" Command="{Binding AllowCommand}" Grid.Row="2"/>
+        <Button Content="Decline" Command="{Binding DeclineCommand}" Grid.Row="2" Grid.Column="1"/>
 
     </Grid>
-</Window>
+</Page>
