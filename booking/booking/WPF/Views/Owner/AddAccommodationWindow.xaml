@@ -66,10 +66,10 @@
         <Line X2="1"  Grid.Row="3" Grid.ColumnSpan="2"/>
         <Line X2="1"  Grid.Row="8" Grid.ColumnSpan="2"/>
         <Line X2="1"  Grid.Row="11" Grid.ColumnSpan="2"/>
-        <TextBox Name="ImageTextbox" Text="{Binding ImageUrl}" Grid.Row="13" Grid.ColumnSpan="2" TextWrapping="Wrap" />
+        <TextBox Name="ImageTextbox" Text="{Binding ImageUrl,UpdateSourceTrigger=PropertyChanged}" Grid.Row="13" Grid.ColumnSpan="2" TextWrapping="Wrap" />
         <Button Content="Cancel"  Grid.Row="16" Grid.Column="1" Width="150" Height="30" BorderBrush="Black"/>
-        <Image HorizontalAlignment="Left" Height="150" Grid.Row="15" Grid.ColumnSpan="2" Grid.Column="0" VerticalAlignment="Top" Width="150" Margin="123,5,0,0" />
-        <Button Content="&gt;&gt;" Background="Gray" HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1" VerticalAlignment="Center" Height="110" Width="20"/>
-        <Button Content="&lt;&lt;" Background="Gray" HorizontalAlignment="Center" Grid.Row="15" Grid.Column="0" VerticalAlignment="Center" Height="110" Width="20"/>
+        <Image Source="{Binding Slika,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="150" Grid.Row="15" Grid.ColumnSpan="2" Grid.Column="0" VerticalAlignment="Top" Width="150" Margin="123,5,0,0" />
+        <Button IsEnabled="{Binding NextEnabled,UpdateSourceTrigger=PropertyChanged}" Command="{Binding NextPictureCommand}" Content="&gt;&gt;" Background="Gray" HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1" VerticalAlignment="Center" Height="110" Width="20"/>
+        <Button IsEnabled="{Binding PrevEnabled,UpdateSourceTrigger=PropertyChanged}" Command="{Binding PrevPictureCommand}" Content="&lt;&lt;" Background="Gray" HorizontalAlignment="Center" Grid.Row="15" Grid.Column="0" VerticalAlignment="Center" Height="110" Width="20"/>
     </Grid>
 </Page>
