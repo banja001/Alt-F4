@@ -6,6 +6,38 @@
         xmlns:local="clr-namespace:booking.View.Owner"
         mc:Ignorable="d"
         Title="RatingView" Height="641" Width="400">
+    <Page.Resources>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="Gray"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="Black"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="Black"/>
+        <ControlTemplate x:Key="ButtonTemplate1" TargetType="{x:Type ButtonBase}">
+            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsDefaulted" Value="true">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="true">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Page.Resources>
     <Grid>
         <Grid.Resources>
             <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
@@ -53,7 +85,7 @@
         <Line X2="1" Grid.ColumnSpan="2" Grid.Row="5"/>
         <Label Content="Images:" FontSize="17" Foreground="#E69138" FontWeight="Bold" Grid.Row="6" VerticalAlignment="Bottom"/>
         <Grid Grid.Row="7" Grid.ColumnSpan="2" >
-            <Button x:Name="NextImageButton" Command="{Binding NextCommand}" Content="&gt;&gt;" Height="120" Width="20" HorizontalAlignment="Left" Margin="334,40,0,39" />
+            <Button Template="{DynamicResource ButtonTemplate1}" x:Name="NextImageButton" Command="{Binding NextCommand}" Content="&gt;&gt;" Height="120" Width="20" HorizontalAlignment="Left" Margin="334,40,0,39" />
             <Button x:Name="PrevImageButton" Command="{Binding PrevCommand}" Content="&lt;&lt;" Height="120" Width="20" HorizontalAlignment="Left" Margin="60,40,0,39" />
             <Image HorizontalAlignment="Left" Stretch="Fill" Name="OwnerImage" Height="161" VerticalAlignment="Top" Width="211" Margin="101,16,0,0"/>
         </Grid>

@@ -201,7 +201,8 @@ namespace WPF.ViewModels.Owner
             }
             else
             {
-                accommodationImagesUrl.Add(ImageUrl);
+                //accommodationImagesUrl.Add(ImageUrl);
+                accommodationImagesUrl.Insert(0, ImageUrl);
                 ImageUrl = "";
             }
             ShowImage();
@@ -220,7 +221,8 @@ namespace WPF.ViewModels.Owner
         {
             if (accommodationImagesUrl.Count() > 0)
             {
-                accommodationImagesUrl.RemoveAt(accommodationImagesUrl.Count() - 1);
+                //accommodationImagesUrl.RemoveAt(accommodationImagesUrl.Count() - 1);
+                accommodationImagesUrl.RemoveAt(ActiveImageIndx);
                 MessageBox.Show("Image removed", "Message");
             }
             ShowImage();
