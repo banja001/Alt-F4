@@ -19,7 +19,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using WPF.ViewModels.Owner;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace booking.View
 {
@@ -35,7 +37,8 @@ namespace booking.View
             InitializeComponent();
             DataContext = new AddAccommodationViewModel(win);
            
-            ownerWindow = win;            
+            ownerWindow = win;
+            Loaded += Window_Loaded;
         }
 
         private void StateComboBox_SelectionChanged(object sender, RoutedEventArgs e)
@@ -46,6 +49,13 @@ namespace booking.View
             CityList = ownerWindow.locationService.FillCityList(CityList, SelectedState, ownerWindow.locations);
             CityComboBox.ItemsSource = CityList;
         }
-        
+
+        public void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // we manually fire the bindings so we get the validation initially
+            MinDaysToUseTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            NameTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+        }
+
     }
 }

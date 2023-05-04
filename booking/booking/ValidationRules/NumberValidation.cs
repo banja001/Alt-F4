@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Syncfusion.Windows.Shared;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -10,7 +11,8 @@ namespace ValidationRules
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if(int.TryParse(value.ToString(),out int Number))
+            if(value==null) return new ValidationResult(false, "Empty textbox!");
+            if (int.TryParse(value.ToString(),out int Number))
             {
                 return ValidationResult.ValidResult;
             }

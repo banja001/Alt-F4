@@ -226,7 +226,7 @@
     <Grid >
         <Grid.Resources>
             <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
-            <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
+            <Style x:Key="BlueButton" TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
             <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
             <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxOwner}"/>
             <Style TargetType="ComboBox" BasedOn="{StaticResource ComboBoxOwner}"/>
@@ -286,7 +286,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBox Name="MinDaysToUseTextBox" Grid.Column="0" Grid.Row="7"    TextWrapping="Wrap" >
+        <TextBox Name="MinDaysToUseTextBox" Grid.Column="0" Grid.Row="7" TextWrapping="Wrap" >
             <TextBox.Text>
                 <Binding Path="MinDaysToUse" UpdateSourceTrigger="PropertyChanged"  ValidatesOnDataErrors="True" NotifyOnValidationError="True">
                     <Binding.ValidationRules>
@@ -305,7 +305,23 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button Content="confirm" Grid.Row="16" Command="{Binding ConfirmCommand}" Width="150" Height="30" />
+        <Button Content="confirm" Grid.Row="16" Command="{Binding ConfirmCommand}" Width="150" Height="30" >
+            <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource BlueButton}">
+                    <Setter Property="IsEnabled" Value="False"/>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=MinDaysToUseTextBox}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+
         <Button Content="+" Grid.Row="14"  Command="{Binding AddImageCommand}" Height="30" Width="30" Margin="130,0,0,0" Background="#447782"/>
         <Button Name="removeImageButton" Grid.Row="14" Grid.Column="1"  Command="{Binding RemoveImageCommand}" Content="-" Height="30" Width="30" Margin="-130,0,0,0" Background="#447782"/>
         <ComboBox Template="{DynamicResource ComboBoxTemplate1}" Name="StateComboBox" Grid.Row="5" Text="{Binding State}"  ItemsSource="{Binding StateList}" SelectedItem="{Binding SelectedItemState}" SelectionChanged="StateComboBox_SelectionChanged"/>
@@ -315,7 +331,7 @@
         <Line X2="1"  Grid.Row="8" Grid.ColumnSpan="2"/>
         <Line X2="1"  Grid.Row="11" Grid.ColumnSpan="2"/>
         <TextBox Name="ImageTextbox" Text="{Binding ImageUrl,UpdateSourceTrigger=PropertyChanged}" Grid.Row="13" Grid.ColumnSpan="2" TextWrapping="Wrap" />
-        <Button Content="Cancel"  Grid.Row="16" Grid.Column="1" Width="150" Height="30" BorderBrush="Black"/>
+        <Button  Content="Cancel"  Grid.Row="16" Grid.Column="1" Width="150" Height="30" BorderBrush="Black" Style="{StaticResource BlueButton}"/>
         <Image Stretch="Fill" Source="{Binding Slika,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="124" Grid.Row="15" Grid.ColumnSpan="2" Grid.Column="0" VerticalAlignment="Top" Width="141" Margin="130,18,0,0" />
         <Button Template="{DynamicResource ButtonTemplate1}" IsEnabled="{Binding NextEnabled,UpdateSourceTrigger=PropertyChanged}" Command="{Binding NextPictureCommand}" Content="&gt;&gt;" Background="#447782" HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1" VerticalAlignment="Center" Height="110" Width="20"/>
         <Button Template="{DynamicResource ButtonTemplate1}" IsEnabled="{Binding PrevEnabled,UpdateSourceTrigger=PropertyChanged}" Command="{Binding PrevPictureCommand}" Content="&lt;&lt;" Background="#447782" HorizontalAlignment="Center" Grid.Row="15" Grid.Column="0" VerticalAlignment="Center" Height="110" Width="20"/>
