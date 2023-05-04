@@ -1,0 +1,21 @@
+﻿<Window x:Class="booking.View.Guide.GuideWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:booking.View.Guide"
+        mc:Ignorable="d"
+        Title="GuideWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button Name="AddTourB" Content="Add Tour" Width="150" Height="30" Click="AddTour"  Grid.Column="0"/>
+        <Button Name="LiveTrackingTourB" Content="Live Tracking Tour" Width="150" Height="30" Click="LiveTrackingTour"  Grid.Column="1"/>
+        <Button Name="ShowReviews" Content="Show Reviews" Width="150" Height="30"  Grid.Column="2" Click="ShowReviews_Click"/>
+        <Button Name="ShowUnfinishedTours" Content="Show upcoming tours" Width="150" Height="30"  Grid.Column="3" Click="ShowUnfinishedTours_Click" />
+    </Grid>
+</Window>
