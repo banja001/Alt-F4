@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="AddAccommodationWindow" Height="641" Width="400"
        
-    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" xmlns:validationrules="clr-namespace:ValidationRules">
     <Page.Resources>
         <LinearGradientBrush x:Key="ComboBox.Static.Background" EndPoint="0,1" StartPoint="0,0">
             <GradientStop Color="#FFF0F0F0" Offset="0.0"/>
@@ -263,15 +263,48 @@
         <Label Content="Min days for reservation" Grid.Column="0" Grid.Row="6" />
         <Label Content="Num of days before u can cancel" Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" />
         <Label Content="Images" Grid.Row="12" Grid.ColumnSpan="2" />
-        <TextBox  Name="NameTextBox" Grid.Row="2" Text="{Binding Name}" TextWrapping="Wrap" />
+        <TextBox  Name="NameTextBox" Grid.Row="2"  TextWrapping="Wrap" >
+            <TextBox.Text>
+                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged"  ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <validationrules:NameValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <ComboBox Template="{DynamicResource ComboBoxTemplate1}" Grid.Column="1" Grid.Row="2" Name="TypeComboBox"  Text="{Binding Type}">
             <ComboBoxItem Content="Apartment"></ComboBoxItem>
             <ComboBoxItem Content="House"></ComboBoxItem>
             <ComboBoxItem Content="Cabin"></ComboBoxItem>
         </ComboBox>
-        <TextBox Name="MaxVisitorsTextBox" Grid.Column="1" Grid.Row="7" Text="{Binding MaxVisitors}"   TextWrapping="Wrap" />
-        <TextBox Name="MinDaysToUseTextBox" Grid.Column="0" Grid.Row="7" Text="{Binding MinDaysToUse}"   TextWrapping="Wrap" />
-        <TextBox Name="DaysToCancelTextBox" Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Text="{Binding DaysToCancel}" TextWrapping="Wrap" />
+        <TextBox Name="MaxVisitorsTextBox" Grid.Column="1" Grid.Row="7"   TextWrapping="Wrap" >
+            <TextBox.Text>
+                <Binding Path="MaxVisitors" UpdateSourceTrigger="PropertyChanged"  ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <validationrules:NumberValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox Name="MinDaysToUseTextBox" Grid.Column="0" Grid.Row="7"    TextWrapping="Wrap" >
+            <TextBox.Text>
+                <Binding Path="MinDaysToUse" UpdateSourceTrigger="PropertyChanged"  ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <validationrules:NumberValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <TextBox Name="DaysToCancelTextBox" Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" TextWrapping="Wrap" >
+            <TextBox.Text>
+                <Binding Path="DaysToCancel" UpdateSourceTrigger="PropertyChanged"  ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <validationrules:NumberValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <Button Content="confirm" Grid.Row="16" Command="{Binding ConfirmCommand}" Width="150" Height="30" />
         <Button Content="+" Grid.Row="14"  Command="{Binding AddImageCommand}" Height="30" Width="30" Margin="130,0,0,0" Background="#447782"/>
         <Button Name="removeImageButton" Grid.Row="14" Grid.Column="1"  Command="{Binding RemoveImageCommand}" Content="-" Height="30" Width="30" Margin="-130,0,0,0" Background="#447782"/>
