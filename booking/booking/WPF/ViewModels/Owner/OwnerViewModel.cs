@@ -25,6 +25,7 @@ namespace WPF.ViewModels.Owner
     {
         public int OwnerId { get; set; }
         public double AverageRating { get; set; }
+        public string UserName { get; set; }
 
         public AccommodationService accommodationService;
         public List<Accommodation> accommodations;
@@ -32,15 +33,12 @@ namespace WPF.ViewModels.Owner
         public List<AccommodationImage> accommodationImages;
         public LocationService locationService;
         public List<Location> locations;
-
         public ReservedDatesService reservedDatesService;
         public List<ReservedDates> reservedDates;
         public Guest1RatingsService guest1RatingsService;
         public List<Guest1Rating> guest1Ratings;
-
         public UserService userService;
         public List<User> users;
-
         public OwnerRatingImageService OwnerRatingImageService;
         public List<OwnerRatingImage> OwnerRatingImages;
         public OwnerRatingService OwnerRatingService;
@@ -63,8 +61,9 @@ namespace WPF.ViewModels.Owner
             mainWindow = m;
             OwnerId = id;
             ownerWindow = ow;
+            
             CreateInstances();
-
+            UserName = userService.GetUserNameById(id);
             List<ReservedDates> ratingDates = PickDatesForRating();
 
             List<Guest1RatingDTO> tempList = GetGuestsToRate(ratingDates);
@@ -125,8 +124,8 @@ namespace WPF.ViewModels.Owner
             {
                 Guest1RatingDTO guestsToRate = new Guest1RatingDTO();
                 guestsToRate.DateId = date.Id;
-                guestsToRate.StartDate = date.StartDate;
-                guestsToRate.EndDate = date.EndDate;
+                guestsToRate.StartDate = date.StartDate.ToShortDateString();
+                guestsToRate.EndDate = date.EndDate.ToShortDateString();
                 guestsToRate.GuestName = users.Find(u => u.Id == date.UserId).Username;
                 guestsToRate.AccommodationName = accommodations.Find(u => u.Id == date.AccommodationId).Name;
                 tempList.Add(guestsToRate);
@@ -161,13 +160,6 @@ namespace WPF.ViewModels.Owner
             ownerWindow.Loaded -= NotifyUser;
             MessageBox.Show("You have unrated guests", "Message");
         }
-
-        private void AddAccommodation()
-        {
-            AddAccommodationWindow win = new AddAccommodationWindow(this);
-            //win.ShowDialog();
-        }
-
         public List<ReservedDates> PickDatesForRating()
         {
             List<ReservedDates> ratingDates = new List<ReservedDates>();
@@ -192,13 +184,17 @@ namespace WPF.ViewModels.Owner
             }
             else
             {
-                RateGuestWindow win = new RateGuestWindow(this);
+                RateGuestWindow win = new RateGuestWindow(this,mainWindow);
                 mainWindow.Main.Content = win;
 
             }
 
         }
-
+        private void AddAccommodation()
+        {
+            AddAccommodationWindow win = new AddAccommodationWindow(this);
+            //win.ShowDialog();
+        }
         private void View_Ratings_Click()
         {
             RatingViewWindow win = new RatingViewWindow(this);

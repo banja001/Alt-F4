@@ -12,6 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF.ViewModels.Owner;
 
@@ -38,11 +39,14 @@ namespace WPF.Views.Owner
             Main.Content = OwnerWindow;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void OwnerDropdownClick(object sender, RoutedEventArgs e)
         {
-            Main.Content=OwnerWindow;   
+
+            
+            Main.Content=OwnerWindow;  
+            
         }
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void AddAccommodationDropdownClick(object sender, RoutedEventArgs e)
         {
             Main.Content=new AddAccommodationWindow(OwnerModel);
         }
@@ -63,14 +67,16 @@ namespace WPF.Views.Owner
             }
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void ViewRatingsDropdownClick(object sender, RoutedEventArgs e)
         {
             Main.Content = new RatingViewWindow(OwnerModel);
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void ManageReservationsDropdownClick(object sender, RoutedEventArgs e)
         {
             Main.Content = new ReservationChangeWindow(OwnerModel);
         }
+
+        
     }
 }

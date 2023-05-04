@@ -7,7 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
+using WPF.Views.Owner;
 
 namespace WPF.ViewModels.Owner
 {
@@ -18,22 +21,22 @@ namespace WPF.ViewModels.Owner
 
         public string Comment { get; set; }
 
-        OwnerViewModel ownerWindow;
-
+        public OwnerViewModel ownerWindow;
+        public MainWindow mainWindow { get; set; }
         public ICommand AddRatingCommand => new RelayCommand(AddRating_Click);
 
-        public RateGuestViewModel(OwnerViewModel ownerWindow)
+        public RateGuestViewModel(OwnerViewModel ownerWindow,MainWindow main)
         {
             this.SelectedCleanRadiobutton = new bool[] { false, false, false, false, false };
             this.SelectedRulesRadiobutton = new bool[] { false, false, false, false, false };
             this.ownerWindow = ownerWindow;
+            mainWindow = main;
         }
 
 
         
         private void AddRating_Click()
         {
-           
             string comment = Comment;
             int cleanliness = GetCleanliness();
             int rules = GetRulesRating();
@@ -45,8 +48,15 @@ namespace WPF.ViewModels.Owner
                 return;
             }
             ModifyForGuestRating(comment, cleanliness, rules, id, guestid);
-            this.CloseCurrentWindow();
+            mainWindow.Main.Navigate(mainWindow.OwnerWindow);
+            
+            
+            
+
+          
         }
+
+        
 
         private int GetRulesRating()
         {

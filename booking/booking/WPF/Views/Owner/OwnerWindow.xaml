@@ -7,8 +7,27 @@
         mc:Ignorable="d"
         Title="OwnerWindow" Height="641" Width="400"
         >
+    
     <Grid>
         <Grid.Resources>
+            <Style TargetType="DataGrid">
+                <Setter Property="Foreground" Value="LightGray"/>
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="CanUserResizeColumns" Value="False"/>
+                <Setter Property="CanUserResizeRows" Value="False"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+            </Style>
+            <Style TargetType="DataGridRow" x:Name="DatagridRowStyle">
+                <Setter  Property="Background" Value="black"/>
+            </Style>
+
+            <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="Red"/>
+
+            </Style>
+
+
             <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
             <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
             <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
@@ -94,12 +113,13 @@
 
         <DataGrid x:Name="DataGridRaatings" ItemsSource="{Binding ListToRate, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
-                  IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="6" Grid.ColumnSpan="2" Width="360" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                  IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="6" Grid.ColumnSpan="2" Width="360" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center"
+                  ColumnHeaderStyle="{StaticResource HeaderStyle}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Guest" Width="90" Binding="{Binding GuestName}"/>
-                <DataGridTextColumn Header="Accommodation" Width="120" Binding="{Binding AccommodationName}"/>
-                <DataGridTextColumn Header="Start date" Width="90" Binding="{Binding StartDate}"/>
-                <DataGridTextColumn Header="End date" Width="90" Binding="{Binding EndDate}"/>
+                <DataGridTextColumn Header="Guest" Width="2.5*" Binding="{Binding GuestName}"/>
+                <DataGridTextColumn Header="Accommodation" Width="3*" Binding="{Binding AccommodationName}"/>
+                <DataGridTextColumn Header="Start date" Width="2.25*" Binding="{Binding StartDate}"/>
+                <DataGridTextColumn Header="End date" Width="2.25*" Binding="{Binding EndDate}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Command="{Binding ViewRatingsCommand}" Content="View Rating" HorizontalAlignment="Left" Margin="-526,66,0,0" VerticalAlignment="Top" Height="44" Width="99" />
@@ -126,7 +146,7 @@
             </Grid.RowDefinitions>
             <Label Content="Owner info:"   Grid.Row="0"  FontWeight="Bold" Foreground="#E69138" FontSize="20" VerticalAlignment="Bottom"/>
             <Label Content="Name:" Grid.Row="1" HorizontalAlignment="Left" Margin="44,0,0,0"/>
-            <Label Content="Jovan" Grid.Row="1" HorizontalAlignment="Left" FontWeight="Bold" Margin="103,0,0,0" Width="72"/>
+            <Label Content="{Binding UserName}" Grid.Row="1" HorizontalAlignment="Left" FontWeight="Bold" Margin="103,0,0,0" Width="72"/>
             <Label Content="Owner rating:" Grid.Row="2" HorizontalAlignment="Left" Margin="44,0,0,0"/>
             <Label x:Name="AverageLabel" Content="" FontWeight="Bold" Grid.Row="2" HorizontalAlignment="Left" Margin="139,0,0,0"/>
             <Label Content="Type of owner:" Grid.Row="3" FontWeight="Bold" Foreground="#E69138" VerticalAlignment="Bottom"/>
