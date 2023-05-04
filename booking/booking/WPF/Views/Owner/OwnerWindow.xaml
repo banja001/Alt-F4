@@ -21,10 +21,8 @@
             <Style TargetType="DataGridRow" x:Name="DatagridRowStyle">
                 <Setter  Property="Background" Value="black"/>
             </Style>
-
             <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
                 <Setter Property="Background" Value="Red"/>
-
             </Style>
 
 
@@ -114,7 +112,12 @@
         <DataGrid x:Name="DataGridRaatings" ItemsSource="{Binding ListToRate, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="6" Grid.ColumnSpan="2" Width="360" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center"
-                  ColumnHeaderStyle="{StaticResource HeaderStyle}">
+                  ColumnHeaderStyle="{StaticResource HeaderStyle}" >
+            <DataGrid.Resources>
+                
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/> 
+                
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Guest" Width="2.5*" Binding="{Binding GuestName}"/>
                 <DataGridTextColumn Header="Accommodation" Width="3*" Binding="{Binding AccommodationName}"/>
