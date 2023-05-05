@@ -55,6 +55,12 @@ namespace booking.View
             // we manually fire the bindings so we get the validation initially
             MinDaysToUseTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             NameTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            MaxVisitorsTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            DaysToCancelTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            TypeComboBox.GetBindingExpression(ComboBox.TextProperty).UpdateSource();
+            StateComboBox.GetBindingExpression(ComboBox.TextProperty).UpdateSource();
+            CityComboBox.GetBindingExpression(ComboBox.TextProperty).UpdateSource();
+            
         }
 
     }
