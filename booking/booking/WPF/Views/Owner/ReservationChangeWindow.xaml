@@ -8,6 +8,22 @@
         Title="ReservationChange" Height="641" Width="400">
     <Grid>
         <Grid.Resources>
+            <Style TargetType="DataGrid">
+                <Setter Property="Foreground" Value="LightGray"/>
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="CanUserResizeColumns" Value="False"/>
+                <Setter Property="CanUserResizeRows" Value="False"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="FontSize" Value="8"/>
+            </Style>
+            <Style TargetType="DataGridRow" x:Name="DatagridRowStyle">
+                <Setter  Property="Background" Value="black"/>
+            </Style>
+            <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="Red"/>
+                <Setter Property="Height" Value="30"/>
+            </Style>
             <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
             <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
         </Grid.Resources>
@@ -16,7 +32,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="8*"/>
             <RowDefinition Height="1*"/>
-            
+
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -27,15 +43,17 @@
 
         <DataGrid x:Name="ReservationChangeGrid" ItemsSource="{Binding requestsObservable, UpdateSourceTrigger=PropertyChanged}" 
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
-                  IsReadOnly="True" AutoGenerateColumns="False" 
-                  Grid.Row="1" Grid.ColumnSpan="2" Width="350">
+                  IsReadOnly="True" AutoGenerateColumns="False" Grid.ColumnSpan="2" ColumnHeaderStyle="{StaticResource HeaderStyle}" Margin="25,64,25,64" Grid.RowSpan="3">
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
+            </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Accommodation" Width="70" Binding="{Binding AccommodationName}"/>
-                <DataGridTextColumn Header="Old Start Date" Width="70" Binding="{Binding OldStartDate}"/>
-                <DataGridTextColumn Header="Old End Date" Width="70" Binding="{Binding OldEndDate}"/>
-                <DataGridTextColumn Header="New Start Date" Width="70" Binding="{Binding NewStartDate}"/>
-                <DataGridTextColumn Header="New End Date" Width="70" Binding="{Binding NewEndDate}"/>
-                <DataGridTextColumn Header="Taken" Width="70" Binding="{Binding IsTaken}"/>
+                <DataGridTextColumn Header="Accommodation" Width="2.5*" Binding="{Binding AccommodationName}"/>
+                <DataGridTextColumn Header="Old Start" Width="1.5*" Binding="{Binding OldStartDate}"/>
+                <DataGridTextColumn Header="Old End" Width="1.5*" Binding="{Binding OldEndDate}"/>
+                <DataGridTextColumn Header="New Start" Width="1.5*" Binding="{Binding NewStartDate}"/>
+                <DataGridTextColumn Header="New End" Width="1.5*" Binding="{Binding NewEndDate}"/>
+                <DataGridTextColumn Header="Taken" Width="1*" Binding="{Binding IsTaken}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Allow" Command="{Binding AllowCommand}" Grid.Row="2"/>

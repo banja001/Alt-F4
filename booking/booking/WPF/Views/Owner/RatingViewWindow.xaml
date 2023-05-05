@@ -40,6 +40,21 @@
     </Page.Resources>
     <Grid>
         <Grid.Resources>
+            <Style TargetType="DataGrid">
+                <Setter Property="Foreground" Value="LightGray"/>
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="CanUserResizeColumns" Value="False"/>
+                <Setter Property="CanUserResizeRows" Value="False"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+            </Style>
+            <Style TargetType="DataGridRow" x:Name="DatagridRowStyle">
+                <Setter  Property="Background" Value="black"/>
+            </Style>
+            <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="Red"/>
+            </Style>
+            
             <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
             <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
             <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
@@ -67,11 +82,15 @@
         <Label Content="Rating table:" FontSize="17" Foreground="#E69138" FontWeight="Bold" VerticalAlignment="Bottom"/>
         <DataGrid Grid.Row="1" Grid.ColumnSpan="2" x:Name="dgrMain" ItemsSource="{Binding OwnerRatings, UpdateSourceTrigger=PropertyChanged}" 
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
-                  IsReadOnly="True" AutoGenerateColumns="False" Width="330" Height="140" HorizontalAlignment="Center" VerticalAlignment="Center">
+                  IsReadOnly="True" AutoGenerateColumns="False" Width="330" Height="140" HorizontalAlignment="Center" VerticalAlignment="Center"
+                  ColumnHeaderStyle="{StaticResource HeaderStyle}">
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
+            </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Guest" Width="90" Binding="{Binding GuestName}"/>
-                <DataGridTextColumn Header="Clean Rating" Width="120" Binding="{Binding CleanRating}"/>
-                <DataGridTextColumn Header="Kind Rating" Width="90" Binding="{Binding KindRating}"/>
+                <DataGridTextColumn Header="Guest" Width="4*" Binding="{Binding GuestName}"/>
+                <DataGridTextColumn Header="Clean Rating" Width="3*" Binding="{Binding CleanRating}"/>
+                <DataGridTextColumn Header="Kind Rating" Width="3*" Binding="{Binding KindRating}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Line X2="1"  Grid.Row="2" Grid.ColumnSpan="2"/>

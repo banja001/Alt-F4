@@ -114,9 +114,7 @@
                   IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="6" Grid.ColumnSpan="2" Width="360" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center"
                   ColumnHeaderStyle="{StaticResource HeaderStyle}" >
             <DataGrid.Resources>
-                
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/> 
-                
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Guest" Width="2.5*" Binding="{Binding GuestName}"/>

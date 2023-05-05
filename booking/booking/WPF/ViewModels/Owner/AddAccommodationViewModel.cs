@@ -126,7 +126,7 @@ namespace WPF.ViewModels.Owner
 
         }
         
-        private bool isValid()
+        /*private bool isValid()
         {
             if (string.IsNullOrEmpty(State) || string.IsNullOrEmpty(City) || string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Type) ||
                 string.IsNullOrEmpty(MaxVisitors) || string.IsNullOrEmpty(MinDaysToUse) || string.IsNullOrEmpty(DaysToCancel))
@@ -165,15 +165,15 @@ namespace WPF.ViewModels.Owner
 
 
             return true;
-        }
+        }*/
 
         private void Confirm()
         {
-            
+            /*
             if (!isValid())
             {
                 return;
-            }
+            }*/
 
             Accommodation a = AddAccommodation();
             ownerViewModel.accommodationService.Add(a);
