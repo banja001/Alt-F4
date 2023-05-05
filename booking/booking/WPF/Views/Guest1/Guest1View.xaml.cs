@@ -110,8 +110,14 @@ namespace booking.View
             InitializeDTOs();
             FillStateComboBox();
             InitializeCheckBoxes();
+            ShowGuestPoints();
 
             Guest1ViewViewModel guest1ViewViewModel = new Guest1ViewViewModel(userId);
+        }
+
+        private void ShowGuestPoints()
+        {
+            lbUserName.Content = _userRepository.GetUserNameById(userId);
         }
 
         private void InitializeDTOs()
@@ -282,11 +288,6 @@ namespace booking.View
                     cities.Add(city);
             }
             CityComboBox.ItemsSource = cities;
-        }
-
-        private void ChangedNumbersOf(object sender, TextChangedEventArgs e)
-        {
-            SearchAccommodationButton.IsEnabled = SearchedAccommodation.IsValid;
         }
 
         private void SeeAll(object sender, RoutedEventArgs e)

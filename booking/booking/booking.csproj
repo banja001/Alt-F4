@@ -23,6 +23,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <COMReference Include="{215d64d2-031c-33c7-96e3-61794cd1ee61}">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>4</VersionMinor>
+      <VersionMajor>2</VersionMajor>
+      <Guid>215d64d2-031c-33c7-96e3-61794cd1ee61</Guid>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Resources\Icons\home.png" />
     <Resource Include="Resources\Icons\whiteLogout.png" />
     <Resource Include="Resources\Icons\whiteRequest.png" />
@@ -32,9 +41,16 @@
 
   <ItemGroup>
     <PackageReference Include="Expression.Interaction" Version="3.0.40218" />
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.3" />
     <PackageReference Include="Syncfusion.SfInput.WPF" Version="21.1.39" />
     <PackageReference Include="Syncfusion.Shared.WPF" Version="21.1.39" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Xceed.Wpf.Toolkit.NET5">
+      <HintPath>bin\Debug\net6.0-windows\Xceed.Wpf.Toolkit.NET5.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
