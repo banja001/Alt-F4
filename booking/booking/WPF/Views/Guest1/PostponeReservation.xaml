@@ -5,14 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.WPF.Views.Guest1"
         mc:Ignorable="d"
-        Title="PostponeReservation" Height="402" Width="703" WindowStartupLocation="CenterScreen">
+        Title="PostponeReservation" Height="363" Width="703" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Label Content="Postpone your reservation" HorizontalAlignment="Left" Margin="23,26,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
-        <Label Content="New start date" HorizontalAlignment="Left" Margin="23,116,0,0" VerticalAlignment="Top"/>
-        <Calendar Name="cNewStartDate" SelectedDate="{Binding Path=NewDate.StartDate}" HorizontalAlignment="Left" Margin="128,116,0,0" VerticalAlignment="Top"/>
-        <Label Content="New end date" HorizontalAlignment="Left" Margin="352,116,0,0" VerticalAlignment="Top"/>
-        <Calendar Name="cNewEndDate" SelectedDate="{Binding Path=NewDate.EndDate}" HorizontalAlignment="Left" Margin="456,116,0,0" VerticalAlignment="Top"/>
-        <Button Command="{Binding SendPostponeRequestCommand}" Content="Send" Name="bSend" HorizontalAlignment="Left" Height="30" Margin="557,315,0,0" VerticalAlignment="Top" Width="78"/>
-        <Button Command="{Binding CloseCommand}" Content="Cancel" x:Name="bCancel" HorizontalAlignment="Left" Height="30" Margin="456,315,0,0" VerticalAlignment="Top" Width="78"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <Label Grid.Row="0" Grid.ColumnSpan="4" Content="Postpone your reservation" FontSize="24" FontWeight="Bold" Margin="10 0"/>
+        
+        <Label Grid.Row="1" Grid.Column="0" Content="New start date" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
+        <Calendar Grid.Row="1" Grid.Column="1" Name="cNewStartDate" SelectedDate="{Binding Path=NewDate.StartDate}"/>
+        
+        <Label Grid.Row="1" Grid.Column="2" Content="New end date" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Calendar Grid.Row="1" Grid.Column="3" Name="cNewEndDate" SelectedDate="{Binding Path=NewDate.EndDate}" Margin="0 0 5 0"/>
+
+        <WrapPanel Grid.Row="2" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Command="{Binding SendPostponeRequestCommand}" Content="Send" Name="bSend" Height="30" Width="78" Margin="10 0"/>
+            <Button Command="{Binding CloseCommand}" Content="Cancel" x:Name="bCancel" Height="30" Width="78" Margin="10 0"/>
+        </WrapPanel>
+        
     </Grid>
 </Window>

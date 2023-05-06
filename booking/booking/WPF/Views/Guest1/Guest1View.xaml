@@ -125,7 +125,7 @@
                     <ColumnDefinition Width="5*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 
-                <Label Grid.Row="0" Grid.ColumnSpan="4"  Content="Rate your accommodations" FontSize="24" FontWeight="Bold" Margin="10 0"/>
+                <Label Grid.Row="0" Grid.ColumnSpan="4" Content="Rate your accommodations" FontSize="24" FontWeight="Bold" Margin="10 0"/>
                 
                 <Label Grid.Row="1" Grid.Column="0" Content="Stayed in" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
                 <ListBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Name="lbStayedIn"
@@ -208,26 +208,26 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 
-                <GroupBox Header="All reservations" Margin="10,54,10,376">
+                <Label Grid.Row="0" Grid.Column="0" Content="Reservations overview" FontSize="24" FontWeight="Bold" Margin="10 0"/>
+                
+                <GroupBox Grid.Row="1" Grid.Column="0" Header="All reservations" Margin="10">
                     <Grid>
                         <DataGrid x:Name="reservationsData"
                               ItemsSource="{Binding ReservationAccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                               SelectedItem="{Binding SelectedReservation, UpdateSourceTrigger=PropertyChanged}"
-                               Height="208" 
-                               VerticalAlignment="Top"
                                IsReadOnly="True"
                                SelectionMode="Single"
                                CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
-                               ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Margin="10,24,10,0">
+                               ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Margin="10 20 10 20">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Accommodation" Binding="{Binding AccommodationName}" CanUserResize="False"  Width="180"/>
-                                <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False" Width="180"/>
-                                <DataGridTextColumn Header="Start date" Binding="{Binding StartDate, Converter={cvt:DateTimeToDateOnlyConverter}}" CanUserResize="False" Width="*"/>
-                                <DataGridTextColumn Header="End Date" Binding="{Binding EndDate, Converter={cvt:DateTimeToDateOnlyConverter}}" CanUserResize="False" Width="*"/>
-                                <DataGridTemplateColumn Header="Reservation options" Width="*">
+                                <DataGridTextColumn Header="Accommodation" Binding="{Binding AccommodationName}" CanUserResize="False"  Width="2*"/>
+                                <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False" Width="2*"/>
+                                <DataGridTextColumn Header="Start date" Binding="{Binding StartDate, Converter={cvt:DateTimeToDateOnlyConverter}}" CanUserResize="False" Width="1*"/>
+                                <DataGridTextColumn Header="End Date" Binding="{Binding EndDate, Converter={cvt:DateTimeToDateOnlyConverter}}" CanUserResize="False" Width="1*"/>
+                                <DataGridTemplateColumn Header="Reservation options" Width="2*">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <Button x:Name="bPostpone" Command="{Binding Path=DataContext.PostponeReservationCommand,       
                                                          RelativeSource= {RelativeSource FindAncestor,
                                                          AncestorType={x:Type DataGrid}}}" 
@@ -235,7 +235,7 @@
                                                 <Button x:Name="bCancel" Command="{Binding Path=DataContext.CancelReservationCommand,       
                                                          RelativeSource= {RelativeSource FindAncestor,
                                                          AncestorType={x:Type DataGrid}}}" Content="Cancel" Margin="10" />
-                                            </StackPanel>
+                                            </WrapPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -243,37 +243,41 @@
                         </DataGrid>
                     </Grid>
                 </GroupBox>
-                <GroupBox Header="Reservation requests" Margin="10,358,10,10">
+                <GroupBox Grid.Row="2" Grid.Column="0" Header="Reservation requests" Margin="10">
                     <Grid>
-                        <DataGrid x:Name="reservationRequestsData"
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="8*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid Grid.Row="0" Grid.Column="0" x:Name="reservationRequestsData"
                               ItemsSource="{Binding ReservationRequestsDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                               SelectedItem="{Binding SelectedReservationRequestDTO, UpdateSourceTrigger=PropertyChanged}"        
-                               Height="246" 
-                               VerticalAlignment="Top"
                                IsReadOnly="True"
                                SelectionMode="Single"
                                CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
-                               ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Margin="10,55,10,0">
+                               ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Margin="10 20 10 0">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Accommodation" Binding="{Binding AccommodationName}" CanUserResize="False"  Width="*"/>
-                                <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False" Width="*"/>
-                                <DataGridTextColumn Header="Request" Binding="{Binding Request}" CanUserResize="False" Width="*"/>
+                                <DataGridTextColumn Header="Accommodation" Binding="{Binding AccommodationName}" CanUserResize="False"  Width="2*"/>
+                                <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False" Width="2*"/>
+                                <DataGridTextColumn Header="Request" Binding="{Binding Request}" CanUserResize="False" Width="1*"/>
                                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" CanUserResize="False" Width="*"/>
                                 <DataGridTemplateColumn x:Name="dgbViewOwnersComment" Header="Owner's comment" Width="*">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button x:Name="bViewOwnersComment" Command="{Binding Path=DataContext.ViewCommentCommand,       
                                                          RelativeSource= {RelativeSource FindAncestor,
-                                                         AncestorType={x:Type DataGrid}}}" Content="View"/>
+                                                         AncestorType={x:Type DataGrid}}}" Content="View" Margin="20 10"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Button Content="Report" HorizontalAlignment="Left" Margin="718,24,0,0" VerticalAlignment="Top" Width="63" Height="26"/>
+                        <Button Grid.Row="1" Grid.Column="0" Content="Report" HorizontalAlignment="Right" VerticalAlignment="Center" Width="63" Height="26" Margin="10 0"/>
                     </Grid>
                 </GroupBox>
-
             </Grid>
         </TabItem>
         <TabItem Name="tabItemForums" Header="Forums">
