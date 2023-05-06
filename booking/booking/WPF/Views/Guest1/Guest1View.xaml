@@ -8,7 +8,7 @@
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="AccomodationOverview" Height="760" Width="846" WindowStartupLocation="CenterScreen">
+        Title="Guest" Height="760" Width="846" WindowStartupLocation="CenterScreen">
     <Grid>
         <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0">
             <Button Content="Tutorial" Height="20" Width="55" Margin="5 0"/>
@@ -87,7 +87,7 @@
                            IsReadOnly="True"
                            SelectionMode="Single"
                            CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
-                           ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Margin="10 0">
+                           ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Margin="10 0 10 10">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" CanUserResize="False"  Width="4*"/>
                         <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False" Width="3*"/>
@@ -109,29 +109,60 @@
         </TabItem>
         <TabItem Name="tabItemRate" Header="Rate">
             <Grid>
-                <Label Content="Rate your accommodations" HorizontalAlignment="Left" Margin="19,23,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
-                <Label Content="Stayed in" HorizontalAlignment="Left" Margin="19,81,0,0" VerticalAlignment="Top"/>
-                <ListBox Name="lbStayedIn"
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.5*"></RowDefinition>
+                    <RowDefinition Height="3*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="4*"></RowDefinition>
+                    <RowDefinition Height="3*"></RowDefinition>
+                    <RowDefinition Height="1.5*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.2*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                <Label Grid.Row="0" Grid.ColumnSpan="4"  Content="Rate your accommodations" FontSize="24" FontWeight="Bold" Margin="10 0"/>
+                
+                <Label Grid.Row="1" Grid.Column="0" Content="Stayed in" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
+                <ListBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Name="lbStayedIn"
                             ItemsSource="{Binding StayedInAccommodations}" 
                              SelectedItem="{Binding SelectedFromList, UpdateSourceTrigger=PropertyChanged}"
                              SelectionMode="Single"
-                             HorizontalAlignment="Left" Height="102" Margin="82,82,0,0" VerticalAlignment="Top" Width="734"/>
-                <Label Content="Clean" HorizontalAlignment="Left" Margin="19,199,0,0" VerticalAlignment="Top"/>
+                             Margin="0 5 10 10 "/>
 
-                <Label Content="Owner" HorizontalAlignment="Left" Margin="19,230,0,0" VerticalAlignment="Top"/>
-                <Label Content="Comment" HorizontalAlignment="Left" Margin="331,199,0,0" VerticalAlignment="Top"/>
-                <GroupBox HorizontalAlignment="Left" Height="194" Header="Images" Margin="19,306,0,0" VerticalAlignment="Top" Width="797">
+                <Label Grid.Row="2" Grid.Column="0" Content="Clean" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0"/>
+                <syncfusion:SfRating Grid.Row="2" Grid.Column="1" Name="stClean" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Center" Width="150" MouseUp="CleanStarsClick"/>
+
+                <Label Grid.Row="3" Grid.Column="0" Content="Owner" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0"/>
+                <syncfusion:SfRating Grid.Row="3" Grid.Column="1" Name="stOwner" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Center" Width="150" MouseUp="OwnersKindnessStarsClick"/>
+
+                <Label Grid.Row="2" Grid.Column="2" Content="Comment" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="3" Name="txtbComment" Text="{Binding RatingComment, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Margin="10 10 10 0"/>
+                
+                <GroupBox Grid.Row="4" Grid.ColumnSpan="4" Header="Images" Margin="10">
                     <Grid>
-                        <Label Content="Image url" HorizontalAlignment="Left" Margin="0,10,0,82"/>
-                        <TextBox Name="tbImageUrl" Text="{Binding ImageUrl, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="25" Margin="81,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="591" TextChanged="tbImageUrl_TextChanged"/>
-                        <Label Content="Added" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,45,0,0"/>
-                        <Button Name="bAddImage" Command="{Binding AddImageCommand}"  Content="Add" HorizontalAlignment="Left" Height="23" Margin="699,16,0,0" VerticalAlignment="Top" Width="63"/>
-                        <Button Content="Remove" Command="{Binding RemoveImageCommand}" HorizontalAlignment="Left" Height="23" Margin="699,51,0,0" VerticalAlignment="Top" Width="63"/>
-                        <ListView Name="lvAddedImages" 
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*"></RowDefinition>
+                            <RowDefinition Height="5*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>       
+                            <ColumnDefinition Width="8*"></ColumnDefinition>       
+                            <ColumnDefinition Width="1*"></ColumnDefinition>       
+                        </Grid.ColumnDefinitions>
+                        
+                        <Label Grid.Row="0" Grid.Column="0" Content="Image url" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Name="tbImageUrl" Text="{Binding ImageUrl, UpdateSourceTrigger=PropertyChanged}" Height="25" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="tbImageUrl_TextChanged" Margin="0 0 10 0"/>
+                        
+                        <Label Grid.Row="1" Grid.Column="0" Content="Added" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
+                        <ListView Grid.Row="1" Grid.Column="1" Name="lvAddedImages" 
                                      ItemsSource="{Binding AddedImages, UpdateSourceTrigger=PropertyChanged}" 
                                      SelectedItem="{Binding SelectedAddedImages, UpdateSourceTrigger=PropertyChanged}"
-                                      SelectionMode="Single"
-                                     HorizontalAlignment="Left" Height="120" Margin="81,51,0,0" VerticalAlignment="Top" Width="591">
+                                      SelectionMode="Single" Margin="0 0 10 10">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -139,25 +170,44 @@
                                 </Style>
                             </ListView.ItemContainerStyle>
                         </ListView>
+                        
+                        <Button Grid.Row="0" Grid.Column="2" Name="bAddImage" Command="{Binding AddImageCommand}"  Content="Add" HorizontalAlignment="Center" Height="23" VerticalAlignment="Center" Width="63" Margin="0 0 10 0"/>
+                            <Button Grid.Row="1" Grid.Column="2" Content="Remove" Command="{Binding RemoveImageCommand}" HorizontalAlignment="Center" Height="23" VerticalAlignment="Top" Width="63" Margin="0 0 10 0"/>     
                     </Grid>
                 </GroupBox>
-                <GroupBox HorizontalAlignment="Center" Height="129" Header="Renovation suggestion (optional)" Margin="0,514,0,0" VerticalAlignment="Top" Width="796">
+                
+                <GroupBox Grid.Row="5" Grid.ColumnSpan="4" Header="Renovation suggestion (optional)" Margin="10 0">
                     <Grid>
-                        <Label Content="Description" HorizontalAlignment="Left" Margin="0,0,0,80"/>
-                        <TextBox Name="txtbRenovationDescription" Text="{Binding RenovationDescription, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" HorizontalAlignment="Left" Height="52"  TextWrapping="Wrap" VerticalAlignment="Top" Width="673" Margin="89,10,0,0"/>
-                        <Label Content="How urgent" HorizontalAlignment="Left" Margin="5,72,0,0" VerticalAlignment="Top"/>
-                        <ComboBox HorizontalAlignment="Left" Height="24" Margin="89,72,0,0" VerticalAlignment="Top" Width="673"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="6*"></RowDefinition>   
+                            <RowDefinition Height="4*"></RowDefinition>   
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="9*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Label Grid.Row="0" Grid.Column="0" Content="Description" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Name="txtbRenovationDescription" Text="{Binding RenovationDescription, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Margin="0 10 10 0"/>
+                        
+                        <Label Grid.Row="1" Grid.Column="0" Content="How urgent" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="1" Grid.Column="1" Height="24" Margin="0 0 10 0"/>
                     </Grid>
                 </GroupBox>
-                <Button Name="bSubmitRate" Command="{Binding SubmitRateCommand}" Content="Submit rate" HorizontalAlignment="Left" Height="30" Margin="737,648,0,0" VerticalAlignment="Top" Width="79" IsEnabled="False"/>
-                <syncfusion:SfRating Name="stClean" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Top" Width="150" Margin="82,197,0,0" MouseUp="CleanStarsClick"/>
-                <syncfusion:SfRating Name="stOwner" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Top" Width="150" Margin="82,228,0,0" MouseUp="OwnersKindnessStarsClick"/>
-                <TextBox Name="txtbComment" Text="{Binding RatingComment, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" HorizontalAlignment="Left" Height="98" Margin="411,203,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="405"/>
-
+                <Button Grid.Row="6" Grid.Column="3" Name="bSubmitRate" Command="{Binding SubmitRateCommand}" Content="Submit rate" HorizontalAlignment="Right" Height="30" VerticalAlignment="Center" Width="79" Margin="10 0" IsEnabled="False"/>
             </Grid>
         </TabItem>
-        <TabItem Name="tabItemReservations" Header="Reservations" Margin="-2,0,-2,0" Height="22" VerticalAlignment="Top">
+        <TabItem Name="tabItemReservations" Header="Reservations" Height="22" VerticalAlignment="Top">
             <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="4*"></RowDefinition>
+                    <RowDefinition Height="4*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
                 <GroupBox Header="All reservations" Margin="10,54,10,376">
                     <Grid>
                         <DataGrid x:Name="reservationsData"

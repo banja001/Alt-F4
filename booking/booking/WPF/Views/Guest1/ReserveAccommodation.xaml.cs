@@ -37,8 +37,11 @@ namespace booking.View.Guest1
         public ReservedDates NewDate { get; set; }
 
         public int NumOfDays { get; set; }
-        
+
+        public int GuestsNumber { get; set; }
+
         private readonly ReservedDatesRepository _repository;
+        private readonly AccommodationRepository _accommodationRepository;
 
         private int userId;
 
@@ -50,6 +53,7 @@ namespace booking.View.Guest1
             DataContext = this;
 
             _repository = new ReservedDatesRepository();
+            _accommodationRepository = new AccommodationRepository();
 
             NewDate = new ReservedDates(DateTime.Now, DateTime.Now, Guest1View.SelectedAccommodation.Id);
             selectedAccommodation = Guest1View.SelectedAccommodation;
@@ -75,9 +79,27 @@ namespace booking.View.Guest1
                 return;
             }
 
-            NumberOfGuests numOfGuestsWindow = new NumberOfGuests(userId);
-            numOfGuestsWindow.Owner = this;
-            numOfGuestsWindow.ShowDialog();
+            int maxCapacity = _accommodationRepository.FindById(SelectedDates.AccommodationId).MaxCapacity;
+
+            if (GuestsNumber > maxCapacity)
+            {
+                MessageBox.Show("Max guest capacity for this accommodation is " + maxCapacity);
+                return;
+            }
+
+            SetSelectedDatesParameters();
+            _repository.Add(SelectedDates);
+
+            MessageBox.Show("Your reservation has been successfully made!");
+
+            this.Close();
+        }
+
+        private void SetSelectedDatesParameters()
+        {
+            SelectedDates.Id = _repository.MakeId();
+            SelectedDates.NumOfGuests = GuestsNumber;
+            SelectedDates.UserId = userId;
         }
 
         private void SearchFreeDates(object sender, RoutedEventArgs e)
@@ -195,23 +217,14 @@ namespace booking.View.Guest1
             accommodationData.ItemsSource = FreeDates;
         }
 
-        private void NumOfDaysTextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                Int32.Parse(NumOfDaysTextBox.Text);
-                SearchFreeDatesButton.IsEnabled = true;
-            }
-            catch
-            {
-                MessageBox.Show("You have to enter numbers for number of days!", "Warning");
-                SearchFreeDatesButton.IsEnabled = false;
-            }
-        }
-
         private void SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             SearchFreeDatesButton.IsEnabled = NewDate.IsValid;
+        }
+
+        private void CloseWindow(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
