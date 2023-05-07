@@ -184,7 +184,7 @@ namespace WPF.ViewModels.Owner
             }
             else
             {
-                RateGuestWindow win = new RateGuestWindow(this,mainWindow);
+                RateGuestWindow win = new RateGuestWindow(this,mainWindow,SelectedItem);
                 mainWindow.Main.Content = win;
 
             }

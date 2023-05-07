@@ -70,8 +70,9 @@
                 </Button.Content>
             </Button>
         </Grid>
-        <Frame x:Name="Main"  NavigationUIVisibility="Hidden"  Margin="0,61,0,0" />
-
+        
+            <Frame x:Name="Main"  NavigationUIVisibility="Hidden"  Margin="0,61,0,0" JournalOwnership="OwnsJournal" />
+        
 
 
     </Grid>

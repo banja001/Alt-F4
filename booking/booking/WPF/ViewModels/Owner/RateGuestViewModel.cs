@@ -1,4 +1,5 @@
 ﻿using booking.Commands;
+using booking.DTO;
 using booking.Model;
 using booking.View;
 using booking.WPF.ViewModels;
@@ -16,6 +17,7 @@ namespace WPF.ViewModels.Owner
 {
     public class RateGuestViewModel:BaseViewModel
     {
+        public Guest1RatingDTO SelectedItem { get; set; }
         public bool[] SelectedCleanRadiobutton { get; set; }
         public bool[] SelectedRulesRadiobutton { get; set; }
 
@@ -25,18 +27,26 @@ namespace WPF.ViewModels.Owner
         public MainWindow mainWindow { get; set; }
         public ICommand AddRatingCommand => new RelayCommand(AddRating_Click);
 
-        public RateGuestViewModel(OwnerViewModel ownerWindow,MainWindow main)
+        public RateGuestViewModel(OwnerViewModel ownerWindow,MainWindow main,Guest1RatingDTO s)
         {
             this.SelectedCleanRadiobutton = new bool[] { false, false, false, false, false };
             this.SelectedRulesRadiobutton = new bool[] { false, false, false, false, false };
             this.ownerWindow = ownerWindow;
             mainWindow = main;
+            SelectedItem = s;
         }
 
 
         
         private void AddRating_Click()
         {
+
+
+            if (SelectedItem == null)
+            {
+                MessageBox.Show("Guest for this reservation is already rated", "Error");
+                return;
+            }
             string comment = Comment;
             int cleanliness = GetCleanliness();
             int rules = GetRulesRating();
@@ -49,11 +59,13 @@ namespace WPF.ViewModels.Owner
             }
             ModifyForGuestRating(comment, cleanliness, rules, id, guestid);
             mainWindow.Main.Navigate(mainWindow.OwnerWindow);
-            
-            
-            
+            SelectedItem = null;    
+                
+ 
 
-          
+
+
+
         }
 
         

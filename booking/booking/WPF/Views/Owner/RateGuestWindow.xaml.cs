@@ -28,10 +28,10 @@ namespace booking.View.Owner
     public partial class RateGuestWindow : Page
     {
         
-        public RateGuestWindow(OwnerViewModel win,MainWindow main)
+        public RateGuestWindow(OwnerViewModel win,MainWindow main, Guest1RatingDTO s)
         {
             InitializeComponent();
-            this.DataContext = new RateGuestViewModel(win,main);
+            this.DataContext = new RateGuestViewModel(win,main,s);
             NameLabel.Content += win.SelectedItem.GuestName;
             AccommodationLabel.Content += win.SelectedItem.AccommodationName;
             DateLabel.Content += win.SelectedItem.StartDate + "-" + win.SelectedItem.EndDate;
