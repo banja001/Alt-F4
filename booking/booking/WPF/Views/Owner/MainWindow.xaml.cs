@@ -29,14 +29,16 @@ namespace WPF.Views.Owner
         public int OwnerId;
         public OwnerWindow OwnerWindow;
         public OwnerViewModel OwnerModel;
+        public static MainWindow w;
 
         public MainWindow(int id)
-        {
+        { 
             InitializeComponent();
             OwnerId = id;
             OwnerWindow = new OwnerWindow(id,this);
             OwnerModel=OwnerWindow.OwnerModel;
             Main.Content = OwnerWindow;
+            w = this;
         }
 
         private void OwnerDropdownClick(object sender, RoutedEventArgs e)

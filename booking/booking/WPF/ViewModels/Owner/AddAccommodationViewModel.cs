@@ -20,6 +20,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using booking.Commands;
 using booking.WPF.ViewModels;
+using WPF.Views.Owner;
 
 namespace WPF.ViewModels.Owner
 {
@@ -111,6 +112,8 @@ namespace WPF.ViewModels.Owner
         public ICommand NextPictureCommand => new RelayCommand(NextPictureClick);
         public ICommand PrevPictureCommand => new RelayCommand(PrevImageButtonClick);
         public ICommand ConfirmCommand => new RelayCommand(Confirm);
+
+        public ICommand CancelCommand => new RelayCommand(Cancel);
         public ICommand AddImageCommand => new RelayCommand(AddImageClick);
         //public ICommand ComboboxSelectionChangedCommand => new RelayCommand(StateComboBox_SelectionChanged);
         public ICommand RemoveImageCommand => new RelayCommand(RemoveImageClick);
@@ -166,6 +169,10 @@ namespace WPF.ViewModels.Owner
 
             return true;
         }*/
+        private void Cancel()
+        {
+            MainWindow.w.Main.Navigate(MainWindow.w.OwnerWindow);
+        }
 
         private void Confirm()
         {
@@ -178,7 +185,7 @@ namespace WPF.ViewModels.Owner
             Accommodation a = AddAccommodation();
             ownerViewModel.accommodationService.Add(a);
             ownerViewModel.accommodationImageService.AddImages(a, accommodationImagesUrl, ownerViewModel.accommodationImages);
-            this.CloseCurrentWindow();
+            MainWindow.w.Main.Navigate(MainWindow.w.OwnerWindow);
         }
 
         private Accommodation AddAccommodation()
