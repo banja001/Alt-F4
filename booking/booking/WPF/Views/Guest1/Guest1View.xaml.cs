@@ -39,7 +39,7 @@ namespace booking.View
         public Image SelectedAddedImages { get; set; }
         public SignInForm signInWindow { get; set; }
 
-        private List<Guest1Notifications> guest1Notifications;
+        
 
         private ReservationsViewModel _reservationViewModel;
         private RateAccommodationAndOwnerViewModel _rateAccommodationAndOwner;
@@ -60,8 +60,6 @@ namespace booking.View
             tabItemForums.DataContext = this;
 
             signInWindow = sign;
-
-            /*guest1Notifications = _guest1NotificationsRepository.GetAllByGuest1Id(id);*/
             
             InitializeCheckBoxes();
 
