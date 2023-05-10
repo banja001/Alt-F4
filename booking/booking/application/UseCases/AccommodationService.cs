@@ -15,14 +15,12 @@ namespace application.UseCases
     public class AccommodationService
     {
         private IAccommodationRepository accommodationRepository;
-        private ILocationRepository locationRepository;
-        
+        private readonly LocationService _locationService;
 
         public AccommodationService()
         {
             accommodationRepository = Injector.CreateInstance<IAccommodationRepository>();
-            locationRepository = Injector.CreateInstance<ILocationRepository>();
-
+            _locationService = new LocationService();
         }
         public List<Accommodation> GetAll()
         {
@@ -44,7 +42,7 @@ namespace application.UseCases
         public ObservableCollection<AccommodationLocationDTO> CreateAccomodationDTOs()
         {
             List<Accommodation> accommodations = accommodationRepository.GetAll();
-            List<Location> locations = locationRepository.GetAll();
+            List<Location> locations = _locationService.GetAll();
             ObservableCollection<AccommodationLocationDTO> accommodationLocations = new ObservableCollection<AccommodationLocationDTO>();
             AccommodationLocationDTO accommodationLocation;
 

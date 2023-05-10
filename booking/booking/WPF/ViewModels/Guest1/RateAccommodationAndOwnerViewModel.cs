@@ -122,9 +122,9 @@ namespace WPF.ViewModels.Guest1
         {
             guest1ViewWindow.signInWindow.RefreshUsers();
 
-            Guest1View.AccommodationDTOs = guest1ViewWindow.CreateAccomodationDTOs(_accommodationService.GetAll());
+            /*Guest1View.AccommodationDTOs = guest1ViewWindow.CreateAccomodationDTOs(_accommodationService.GetAll());
             Guest1View.AccommodationDTOs = guest1ViewWindow.SortAccommodationDTOs();
-            guest1ViewWindow.accommodationData.ItemsSource = Guest1View.AccommodationDTOs;
+            guest1ViewWindow.accommodationData.ItemsSource = Guest1View.AccommodationDTOs;*/
         }
 
         private void ResetLists()
@@ -134,7 +134,7 @@ namespace WPF.ViewModels.Guest1
 
             guest1ViewWindow.lvAddedImages.ItemsSource = AddedImages;
             guest1ViewWindow.lbStayedIn.ItemsSource = StayedInAccommodations;
-            guest1ViewWindow.ResetFormInputs();
+            //guest1ViewWindow.ResetFormInputs();
         }
 
         private void AddImage()

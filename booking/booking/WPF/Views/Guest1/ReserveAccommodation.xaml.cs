@@ -55,8 +55,8 @@ namespace booking.View.Guest1
             _repository = new ReservedDatesRepository();
             _accommodationRepository = new AccommodationRepository();
 
-            NewDate = new ReservedDates(DateTime.Now, DateTime.Now, Guest1View.SelectedAccommodation.Id);
-            selectedAccommodation = Guest1View.SelectedAccommodation;
+            /*NewDate = new ReservedDates(DateTime.Now, DateTime.Now, Guest1View.SelectedAccommodation.Id);
+            selectedAccommodation = Guest1View.SelectedAccommodation;*/
 
             ReservedDates = _repository.GetAllByAccommodationId(selectedAccommodation.Id);
 

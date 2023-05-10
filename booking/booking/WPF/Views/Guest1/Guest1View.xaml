@@ -7,14 +7,17 @@
         xmlns:cvt="clr-namespace:booking.Converter"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:val="clr-namespace:booking.Validation"
         mc:Ignorable="d"
         Title="Guest" Height="760" Width="846" WindowStartupLocation="CenterScreen">
     <Grid>
         <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0">
             <Button Content="Tutorial" Height="20" Width="55" Margin="5 0"/>
-            <Label Name="lbUserName" Content="UserName"/>
+            <Label Name="lbUserName" Content="{Binding UserName}"/>
             <Label Content="|   Score:"/>
-            <Label Name="lbScore" Content="0"/>
+            <Label Name="lbScore" Content="{Binding Score}"/>
         </WrapPanel>
     <TabControl Name="tabControl">
         <TabItem Name="tabItemOverview" Header="Overview" Height="22" VerticalAlignment="Top">
@@ -42,6 +45,7 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
+                            <RowDefinition Height="0.5*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -53,33 +57,91 @@
                             <ColumnDefinition Width="2*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <WrapPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Bottom">
-                            <CheckBox x:Name="CheckBoxApartment" Content="Apartment" HorizontalAlignment="Left" Unchecked="CheckBoxUnchecked" Checked="CheckBoxChecked" Margin="10 0"/>
-                            <CheckBox x:Name="CheckBoxHouse" Content="House" HorizontalAlignment="Center" Unchecked="CheckBoxUnchecked" Checked="CheckBoxChecked" Margin="10 0"/>
-                            <CheckBox x:Name="CheckBoxCabin" Content="Cabin" HorizontalAlignment="Right" Unchecked="CheckBoxUnchecked" Checked="CheckBoxChecked" Margin="10 0"/>
+                            <CheckBox x:Name="CheckBoxApartment" Content="Apartment" HorizontalAlignment="Left" Margin="10 0" IsChecked="{Binding ApartmentChecked}"/>
+                            <CheckBox x:Name="CheckBoxHouse" Content="House" HorizontalAlignment="Center" Margin="10 0" IsChecked="{Binding HouseChecked}"/>
+                            <CheckBox x:Name="CheckBoxCabin" Content="Cabin" HorizontalAlignment="Right" Margin="10 0" IsChecked="{Binding CabinChecked}"/>
                         </WrapPanel>
                         
                         <Label Grid.Row="1" Grid.Column="0" Content="Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0"/>
                         <TextBox Grid.Row="1" Grid.Column="1"  x:Name="tSearchBarName" Height="20" Text="{Binding SearchedAccommodation.Name, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Row="1" Grid.Column="2" Content="State" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                        <ComboBox Grid.Row="1" Grid.Column="3" x:Name="StateComboBox" Height="20" ItemsSource="{Binding States, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedState}" SelectionChanged="StateSelectionChanged"/>
+                        <ComboBox Grid.Row="1" Grid.Column="3" x:Name="StateComboBox" Height="20" 
+                                  ItemsSource="{Binding States, UpdateSourceTrigger=PropertyChanged}" 
+                                  SelectedItem="{Binding SelectedState}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding StateSelectionChangedCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                        </ComboBox>
 
                         <Label Grid.Row="1" Grid.Column="4" Content="City" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                        <ComboBox Grid.Row="1" Grid.Column="5" x:Name="CityComboBox"  Height="20" SelectedItem="{Binding SelectedCity}" IsEnabled="False" />
+                        <ComboBox Grid.Row="1" Grid.Column="5" x:Name="CityComboBox"  Height="20" 
+                                  ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}"
+                                  SelectedItem="{Binding SelectedCity}" IsEnabled="{Binding CitiesComboBoxEnabled, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Row="2" Content="Guests" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0"/>
-                        <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" x:Name="tSearchBarNumberOfGuests" Height="20" Text="{Binding SearchedAccommodation.NumOfGuests, UpdateSourceTrigger=PropertyChanged}"/>
+                        <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" x:Name="tSearchBarNumberOfGuests" Height="20">
+                            <xctk:IntegerUpDown.Text>
+                                <Binding Path="SearchedAccommodation.NumOfGuests" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <val:StringToIntValidationRule ValidationStep="RawProposedValue"/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </xctk:IntegerUpDown.Text>
+                            <Validation.ErrorTemplate>
+                                <ControlTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <AdornedElementPlaceholder Grid.Row="0" Grid.Column="0"/>
+                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>    
+                                    </Grid>
+                                </ControlTemplate>
+                            </Validation.ErrorTemplate>
+                        </xctk:IntegerUpDown>
 
                         <Label Grid.Row="2" Grid.Column="2" Height="30" Content="Days" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                        <xctk:IntegerUpDown Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" x:Name="tSearchBarNumberOfDays" Height="20" Text="{Binding SearchedAccommodation.NumOfDays, UpdateSourceTrigger=PropertyChanged}"/>
+                        <xctk:IntegerUpDown Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" x:Name="tSearchBarNumberOfDays" Height="20">
+                                <xctk:IntegerUpDown.Text>
+                                    <Binding Path="SearchedAccommodation.NumOfDays" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <val:StringToIntValidationRule ValidationStep="RawProposedValue"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </xctk:IntegerUpDown.Text>
+                                <Validation.ErrorTemplate>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
 
-                        <Button Grid.Row="1" Grid.Column="6" x:Name="SeeAllButton" Height="20" Width="67" Content="See all" HorizontalAlignment="Right" Click="SeeAll"/>
-                        <Button Grid.Row="2" Grid.Column="6" x:Name="SearchAccommodationButton" Height="20" Width="67" Content="Search" HorizontalAlignment="Right" Click="SearchAccommodations"/>
+                                            <AdornedElementPlaceholder Grid.Row="0" Grid.Column="0"/>
+                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Validation.ErrorTemplate>
+                            </xctk:IntegerUpDown>
+
+                        <Button Grid.Row="1" Grid.Column="6" x:Name="SeeAllButton" Command="{Binding SeeAllCommand}" Height="20" Width="67" Content="See all" HorizontalAlignment="Right"/>
+                        <Button Grid.Row="2" Grid.Column="6" x:Name="SearchAccommodationButton" Command="{Binding SearchAccommodationsCommand}" Height="20" Width="67" Content="Search" HorizontalAlignment="Right"/>
                         
                     </Grid>
                 </GroupBox>
 
-                <Button Grid.Row="3" Grid.Column="1" x:Name="ReserveAccommodationButton" Width="67" Content="Reserve" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="ReserveAccommodations" Margin="10 10"/>
+                <Button Grid.Row="3" Grid.Column="1" x:Name="ReserveAccommodationButton" Command="{Binding ReserveAccommodationCommand}" Width="67" Content="Reserve" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10 10"/>
                 <Label Grid.Row="3" Grid.Column="0" Content="Accommodations" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10 0"/>
                 <DataGrid Grid.Row="4" Grid.ColumnSpan="2" x:Name="accommodationData"
                           ItemsSource="{Binding AccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
@@ -98,7 +160,9 @@
                         <DataGridTemplateColumn Header="Images" Width="1.5*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button x:Name="ImagesButton" Click="OpenImages" Content="View" />
+                                        <Button x:Name="ImagesButton" Command="{Binding DataContext.OpenImagesCommand,
+                                            RelativeSource= {RelativeSource FindAncestor,
+                                            AncestorType={x:Type DataGrid}}}" Content="View"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -172,7 +236,7 @@
                         </ListView>
                         
                         <Button Grid.Row="0" Grid.Column="2" Name="bAddImage" Command="{Binding AddImageCommand}"  Content="Add" HorizontalAlignment="Center" Height="23" VerticalAlignment="Center" Width="63" Margin="0 0 10 0"/>
-                            <Button Grid.Row="1" Grid.Column="2" Content="Remove" Command="{Binding RemoveImageCommand}" HorizontalAlignment="Center" Height="23" VerticalAlignment="Top" Width="63" Margin="0 0 10 0"/>     
+                        <Button Grid.Row="1" Grid.Column="2" Content="Remove" Command="{Binding RemoveImageCommand}" HorizontalAlignment="Center" Height="23" VerticalAlignment="Top" Width="63" Margin="0 0 10 0"/>     
                     </Grid>
                 </GroupBox>
                 
@@ -191,7 +255,13 @@
                         <TextBox Grid.Row="0" Grid.Column="1" Name="txtbRenovationDescription" Text="{Binding RenovationDescription, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Margin="0 10 10 0"/>
                         
                         <Label Grid.Row="1" Grid.Column="0" Content="How urgent" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <ComboBox Grid.Row="1" Grid.Column="1" Height="24" Margin="0 0 10 0"/>
+                        <ComboBox Grid.Row="1" Grid.Column="1" Height="24" Margin="0 0 10 0">
+                                <ComboBoxItem Content="Level 1 - It would be nice to renovate some small things, but everything works perefctly without that"/>
+                                <ComboBoxItem Content="Level 2 - Accommodation needs small adjustments which would make it perfect"/>
+                                <ComboBoxItem Content="Level 3 - There are few things that should really be taken care of"/>
+                                <ComboBoxItem Content="Level 4 - There are a lot of things that should be fixed"/>
+                                <ComboBoxItem Content="Level 5 - The accommodation is in a really bad state and unless you renovate it, it's not worth staying in"/>
+                        </ComboBox>
                     </Grid>
                 </GroupBox>
                 <Button Grid.Row="6" Grid.Column="3" Name="bSubmitRate" Command="{Binding SubmitRateCommand}" Content="Submit rate" HorizontalAlignment="Right" Height="30" VerticalAlignment="Center" Width="79" Margin="10 0" IsEnabled="False"/>
