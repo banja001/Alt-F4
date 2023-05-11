@@ -36,8 +36,8 @@ namespace booking.View
         {
             InitializeComponent();
             DataContext = new AddAccommodationViewModel(win);
-           
             ownerWindow = win;
+
             Loaded += Window_Loaded;
         }
 

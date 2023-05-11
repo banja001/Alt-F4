@@ -10,16 +10,70 @@ using booking.Model;
 using booking.View.Owner;
 using booking.Commands;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace WPF.ViewModels.Owner
 {
     public class RatingViewViewModel:BaseViewModel
     {
+        private bool nextButtonEnabled;
+
+        public bool NextButtonEnabled
+        {
+            get
+            {
+                return nextButtonEnabled;
+            }
+            set
+            {
+                if (value != nextButtonEnabled)
+                {
+                    nextButtonEnabled = value;
+                    OnPropertyChanged("NextButtonEnabled");
+                }
+            }
+        }
+
+        private bool prevButtonEnabled;
+
+        public bool PrevButtonEnabled
+        {
+            get
+            {
+                return prevButtonEnabled;
+            }
+            set
+            {
+                if (value != prevButtonEnabled)
+                {
+                    prevButtonEnabled = value;
+                    OnPropertyChanged("PrevButtonEnabled");
+                }
+            }
+        }
+
+        private BitmapImage imageSource;
+
+        public BitmapImage ImageSource
+        {
+            get
+            {
+                return imageSource;
+            }
+            set
+            {
+                if (value != imageSource)
+                {
+                    imageSource = value;
+                    OnPropertyChanged("ImageSource");
+                }
+            }
+        }
 
         private int ActiveImageIndx;
         public string Comment { get; set; }
         private OwnerViewModel win;
-        public RatingViewWindow viewWindow;
+        //public RatingViewWindow viewWindow;
         public ObservableCollection<OwnerRatingDTO> OwnerRatings { get; set; }
         private OwnerRatingDTO selectedItem;
         public OwnerRatingDTO SelectedItem
@@ -40,12 +94,12 @@ namespace WPF.ViewModels.Owner
         public ICommand NextCommand => new RelayCommand(NextPictureClick);
         public ICommand PrevCommand => new RelayCommand(PrevImageButtonClick);
 
-        public RatingViewViewModel(OwnerViewModel win,RatingViewWindow viewWindow)
+        public RatingViewViewModel(OwnerViewModel win)
         {
             this.win = win;
-            viewWindow.NextImageButton.IsEnabled = false;
-            viewWindow.PrevImageButton.IsEnabled = false;
-            this.viewWindow = viewWindow;
+            NextButtonEnabled = false;
+            PrevButtonEnabled = false;
+            //this.viewWindow = viewWindow;
 
             OwnerRatings = new ObservableCollection<OwnerRatingDTO>();
             AddRatingsToView();
@@ -78,15 +132,15 @@ namespace WPF.ViewModels.Owner
             bitmapImage.BeginInit();
             bitmapImage.UriSource = new Uri(@url, UriKind.Absolute);
             bitmapImage.EndInit();
-            viewWindow.OwnerImage.Source = bitmapImage;
+            ImageSource = bitmapImage;
         }
         public void ShowImage()
         {
             CheckIndexScope();
             if (win.OwnerRatingImages.Count == 0)
             {
-                viewWindow.OwnerImage.Source=null;
-                viewWindow.NoImagesLabel.Content = "No images for display";
+                ImageSource = null;
+                //viewWindow.NoImagesLabel.Content = "No images for display";
                 return;
             }
 
@@ -110,20 +164,20 @@ namespace WPF.ViewModels.Owner
         {
             if (ActiveImageIndx + 1 >= win.OwnerRatingImages.Count)
             {
-                viewWindow.NextImageButton.IsEnabled = false;
+                NextButtonEnabled = false;
             }
             else
             {
-                viewWindow.NextImageButton.IsEnabled = true;
+                NextButtonEnabled = true;
             }
 
             if (ActiveImageIndx <= 0)
             {
-                viewWindow.PrevImageButton.IsEnabled = false;
+                PrevButtonEnabled = false;
             }
             else
             {
-                viewWindow.PrevImageButton.IsEnabled = true;
+                PrevButtonEnabled = true;
             }
         }
     }

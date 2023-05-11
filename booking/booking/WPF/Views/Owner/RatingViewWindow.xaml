@@ -66,6 +66,7 @@
             <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
                 <Setter Property="Background" Value="DarkRed"/>
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Height" Value="20"/>
             </Style>
             
             <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
@@ -117,9 +118,9 @@
         <Line X2="1" Grid.ColumnSpan="2" Grid.Row="5"/>
         <Label Content="Images:" FontSize="17" Foreground="#E69138" FontWeight="Bold" Grid.Row="6" VerticalAlignment="Bottom"/>
         <Grid Grid.Row="7" Grid.ColumnSpan="2" >
-            <Button Template="{DynamicResource ButtonTemplate1}" x:Name="NextImageButton" Command="{Binding NextCommand}" Content="&gt;&gt;" Height="120" Width="20" HorizontalAlignment="Left" Margin="334,40,0,39" />
-            <Button Template="{DynamicResource ButtonTemplate1}" x:Name="PrevImageButton" Command="{Binding PrevCommand}" Content="&lt;&lt;" Height="120" Width="20" HorizontalAlignment="Left" Margin="60,40,0,39" />
-            <Image HorizontalAlignment="Left" Stretch="Fill" Name="OwnerImage" Height="161" VerticalAlignment="Top" Width="211" Margin="101,16,0,0"/>
+            <Button IsEnabled="{Binding NextButtonEnabled}" Template="{DynamicResource ButtonTemplate1}" x:Name="NextImageButton" Command="{Binding NextCommand}" Content="&gt;&gt;" Height="120" Width="20" HorizontalAlignment="Left" Margin="334,40,0,39" />
+            <Button IsEnabled="{Binding PrevButtonEnabled}" Template="{DynamicResource ButtonTemplate1}" x:Name="PrevImageButton" Command="{Binding PrevCommand}" Content="&lt;&lt;" Height="120" Width="20" HorizontalAlignment="Left" Margin="60,40,0,39" />
+            <Image HorizontalAlignment="Left" Stretch="Fill" Source="{Binding ImageSource}" Height="161" VerticalAlignment="Top" Width="211" Margin="101,16,0,0"/>
         </Grid>
     </Grid>
 </Page>

@@ -31,7 +31,7 @@ namespace booking.View.Owner
         public RatingViewWindow(OwnerViewModel win)
         {
             InitializeComponent();
-            DataContext = new RatingViewViewModel(win,this);
+            DataContext = new RatingViewViewModel(win);
             
             
         }
