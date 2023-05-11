@@ -2,8 +2,10 @@
 using booking.application.usecases;
 using booking.Commands;
 using booking.Domain.DTO;
+using booking.DTO;
 using booking.Model;
 using booking.View;
+using Microsoft.Expression.Interactivity.Media;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,6 +24,10 @@ namespace WPF.ViewModels.Guest1
         public static ObservableCollection<ReservationAccommodationDTO> StayedInAccommodations { get; set; }
         public static ObservableCollection<Image> AddedImages { get; set; }
         public static ReservationAccommodationDTO SelectedStayedInAccommodation { get; set; }
+
+        public Image SelectedAddedImages { get; set; }
+
+        public static bool AddImageEnabled { get; set; }
 
         private static object selectedFromList;
         public object SelectedFromList 
@@ -47,6 +53,7 @@ namespace WPF.ViewModels.Guest1
         private readonly ReservedDatesService _reservedDatesService;
         private readonly ReservationService _reservationService;
         private readonly AccommodationService _accommodationService;
+        private readonly UserService _userService;
 
         public ICommand SubmitRateCommand => new RelayCommand(SubmitRate);
         public ICommand AddImageCommand => new RelayCommand(AddImage);
@@ -62,9 +69,11 @@ namespace WPF.ViewModels.Guest1
             _reservedDatesService = new ReservedDatesService();
             _reservationService = new ReservationService();
             _accommodationService = new AccommodationService();
+            _userService = new UserService();
 
             guest1ViewWindow = guest1View;
             userId = id;
+            AddImageEnabled = true;
 
             StayedInAccommodations = new ObservableCollection<ReservationAccommodationDTO>(CreateStayedInAccommodations());
             AddedImages = new ObservableCollection<Image>();
@@ -120,8 +129,36 @@ namespace WPF.ViewModels.Guest1
 
         private void InitializeAccommodationDTO()
         {
-            guest1ViewWindow.signInWindow.RefreshUsers();
+            //guest1ViewWindow.signInWindow.RefreshUsers();
 
+            List<OwnerRating> ownerRatings = _ownerRatingService.GetAll();
+            List<User> users = _userService.GetAll().ToList();
+            double sum, i;
+            double AverageRating = 0;
+            foreach (User user in users)
+            {
+                sum = 0;
+                i = 0;
+                if (user.Role != "Owner") continue;
+                foreach (var rating in ownerRatings)
+                {
+                    if (rating.OwnerId != user.Id) continue;
+                    sum += rating.CleanRating + rating.KindRating;
+                    i += 1;
+                }
+                AverageRating = i == 0 ? 0 : sum / (i * 2);
+                _userService.UpdateById(user.Id, AverageRating >= 4.5 && i >= 3);
+            }
+
+            while(Guest1ViewViewModel.AccommodationDTOs.Count > 0)
+            {
+                Guest1ViewViewModel.AccommodationDTOs.RemoveAt(0);
+            }
+
+            foreach(var item in _accommodationService.SortAccommodationDTOs(_accommodationService.CreateAccomodationDTOs()))
+            {
+                Guest1ViewViewModel.AccommodationDTOs.Add(item);
+            }
             /*Guest1View.AccommodationDTOs = guest1ViewWindow.CreateAccomodationDTOs(_accommodationService.GetAll());
             Guest1View.AccommodationDTOs = guest1ViewWindow.SortAccommodationDTOs();
             guest1ViewWindow.accommodationData.ItemsSource = Guest1View.AccommodationDTOs;*/
@@ -129,18 +166,21 @@ namespace WPF.ViewModels.Guest1
 
         private void ResetLists()
         {
-            OwnerRatingImages.Clear();
-            AddedImages.Clear();
+            while(OwnerRatingImages.Count > 0)
+            {
+                OwnerRatingImages.RemoveAt(0);
+            }
 
-            guest1ViewWindow.lvAddedImages.ItemsSource = AddedImages;
-            guest1ViewWindow.lbStayedIn.ItemsSource = StayedInAccommodations;
-            //guest1ViewWindow.ResetFormInputs();
+            while(AddedImages.Count > 0)
+            {
+                AddedImages.RemoveAt(0);
+            }
         }
 
         private void AddImage()
         {
             AddedImages.Add(CreateImageFromBitMap());
-            if (!guest1ViewWindow.bAddImage.IsEnabled)
+            if (!AddImageEnabled)
             {
                 RemoveLastAddedImage();
                 return;
@@ -154,18 +194,16 @@ namespace WPF.ViewModels.Guest1
             } 
 
             OwnerRatingImages.Add(new OwnerRatingImage(-1, ImageUrl, SelectedStayedInAccommodation.ReservationId));
-            guest1ViewWindow.ClearImgUrlTextBox();
         }
 
         private void RemoveLastAddedImage()
         {
             AddedImages.RemoveAt(AddedImages.Count - 1);
-            guest1ViewWindow.ClearImgUrlTextBox();
         }
 
         private Image CreateImageFromBitMap()
         {
-            if (guest1ViewWindow.bAddImage.IsEnabled)
+            if (AddImageEnabled)
             {
                 Image img = new Image();
                 img.Source = CreateBitmapImage();
@@ -191,22 +229,28 @@ namespace WPF.ViewModels.Guest1
             catch
             {
                 MessageBox.Show("Invalid type of image url");
-                guest1ViewWindow.bAddImage.IsEnabled = false;
+                AddImageEnabled = false;
                 return null;
             }
         }
 
         private void RemoveImage()
         {
-            OwnerRatingImages.RemoveAt(guest1ViewWindow.lvAddedImages.SelectedIndex);
-            AddedImages.Remove((Image)guest1ViewWindow.lvAddedImages.SelectedItem);
-           
-            guest1ViewWindow.lvAddedImages.ItemsSource = AddedImages;
+            if(SelectedAddedImages != null)
+            {
+                
+                OwnerRatingImages.RemoveAt(guest1ViewWindow.lvAddedImages.SelectedIndex);
+                AddedImages.Remove((Image)guest1ViewWindow.lvAddedImages.SelectedItem);
+            }
+            else
+            {
+                MessageBox.Show("You have to select an image you want to remove!");
+            }
         }
 
         private void StayedInSelectionChanged(object selectedFromList)
         {
-            guest1ViewWindow.bSubmitRate.IsEnabled = true;
+            AddImageEnabled = true;
             if (selectedFromList != null)
             {
                 string[] parts = selectedFromList.ToString().Split("|");

@@ -35,12 +35,8 @@ namespace booking.View
     /// </summary>
     public partial class Guest1View : Window
     {
-
-        public Image SelectedAddedImages { get; set; }
         public SignInForm signInWindow { get; set; }
-
-        
-
+       
         private ReservationsViewModel _reservationViewModel;
         private RateAccommodationAndOwnerViewModel _rateAccommodationAndOwner;
         private Guest1ViewViewModel _guest1ViewViewModel;
@@ -71,25 +67,6 @@ namespace booking.View
             CheckBoxApartment.IsChecked = true;
             CheckBoxCabin.IsChecked = true;
             CheckBoxHouse.IsChecked = true;
-        }
-        
-        private void tbImageUrl_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            bAddImage.IsEnabled = true;
-        }
-
-        public void ClearImgUrlTextBox()
-        {
-            tbImageUrl.Text = "";
-        }
-
-        private void CleanStarsClick(object sender, MouseButtonEventArgs e)
-        {
-            RateAccommodationAndOwnerViewModel.CleanRating = stClean.Value;
-        }
-        private void OwnersKindnessStarsClick(object sender, MouseButtonEventArgs e)
-        {
-            RateAccommodationAndOwnerViewModel.OwnersKindenssRating = stOwner.Value;
         }
     }
 }

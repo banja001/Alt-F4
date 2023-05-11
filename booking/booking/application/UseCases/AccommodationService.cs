@@ -7,6 +7,7 @@ using Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 
 namespace application.UseCases
@@ -16,11 +17,13 @@ namespace application.UseCases
     {
         private IAccommodationRepository accommodationRepository;
         private readonly LocationService _locationService;
+        private readonly UserService _userService;
 
         public AccommodationService()
         {
             accommodationRepository = Injector.CreateInstance<IAccommodationRepository>();
             _locationService = new LocationService();
+            _userService = new UserService();
         }
         public List<Accommodation> GetAll()
         {
@@ -65,6 +68,29 @@ namespace application.UseCases
             accommodationLocation = new AccommodationLocationDTO(accommodation.Id, accommodation.Name, locationCity + "," + locationCountry,
                 accommodation.Type, accommodation.MaxCapacity, accommodation.MinDaysToUse, accommodation.MinDaysToCancel, accommodation.Id);//dodao acc id
             return accommodationLocation;
+        }
+
+        public ObservableCollection<AccommodationLocationDTO> SortAccommodationDTOs(ObservableCollection<AccommodationLocationDTO> acommodationLocationDTOs)
+        {
+            List<Accommodation> accommodations = accommodationRepository.GetAll();
+            ObservableCollection<AccommodationLocationDTO> SortedAccommodationDTOs = new ObservableCollection<AccommodationLocationDTO>();
+            bool flag;
+            Accommodation accommodation;
+            foreach (var item in acommodationLocationDTOs)
+            {
+                accommodation = accommodations.Find(s => s.Id == item.AccommodationId);
+                flag = _userService.GetAll().Find(s => accommodation.OwnerId == s.Id).Super;
+                if (flag)
+                {
+                    if (!item.Name.Last().Equals("*"))
+                        item.Name += "*";
+                    SortedAccommodationDTOs.Insert(0, item);
+
+                }
+                else
+                    SortedAccommodationDTOs.Add(item);
+            }
+            return SortedAccommodationDTOs;
         }
     }
 }

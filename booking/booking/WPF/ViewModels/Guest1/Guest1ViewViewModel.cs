@@ -4,6 +4,7 @@ using booking.Commands;
 using booking.DTO;
 using booking.Model;
 using booking.View.Guest1;
+using booking.WPF.ViewModels;
 using Domain.Model;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ using System.Windows.Input;
 
 namespace WPF.ViewModels.Guest1
 {
-    public class Guest1ViewViewModel : INotifyPropertyChanged
+    public class Guest1ViewViewModel : BaseViewModel, INotifyPropertyChanged
     {
         public static ObservableCollection<AccommodationLocationDTO> AccommodationDTOs { get; set; }
         public static AccommodationLocationDTO SelectedAccommodation { get; set; }
@@ -97,31 +98,10 @@ namespace WPF.ViewModels.Guest1
         private void InitializeDTOs()
         {
             SearchedAccommodation = new SearchedAccomodationDTO();
-            AccommodationDTOs = SortAccommodationDTOs(_accommodationService.CreateAccomodationDTOs());
+            AccommodationDTOs = _accommodationService.SortAccommodationDTOs(_accommodationService.CreateAccomodationDTOs());
         }
 
-        public ObservableCollection<AccommodationLocationDTO> SortAccommodationDTOs(ObservableCollection<AccommodationLocationDTO> acommodationLocationDTOs)
-        {
-            List<Accommodation> accommodations = _accommodationService.GetAll();
-            ObservableCollection<AccommodationLocationDTO> SortedAccommodationDTOs = new ObservableCollection<AccommodationLocationDTO>();
-            bool flag;
-            Accommodation accommodation;
-            foreach (var item in acommodationLocationDTOs)
-            {
-                accommodation = accommodations.Find(s => s.Id == item.AccommodationId);
-                flag = _userService.GetAll().Find(s => accommodation.OwnerId == s.Id).Super;
-                if (flag)
-                {
-                    if (!item.Name.Last().Equals("*"))
-                        item.Name += "*";
-                    SortedAccommodationDTOs.Insert(0, item);
-
-                }
-                else
-                    SortedAccommodationDTOs.Add(item);
-            }
-            return SortedAccommodationDTOs;
-        }
+        
 
         private void FillStateComboBox()
         {
@@ -160,7 +140,7 @@ namespace WPF.ViewModels.Guest1
                 AddAccommodationToList(accommodation);
             }
 
-            ObservableCollection<AccommodationLocationDTO> SortedAccommodationDTOs = SortAccommodationDTOs(AccommodationDTOs);
+            ObservableCollection<AccommodationLocationDTO> SortedAccommodationDTOs = _accommodationService.SortAccommodationDTOs(AccommodationDTOs);
 
             while (AccommodationDTOs.Count > 0)
             {
@@ -209,7 +189,7 @@ namespace WPF.ViewModels.Guest1
                 AccommodationDTOs.RemoveAt(0);
             }
 
-            ObservableCollection<AccommodationLocationDTO> SortedAccommodationDTOs = SortAccommodationDTOs(_accommodationService.CreateAccomodationDTOs());
+            ObservableCollection<AccommodationLocationDTO> SortedAccommodationDTOs = _accommodationService.SortAccommodationDTOs(_accommodationService.CreateAccomodationDTOs());
 
             foreach (var sortedAccommodation in SortedAccommodationDTOs)
             {
