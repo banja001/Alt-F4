@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:booking.WPF.Views.Owner"
-        mc:Ignorable="d"
+        xmlns:local="clr-namespace:booking.WPF.Views.Owner" xmlns:cvt="clr-namespace:booking.Converter"
+      mc:Ignorable="d"
         Title="ReservationChange" Height="641" Width="400">
     <Grid>
         <Grid.Resources>
@@ -49,10 +49,10 @@
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Accommodation" Width="2.5*" Binding="{Binding AccommodationName}"/>
-                <DataGridTextColumn Header="Old Start" Width="1.5*" Binding="{Binding OldStartDate}"/>
-                <DataGridTextColumn Header="Old End" Width="1.5*" Binding="{Binding OldEndDate}"/>
-                <DataGridTextColumn Header="New Start" Width="1.5*" Binding="{Binding NewStartDate}"/>
-                <DataGridTextColumn Header="New End" Width="1.5*" Binding="{Binding NewEndDate}"/>
+                <DataGridTextColumn Header="Old Start" Width="1.5*" Binding="{Binding OldStartDate,Converter={cvt:DateTimeToDateOnlyConverter}}"/>
+                <DataGridTextColumn Header="Old End" Width="1.5*" Binding="{Binding OldEndDate,Converter={cvt:DateTimeToDateOnlyConverter}}"/>
+                <DataGridTextColumn Header="New Start" Width="1.5*" Binding="{Binding NewStartDate,Converter={cvt:DateTimeToDateOnlyConverter}}"/>
+                <DataGridTextColumn Header="New End" Width="1.5*" Binding="{Binding NewEndDate,Converter={cvt:DateTimeToDateOnlyConverter}}"/>
                 <DataGridTextColumn Header="Taken" Width="1*" Binding="{Binding IsTaken}"/>
             </DataGrid.Columns>
         </DataGrid>
