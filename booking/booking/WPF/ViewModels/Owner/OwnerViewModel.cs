@@ -91,10 +91,10 @@ namespace WPF.ViewModels.Owner
         //public ICommand ReservationChangeCommand => new RelayCommand(ReservationChangeClick);
         //public ICommand ViewRatingsCommand => new RelayCommand(View_Ratings_Click);
 
-        public MainWindow mainWindow;
-        public OwnerViewModel(int id,MainWindow m)
+        //public MainWindow mainWindow;
+        public OwnerViewModel(int id)
         {
-            mainWindow = m;
+            //mainWindow = m;
             OwnerId = id;
             //ownerWindow = ow;
             
@@ -225,9 +225,9 @@ namespace WPF.ViewModels.Owner
             }
             else
             {
-                RateGuestWindow win = new RateGuestWindow(this,mainWindow,SelectedItem);
-                mainWindow.Main.Content = win;
-
+                RateGuestWindow win = new RateGuestWindow(this,SelectedItem);
+                //mainWindow.Main.Content = win;
+                MainWindow.w.Main.Content = win;
             }
 
         }

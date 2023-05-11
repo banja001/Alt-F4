@@ -36,7 +36,7 @@ namespace WPF.Views.Owner
         { 
             InitializeComponent();
             OwnerId = id;
-            OwnerWindow = new OwnerWindow(id,this);
+            OwnerWindow = new OwnerWindow(id);
             OwnerModel=OwnerWindow.OwnerModel;
             Main.Content = OwnerWindow;
             w = this;

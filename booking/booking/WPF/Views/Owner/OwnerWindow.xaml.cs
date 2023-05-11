@@ -36,10 +36,10 @@ namespace booking.View
     public partial class OwnerWindow : Page
     {
         public OwnerViewModel OwnerModel;
-        public OwnerWindow(int id,MainWindow mainWindow)
+        public OwnerWindow(int id)
         {
             InitializeComponent();
-            OwnerModel = new OwnerViewModel(id,mainWindow);
+            OwnerModel = new OwnerViewModel(id);
             DataContext = OwnerModel;
             
         }
