@@ -25,9 +25,6 @@ using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace booking.View
 {
-    /// <summary>
-    /// Interaction logic for AddAccommodationWindow.xaml
-    /// </summary>
     public partial class AddAccommodationWindow : Page
     {
         public OwnerViewModel ownerWindow;
@@ -40,19 +37,10 @@ namespace booking.View
 
             Loaded += Window_Loaded;
         }
-        /*
-        private void StateComboBox_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            List<string> CityList = new List<string>();
-            CityComboBox.SelectedItem = null;
-            string SelectedState = StateComboBox.SelectedItem.ToString();
-            CityList = ownerWindow.locationService.FillCityList(CityList, SelectedState, ownerWindow.locations);
-            CityComboBox.ItemsSource = CityList;
-        }*/
+
 
         public void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // we manually fire the bindings so we get the validation initially
             MinDaysToUseTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             NameTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             MaxVisitorsTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();

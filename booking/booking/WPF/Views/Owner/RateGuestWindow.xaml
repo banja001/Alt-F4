@@ -37,9 +37,9 @@
         </Grid.ColumnDefinitions>
 
         <Label Content="Guest info:" Grid.ColumnSpan="2" Foreground="#E69138" FontWeight="Bold" FontSize="20" VerticalAlignment="Bottom"/>
-        <Label Name="NameLabel"  Content="Name:" Grid.Row="1" Grid.ColumnSpan="2"/>
-        <Label Name="AccommodationLabel" Content="Accommodation:" Grid.Row="2" Grid.ColumnSpan="2"/>
-        <Label Name="DateLabel" Content="Date:" Grid.Row="3" Grid.ColumnSpan="2"/>
+        <Label Name="NameLabel"  Content="{Binding NameLabel}" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Label Name="AccommodationLabel" Content="{Binding AccommodationLabel}" Grid.Row="2" Grid.ColumnSpan="2"/>
+        <Label Name="DateLabel" Content="{Binding DateLabel}" Grid.Row="3" Grid.ColumnSpan="2"/>
         <Line X2="1"  Grid.Row="4" Grid.ColumnSpan="2"/>
 
 

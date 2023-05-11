@@ -65,7 +65,9 @@ namespace WPF.ViewModels.Owner
                 }
             }
         }
+        
         public string State { get; set; }
+        
         public string City { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
@@ -88,8 +90,24 @@ namespace WPF.ViewModels.Owner
                 }
             }
             }
+        private string selectedItemCity;
+        public string SelectedItemCity {
+            get
+            {
+                return selectedItemCity;
+            }
+            set
+            {
+                if (value != selectedItemCity)
+                {
+                    selectedItemCity = value;
+                    OnPropertyChanged("SelectedItemCity");
+                    CityLabel = "";
 
-        public string SelectedItemCity { get; set; }
+                }
+
+            }
+        }
 
         private string selectedItemState;
         public string SelectedItemState {
@@ -104,6 +122,7 @@ namespace WPF.ViewModels.Owner
                     selectedItemState = value;
                     OnPropertyChanged("SelectedItemState");
                     StateComboBox_SelectionChanged();
+                    CityLabel = "City";
                 }
 
             }
@@ -142,16 +161,54 @@ namespace WPF.ViewModels.Owner
         
         public Regex intRegex = new Regex("^[0-9]{1,4}$");
 
+        private string stateLabel;
+        public string StateLabel {
+            get
+            {
+                return stateLabel;
+            }
+            set
+            {
+                if (value != stateLabel)
+                {
+                    stateLabel = value;
+                    OnPropertyChanged("StateLabel");
+                }
+
+            }
+        }
+        private string cityLabel;
+        public string CityLabel
+        {
+            get
+            {
+                return cityLabel;
+            }
+            set
+            {
+                if (value != cityLabel)
+                {
+                    cityLabel = value;
+                    OnPropertyChanged("CityLabel");
+                }
+
+            }
+        }
+
         public AddAccommodationViewModel(OwnerViewModel ownerViewModel)
         {
             this.accommodationImagesUrl = new List<string>();
             this.ownerViewModel = ownerViewModel;
             StateList = ownerViewModel.locationService.InitializeStateList(new List<string>(), ownerViewModel.locations);
             this.CityList = new ObservableCollection<string>();
+            StateLabel = "State";
+            CityLabel = "City";
         }
 
         public void StateComboBox_SelectionChanged()
         {
+            StateLabel = "";
+            
             List<string> listTemp = new List<string>();
             SelectedItemCity = null;
             listTemp = ownerViewModel.locationService.FillCityList(listTemp, SelectedItemState.ToString(), ownerViewModel.locations);
@@ -162,49 +219,6 @@ namespace WPF.ViewModels.Owner
             }
         }
 
-        /*private bool isValid()
-        {
-            if (string.IsNullOrEmpty(State) || string.IsNullOrEmpty(City) || string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Type) ||
-                string.IsNullOrEmpty(MaxVisitors) || string.IsNullOrEmpty(MinDaysToUse) || string.IsNullOrEmpty(DaysToCancel))
-            {
-                MessageBox.Show("Please fill in all of the textboxes", "Error");
-                return false;
-            }
-            Match match = intRegex.Match(MaxVisitors);
-            if (!match.Success)
-            {
-                MessageBox.Show("Max visitors should be a valid number", "Error");
-                return false; ;
-            }
-            match = intRegex.Match(MinDaysToUse);
-            if (!match.Success)
-            {
-                MessageBox.Show("Min reservation should be a valid number", "Error");
-                return false;
-            }
-            match = intRegex.Match(DaysToCancel);
-            if (!match.Success)
-            {
-                MessageBox.Show("Days to cancel should be a valid number", "Error");
-                return false;
-            }
-            if (accommodationImagesUrl.Count() == 0)
-            {
-                MessageBox.Show("Please enter atleast one image", "Error");
-                return false;
-            }
-            if (Name.Last().Equals('*'))
-            {
-                MessageBox.Show("Accommodation name cant end with *", "Error");
-                return false;
-            }
-
-
-            return true;
-        }*/
-
-
-
         private void Cancel()
         {
             MainWindow.w.Main.Navigate(MainWindow.w.OwnerWindow);
@@ -212,12 +226,7 @@ namespace WPF.ViewModels.Owner
 
         private void Confirm()
         {
-            /*
-            if (!isValid())
-            {
-                return;
-            }*/
-
+ 
             Accommodation a = AddAccommodation();
             ownerViewModel.accommodationService.Add(a);
             ownerViewModel.accommodationImageService.AddImages(a, accommodationImagesUrl, ownerViewModel.accommodationImages);
@@ -234,9 +243,6 @@ namespace WPF.ViewModels.Owner
 
         private void AddImageClick()
         {
-
-            //AddAccommodationImageWindow win = new AddAccommodationImageWindow(accommodationImagesUrl);
-            //win.ShowDialog();
             if (string.IsNullOrEmpty(ImageUrl))
             {
                 MessageBox.Show("Please enter atleast one image", "Error");
@@ -244,27 +250,17 @@ namespace WPF.ViewModels.Owner
             }
             else
             {
-                //accommodationImagesUrl.Add(ImageUrl);
                 accommodationImagesUrl.Insert(0, ImageUrl);
                 ImageUrl = "";
             }
             ShowImage();
 
         }
-        /*
-        private void StateComboBox_SelectionChanged()
-        {
-            List<string> CityList = new List<string>();
-            SelectedItemCity = null;
-            string SelectedState = SelectedItemState.ToString();
-            CityList = ownerViewModel.locationService.FillCityList(CityList, SelectedState, ownerViewModel.locations);
-            //CityComboBox.ItemsSource = CityList;
-        }*/
+        
         private void RemoveImageClick()
         {
             if (accommodationImagesUrl.Count() > 0)
             {
-                //accommodationImagesUrl.RemoveAt(accommodationImagesUrl.Count() - 1);
                 accommodationImagesUrl.RemoveAt(ActiveImageIndx);
                 MessageBox.Show("Image removed", "Message");
             }

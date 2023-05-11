@@ -28,7 +28,6 @@ namespace WPF.ViewModels.Owner
         public ObservableCollection<ReservationChangeDTO> requestsObservable { get; set; }
         public ReservationChangeDTO SelectedItem { get; set; }
 
-        //public ReservationChangeWindow reservationChangeWindow;
 
         public NotificationsService _notificationsService { get; set; }
         public ICommand AllowCommand => new RelayCommand(AllowClick);
@@ -37,7 +36,6 @@ namespace WPF.ViewModels.Owner
         public ReservationChangeViewModel(OwnerViewModel ownerWindow)
         {
             this.ownerViewModel = ownerWindow;
-            //this.reservationChangeWindow = res;
             reservationRequestsService = new ReservationRequestsService();
             requestsObservable = new ObservableCollection<ReservationChangeDTO>();
             _notificationsService = new NotificationsService();

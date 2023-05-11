@@ -59,13 +59,12 @@ namespace booking.View
             _repository = new UserRepository();
             _ownerRatingsRepository = new OwnerRatingRepository();
             RefreshUsers();
-            //Loaded += RefreshUsers;
+
         }
 
-        public void RefreshUsers()//object sender, RoutedEventArgs e)
+        public void RefreshUsers()
         {
-            //Loaded -= RefreshUsers;
-             
+            
             List<OwnerRating> ownerRatings = _ownerRatingsRepository.GetAll();
             List<User> users = _repository.GetAll().ToList();
             double sum, i;
@@ -97,7 +96,6 @@ namespace booking.View
 
                     if (user.Role == "Owner")
                     {
-                        //OwnerWindow win=new OwnerWindow(user.Id);
                         MainWindow win = new MainWindow(user.Id);
                         win.Show();
                         this.Close();

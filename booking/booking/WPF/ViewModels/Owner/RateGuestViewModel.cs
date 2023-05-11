@@ -17,6 +17,60 @@ namespace WPF.ViewModels.Owner
 {
     public class RateGuestViewModel:BaseViewModel
     {
+        private string nameLabel;
+        public string NameLabel
+        {
+            get
+            {
+                return nameLabel;
+            }
+            set
+            {
+                if (value != nameLabel)
+                {
+                    nameLabel = value;
+                    OnPropertyChanged("NameLabel");
+                }
+            }
+
+        }
+
+        private string accommodationLabel;
+        public string AccommodationLabel
+        {
+            get
+            {
+                return accommodationLabel;
+            }
+            set
+            {
+                if (value != accommodationLabel)
+                {
+                    accommodationLabel = value;
+                    OnPropertyChanged("AccommodationLabel");
+                }
+            }
+
+        }
+
+        private string dateLabel;
+        public string DateLabel
+        {
+            get
+            {
+                return dateLabel;
+            }
+            set
+            {
+                if (value != dateLabel)
+                {
+                    dateLabel = value;
+                    OnPropertyChanged("DateLabel");
+                }
+            }
+
+        }
+
         public Guest1RatingDTO SelectedItem { get; set; }
         public bool[] SelectedCleanRadiobutton { get; set; }
         public bool[] SelectedRulesRadiobutton { get; set; }
@@ -24,7 +78,6 @@ namespace WPF.ViewModels.Owner
         public string Comment { get; set; }
 
         public OwnerViewModel ownerWindow;
-        //public MainWindow mainWindow { get; set; }
         public ICommand AddRatingCommand => new RelayCommand(AddRating_Click);
 
         public RateGuestViewModel(OwnerViewModel ownerWindow,Guest1RatingDTO s)
@@ -32,8 +85,11 @@ namespace WPF.ViewModels.Owner
             this.SelectedCleanRadiobutton = new bool[] { false, false, false, false, false };
             this.SelectedRulesRadiobutton = new bool[] { false, false, false, false, false };
             this.ownerWindow = ownerWindow;
-            //mainWindow = main;
             SelectedItem = s;
+
+            NameLabel ="Name:" + ownerWindow.SelectedItem.GuestName;
+            AccommodationLabel ="Accommodation:"+ ownerWindow.SelectedItem.AccommodationName;
+            DateLabel ="Date:"+ ownerWindow.SelectedItem.StartDate + "-" + ownerWindow.SelectedItem.EndDate;
         }
 
 

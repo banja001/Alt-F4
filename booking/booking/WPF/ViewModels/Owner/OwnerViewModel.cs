@@ -80,24 +80,14 @@ namespace WPF.ViewModels.Owner
 
         private readonly OwnerNotificationsService _ownerNotificationService;
         public static List<OwnerNotification> Notifications { get; set; }
-        //public OwnerWindow ownerWindow;
-
         public ICommand NotifyUserCommand => new RelayCommand(NotifyUser);
 
         public bool load;
-        
-        //public ICommand AddAccommodationCommand => new RelayCommand(AddAccommodation);
         public ICommand RateGuestsCommand => new RelayCommand(RateGuests_Click);
-        //public ICommand ReservationChangeCommand => new RelayCommand(ReservationChangeClick);
-        //public ICommand ViewRatingsCommand => new RelayCommand(View_Ratings_Click);
-
-        //public MainWindow mainWindow;
         public OwnerViewModel(int id)
         {
-            //mainWindow = m;
             OwnerId = id;
-            //ownerWindow = ow;
-            
+       
             CreateInstances();
             UserName = userService.GetUserNameById(id);
             List<ReservedDates> ratingDates = PickDatesForRating();
@@ -146,11 +136,9 @@ namespace WPF.ViewModels.Owner
             }
             if (i == 0) AverageRating = 0;
             else AverageRating =sum / (i * 2);
-            //ownerWindow.AverageLabel.Content = AverageRating;
             AverageLabel = AverageRating.ToString();
             if (AverageRating >= 4.5 && i >= 3)
             {
-                //ownerWindow.SuperOwnerLabel.Content = "Super Owner**";
                 SuperOwnerLabel = "Super Owner**";
                 userService.UpdateById(OwnerId, true);
             }
@@ -226,27 +214,9 @@ namespace WPF.ViewModels.Owner
             else
             {
                 RateGuestWindow win = new RateGuestWindow(this,SelectedItem);
-                //mainWindow.Main.Content = win;
                 MainWindow.w.Main.Content = win;
             }
 
         }
-        /*
-        private void AddAccommodation()
-        {
-            AddAccommodationWindow win = new AddAccommodationWindow(this);
-            //win.ShowDialog();
-        }
-        private void View_Ratings_Click()
-        {
-            RatingViewWindow win = new RatingViewWindow(this);
-            //win.ShowDialog();
-        }
-        private void ReservationChangeClick()
-        {
-            ReservationChangeWindow win = new ReservationChangeWindow(this);
-            //win.ShowDialog();
-        }
-        */
     }
 }

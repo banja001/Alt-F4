@@ -339,23 +339,23 @@
 
 
         <Button Name="removeImageButton" Grid.Row="14" Grid.Column="1"  Command="{Binding RemoveImageCommand}" Content="-" Height="30" Width="30" Margin="-130,0,0,0" Background="#447782"/>
-        <ComboBox Template="{DynamicResource ComboBoxTemplate1}" Name="StateComboBox" Grid.Row="5"  ItemsSource="{Binding StateList}" SelectedItem="{Binding SelectedItemState}" >
-        <ComboBox.Text>
-            <Binding Path="State" UpdateSourceTrigger="PropertyChanged"  ValidatesOnDataErrors="True" NotifyOnValidationError="True">
-                <Binding.ValidationRules>
-                    <validationrules:ComboboxValidation/>
-                </Binding.ValidationRules>
-            </Binding>
-        </ComboBox.Text>
+        <ComboBox  Template="{DynamicResource ComboBoxTemplate1}" Name="StateComboBox" Grid.Row="5"  ItemsSource="{Binding StateList}" SelectedItem="{Binding SelectedItemState}" >
+            <ComboBox.Text>
+                <Binding Path="State" UpdateSourceTrigger="PropertyChanged"  ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <validationrules:ComboboxValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.Text>
         </ComboBox>
         <ComboBox Template="{DynamicResource ComboBoxTemplate1}" Name="CityComboBox" Grid.Row="5" Grid.Column="1"  ItemsSource="{Binding CityList}" SelectedItem="{Binding SelectedItemCity}" >
-        <ComboBox.Text>
-            <Binding Path="City" UpdateSourceTrigger="PropertyChanged"  ValidatesOnDataErrors="True" NotifyOnValidationError="True">
-                <Binding.ValidationRules>
-                    <validationrules:ComboboxValidation/>
-                </Binding.ValidationRules>
-            </Binding>
-        </ComboBox.Text>
+            <ComboBox.Text>
+                <Binding Path="City" UpdateSourceTrigger="PropertyChanged"  ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <validationrules:ComboboxValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.Text>
         </ComboBox>
         <Label Content="Add Accommodation" Grid.Row="0" Grid.ColumnSpan="2" FontSize="17" Foreground="#E69138"/>
         <Line X2="1"  Grid.Row="3" Grid.ColumnSpan="2" Margin="15,4,15,26" Grid.RowSpan="2"/>
@@ -374,6 +374,7 @@
         <Image Stretch="Fill" Source="{Binding Slika,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="124" Grid.Row="15" Grid.ColumnSpan="2" Grid.Column="0" VerticalAlignment="Top" Width="141" Margin="130,6,0,0" />
         <Button Template="{DynamicResource ButtonTemplate1}" IsEnabled="{Binding NextEnabled,UpdateSourceTrigger=PropertyChanged}" Command="{Binding NextPictureCommand}" Content="&gt;&gt;" Background="#447782" HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1" VerticalAlignment="Center" Height="110" Width="20"/>
         <Button Template="{DynamicResource ButtonTemplate1}" IsEnabled="{Binding PrevEnabled,UpdateSourceTrigger=PropertyChanged}" Command="{Binding PrevPictureCommand}" Content="&lt;&lt;" Background="#447782" HorizontalAlignment="Center" Grid.Row="15" Grid.Column="0" VerticalAlignment="Center" Height="110" Width="20"/>
-
+        <Label Content="{Binding StateLabel}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Grid.Row="5" Width="80" Margin="42,0,0,0" Foreground="DarkGray"/>
+        <Label Content="{Binding CityLabel}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Grid.Row="5" Grid.Column="1" Width="80" Margin="42,0,0,0" Foreground="DarkGray" />
     </Grid>
 </Page>

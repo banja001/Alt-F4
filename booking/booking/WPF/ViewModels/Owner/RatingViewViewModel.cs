@@ -73,7 +73,6 @@ namespace WPF.ViewModels.Owner
         private int ActiveImageIndx;
         public string Comment { get; set; }
         private OwnerViewModel win;
-        //public RatingViewWindow viewWindow;
         public ObservableCollection<OwnerRatingDTO> OwnerRatings { get; set; }
         private OwnerRatingDTO selectedItem;
         public OwnerRatingDTO SelectedItem
@@ -99,7 +98,6 @@ namespace WPF.ViewModels.Owner
             this.win = win;
             NextButtonEnabled = false;
             PrevButtonEnabled = false;
-            //this.viewWindow = viewWindow;
 
             OwnerRatings = new ObservableCollection<OwnerRatingDTO>();
             AddRatingsToView();
@@ -140,7 +138,6 @@ namespace WPF.ViewModels.Owner
             if (win.OwnerRatingImages.Count == 0)
             {
                 ImageSource = null;
-                //viewWindow.NoImagesLabel.Content = "No images for display";
                 return;
             }
 
