@@ -42,6 +42,7 @@ namespace WPF.ViewModels.Owner
             requestsObservable = new ObservableCollection<ReservationChangeDTO>();
             _notificationsService = new NotificationsService();
             UpdateObservable();
+            
         }
 
         private void UpdateObservable()

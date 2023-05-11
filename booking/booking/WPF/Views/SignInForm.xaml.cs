@@ -27,11 +27,10 @@ namespace booking.View
     /// </summary>
     public partial class SignInForm : Window
     {
-        
         private readonly UserRepository _repository;
         private readonly OwnerRatingRepository _ownerRatingsRepository;
         private string _userName;
-
+        
         
 
         public string UserName

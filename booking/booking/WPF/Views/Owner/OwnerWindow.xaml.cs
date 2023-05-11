@@ -39,7 +39,7 @@ namespace booking.View
         public OwnerWindow(int id,MainWindow mainWindow)
         {
             InitializeComponent();
-            OwnerModel = new OwnerViewModel(id,this,mainWindow);
+            OwnerModel = new OwnerViewModel(id,mainWindow);
             DataContext = OwnerModel;
             
         }

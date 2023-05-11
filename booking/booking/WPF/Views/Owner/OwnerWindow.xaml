@@ -4,24 +4,29 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.View" xmlns:booking="clr-namespace:booking"
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="OwnerWindow" Height="641" Width="400"
         >
 
     <Grid>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding NotifyUserCommand}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
         <Grid.Resources>
-            
-                <Style TargetType="DataGridCell">
-                    <Style.Triggers>
-                    <Trigger Property="IsSelected" Value="True">
-                        <Setter Property="Background" Value="#E69138"/>
-                        <Setter Property="Foreground" Value="Black"/>
-                        <Setter Property="BorderBrush" Value="Black"/>
-                        
-                    </Trigger>
-                </Style.Triggers>
-                    <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                </Style>
+            <Style TargetType="DataGridCell">
+                <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#E69138"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    
+                </Trigger>
+            </Style.Triggers>
+                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            </Style>
             
             <Style TargetType="DataGrid">
                 <Setter Property="Foreground" Value="LightGray"/>
@@ -162,9 +167,9 @@
             <Label Content="Name:" Grid.Row="1" HorizontalAlignment="Left" Margin="44,0,0,0"/>
             <Label Content="{Binding UserName}" Grid.Row="1" HorizontalAlignment="Left" FontWeight="Bold" Margin="103,0,0,0" Width="72"/>
             <Label Content="Owner rating:" Grid.Row="2" HorizontalAlignment="Left" Margin="44,0,0,0"/>
-            <Label x:Name="AverageLabel" Content="" FontWeight="Bold" Grid.Row="2" HorizontalAlignment="Left" Margin="139,0,0,0"/>
+            <Label Content="{Binding AverageLabel}" FontWeight="Bold" Grid.Row="2" HorizontalAlignment="Left" Margin="139,0,0,0"/>
             <Label Content="Type of owner:" Grid.Row="3" FontWeight="Bold" Foreground="#E69138" VerticalAlignment="Bottom"/>
-            <Label x:Name="SuperOwnerLabel" Content="" Grid.Row="4" FontWeight="Bold" VerticalAlignment="Top"/>
+            <Label Content="{Binding SuperOwnerLabel}" Grid.Row="4" FontWeight="Bold" VerticalAlignment="Top"/>
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>

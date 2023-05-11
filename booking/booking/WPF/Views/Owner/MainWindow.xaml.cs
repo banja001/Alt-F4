@@ -1,6 +1,7 @@
 ﻿using booking.View;
 using booking.View.Owner;
 using booking.WPF.Views.Owner;
+using Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -45,8 +46,8 @@ namespace WPF.Views.Owner
         {
 
             
-            Main.Content=OwnerWindow;  
-            
+            Main.Content=OwnerWindow;
+            Console.WriteLine(GlobalVariables.a);
         }
         private void AddAccommodationDropdownClick(object sender, RoutedEventArgs e)
         {

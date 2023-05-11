@@ -8,6 +8,7 @@ using booking.View;
 using booking.View.Owner;
 using booking.WPF.ViewModels;
 using booking.WPF.Views.Owner;
+using Domain.Model;
 using Repositories;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,37 @@ namespace WPF.ViewModels.Owner
     
     public class OwnerViewModel:BaseViewModel
     {
+        private string averageLabel;
+        public string AverageLabel {
+            get
+            {
+                return averageLabel;
+            }
+            set
+            {
+                if (value != averageLabel)
+                {
+                    averageLabel = value;
+                    OnPropertyChanged("AverageLabel");
+                }
+            }
+        }
+        private string superOwnerLabel;
+        public string SuperOwnerLabel
+        {
+            get
+            {
+                return superOwnerLabel;
+            }
+            set
+            {
+                if (value != superOwnerLabel)
+                {
+                    superOwnerLabel = value;
+                    OnPropertyChanged("AverageLabel");
+                }
+            }
+        }
         public int OwnerId { get; set; }
         public double AverageRating { get; set; }
         public string UserName { get; set; }
@@ -48,19 +80,23 @@ namespace WPF.ViewModels.Owner
 
         private readonly OwnerNotificationsService _ownerNotificationService;
         public static List<OwnerNotification> Notifications { get; set; }
-        public OwnerWindow ownerWindow;
+        //public OwnerWindow ownerWindow;
+
+        public ICommand NotifyUserCommand => new RelayCommand(NotifyUser);
+
+        public bool load;
         
-        public ICommand AddAccommodationCommand => new RelayCommand(AddAccommodation);
+        //public ICommand AddAccommodationCommand => new RelayCommand(AddAccommodation);
         public ICommand RateGuestsCommand => new RelayCommand(RateGuests_Click);
-        public ICommand ReservationChangeCommand => new RelayCommand(Button_Click);
-        public ICommand ViewRatingsCommand => new RelayCommand(View_Ratings_Click);
+        //public ICommand ReservationChangeCommand => new RelayCommand(ReservationChangeClick);
+        //public ICommand ViewRatingsCommand => new RelayCommand(View_Ratings_Click);
 
         public MainWindow mainWindow;
-        public OwnerViewModel(int id,OwnerWindow ow,MainWindow m)
+        public OwnerViewModel(int id,MainWindow m)
         {
             mainWindow = m;
             OwnerId = id;
-            ownerWindow = ow;
+            //ownerWindow = ow;
             
             CreateInstances();
             UserName = userService.GetUserNameById(id);
@@ -70,9 +106,10 @@ namespace WPF.ViewModels.Owner
             ListToRate = new ObservableCollection<Guest1RatingDTO>(tempList);
 
             CalculateAverageRating();
+            load = false;
             if (tempList.Count() != 0)
             {
-                ownerWindow.Loaded += NotifyUser;
+                load = true;
             }
 
             _ownerNotificationService = new OwnerNotificationsService();
@@ -109,10 +146,12 @@ namespace WPF.ViewModels.Owner
             }
             if (i == 0) AverageRating = 0;
             else AverageRating =sum / (i * 2);
-            ownerWindow.AverageLabel.Content = AverageRating;
+            //ownerWindow.AverageLabel.Content = AverageRating;
+            AverageLabel = AverageRating.ToString();
             if (AverageRating >= 4.5 && i >= 3)
             {
-                ownerWindow.SuperOwnerLabel.Content = "Super Owner**";
+                //ownerWindow.SuperOwnerLabel.Content = "Super Owner**";
+                SuperOwnerLabel = "Super Owner**";
                 userService.UpdateById(OwnerId, true);
             }
         }
@@ -154,11 +193,13 @@ namespace WPF.ViewModels.Owner
             OwnerRatings = OwnerRatingService.GetAll();
         }
 
-        private void NotifyUser(object sender, RoutedEventArgs e)
+        private void NotifyUser()
         {
-
-            ownerWindow.Loaded -= NotifyUser;
-            MessageBox.Show("You have unrated guests", "Message");
+            if (GlobalVariables.a == true && load==true)
+            {
+                MessageBox.Show("You have unrated guests", "Message");
+                GlobalVariables.a = false;
+            }
         }
         public List<ReservedDates> PickDatesForRating()
         {
@@ -190,6 +231,7 @@ namespace WPF.ViewModels.Owner
             }
 
         }
+        /*
         private void AddAccommodation()
         {
             AddAccommodationWindow win = new AddAccommodationWindow(this);
@@ -200,11 +242,11 @@ namespace WPF.ViewModels.Owner
             RatingViewWindow win = new RatingViewWindow(this);
             //win.ShowDialog();
         }
-
-        private void Button_Click()
+        private void ReservationChangeClick()
         {
             ReservationChangeWindow win = new ReservationChangeWindow(this);
             //win.ShowDialog();
         }
+        */
     }
 }
