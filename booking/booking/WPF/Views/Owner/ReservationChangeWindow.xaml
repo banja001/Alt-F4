@@ -8,6 +8,17 @@
         Title="ReservationChange" Height="641" Width="400">
     <Grid>
         <Grid.Resources>
+            <Style TargetType="DataGridCell">
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#E69138"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+
+                    </Trigger>
+                </Style.Triggers>
+                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            </Style>
             <Style TargetType="DataGrid">
                 <Setter Property="Foreground" Value="LightGray"/>
                 <Setter Property="Background" Value="Black"/>
@@ -21,8 +32,9 @@
                 <Setter  Property="Background" Value="black"/>
             </Style>
             <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
-                <Setter Property="Background" Value="Red"/>
-                <Setter Property="Height" Value="30"/>
+                <Setter Property="Background" Value="DarkRed"/>
+                <Setter Property="Height" Value="25"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
             </Style>
             <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
             <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
@@ -35,8 +47,8 @@
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
         <Label Content="Pick a reservation change" Grid.ColumnSpan="2" HorizontalAlignment="Left" FontSize="17" Foreground="#E69138" Padding="10" Margin="15,0,0,0"/>

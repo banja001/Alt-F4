@@ -40,6 +40,17 @@
     </Page.Resources>
     <Grid>
         <Grid.Resources>
+            <Style TargetType="DataGridCell">
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#E69138"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+
+                    </Trigger>
+                </Style.Triggers>
+                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            </Style>
             <Style TargetType="DataGrid">
                 <Setter Property="Foreground" Value="LightGray"/>
                 <Setter Property="Background" Value="Black"/>
@@ -50,9 +61,11 @@
             </Style>
             <Style TargetType="DataGridRow" x:Name="DatagridRowStyle">
                 <Setter  Property="Background" Value="black"/>
+                
             </Style>
             <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
-                <Setter Property="Background" Value="Red"/>
+                <Setter Property="Background" Value="DarkRed"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
             </Style>
             
             <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
@@ -76,8 +89,8 @@
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <Label Content="Rating table:" FontSize="17" Foreground="#E69138" FontWeight="Bold" VerticalAlignment="Bottom"/>
         <DataGrid Grid.Row="1" Grid.ColumnSpan="2" x:Name="dgrMain" ItemsSource="{Binding OwnerRatings, UpdateSourceTrigger=PropertyChanged}" 

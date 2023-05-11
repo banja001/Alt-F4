@@ -32,8 +32,8 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120"/>
-            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
 
         <Label Content="Guest info:" Grid.ColumnSpan="2" Foreground="#E69138" FontWeight="Bold" FontSize="20" VerticalAlignment="Bottom"/>

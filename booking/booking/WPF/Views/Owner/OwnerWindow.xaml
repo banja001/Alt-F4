@@ -7,9 +7,22 @@
         mc:Ignorable="d"
         Title="OwnerWindow" Height="641" Width="400"
         >
-    
+
     <Grid>
         <Grid.Resources>
+            
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#E69138"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+                        
+                    </Trigger>
+                </Style.Triggers>
+                    <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                </Style>
+            
             <Style TargetType="DataGrid">
                 <Setter Property="Foreground" Value="LightGray"/>
                 <Setter Property="Background" Value="Black"/>
@@ -20,9 +33,12 @@
             </Style>
             <Style TargetType="DataGridRow" x:Name="DatagridRowStyle">
                 <Setter  Property="Background" Value="black"/>
+                
             </Style>
             <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
-                <Setter Property="Background" Value="Red"/>
+                <Setter Property="Background" Value="DarkRed"/>
+                <Setter Property="Height" Value="20"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
             </Style>
 
 
@@ -103,8 +119,6 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
-
-        <Button Content="Add" Command="{Binding AddAccommodationCommand}" HorizontalAlignment="Left" Margin="-685,66,0,0" VerticalAlignment="Top" Height="32" Width="136"/>
         <Button Name="RateGuests" Command="{Binding RateGuestsCommand}" Content="Rate" FontSize="17" Width="100" Grid.Row="5" Grid.Column="1"/>
 
 
@@ -113,19 +127,18 @@
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="6" Grid.ColumnSpan="2" Width="360" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center"
                   ColumnHeaderStyle="{StaticResource HeaderStyle}" >
+            
             <DataGrid.Resources>
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/> 
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
             </DataGrid.Resources>
             <DataGrid.Columns>
+                
                 <DataGridTextColumn Header="Guest" Width="2.5*" Binding="{Binding GuestName}"/>
                 <DataGridTextColumn Header="Accommodation" Width="3*" Binding="{Binding AccommodationName}"/>
                 <DataGridTextColumn Header="Start date" Width="2.25*" Binding="{Binding StartDate}"/>
                 <DataGridTextColumn Header="End date" Width="2.25*" Binding="{Binding EndDate}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Command="{Binding ViewRatingsCommand}" Content="View Rating" HorizontalAlignment="Left" Margin="-526,66,0,0" VerticalAlignment="Top" Height="44" Width="99" />
-
-        <Button Command="{Binding ReservationChangeCommand}" Content="ReservationChange" HorizontalAlignment="Left" Margin="-685,114,0,0" VerticalAlignment="Top" />
 
         <Label Content="Best locations&#10;(most booked)" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2"/>
         <Line X2="1"  Grid.Row="1" Grid.ColumnSpan="2"/>
