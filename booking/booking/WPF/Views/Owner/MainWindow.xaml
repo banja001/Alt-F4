@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.Views.Owner" xmlns:booking="clr-namespace:booking"
         mc:Ignorable="d"
-        Title="MainWindow" Height="749" Width="410">
+        Title="MainWindow" Height="749" Width="410" WindowStartupLocation="CenterScreen">
     <Grid Background="Black">
         
         

@@ -40,7 +40,7 @@ namespace booking.View
 
             Loaded += Window_Loaded;
         }
-
+        /*
         private void StateComboBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
             List<string> CityList = new List<string>();
@@ -48,7 +48,7 @@ namespace booking.View
             string SelectedState = StateComboBox.SelectedItem.ToString();
             CityList = ownerWindow.locationService.FillCityList(CityList, SelectedState, ownerWindow.locations);
             CityComboBox.ItemsSource = CityList;
-        }
+        }*/
 
         public void Window_Loaded(object sender, RoutedEventArgs e)
         {

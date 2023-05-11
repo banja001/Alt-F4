@@ -21,6 +21,7 @@ using System.Windows.Shapes;
 using booking.Commands;
 using booking.WPF.ViewModels;
 using WPF.Views.Owner;
+using System.Collections.ObjectModel;
 
 namespace WPF.ViewModels.Owner
 {
@@ -89,7 +90,25 @@ namespace WPF.ViewModels.Owner
             }
 
         public string SelectedItemCity { get; set; }
-        public string SelectedItemState { get; set; }
+
+        private string selectedItemState;
+        public string SelectedItemState {
+            get
+            {
+                return selectedItemState;
+            }
+            set
+            {
+                if (value != selectedItemState)
+                {
+                    selectedItemState = value;
+                    OnPropertyChanged("SelectedItemState");
+                    StateComboBox_SelectionChanged();
+                }
+
+            }
+
+        }
 
         private BitmapImage slika;
         public BitmapImage Slika { 
@@ -109,6 +128,8 @@ namespace WPF.ViewModels.Owner
             }
         public int ActiveImageIndx { get; set; }
         public List<string> StateList { get; set; }
+
+        public ObservableCollection<string> CityList { get; set; }
         public ICommand NextPictureCommand => new RelayCommand(NextPictureClick);
         public ICommand PrevPictureCommand => new RelayCommand(PrevImageButtonClick);
         public ICommand ConfirmCommand => new RelayCommand(Confirm);
@@ -126,9 +147,21 @@ namespace WPF.ViewModels.Owner
             this.accommodationImagesUrl = new List<string>();
             this.ownerViewModel = ownerViewModel;
             StateList = ownerViewModel.locationService.InitializeStateList(new List<string>(), ownerViewModel.locations);
-
+            this.CityList = new ObservableCollection<string>();
         }
-        
+
+        public void StateComboBox_SelectionChanged()
+        {
+            List<string> listTemp = new List<string>();
+            SelectedItemCity = null;
+            listTemp = ownerViewModel.locationService.FillCityList(listTemp, SelectedItemState.ToString(), ownerViewModel.locations);
+            CityList.Clear();
+            foreach(string item in listTemp)
+            {
+                CityList.Add(item);
+            }
+        }
+
         /*private bool isValid()
         {
             if (string.IsNullOrEmpty(State) || string.IsNullOrEmpty(City) || string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Type) ||
@@ -169,6 +202,9 @@ namespace WPF.ViewModels.Owner
 
             return true;
         }*/
+
+
+
         private void Cancel()
         {
             MainWindow.w.Main.Navigate(MainWindow.w.OwnerWindow);

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.WPF.Views.Owner"
         mc:Ignorable="d"
-        Title="LeaveComment" Height="400" Width="350" WindowStartupLocation="CenterOwner">
+        Title="LeaveComment" Height="400" Width="350" WindowStartupLocation="CenterScreen">
     <Grid Background="Black">
         <Grid.Resources>
             <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
