@@ -17,9 +17,11 @@
 
                     </Trigger>
                 </Style.Triggers>
+                <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="TextBlock.TextAlignment" Value="Center" />
             </Style>
             <Style TargetType="DataGrid">
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
                 <Setter Property="Foreground" Value="LightGray"/>
                 <Setter Property="Background" Value="Black"/>
                 <Setter Property="CanUserResizeColumns" Value="False"/>

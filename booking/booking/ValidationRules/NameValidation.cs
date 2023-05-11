@@ -12,7 +12,7 @@ namespace ValidationRules
         private Regex NameReg = new Regex("^[a-zA-Z]+$");
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (value == null) return new ValidationResult(false, "Empty textbox!");
+            if (value == null) return new ValidationResult(false, "");
             Match match = NameReg.Match(value.ToString());
             if(match.Success)
             {

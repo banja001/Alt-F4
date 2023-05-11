@@ -194,7 +194,22 @@ namespace WPF.ViewModels.Owner
 
             }
         }
+        private bool imaSlika;
+        public bool ImaSlika {
+            get
+            {
+                return imaSlika;
+            }
+            set
+            {
+                if (value != imaSlika)
+                {
+                    imaSlika = value;
+                    OnPropertyChanged("ImaSlika");
+                }
 
+            }
+        }
         public AddAccommodationViewModel(OwnerViewModel ownerViewModel)
         {
             this.accommodationImagesUrl = new List<string>();
@@ -203,6 +218,7 @@ namespace WPF.ViewModels.Owner
             this.CityList = new ObservableCollection<string>();
             StateLabel = "State";
             CityLabel = "City";
+            ImaSlika = false;//////////////////////
         }
 
         public void StateComboBox_SelectionChanged()
@@ -226,7 +242,7 @@ namespace WPF.ViewModels.Owner
 
         private void Confirm()
         {
- 
+
             Accommodation a = AddAccommodation();
             ownerViewModel.accommodationService.Add(a);
             ownerViewModel.accommodationImageService.AddImages(a, accommodationImagesUrl, ownerViewModel.accommodationImages);
@@ -254,7 +270,7 @@ namespace WPF.ViewModels.Owner
                 ImageUrl = "";
             }
             ShowImage();
-
+            ImaSlika = true;
         }
         
         private void RemoveImageClick()

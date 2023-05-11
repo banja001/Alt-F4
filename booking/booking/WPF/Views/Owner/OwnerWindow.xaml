@@ -22,10 +22,12 @@
                     <Setter Property="Background" Value="#E69138"/>
                     <Setter Property="Foreground" Value="Black"/>
                     <Setter Property="BorderBrush" Value="Black"/>
-                    
-                </Trigger>
+                    </Trigger>
             </Style.Triggers>
+                <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                
+
             </Style>
             
             <Style TargetType="DataGrid">
@@ -35,6 +37,8 @@
                 <Setter Property="CanUserResizeRows" Value="False"/>
                 <Setter Property="HeadersVisibility" Value="Column"/>
                 <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
+
             </Style>
             <Style TargetType="DataGridRow" x:Name="DatagridRowStyle">
                 <Setter  Property="Background" Value="black"/>
@@ -46,6 +50,8 @@
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
             </Style>
 
+            
+            
 
             <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
             <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>

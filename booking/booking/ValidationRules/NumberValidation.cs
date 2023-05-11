@@ -11,7 +11,7 @@ namespace ValidationRules
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if(value==null) return new ValidationResult(false, "Empty textbox!");
+            if(value==null) return new ValidationResult(false, "");
             if (int.TryParse(value.ToString(),out int Number))
             {
                 return ValidationResult.ValidResult;

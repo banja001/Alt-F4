@@ -12,7 +12,7 @@ namespace ValidationRules
        
 public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (value == null) return new ValidationResult(false, "Empty combobox!");
+            if (value == null) return new ValidationResult(false, "");
             
             return ValidationResult.ValidResult;
             

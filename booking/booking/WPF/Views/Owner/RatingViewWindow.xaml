@@ -49,9 +49,12 @@
 
                     </Trigger>
                 </Style.Triggers>
+                <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                
             </Style>
             <Style TargetType="DataGrid">
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
                 <Setter Property="Foreground" Value="LightGray"/>
                 <Setter Property="Background" Value="Black"/>
                 <Setter Property="CanUserResizeColumns" Value="False"/>
@@ -97,7 +100,7 @@
         <DataGrid Grid.Row="1" Grid.ColumnSpan="2" x:Name="dgrMain" ItemsSource="{Binding OwnerRatings, UpdateSourceTrigger=PropertyChanged}" 
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False" Width="330" Height="140" HorizontalAlignment="Center" VerticalAlignment="Center"
-                  ColumnHeaderStyle="{StaticResource HeaderStyle}">
+                  ColumnHeaderStyle="{StaticResource HeaderStyle}" >
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
             </DataGrid.Resources>

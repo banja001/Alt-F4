@@ -326,6 +326,7 @@
                                 <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TypeComboBox}" Value="False"/>
                                 <Condition Binding="{Binding Path=(Validation.HasError), ElementName=CityComboBox}" Value="False"/>
                                 <Condition Binding="{Binding Path=(Validation.HasError), ElementName=StateComboBox}" Value="False"/>
+                                <Condition Binding="{Binding ImaSlika}" Value="True"/>
                             </MultiDataTrigger.Conditions>
                             <Setter Property="IsEnabled" Value="True"/>
                         </MultiDataTrigger>
