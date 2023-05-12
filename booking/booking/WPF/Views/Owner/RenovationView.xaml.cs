@@ -21,6 +21,7 @@ namespace WPF.Views.Owner
         public RenovationView()
         {
             InitializeComponent();
+            DataContext = this;
         }
     }
 }

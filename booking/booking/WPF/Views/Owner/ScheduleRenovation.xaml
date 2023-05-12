@@ -9,6 +9,11 @@
       Title="ScheduleRenovation">
 
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
+            <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
+            <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
+        </Grid.Resources>
         <Grid.RowDefinitions>
 
             <RowDefinition Height="0.75*"/>
@@ -33,30 +38,30 @@
 
         <Label Grid.ColumnSpan="2" Content="Find dates"/>
         <Label Grid.Row="1" Grid.ColumnSpan="2" Content="Select accommodation you want to renovate!"/>
-        <DataGrid x:Name="DataGridRaatings" ItemsSource="{Binding ListToRate, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
+        <DataGrid ItemsSource="{Binding AccommodationList, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False"  Grid.ColumnSpan="2" Width="360" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center"
                   Grid.Row="2" >
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Accommodation Name" Width="*"  Binding="{Binding GuestName}"/>
+                <DataGridTextColumn Header="Accommodation Name" Width="*"  Binding="{Binding Name}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Label Grid.Row="3" Grid.Column="2" Content="Select date range:"/>
         <Label Grid.Row="4" Content="From:"/>
         <Label Grid.Row="4" Grid.Column="1" Content="To:"/>
-        <DatePicker Grid.Row="5" />
-        <DatePicker Grid.Row="5" Grid.Column="1" />
+        <DatePicker Grid.Row="5" SelectedDate="{Binding FromDate}" SelectedDateFormat="Short"/>
+        <DatePicker Grid.Row="5" Grid.Column="1" SelectedDate="{Binding ToDate}" SelectedDateFormat="Short" />
         <Label Grid.Row="6" Content="Number of days for reservation:"/>
-        <TextBox Grid.Row="6" Grid.Column="1"/>
-        <Button Content="Search for free dates" Grid.Row="7" Grid.Column="1"/>
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Duration}"/>
+        <Button Command="{Binding SearchFreeDatesCommand}" Content="Search for free dates" Grid.Row="7" Grid.Column="1"/>
         <Line X2="1"  Grid.Row="8" Grid.ColumnSpan="2"/>
         <Label Grid.Row="9" Content="Renovate"/>
         <Label Grid.Row="10" Content="Select dates you want to book for renovating!"/>
-        <DataGrid Grid.Row="11" ItemsSource="{Binding ListToRate, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
+        <DataGrid Grid.Row="11" ItemsSource="{Binding IntervalList}"
+                  SelectedItem="{Binding SelectedInterval}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False"  Grid.ColumnSpan="2" Width="360" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center"
                   >
             <DataGrid.Resources>
