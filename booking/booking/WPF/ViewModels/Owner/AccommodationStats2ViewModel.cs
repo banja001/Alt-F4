@@ -3,6 +3,7 @@ using booking.Domain.Model;
 using booking.Model;
 using booking.WPF.ViewModels;
 using Domain.DTO;
+using Syncfusion.Windows.Shared;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -45,6 +46,23 @@ namespace WPF.ViewModels.Owner
         public ObservableCollection<AccommodationYearlyStatsDTO> DatagridYearList { get; set; }
         public ObservableCollection<AccommodationMonthlyStatsDTO> DatagridMonthList { get; set; }
 
+        private int maxYear;
+        public int MaxYear {
+            get
+            {
+                return maxYear;
+            }
+            set
+            {
+                if (value != maxYear)
+                {
+                    maxYear = value;
+                    OnPropertyChanged("MaxYear");
+                    
+                }
+            }
+        }
+
         public AccommodationStats2ViewModel(int accId,OwnerViewModel ownerViewModel)
         {
             accommodationId = accId;
@@ -59,19 +77,38 @@ namespace WPF.ViewModels.Owner
             reservedDates = ownerViewModel.reservedDatesService.GetAll();
             DatagridYearList=new ObservableCollection<AccommodationYearlyStatsDTO>();
             DatagridMonthList = new ObservableCollection<AccommodationMonthlyStatsDTO>();
-            int max = 0;
+            int max = -1;
+            MaxYear = -1;
+            int maxTemp;
             foreach (int year in YearList)
             {
+                maxTemp = 0;
                 NumberOfReservations = 0;
                 CanceledReservations = 0;
                 PostponedReservations = 0;
+                var lastDayOfTheYear = new DateTime(year, 12, 31);
                 foreach(var reservation in reservedDates)
-                {
-                    if(reservation.StartDate.Year==year && accommodationId==reservation.AccommodationId) NumberOfReservations++;
+                { 
                     
-                    //max += (int)(reservation.EndDate - reservation.StartDate).TotalDays;
+                    if(reservation.StartDate.Year==year && accommodationId==reservation.AccommodationId)
+                    {
+                        NumberOfReservations++;
+                        if(reservation.EndDate>=lastDayOfTheYear) maxTemp += (int)(lastDayOfTheYear - reservation.StartDate).TotalDays;
+                        else maxTemp += (int)(reservation.EndDate - reservation.StartDate).TotalDays;
+                    }
+                        
+
+                   
+                    
+                    
                 }
-                foreach(var request in res.GetAll())
+                if (maxTemp >= max)
+                {
+                    max = maxTemp;
+                    MaxYear = year;
+                }
+
+                foreach (var request in res.GetAll())
                 {
                     ReservedDates date = reservedDates.Find(a => a.Id == request.ReservationId);
                     if (date.AccommodationId==accommodationId && date.StartDate.Year==year)
