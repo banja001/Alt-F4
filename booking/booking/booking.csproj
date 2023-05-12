@@ -43,6 +43,7 @@
     <PackageReference Include="Expression.Interaction" Version="3.0.40218" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.3" />
+    <PackageReference Include="MvvmNavigation.Wpf" Version="3.2.0" />
     <PackageReference Include="Syncfusion.SfInput.WPF" Version="21.1.39" />
     <PackageReference Include="Syncfusion.Shared.WPF" Version="21.1.39" />
   </ItemGroup>

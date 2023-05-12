@@ -31,8 +31,6 @@ namespace booking.View
         private readonly OwnerRatingRepository _ownerRatingsRepository;
         private string _userName;
 
-        
-
         public string UserName
         {
             get => _userName;

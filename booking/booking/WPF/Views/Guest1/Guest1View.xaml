@@ -11,17 +11,63 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:val="clr-namespace:booking.Validation"
         mc:Ignorable="d"
-        Title="Guest" Height="760" Width="846" WindowStartupLocation="CenterScreen">
-    <Grid>
+        Title="Guest" Height="760" Width="846" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" Background="#597a6a">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding ReserveAccommodationsCommand}" Gesture="CTRL+R"></KeyBinding>
+        <KeyBinding Command="{Binding SearchAccommodationsCommand}" Gesture="CTRL+S"></KeyBinding>
+        <KeyBinding Command="{Binding SeeAllCommand}" Gesture="CTRL+L"></KeyBinding>
+
+        <KeyBinding Command="{Binding RemoveImageCommand}" Gesture="ALT+R"></KeyBinding>
+        <KeyBinding Command="{Binding SubmitRateCommand}" Gesture="ALT+S"></KeyBinding>
+        <KeyBinding Command="{Binding DataContext.AddImageCommand}" Gesture="ALT+A"></KeyBinding>
+
+        <KeyBinding Command="{Binding Path=DataContext.PostponeReservationCommand,
+            RelativeSource= {RelativeSource FindAncestor,
+            AncestorType={x:Type DataGrid}}}" Gesture="CTRL+P"></KeyBinding>
+        <KeyBinding Command="{Binding Path=DataContext.CancelReservationCommand, 
+            RelativeSource= {RelativeSource FindAncestor,
+            AncestorType={x:Type DataGrid}}}" Gesture="CTRL+C"></KeyBinding>
+
+        <KeyBinding Command="{Binding OpenFirstTabCommand}" Gesture="F1"></KeyBinding>
+        <KeyBinding Command="{Binding OpenSecondTabCommand}" Gesture="F2"></KeyBinding>
+        <KeyBinding Command="{Binding OpenThirdTabCommand}" Gesture="F3"></KeyBinding>
+        <KeyBinding Command="{Binding OpenFourthTabCommand}" Gesture="F4"></KeyBinding>
+    </Window.InputBindings>
+    <Window.Resources>
+        <Style x:Key="labelsStyle" TargetType="{x:Type Control}">
+            <Setter Property="Foreground" Value="#edf2f0"></Setter>
+        </Style>
+        <Style x:Key="groupBoxStyle" TargetType="GroupBox">
+            <Setter Property="Background" Value="#639985"></Setter>
+            <Setter Property="Foreground" Value="#edf2f0"></Setter>
+        </Style>
+        <Style x:Key="tabItemStyle" TargetType="TabItem">
+            <Setter Property="Background" Value="#639985"></Setter>
+            <Setter Property="Foreground" Value="#edf2f0"></Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#80a698"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="gridStyle" TargetType="Grid">
+            <Setter Property="Background" Value="#80a698"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid KeyboardNavigation.TabNavigation="Cycle"
+          FocusManager.FocusedElement="{Binding ElementName=tabControl}">
         <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0">
             <Button Content="Tutorial" Height="20" Width="55" Margin="5 0"/>
-            <Label Name="lbUserName" Content="{Binding UserName}"/>
-            <Label Content="|   Score:"/>
-            <Label Name="lbScore" Content="{Binding Score}"/>
+            <Label Name="lbUserName" Content="{Binding UserName}" Style="{StaticResource ResourceKey=labelsStyle}"/>
+            <Label Content="|   Score:" Style="{StaticResource ResourceKey=labelsStyle}"/>
+            <Label Name="lbScore" Content="{Binding Score}" Style="{StaticResource ResourceKey=labelsStyle}"/>
         </WrapPanel>
-    <TabControl Name="tabControl">
-        <TabItem Name="tabItemOverview" Header="Overview" Height="22" VerticalAlignment="Top">
-            <Grid>
+    <TabControl Name="tabControl" SelectedIndex="{Binding SelectedIndexTabControl, UpdateSourceTrigger=PropertyChanged}">
+            <TabItem Name="tabItemOverview" Header="Overview" Height="22" VerticalAlignment="Top" Style="{StaticResource ResourceKey=tabItemStyle}"
+                 KeyboardNavigation.TabNavigation="Cycle"
+                 FocusManager.FocusedElement="{Binding ElementName=wpRadioButtons.rbOverview}">
+                <Grid Style="{StaticResource ResourceKey=gridStyle}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.5*"></RowDefinition>
                     <RowDefinition Height="0.2*"></RowDefinition>
@@ -34,12 +80,16 @@
                     <ColumnDefinition Width="5*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Accommodation overview" FontSize="24" FontWeight="Bold" Margin="10 0"/>
-                 <WrapPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10 10">
-                        <RadioButton Content="Overview" RenderTransformOrigin="0.722,0.613" IsChecked="True"/>
-                        <RadioButton Grid.Column="0" Content="Anywhere, anytime" Margin="10 0" RenderTransformOrigin="0.722,0.613"/>
+                <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Accommodation overview" 
+                       Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24" FontWeight="Bold" Margin="10 0"/>
+                 <WrapPanel Name="wpRadioButtons" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10 10">
+                        <RadioButton Name="rbOverview"  Content="Overview" RenderTransformOrigin="0.722,0.613" 
+                                     Style="{StaticResource ResourceKey=labelsStyle}" IsChecked="True" KeyDown="RadioButton_KeyDown"/>
+                        <RadioButton Name="rbAnywhereAnytime" Grid.Column="0" Content="Anywhere, anytime" Margin="10 0" 
+                                     Style="{StaticResource ResourceKey=labelsStyle}" RenderTransformOrigin="0.722,0.613" KeyDown="RadioButton_KeyDown"/>
                     </WrapPanel>
-                    <GroupBox Grid.Row="2" Grid.ColumnSpan="2" Header="Search" Margin="10 0">
+                    <GroupBox Grid.Row="2" Grid.ColumnSpan="2" Header="Search" 
+                              Style="{StaticResource ResourceKey=groupBoxStyle}" BorderThickness="2" Margin="10 0" KeyDown="GroupBox_KeyDown">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
@@ -56,16 +106,20 @@
                             <ColumnDefinition Width="2*"></ColumnDefinition>
                             <ColumnDefinition Width="2*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <WrapPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Bottom">
-                            <CheckBox x:Name="CheckBoxApartment" Content="Apartment" HorizontalAlignment="Left" Margin="10 0" IsChecked="{Binding ApartmentChecked}"/>
-                            <CheckBox x:Name="CheckBoxHouse" Content="House" HorizontalAlignment="Center" Margin="10 0" IsChecked="{Binding HouseChecked}"/>
-                            <CheckBox x:Name="CheckBoxCabin" Content="Cabin" HorizontalAlignment="Right" Margin="10 0" IsChecked="{Binding CabinChecked}"/>
+                            <WrapPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Bottom">
+                            <CheckBox x:Name="CheckBoxApartment" Content="Apartment" 
+                                      Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" Margin="10 0" IsChecked="{Binding ApartmentChecked}" KeyDown="CheckBox_KeyDown"/>
+                            <CheckBox x:Name="CheckBoxHouse" Content="House" 
+                                      Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Center" Margin="10 0" IsChecked="{Binding HouseChecked}" KeyDown="CheckBox_KeyDown"/>
+                            <CheckBox x:Name="CheckBoxCabin" Content="Cabin" 
+                                      Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Right" Margin="10 0" IsChecked="{Binding CabinChecked}" KeyDown="CheckBox_KeyDown"/>
                         </WrapPanel>
                         
-                        <Label Grid.Row="1" Grid.Column="0" Content="Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0"/>
+                        <Label Grid.Row="1" Grid.Column="0" Content="Name" VerticalAlignment="Center" 
+                               Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" Margin="5 0"/>
                         <TextBox Grid.Row="1" Grid.Column="1"  x:Name="tSearchBarName" Height="20" Text="{Binding SearchedAccommodation.Name, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <Label Grid.Row="1" Grid.Column="2" Content="State" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <Label Grid.Row="1" Grid.Column="2" Content="State" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                         <ComboBox Grid.Row="1" Grid.Column="3" x:Name="StateComboBox" Height="20" 
                                   ItemsSource="{Binding States, UpdateSourceTrigger=PropertyChanged}" 
                                   SelectedItem="{Binding SelectedState}">
@@ -76,12 +130,12 @@
                                 </i:Interaction.Triggers>
                         </ComboBox>
 
-                        <Label Grid.Row="1" Grid.Column="4" Content="City" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <Label Grid.Row="1" Grid.Column="4" Content="City" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                         <ComboBox Grid.Row="1" Grid.Column="5" x:Name="CityComboBox"  Height="20" 
                                   ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}"
                                   SelectedItem="{Binding SelectedCity}" IsEnabled="{Binding CitiesComboBoxEnabled, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <Label Grid.Row="2" Content="Guests" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0"/>
+                        <Label Grid.Row="2" Content="Guests" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0"/>
                         <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" x:Name="tSearchBarNumberOfGuests" Height="20">
                             <xctk:IntegerUpDown.Text>
                                 <Binding Path="SearchedAccommodation.NumOfGuests" UpdateSourceTrigger="PropertyChanged">
@@ -108,7 +162,8 @@
                             </Validation.ErrorTemplate>
                         </xctk:IntegerUpDown>
 
-                        <Label Grid.Row="2" Grid.Column="2" Height="30" Content="Days" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <Label Grid.Row="2" Grid.Column="2" Height="30" Content="Days" 
+                               Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                         <xctk:IntegerUpDown Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" x:Name="tSearchBarNumberOfDays" Height="20">
                                 <xctk:IntegerUpDown.Text>
                                     <Binding Path="SearchedAccommodation.NumOfDays" UpdateSourceTrigger="PropertyChanged">
@@ -135,22 +190,37 @@
                                 </Validation.ErrorTemplate>
                             </xctk:IntegerUpDown>
 
-                        <Button Grid.Row="1" Grid.Column="6" x:Name="SeeAllButton" Command="{Binding SeeAllCommand}" Height="20" Width="67" Content="See all" HorizontalAlignment="Right"/>
-                        <Button Grid.Row="2" Grid.Column="6" x:Name="SearchAccommodationButton" Command="{Binding SearchAccommodationsCommand}" Height="20" Width="67" Content="Search" HorizontalAlignment="Right"/>
+                        <Button Grid.Row="1" Grid.Column="6" x:Name="SeeAllButton" Command="{Binding SeeAllCommand}" Height="20" Width="67" Content="See all" HorizontalAlignment="Right" Margin="10 0"/>
+                            <Button Grid.Row="2" Grid.Column="6" x:Name="SearchAccommodationButton" Command="{Binding SearchAccommodationsCommand}" Height="20" Width="67" Content="Search" HorizontalAlignment="Right" Margin="10 0"/>
                         
                     </Grid>
                 </GroupBox>
 
-                <Button Grid.Row="3" Grid.Column="1" x:Name="ReserveAccommodationButton" Command="{Binding ReserveAccommodationCommand}" Width="67" Content="Reserve" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10 10"/>
-                <Label Grid.Row="3" Grid.Column="0" Content="Accommodations" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10 0"/>
-                <DataGrid Grid.Row="4" Grid.ColumnSpan="2" x:Name="accommodationData"
+                <Button Grid.Row="3" Grid.Column="1" x:Name="ReserveAccommodationButton" Command="{Binding ReserveAccommodationsCommand}"
+                        Width="67" Content="Reserve" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10 10"/>
+                <Label Grid.Row="3" Grid.Column="0" Content="Accommodations" Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10 0"/>
+                    <DataGrid Grid.Row="4" Grid.ColumnSpan="2" x:Name="accommodationData"
                           ItemsSource="{Binding AccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
                            IsReadOnly="True"
                            SelectionMode="Single"
                            CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
-                           ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Margin="10 0 10 10">
-                    <DataGrid.Columns>
+                           ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Margin="10 0 10 10" PreviewKeyDown="accommodationData_PreviewKeyDown">
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="Background" Value="#80a698"></Setter>
+                                <Setter Property="Foreground" Value="#edf2f0"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#597a6a"></Setter>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#597a6a"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" CanUserResize="False"  Width="4*"/>
                         <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False" Width="3*"/>
                         <DataGridTextColumn Header="Type" Binding="{Binding Type}" CanUserResize="False" Width="2*"/>
@@ -171,7 +241,9 @@
                 <Label Content="Accommodations" HorizontalAlignment="Left" Margin="10,334,0,0" VerticalAlignment="Top" Height="28"/>
             </Grid>
         </TabItem>
-        <TabItem Name="tabItemRate" Header="Rate">
+            <TabItem Name="tabItemRate" Header="Rate" Style="{StaticResource ResourceKey=tabItemStyle}"
+                 KeyboardNavigation.TabNavigation="Cycle" 
+                 FocusManager.FocusedElement="{Binding ElementName=lbStayedIn}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1.5*"></RowDefinition>
@@ -270,7 +342,9 @@
                 <Button Grid.Row="6" Grid.Column="3" Name="bSubmitRate" Command="{Binding SubmitRateCommand}" Content="Submit rate" HorizontalAlignment="Right" Height="30" VerticalAlignment="Center" Width="79" Margin="10 0"/>
             </Grid>
         </TabItem>
-        <TabItem Name="tabItemReservations" Header="Reservations" Height="22" VerticalAlignment="Top">
+            <TabItem Name="tabItemReservations" Header="Reservations" Height="22" VerticalAlignment="Top" Style="{StaticResource ResourceKey=tabItemStyle}"
+                 KeyboardNavigation.TabNavigation="Cycle"
+                 FocusManager.FocusedElement="{Binding ElementName=gbAllReservations.reservationsData}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"></RowDefinition>
@@ -283,7 +357,7 @@
                 
                 <Label Grid.Row="0" Grid.Column="0" Content="Reservations overview" FontSize="24" FontWeight="Bold" Margin="10 0"/>
                 
-                <GroupBox Grid.Row="1" Grid.Column="0" Header="All reservations" Margin="10">
+                <GroupBox Name="gbAllReservations" Grid.Row="1" Grid.Column="0" Header="All reservations" Margin="10">
                     <Grid>
                         <DataGrid x:Name="reservationsData"
                               ItemsSource="{Binding ReservationAccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
@@ -353,7 +427,7 @@
                 </GroupBox>
             </Grid>
         </TabItem>
-        <TabItem Name="tabItemForums" Header="Forums">
+            <TabItem Name="tabItemForums" Header="Forums" Style="{StaticResource ResourceKey=tabItemStyle}">
             <Grid Background="#FFE5E5E5"/>
         </TabItem>
     </TabControl>

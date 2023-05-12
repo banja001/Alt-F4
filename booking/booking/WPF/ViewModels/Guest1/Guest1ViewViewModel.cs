@@ -6,6 +6,7 @@ using booking.Model;
 using booking.View.Guest1;
 using booking.WPF.ViewModels;
 using Domain.Model;
+using Egor92.MvvmNavigation.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -41,6 +42,20 @@ namespace WPF.ViewModels.Guest1
             }
         }
 
+        private int selectedIndexTabControl;
+        public int SelectedIndexTabControl 
+        {
+            get { return selectedIndexTabControl; }
+            set
+            {
+                if(selectedIndexTabControl != value)
+                {
+                    selectedIndexTabControl = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public bool ApartmentChecked { get; set; }
         public bool HouseChecked { get; set; }
         public bool CabinChecked { get; set; }
@@ -62,10 +77,15 @@ namespace WPF.ViewModels.Guest1
         private readonly Guest1NotificationsService _guest1NotificationsService;
 
         public ICommand SearchAccommodationsCommand => new RelayCommand(SearchAccommodations);
-        public ICommand ReserveAccommodationCommand => new RelayCommand(ReserveAccommodations);
+        public ICommand ReserveAccommodationsCommand => new RelayCommand(ReserveAccommodations);
         public ICommand OpenImagesCommand => new RelayCommand(OpenImages);
         public ICommand SeeAllCommand => new RelayCommand(SeeAll);
         public ICommand StateSelectionChangedCommand => new RelayCommand(StateSelectionChanged);
+
+        public ICommand OpenFirstTabCommand => new RelayCommand(OpenFirstTab);
+        public ICommand OpenSecondTabCommand => new RelayCommand(OpenSecondTab);
+        public ICommand OpenThirdTabCommand => new RelayCommand(OpenThirdTab);
+        public ICommand OpenFourthTabCommand => new RelayCommand(OpenFourthTab);
 
         public Guest1ViewViewModel(int userId)
         {
@@ -76,6 +96,8 @@ namespace WPF.ViewModels.Guest1
             _guest1NotificationsService = new Guest1NotificationsService();
 
             this.userId = userId;
+
+            SelectedIndexTabControl = 0;
 
             States = new ObservableCollection<string>();
             Cities = new ObservableCollection<string>();
@@ -100,8 +122,6 @@ namespace WPF.ViewModels.Guest1
             SearchedAccommodation = new SearchedAccomodationDTO();
             AccommodationDTOs = _accommodationService.SortAccommodationDTOs(_accommodationService.CreateAccomodationDTOs());
         }
-
-        
 
         private void FillStateComboBox()
         {
@@ -227,6 +247,26 @@ namespace WPF.ViewModels.Guest1
             }
 
             CitiesComboBoxEnabled = true;
+        }
+
+        private void OpenFirstTab()
+        {
+            SelectedIndexTabControl = 0;
+        }
+
+        private void OpenSecondTab()
+        {
+            SelectedIndexTabControl = 1;
+        }
+
+        private void OpenThirdTab()
+        {
+            SelectedIndexTabControl = 2;
+        }
+
+        private void OpenFourthTab()
+        {
+            SelectedIndexTabControl = 3;
         }
     }
 }

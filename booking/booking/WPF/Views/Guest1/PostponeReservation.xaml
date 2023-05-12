@@ -6,7 +6,12 @@
         xmlns:local="clr-namespace:booking.WPF.Views.Guest1"
         mc:Ignorable="d"
         Title="PostponeReservation" Height="363" Width="703" WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CloseCommand}" Gesture="ESC"></KeyBinding>
+        <KeyBinding Command="{Binding SendPostponeRequestCommand}" Gesture="CTRL+S"></KeyBinding>
+    </Window.InputBindings>
+    <Grid KeyboardNavigation.TabNavigation="Cycle"
+          FocusManager.FocusedElement="{Binding ElementName=cNewStartDate}">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="4*"></RowDefinition>
@@ -28,8 +33,8 @@
         <Calendar Grid.Row="1" Grid.Column="3" Name="cNewEndDate" SelectedDate="{Binding Path=NewDate.EndDate}" Margin="0 0 5 0"/>
 
         <WrapPanel Grid.Row="2" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Command="{Binding SendPostponeRequestCommand}" Content="Send" Name="bSend" Height="30" Width="78" Margin="10 0"/>
             <Button Command="{Binding CloseCommand}" Content="Cancel" x:Name="bCancel" Height="30" Width="78" Margin="10 0"/>
+            <Button Command="{Binding SendPostponeRequestCommand}" Content="Send" Name="bSend" Height="30" Width="78" Margin="10 0"/>
         </WrapPanel>
         
     </Grid>
