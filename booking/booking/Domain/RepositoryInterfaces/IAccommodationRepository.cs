@@ -9,6 +9,8 @@ namespace Domain.RepositoryInterfaces
     {
         List<Accommodation> GetAll();
         Accommodation GetById(int id);
+
+        List<Accommodation> GetAllByOwnerId(int id);
         void Add(Accommodation acc);
         Accommodation FindById(int id);
     }

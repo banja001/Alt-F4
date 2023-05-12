@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF.ViewModels.Owner;
 
 namespace WPF.Views.Owner
 {
@@ -18,9 +19,10 @@ namespace WPF.Views.Owner
     /// </summary>
     public partial class AccommodationStats2 : Page
     {
-        public AccommodationStats2()
+        public AccommodationStats2(int accId,OwnerViewModel ownerViewModel)
         {
             InitializeComponent();
+            DataContext = new AccommodationStats2ViewModel(accId,ownerViewModel);
         }
     }
 }

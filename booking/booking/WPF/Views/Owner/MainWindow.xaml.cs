@@ -47,12 +47,9 @@ namespace WPF.Views.Owner
 
             
             Main.Content=OwnerWindow;
-            Console.WriteLine(GlobalVariables.a);
+            
         }
-        private void AddAccommodationDropdownClick(object sender, RoutedEventArgs e)
-        {
-            Main.Content=new AddAccommodationWindow(OwnerModel);
-        }
+        
 
         private void BackClick(object sender, RoutedEventArgs e)
         {
@@ -69,6 +66,10 @@ namespace WPF.Views.Owner
                 Main.NavigationService.GoForward();
             }
         }
+        private void AddAccommodationDropdownClick(object sender, RoutedEventArgs e)
+        {
+            Main.Content=new AddAccommodationWindow(OwnerModel);
+        }
 
         private void ViewRatingsDropdownClick(object sender, RoutedEventArgs e)
         {
@@ -79,7 +80,10 @@ namespace WPF.Views.Owner
         {
             Main.Content = new ReservationChangeWindow(OwnerModel);
         }
-
+        private void AccommodationStatsClick(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new AccommodationStats(OwnerModel);
+        }
         
     }
 }

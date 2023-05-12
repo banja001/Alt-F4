@@ -9,6 +9,11 @@
       Title="AccommodationStats2">
 
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
+            <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
+            <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="0.75*"/>
@@ -33,10 +38,10 @@
         <Label Content="" Grid.Row="1" Grid.ColumnSpan="2"/>
         <Line X2="1"  Grid.ColumnSpan="2" Grid.Row="2"/>
         <Label Grid.Row="3" Content="Select a year:"/>
-        <ComboBox Grid.Row="3" Grid.Column="1" />
+        <ComboBox Grid.Row="3" Grid.Column="1"  ItemsSource="{Binding YearList}" SelectedItem="{Binding SelectedYear}"/>
         <Line X2="1"  Grid.Row="4" Grid.ColumnSpan="2"/>
         <Label Grid.Row="5" Content="Select a month:"/>
-        <ComboBox Grid.Row="5" Grid.Column="1" />
+        <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding MonthList}" SelectedItem="{Binding SelectedMonth}"/>
         <Label Grid.Row="6" Content="Number of reservations:"/>
         <Label Grid.Row="6" Grid.Column="1" Content=""/>
         <Label Grid.Row="7" Content="Number of canceled reservations:"/>

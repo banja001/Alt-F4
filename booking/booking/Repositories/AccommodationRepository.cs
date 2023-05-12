@@ -37,7 +37,10 @@ namespace booking.Repository
         {
             return accommodations.Where(a => a.Id == id).ToList()[0];
         }
-
+        public List<Accommodation> GetAllByOwnerId(int id)/////////////////
+        {
+            return accommodations.FindAll(a => a.OwnerId == id);
+        }
         public void Add(Accommodation acc)
         {
 
