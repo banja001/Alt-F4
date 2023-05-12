@@ -1,6 +1,11 @@
-﻿using booking.WPF.ViewModels;
+﻿using booking.application.usecases;
+using booking.Domain.Model;
+using booking.Model;
+using booking.WPF.ViewModels;
+using Domain.DTO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -12,74 +17,106 @@ namespace WPF.ViewModels.Owner
         public OwnerViewModel ownerViewModel;
         private int accommodationId;
         public List<int> YearList { get; set; }
-        private int selectedYear;
-        public int SelectedYear {
-            get
-            {
-                return selectedYear;
-            }
-            set
-            {
-                if (value != selectedYear)
-                {
-                    selectedYear = value;
-                    OnPropertyChanged("SelectedYear");
-                    YearSelectionChanged();
-                }
-            }
-        }
+        
         public List<string> Months =new List<string>{"January","February","March","April","May","June","July","August","September","October","November","December"};
-        private List<string> monthList;
-        public List<string> MonthList {
+
+        private AccommodationYearlyStatsDTO selectedItem;
+        public AccommodationYearlyStatsDTO SelectedItem
+        {
             get
             {
-                return monthList;
+                return selectedItem;
             }
             set
             {
-                if (value != monthList)
+                if (value != selectedItem)
                 {
-                    monthList = value;
-                    OnPropertyChanged("MonthList");
+                    selectedItem = value;
+                    OnPropertyChanged("SelectedItem");
+                    DatagridSelectionChange();
                 }
             }
         }
-        private string selectedMonth;
-        public string SelectedMonth {
-            get
-            {
-                return selectedMonth;
-            }
-            set
-            {
-                if (value != selectedMonth)
-                {
-                    selectedMonth = value;
-                    OnPropertyChanged("SelectedMonth");
-                }
-            }
-        }
+        private int NumberOfReservations;
+        private int CanceledReservations;
+        private int PostponedReservations;
+        ReservationRequestsService res;
+        public List<ReservedDates> reservedDates;
+        public ObservableCollection<AccommodationYearlyStatsDTO> DatagridYearList { get; set; }
+        public ObservableCollection<AccommodationMonthlyStatsDTO> DatagridMonthList { get; set; }
+
         public AccommodationStats2ViewModel(int accId,OwnerViewModel ownerViewModel)
         {
             accommodationId = accId;
             this.ownerViewModel=ownerViewModel;
             YearList = new List<int>();
-            MonthList = new List<string>();
+            res = new ReservationRequestsService();
             for(int i=2018;i<=DateTime.Now.Year; i++)
             {
                 YearList.Add(i);
             }
             
+            reservedDates = ownerViewModel.reservedDatesService.GetAll();
+            DatagridYearList=new ObservableCollection<AccommodationYearlyStatsDTO>();
+            DatagridMonthList = new ObservableCollection<AccommodationMonthlyStatsDTO>();
+            int max = 0;
+            foreach (int year in YearList)
+            {
+                NumberOfReservations = 0;
+                CanceledReservations = 0;
+                PostponedReservations = 0;
+                foreach(var reservation in reservedDates)
+                {
+                    if(reservation.StartDate.Year==year && accommodationId==reservation.AccommodationId) NumberOfReservations++;
+                    
+                    //max += (int)(reservation.EndDate - reservation.StartDate).TotalDays;
+                }
+                foreach(var request in res.GetAll())
+                {
+                    ReservedDates date = reservedDates.Find(a => a.Id == request.ReservationId);
+                    if (date.AccommodationId==accommodationId && date.StartDate.Year==year)
+                    {
+                        if (request.isCanceled == RequestStatus.Canceled) CanceledReservations++;
+                        if (request.isCanceled == RequestStatus.Postponed) PostponedReservations++;
+                    }//Preporuk za renoviranje fali
+                }
+                
+                AccommodationYearlyStatsDTO statsPerYear = new AccommodationYearlyStatsDTO(year,NumberOfReservations,CanceledReservations,PostponedReservations);
+                DatagridYearList.Add(statsPerYear);
+            }
+            
+            
         }
 
-        public void YearSelectionChanged()
+        public void DatagridSelectionChange()
         {
-            SelectedMonth = null;
-            MonthList = Months.ToList();
-            if (SelectedYear == DateTime.Now.Year)
-            {
-                MonthList=MonthList.Take(DateTime.Now.Month).ToList();
-            } 
+            DatagridMonthList.Clear();
+            for(int i=1;i <= 12; i++){
+            NumberOfReservations = 0;
+            CanceledReservations = 0;
+            PostponedReservations = 0;
+                foreach (var reservation in reservedDates)
+                {
+                    if (reservation.StartDate.Month == i && reservation.StartDate.Year == SelectedItem.year && accommodationId == reservation.AccommodationId) NumberOfReservations++;
+                }
+                foreach (var request in res.GetAll())
+                {
+                    ReservedDates date = reservedDates.Find(a => a.Id == request.ReservationId);
+                    if (date.AccommodationId == accommodationId && date.StartDate.Month == i && date.StartDate.Year==SelectedItem.year)
+                    {
+                        if (request.isCanceled == RequestStatus.Canceled) CanceledReservations++;
+                        if (request.isCanceled == RequestStatus.Postponed) PostponedReservations++;
+                    }//Preporuk za renoviranje fali
+                }
+                AccommodationMonthlyStatsDTO statsPerMonth = new AccommodationMonthlyStatsDTO(Months[i-1], NumberOfReservations, CanceledReservations, PostponedReservations);
+                DatagridMonthList.Add(statsPerMonth);
+
+            }
+
         }
+
+
+
+
     }
 }

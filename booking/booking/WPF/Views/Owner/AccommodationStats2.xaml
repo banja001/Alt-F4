@@ -16,15 +16,11 @@
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="0.75*"/>
-            <RowDefinition Height="0.75*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
             <RowDefinition Height="0.75*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="0.75*"/>
-            <RowDefinition Height="0.75*"/>
-            <RowDefinition Height="0.75*"/>
-            <RowDefinition Height="0.75*"/>
+            <RowDefinition Height="5*"/>
+            
             <RowDefinition Height="0.75*"/>
             <RowDefinition Height="1*"/>
  
@@ -33,24 +29,42 @@
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
+        <DataGrid ItemsSource="{Binding DatagridYearList, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
+                  IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                  Width="350" Height="200" >
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Year" Width="2*" Binding="{Binding year}"/>
+                <DataGridTextColumn Header="Reservations" Width="2*" Binding="{Binding NumberOfReservations}"/>
+                <DataGridTextColumn Header="Postponed" Width="2*" Binding="{Binding PostponedReservations}"/>
+                <DataGridTextColumn Header="Canceled" Width="2*" Binding="{Binding CanceledReservations}"/>
+                <DataGridTextColumn Header="Renovation" Width="2*" Binding="{Binding RenovationSuggestions}"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
         <Label Content="Accommodation" Grid.ColumnSpan="2"/>
         <Label Content="" Grid.Row="1" Grid.ColumnSpan="2"/>
         <Line X2="1"  Grid.ColumnSpan="2" Grid.Row="2"/>
-        <Label Grid.Row="3" Content="Select a year:"/>
-        <ComboBox Grid.Row="3" Grid.Column="1"  ItemsSource="{Binding YearList}" SelectedItem="{Binding SelectedYear}"/>
-        <Line X2="1"  Grid.Row="4" Grid.ColumnSpan="2"/>
-        <Label Grid.Row="5" Content="Select a month:"/>
-        <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding MonthList}" SelectedItem="{Binding SelectedMonth}"/>
-        <Label Grid.Row="6" Content="Number of reservations:"/>
-        <Label Grid.Row="6" Grid.Column="1" Content=""/>
-        <Label Grid.Row="7" Content="Number of canceled reservations:"/>
-        <Label Grid.Row="7" Grid.Column="1" Content=""/>
-        <Label Grid.Row="8" Content="Number of postponed reservations:"/>
-        <Label Grid.Row="8" Grid.Column="1" Content=""/>
-        <Label Grid.Row="9" Content="Number of recommendations for renovation:"/>
-        <Label Grid.Row="9" Grid.Column="1" Content=""/>
-        <Line X2="1"  Grid.Row="10" Grid.ColumnSpan="2"/>
+
+        <DataGrid ItemsSource="{Binding DatagridMonthList, UpdateSourceTrigger=PropertyChanged}"
+                  IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                  Width="350" Height="200" >
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Year" Width="2*" Binding="{Binding Month}"/>
+                <DataGridTextColumn Header="Reservations" Width="2*" Binding="{Binding NumberOfReservations}"/>
+                <DataGridTextColumn Header="Postponed" Width="2*" Binding="{Binding PostponedReservations}"/>
+                <DataGridTextColumn Header="Canceled" Width="2*" Binding="{Binding CanceledReservations}"/>
+                <DataGridTextColumn Header="Renovation" Width="2*" Binding="{Binding RenovationSuggestions}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
         <Label Grid.Row="11" Content="Most booked month:"/>
         <Label Grid.Row="11" Grid.Column="1" Content=""/>
     </Grid>
