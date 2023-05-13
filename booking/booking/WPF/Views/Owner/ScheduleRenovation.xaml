@@ -72,6 +72,6 @@
                 <DataGridTextColumn Header="End date" Width="*"  Binding="{Binding EndDate}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="12" Grid.Column="1" Content="Renovate"/>
+        <Button Grid.Row="12" Grid.Column="1" Content="Renovate" Command="{Binding ScheduleRenovationCommand}"/>
     </Grid>
 </Page>

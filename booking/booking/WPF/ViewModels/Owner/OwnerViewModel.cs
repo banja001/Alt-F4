@@ -1,4 +1,5 @@
 ﻿using application.UseCases;
+using booking.application.UseCases;
 using booking.Commands;
 using booking.Domain.Model;
 using booking.DTO;
@@ -75,6 +76,7 @@ namespace WPF.ViewModels.Owner
         public List<OwnerRatingImage> OwnerRatingImages;
         public OwnerRatingService OwnerRatingService;
         public List<OwnerRating> OwnerRatings;
+        public RenovationDatesService renovationDatesService;
         public ObservableCollection<Guest1RatingDTO> ListToRate { get; set; }
         public Guest1RatingDTO SelectedItem { get; set; }
 
@@ -179,6 +181,8 @@ namespace WPF.ViewModels.Owner
             OwnerRatingImages = OwnerRatingImageService.GetAll();
             OwnerRatingService = new OwnerRatingService();
             OwnerRatings = OwnerRatingService.GetAll();
+
+            renovationDatesService = new RenovationDatesService();
         }
 
         private void NotifyUser()

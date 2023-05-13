@@ -1,13 +1,17 @@
-﻿using booking.Commands;
+﻿using booking.application.UseCases;
+using booking.Commands;
 using booking.Model;
 using booking.WPF.ViewModels;
+using booking.WPF.Views.Owner;
 using Domain.DTO;
+using Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
+using WPF.Views.Owner;
 
 namespace WPF.ViewModels.Owner
 {
@@ -103,6 +107,7 @@ namespace WPF.ViewModels.Owner
         }
 
         public ICommand SearchFreeDatesCommand => new RelayCommand(SearchFreeDates);
+        public ICommand ScheduleRenovationCommand => new RelayCommand(ScheduleRenovation);
         public ScheduleRenovationViewModel(OwnerViewModel ow)
         {
             ownerViewModel = ow;
@@ -120,7 +125,7 @@ namespace WPF.ViewModels.Owner
             while(tempDate.Date<=endDate.Date)
             {
                 check = true;
-                foreach(var reservation in ownerViewModel.reservedDatesService.GetAll())
+                foreach(var reservation in ownerViewModel.reservedDatesService.GetAll())//checks for reserved date range
                 {
                     if (reservation.AccommodationId == SelectedAccommodation.Id)
                     {
@@ -131,6 +136,21 @@ namespace WPF.ViewModels.Owner
                         } 
                     }
                 }
+                if (check)//checks for renovation date range
+                {
+                    foreach(var renovation in ownerViewModel.renovationDatesService.GetAll())
+                    {
+                        if (renovation.AccommodationId == SelectedAccommodation.Id)
+                        {
+                            if (!(startDate.Date >= renovation.EndDate.Date || tempDate.Date <= renovation.StartDate))
+                            {
+                                check = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+
 
                 if (check)
                 {
@@ -138,12 +158,19 @@ namespace WPF.ViewModels.Owner
                     IntervalList.Add(interval);
                 }
 
-
                 tempDate=tempDate.AddDays(1);
                 startDate = startDate.AddDays(1);
             }
 
 
+        }
+
+        private void ScheduleRenovation()
+        {
+            LeaveCommentRenovationWindow win = new LeaveCommentRenovationWindow(SelectedInterval,SelectedAccommodation.Id);
+            win.ShowDialog();
+            IntervalList.Clear();
+            
         }
     }
 }
