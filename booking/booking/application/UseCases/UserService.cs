@@ -33,5 +33,10 @@ namespace application.UseCases
         {
             userRepository.UpdateById(id, b);
         }
+
+        public int GetScoreById(int id)
+        {
+            return userRepository.GetScoreById(id);
+        }
     }
 }

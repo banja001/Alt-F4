@@ -55,6 +55,9 @@ namespace booking.Repository
             }
         }
 
-        
+        public int GetScoreById(int id)
+        {
+            return _users.Find(u => u.Id == id).Score;
+        }
     }
 }
