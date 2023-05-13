@@ -88,7 +88,10 @@ namespace WPF.Views.Owner
         {
             Main.Content = new ScheduleRenovation(OwnerModel);
         }
-
+        private void ViewRenovationClick(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new RenovationView(OwnerModel);
+        }
 
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using WPF.Views.Owner;
 
 namespace WPF.ViewModels.Owner
 {
@@ -31,6 +32,7 @@ namespace WPF.ViewModels.Owner
         {
             RenovationDates ren = new RenovationDates(repository.MakeId(), selectedInterval.StartDate, selectedInterval.EndDate, accommodationId,Comment);
             repository.Add(ren);
+            MainWindow.w.Main.Navigate(MainWindow.w.OwnerWindow);
             this.CloseCurrentWindow();
         }
     }

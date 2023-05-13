@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF.ViewModels.Owner;
 
 namespace WPF.Views.Owner
 {
@@ -18,10 +19,10 @@ namespace WPF.Views.Owner
     /// </summary>
     public partial class RenovationView : Page
     {
-        public RenovationView()
+        public RenovationView(OwnerViewModel ow)
         {
             InitializeComponent();
-            DataContext = this;
+            DataContext = new RenovationViewViewModel(ow);
         }
     }
 }

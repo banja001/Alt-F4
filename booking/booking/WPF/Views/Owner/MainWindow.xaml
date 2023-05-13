@@ -71,6 +71,14 @@
                             </StackPanel>
                         </Button.Content>
                     </Button>
+                    <Button Click="ViewRenovationClick" HorizontalContentAlignment="Left">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" >
+                                <Image Source="../../../Resources/Icons/owner_icon.png" Width="10" Height="10"/>
+                                <Label Content="View Renovation" FontSize="10"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
                 </StackPanel>
             </booking:DropdownMenu>
             <Button Name="BackButton"  BorderBrush="DarkRed" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="30" Margin="19,0,0,0" Background="DarkRed" Click="BackClick">
