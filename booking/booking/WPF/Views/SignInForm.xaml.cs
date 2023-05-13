@@ -19,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WPF.Views.Guide;
+using WPF.Views.Owner;
 
 namespace booking.View
 {
@@ -27,7 +28,6 @@ namespace booking.View
     /// </summary>
     public partial class SignInForm : Window
     {
-        
         private readonly UserRepository _repository;
         private readonly OwnerRatingRepository _ownerRatingsRepository;
         private string _userName;
@@ -58,13 +58,12 @@ namespace booking.View
             _repository = new UserRepository();
             _ownerRatingsRepository = new OwnerRatingRepository();
             RefreshUsers();
-            //Loaded += RefreshUsers;
+
         }
 
-        public void RefreshUsers()//object sender, RoutedEventArgs e)
+        public void RefreshUsers()
         {
-            //Loaded -= RefreshUsers;
-             
+            
             List<OwnerRating> ownerRatings = _ownerRatingsRepository.GetAll();
             List<User> users = _repository.GetAll().ToList();
             double sum, i;
@@ -96,7 +95,7 @@ namespace booking.View
 
                     if (user.Role == "Owner")
                     {
-                        OwnerWindow win=new OwnerWindow(user.Id);
+                        MainWindow win = new MainWindow(user.Id);
                         win.Show();
                         this.Close();
                     }

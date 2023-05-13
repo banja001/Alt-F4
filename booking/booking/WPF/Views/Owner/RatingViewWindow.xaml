@@ -1,31 +1,129 @@
-﻿<Window x:Class="booking.View.Owner.RatingViewWindow"
+﻿<Page x:Class="booking.View.Owner.RatingViewWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.View.Owner"
         mc:Ignorable="d"
-        Title="RatingView" Height="749" Width="430">
+        Title="RatingView" Height="641" Width="400">
+    <Page.Resources>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="Gray"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="Black"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="Black"/>
+        <ControlTemplate x:Key="ButtonTemplate1" TargetType="{x:Type ButtonBase}">
+            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsDefaulted" Value="true">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="true">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Page.Resources>
     <Grid>
-        <DataGrid x:Name="dgrMain" ItemsSource="{Binding OwnerRatings, UpdateSourceTrigger=PropertyChanged}" 
+        <Grid.Resources>
+            <Style TargetType="DataGridCell">
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#E69138"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+
+                    </Trigger>
+                </Style.Triggers>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                
+            </Style>
+            <Style TargetType="DataGrid">
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
+                <Setter Property="Foreground" Value="LightGray"/>
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="CanUserResizeColumns" Value="False"/>
+                <Setter Property="CanUserResizeRows" Value="False"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+            </Style>
+            <Style TargetType="DataGridRow" x:Name="DatagridRowStyle">
+                <Setter  Property="Background" Value="black"/>
+                
+            </Style>
+            <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="DarkRed"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Height" Value="20"/>
+            </Style>
+            
+            <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
+            <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
+            <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
+            <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxOwner}"/>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="0.2*"/>
+
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="2.3*"/>
+            <RowDefinition Height="0.2*"/>
+
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="2.8*"/>
+
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Rating table:" FontSize="17" Foreground="#E69138" FontWeight="Bold" VerticalAlignment="Bottom"/>
+        <DataGrid Grid.Row="1" Grid.ColumnSpan="2" x:Name="dgrMain" ItemsSource="{Binding OwnerRatings, UpdateSourceTrigger=PropertyChanged}" 
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
-                  IsReadOnly="True" AutoGenerateColumns="False" Margin="10,105,10,451" Grid.Column="1" >
+                  IsReadOnly="True" AutoGenerateColumns="False" Width="330" Height="140" HorizontalAlignment="Center" VerticalAlignment="Center"
+                  ColumnHeaderStyle="{StaticResource HeaderStyle}" >
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
+            </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Guest" Width="90" Binding="{Binding GuestName}"/>
-                <DataGridTextColumn Header="Clean Rating" Width="120" Binding="{Binding CleanRating}"/>
-                <DataGridTextColumn Header="Kind Rating" Width="90" Binding="{Binding KindRating}"/>
+                <DataGridTextColumn Header="Guest" Width="3*" Binding="{Binding GuestName}"/>
+                <DataGridTextColumn Header="Clean Rating" Width="3*" Binding="{Binding CleanRating}"/>
+                <DataGridTextColumn Header="Kind Rating" Width="3*" Binding="{Binding KindRating}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Grid DataContext="{Binding ElementName=dgrMain,Path=SelectedItem}" Margin="0,217,0,85">
-            <TextBlock Background="Gray" HorizontalAlignment="Center" Margin="0,103,0,0" TextWrapping="Wrap" Text="{Binding Path=Comment}" VerticalAlignment="Top" Height="137" Width="222"/>
+        <Line X2="1"  Grid.Row="2" Grid.ColumnSpan="2"/>
+        <Label Content="Comment:" Grid.Row="3" FontSize="17" Foreground="#E69138" FontWeight="Bold" VerticalAlignment="Bottom"/>
+        <Grid DataContext="{Binding ElementName=dgrMain,Path=SelectedItem}" Grid.Row="4" Grid.ColumnSpan="2" >
+            <TextBlock Foreground="LightGray" HorizontalAlignment="Center"  TextWrapping="Wrap" Text="{Binding Path=Comment}" VerticalAlignment="Center" Height="137" Width="330"/>
 
             <Label Content="" Name="NoImagesLabel" Margin="182,323,182,366"/>
 
         </Grid>
-        <Grid Margin="-10,217,10,10">
-            <Button x:Name="NextImageButton" Command="{Binding NextCommand}" Content="&gt;&gt;" HorizontalAlignment="Left" Margin="356,351,0,0" VerticalAlignment="Top" Height="41" Width="40"/>
-            <Button x:Name="PrevImageButton" Command="{Binding PrevCommand}" Content="&lt;&lt;" HorizontalAlignment="Left" Margin="65,352,0,0" VerticalAlignment="Top" Height="40" Width="39" />
-            <Image HorizontalAlignment="Left" Name="OwnerImage" Height="161" Margin="125,297,0,0" VerticalAlignment="Top" Width="211"/>
+        <Line X2="1" Grid.ColumnSpan="2" Grid.Row="5"/>
+        <Label Content="Images:" FontSize="17" Foreground="#E69138" FontWeight="Bold" Grid.Row="6" VerticalAlignment="Bottom"/>
+        <Grid Grid.Row="7" Grid.ColumnSpan="2" >
+            <Button IsEnabled="{Binding NextButtonEnabled}" Template="{DynamicResource ButtonTemplate1}" x:Name="NextImageButton" Command="{Binding NextCommand}" Content="&gt;&gt;" Height="120" Width="20" HorizontalAlignment="Left" Margin="334,40,0,39" />
+            <Button IsEnabled="{Binding PrevButtonEnabled}" Template="{DynamicResource ButtonTemplate1}" x:Name="PrevImageButton" Command="{Binding PrevCommand}" Content="&lt;&lt;" Height="120" Width="20" HorizontalAlignment="Left" Margin="60,40,0,39" />
+            <Image HorizontalAlignment="Left" Stretch="Fill" Source="{Binding ImageSource}" Height="161" VerticalAlignment="Top" Width="211" Margin="101,16,0,0"/>
         </Grid>
     </Grid>
-</Window>
+</Page>
