@@ -14,6 +14,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WPF.Views.Guest1;
 
 namespace WPF.ViewModels.Guest1
 {
@@ -71,7 +72,7 @@ namespace WPF.ViewModels.Guest1
             _accommodationService = new AccommodationService();
 
             this.userId = userId;
-            selectedAccommodation = Guest1ViewViewModel.SelectedAccommodation;
+            selectedAccommodation = OverviewViewModel.SelectedAccommodation;
             AlternativeDatesVisibility = Visibility.Hidden;
             SearchButtonEnabled = true;
 

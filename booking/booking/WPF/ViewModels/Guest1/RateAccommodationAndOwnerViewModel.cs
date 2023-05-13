@@ -6,10 +6,13 @@ using booking.DTO;
 using booking.Model;
 using booking.View;
 using Microsoft.Expression.Interactivity.Media;
+using Overview = WPF.Views.Guest1.Overview;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,7 +21,7 @@ using System.Windows.Media.Imaging;
 
 namespace WPF.ViewModels.Guest1
 {
-    public class RateAccommodationAndOwnerViewModel
+    public class RateAccommodationAndOwnerViewModel : INotifyPropertyChanged
     {
         public List<OwnerRatingImage> OwnerRatingImages { get; set; }
         public static ObservableCollection<ReservationAccommodationDTO> StayedInAccommodations { get; set; }
@@ -42,8 +45,34 @@ namespace WPF.ViewModels.Guest1
                 StayedInSelectionChanged(selectedFromList);
             }
         }
-        public static double CleanRating { get; set; }
-        public static double OwnersKindenssRating { get; set; }
+
+        private double cleanRating;
+        public double CleanRating 
+        {
+            get { return cleanRating; }
+            set
+            {
+                if(cleanRating != value)
+                {
+                    cleanRating = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private double ownersKidnessRating;
+        public double OwnersKindenssRating 
+        {
+            get { return ownersKidnessRating; }
+            set
+            {
+                if (ownersKidnessRating != value)
+                {
+                    ownersKidnessRating = value;
+                    OnPropertyChanged();
+                }
+            } 
+        }
         public string RatingComment { get; set; }
         public string ImageUrl { get; set; }
 
@@ -86,6 +115,12 @@ namespace WPF.ViewModels.Guest1
 
             return reservationAccommodations.Where(r => !_reservedDatesService.GetById(r.ReservationId).RatedByGuest &&
                  DateTime.Now >= r.EndDate && (DateTime.Now - r.EndDate).Days <= 5).ToList();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void SubmitRate()
@@ -150,14 +185,14 @@ namespace WPF.ViewModels.Guest1
                 _userService.UpdateById(user.Id, AverageRating >= 4.5 && i >= 3);
             }
 
-            while(Guest1ViewViewModel.AccommodationDTOs.Count > 0)
+            while(OverviewViewModel.AccommodationDTOs.Count > 0)
             {
-                Guest1ViewViewModel.AccommodationDTOs.RemoveAt(0);
+                OverviewViewModel.AccommodationDTOs.RemoveAt(0);
             }
 
             foreach(var item in _accommodationService.SortAccommodationDTOs(_accommodationService.CreateAccomodationDTOs()))
             {
-                Guest1ViewViewModel.AccommodationDTOs.Add(item);
+                OverviewViewModel.AccommodationDTOs.Add(item);
             }
             /*Guest1View.AccommodationDTOs = guest1ViewWindow.CreateAccomodationDTOs(_accommodationService.GetAll());
             Guest1View.AccommodationDTOs = guest1ViewWindow.SortAccommodationDTOs();

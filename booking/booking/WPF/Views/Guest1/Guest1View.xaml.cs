@@ -9,6 +9,7 @@ using booking.View.Guest1;
 using booking.WPF.Views.Guest1;
 using Domain.Model;
 using Repositories;
+using Syncfusion.Windows.Shared;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,6 +29,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WPF.ViewModels.Guest1;
+using WPF.Views;
+using WPF.Views.Guest1;
+using Overview = WPF.Views.Guest1.Overview;
 
 namespace booking.View
 {
@@ -39,6 +43,8 @@ namespace booking.View
         private ReservationsViewModel _reservationViewModel;
         private RateAccommodationAndOwnerViewModel _rateAccommodationAndOwner;
         private Guest1ViewViewModel _guest1ViewViewModel;
+        private Overview _overview;
+        private AnytimeAnywhereView _anytimeAnywhereView;
 
         public Guest1View(int id,SignInForm sign)
         {
@@ -47,32 +53,24 @@ namespace booking.View
             _reservationViewModel = new ReservationsViewModel(id, this);
             _rateAccommodationAndOwner = new RateAccommodationAndOwnerViewModel(id, this);
             _guest1ViewViewModel = new Guest1ViewViewModel(id);
+            _overview = new Overview(id);
+            _anytimeAnywhereView = new AnytimeAnywhereView(id);
+
+
+            fOverviewAnywhere.Content = _overview;
 
             this.DataContext = _guest1ViewViewModel;
-            tabItemOverview.DataContext = _guest1ViewViewModel;
+            fOverviewAnywhere.DataContext = _overview;
             tabItemRate.DataContext = _rateAccommodationAndOwner;
             tabItemReservations.DataContext = _reservationViewModel;
             tabItemForums.DataContext = this;
+
             
-            InitializeCheckBoxes();
         }
-
-        private void InitializeCheckBoxes()
+        private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            CheckBoxApartment.IsChecked = true;
-            CheckBoxCabin.IsChecked = true;
-            CheckBoxHouse.IsChecked = true;
-        }
-
-        private void CheckBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-                if (sender.ToString().Contains("Apartment"))
-                    CheckBoxApartment.IsChecked = !CheckBoxApartment.IsChecked;
-                else if (sender.ToString().Contains("House"))
-                    CheckBoxHouse.IsChecked = !CheckBoxHouse.IsChecked;
-                else
-                    CheckBoxCabin.IsChecked = !CheckBoxCabin.IsChecked;
+            if(e.Key == Key.Escape)
+                this.Close();
         }
 
         private void RadioButton_KeyDown(object sender, KeyEventArgs e)
@@ -82,42 +80,21 @@ namespace booking.View
                 {
                     rbOverview.IsChecked = true;
                     rbAnywhereAnytime.IsChecked = false;
+
+                    fOverviewAnywhere.DataContext = _overview;
+                    fOverviewAnywhere.Content = _overview;
+                    lbHeader.Content = "Accommodation overview";
                 }
                 else if (sender.ToString().Contains("Anywhere, anytime") && rbOverview.IsChecked == true)
                 {
                     rbOverview.IsChecked = false;
                     rbAnywhereAnytime.IsChecked = true;
+
+                  
+                    fOverviewAnywhere.DataContext = _anytimeAnywhereView;
+                    fOverviewAnywhere.Content = _anytimeAnywhereView;
+                    lbHeader.Content = "Anywhere, anytime!";
                 }
-            else if(e.Key == Key.Down && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
-            {
-                FocusManager.SetFocusedElement(CheckBoxApartment.Parent, CheckBoxApartment);
-            } 
-        }
-
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if(e.Key == Key.Escape)
-                this.Close();
-        }
-
-        private void GroupBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Down && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
-            {
-                FocusManager.SetFocusedElement(accommodationData.Parent, accommodationData);
-            }
-            else if (e.Key == Key.W && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
-            {
-                FocusManager.SetFocusedElement(rbOverview.Parent, rbOverview);
-            }
-        }
-
-        private void accommodationData_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Up && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
-            {
-                FocusManager.SetFocusedElement(ReserveAccommodationButton.Parent, ReserveAccommodationButton);
-            }
         }
     }
 }

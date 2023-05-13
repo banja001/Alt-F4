@@ -18,13 +18,39 @@
                 <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" />
             </StackPanel>
         </ControlTemplate>
+
+        <SolidColorBrush x:Key="GreenBrush" Color="#597a6a" />
+
+        <Style x:Key="labelsStyle" TargetType="{x:Type Control}">
+            <Setter Property="Foreground" Value="#edf2f0"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
+        </Style>
+        <Style x:Key="groupBoxStyle" TargetType="GroupBox">
+            <Setter Property="Background" Value="#597a6a"></Setter>
+            <Setter Property="Foreground" Value="#edf2f0"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
+        </Style>
+        <Style x:Key="tabItemStyle" TargetType="TabItem">
+            <Setter Property="Background" Value="#699687"></Setter>
+            <Setter Property="Foreground" Value="#edf2f0"></Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="#597a6a"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="gridStyle" TargetType="Grid">
+            <Setter Property="Background" Value="#699687"></Setter>
+        </Style>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Command="{Binding CloseWindowCommand}" Gesture="ESC"></KeyBinding>
         <KeyBinding Command="{Binding ReserveAccommodationClickCommand}" Gesture="CTRL+R"></KeyBinding>
     </Window.InputBindings>
     <Grid KeyboardNavigation.TabNavigation="Cycle"
-          FocusManager.FocusedElement="{Binding ElementName=gbSearch.cStartDate}">
+          FocusManager.FocusedElement="{Binding ElementName=gbSearch.cStartDate}"
+          Style="{StaticResource ResourceKey=gridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
@@ -38,9 +64,10 @@
             <ColumnDefinition Width="8*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Pick a date of your reservation" FontSize="24" FontWeight="Bold" Margin="10 0"/>
+        <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Pick a date of your reservation" 
+               Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24" FontWeight="Bold" Margin="10 0"/>
 
-        <GroupBox Name="gbSearch" Grid.Row="1" Grid.ColumnSpan="2" Header="Search" Margin="10 0">
+        <GroupBox Name="gbSearch" Grid.Row="1" Grid.ColumnSpan="2" Header="Search" Margin="10 0" Style="{StaticResource ResourceKey=groupBoxStyle}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="8*"></RowDefinition>
@@ -54,7 +81,7 @@
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Content="Start date" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5 0"/>
+                <Label Grid.Row="0" Grid.Column="0" Content="Start date" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ResourceKey=labelsStyle}" Margin="5 10"/>
                 <Calendar Name="cStartDate" Grid.Row="0" Grid.Column="1" SelectedDate="{Binding Path=NewDate.StartDate, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" 
                         VerticalAlignment="Center">
                     <i:Interaction.Triggers>
@@ -64,7 +91,7 @@
                     </i:Interaction.Triggers>
                 </Calendar>
 
-                <Label Grid.Row="0" Grid.Column="2" Content="End date" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5 0"/>
+                <Label Grid.Row="0" Grid.Column="2" Content="End date" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ResourceKey=labelsStyle}" Margin="5 10"/>
                 <Calendar Grid.Row="0" Grid.Column="3" SelectedDate="{Binding Path=NewDate.EndDate, UpdateSourceTrigger=PropertyChanged}"  Validation.ErrorTemplate="{StaticResource ValidationTemplate}" 
                         VerticalAlignment="Center">
                     <i:Interaction.Triggers>
@@ -74,7 +101,7 @@
                     </i:Interaction.Triggers>
                 </Calendar>
 
-                <Label Grid.Row="1" Grid.Column="0" Content="Num of days" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5 0"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Num of days" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource ResourceKey=labelsStyle}" Margin="5 0"/>
                 <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" Name="NumOfDaysTextBox" Text="{Binding NumOfDays, UpdateSourceTrigger=PropertyChanged}"
                                     Height="25"/>
 
@@ -82,7 +109,7 @@
             </Grid>
         </GroupBox>
 
-        <Label Grid.Row="2" Grid.ColumnSpan="2" Name="AlternativeDates" Content="Alternative dates:" Visibility="{Binding AlternativeDatesVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom"  HorizontalAlignment="Left" Margin="5 0"/>
+        <Label Grid.Row="2" Grid.ColumnSpan="2" Name="AlternativeDates" Content="Alternative dates:" Style="{StaticResource ResourceKey=labelsStyle}" Visibility="{Binding AlternativeDatesVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom"  HorizontalAlignment="Left" Margin="5 0"/>
         <DataGrid Grid.Row="3" Grid.ColumnSpan="2" x:Name="accommodationData"
                           ItemsSource="{Binding FreeDates,
                                         Mode=OneWay,
@@ -92,13 +119,34 @@
                            SelectionMode="Single"
                            CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
                            ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Margin="10 0 10 10" PreviewKeyDown="accommodationData_PreviewKeyDown">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="#80a698"></Setter>
+                    <Setter Property="Foreground" Value="#edf2f0"></Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#6b9481"></Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#597a6a"></Setter>
+                            <Setter Property="BorderBrush" Value="#597a6a"></Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Start date" Binding="{Binding StartDate, Converter={cvt:DateTimeToDateOnlyConverter}}" CanUserResize="False" Width="5*"/>
                 <DataGridTextColumn Header="End date" Binding="{Binding EndDate, Converter={cvt:DateTimeToDateOnlyConverter}}" CanUserResize="False" Width="5*"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Label Grid.Row="4" Grid.Column="0" Content="Num of guests" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0"/>
+        <Label Grid.Row="4" Grid.Column="0" Content="Num of guests" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0"/>
         <xctk:IntegerUpDown x:Name="udNumOfGuests" Grid.Row="4" Grid.Column="1" Text="{Binding Path=GuestsNumber, UpdateSourceTrigger=PropertyChanged}" Height="20" Margin="0 0 10 0" KeyDown="udNumOfGuests_KeyDown"></xctk:IntegerUpDown>
 
         <WrapPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">

@@ -10,8 +10,35 @@
         <KeyBinding Command="{Binding CloseCommand}" Gesture="ESC"></KeyBinding>
         <KeyBinding Command="{Binding SendPostponeRequestCommand}" Gesture="CTRL+S"></KeyBinding>
     </Window.InputBindings>
+    <Window.Resources>
+        <SolidColorBrush x:Key="GreenBrush" Color="#597a6a" />
+
+        <Style x:Key="labelsStyle" TargetType="{x:Type Control}">
+            <Setter Property="Foreground" Value="#edf2f0"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
+        </Style>
+        <Style x:Key="groupBoxStyle" TargetType="GroupBox">
+            <Setter Property="Background" Value="#597a6a"></Setter>
+            <Setter Property="Foreground" Value="#edf2f0"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
+        </Style>
+        <Style x:Key="tabItemStyle" TargetType="TabItem">
+            <Setter Property="Background" Value="#699687"></Setter>
+            <Setter Property="Foreground" Value="#edf2f0"></Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="#597a6a"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="gridStyle" TargetType="Grid">
+            <Setter Property="Background" Value="#699687"></Setter>
+        </Style>
+    </Window.Resources>
     <Grid KeyboardNavigation.TabNavigation="Cycle"
-          FocusManager.FocusedElement="{Binding ElementName=cNewStartDate}">
+          FocusManager.FocusedElement="{Binding ElementName=cNewStartDate}"
+          Style="{StaticResource ResourceKey=gridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="4*"></RowDefinition>
@@ -23,13 +50,13 @@
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="4*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        
-        <Label Grid.Row="0" Grid.ColumnSpan="4" Content="Postpone your reservation" FontSize="24" FontWeight="Bold" Margin="10 0"/>
-        
-        <Label Grid.Row="1" Grid.Column="0" Content="New start date" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
+
+        <Label Grid.Row="0" Grid.ColumnSpan="4" Content="Postpone your reservation" FontSize="24" FontWeight="Bold" Style="{StaticResource ResourceKey=labelsStyle}" Margin="10 0"/>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="New start date" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ResourceKey=labelsStyle}" Margin="10 0"/>
         <Calendar Grid.Row="1" Grid.Column="1" Name="cNewStartDate" SelectedDate="{Binding Path=NewDate.StartDate}"/>
-        
-        <Label Grid.Row="1" Grid.Column="2" Content="New end date" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+        <Label Grid.Row="1" Grid.Column="2" Content="New end date" HorizontalAlignment="Center" VerticalAlignment="Top" Style="{StaticResource ResourceKey=labelsStyle}"/>
         <Calendar Grid.Row="1" Grid.Column="3" Name="cNewEndDate" SelectedDate="{Binding Path=NewDate.EndDate}" Margin="0 0 5 0"/>
 
         <WrapPanel Grid.Row="2" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center">

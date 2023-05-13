@@ -13,46 +13,35 @@
         mc:Ignorable="d"
         Title="Guest" Height="760" Width="846" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" Background="#597a6a">
     <Window.InputBindings>
-        <KeyBinding Command="{Binding ReserveAccommodationsCommand}" Gesture="CTRL+R"></KeyBinding>
-        <KeyBinding Command="{Binding SearchAccommodationsCommand}" Gesture="CTRL+S"></KeyBinding>
-        <KeyBinding Command="{Binding SeeAllCommand}" Gesture="CTRL+L"></KeyBinding>
-
-        <KeyBinding Command="{Binding RemoveImageCommand}" Gesture="ALT+R"></KeyBinding>
-        <KeyBinding Command="{Binding SubmitRateCommand}" Gesture="ALT+S"></KeyBinding>
-        <KeyBinding Command="{Binding DataContext.AddImageCommand}" Gesture="ALT+A"></KeyBinding>
-
-        <KeyBinding Command="{Binding Path=DataContext.PostponeReservationCommand,
-            RelativeSource= {RelativeSource FindAncestor,
-            AncestorType={x:Type DataGrid}}}" Gesture="CTRL+P"></KeyBinding>
-        <KeyBinding Command="{Binding Path=DataContext.CancelReservationCommand, 
-            RelativeSource= {RelativeSource FindAncestor,
-            AncestorType={x:Type DataGrid}}}" Gesture="CTRL+C"></KeyBinding>
-
         <KeyBinding Command="{Binding OpenFirstTabCommand}" Gesture="F1"></KeyBinding>
         <KeyBinding Command="{Binding OpenSecondTabCommand}" Gesture="F2"></KeyBinding>
         <KeyBinding Command="{Binding OpenThirdTabCommand}" Gesture="F3"></KeyBinding>
         <KeyBinding Command="{Binding OpenFourthTabCommand}" Gesture="F4"></KeyBinding>
     </Window.InputBindings>
     <Window.Resources>
+        <SolidColorBrush x:Key="GreenBrush" Color="#597a6a" />
+
         <Style x:Key="labelsStyle" TargetType="{x:Type Control}">
             <Setter Property="Foreground" Value="#edf2f0"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
         </Style>
         <Style x:Key="groupBoxStyle" TargetType="GroupBox">
-            <Setter Property="Background" Value="#639985"></Setter>
+            <Setter Property="Background" Value="#597a6a"></Setter>
             <Setter Property="Foreground" Value="#edf2f0"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
         </Style>
         <Style x:Key="tabItemStyle" TargetType="TabItem">
-            <Setter Property="Background" Value="#639985"></Setter>
+            <Setter Property="Background" Value="#699687"></Setter>
             <Setter Property="Foreground" Value="#edf2f0"></Setter>
 
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="#80a698"></Setter>
+                    <Setter Property="Foreground" Value="#597a6a"></Setter>
                 </Trigger>
             </Style.Triggers>
         </Style>
         <Style x:Key="gridStyle" TargetType="Grid">
-            <Setter Property="Background" Value="#80a698"></Setter>
+            <Setter Property="Background" Value="#699687"></Setter>
         </Style>
     </Window.Resources>
     <Grid KeyboardNavigation.TabNavigation="Cycle"
@@ -63,373 +52,288 @@
             <Label Content="|   Score:" Style="{StaticResource ResourceKey=labelsStyle}"/>
             <Label Name="lbScore" Content="{Binding Score}" Style="{StaticResource ResourceKey=labelsStyle}"/>
         </WrapPanel>
-    <TabControl Name="tabControl" SelectedIndex="{Binding SelectedIndexTabControl, UpdateSourceTrigger=PropertyChanged}">
+        <TabControl Name="tabControl" SelectedIndex="{Binding SelectedIndexTabControl, UpdateSourceTrigger=PropertyChanged}">
             <TabItem Name="tabItemOverview" Header="Overview" Height="22" VerticalAlignment="Top" Style="{StaticResource ResourceKey=tabItemStyle}"
                  KeyboardNavigation.TabNavigation="Cycle"
                  FocusManager.FocusedElement="{Binding ElementName=wpRadioButtons.rbOverview}">
+                
                 <Grid Style="{StaticResource ResourceKey=gridStyle}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.5*"></RowDefinition>
-                    <RowDefinition Height="0.2*"></RowDefinition>
-                    <RowDefinition Height="0.7*"></RowDefinition>
-                    <RowDefinition Height="0.4*"></RowDefinition>
-                    <RowDefinition Height="2*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"></ColumnDefinition>
-                    <ColumnDefinition Width="5*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-
-                <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Accommodation overview" 
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.5*"></RowDefinition>
+                        <RowDefinition Height="0.5*"></RowDefinition>
+                        <RowDefinition Height="4*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Name="lbHeader" Content="Accommodation overview" 
                        Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24" FontWeight="Bold" Margin="10 0"/>
-                 <WrapPanel Name="wpRadioButtons" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10 10">
+                    <WrapPanel Name="wpRadioButtons" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10 10">
                         <RadioButton Name="rbOverview"  Content="Overview" RenderTransformOrigin="0.722,0.613" 
                                      Style="{StaticResource ResourceKey=labelsStyle}" IsChecked="True" KeyDown="RadioButton_KeyDown"/>
                         <RadioButton Name="rbAnywhereAnytime" Grid.Column="0" Content="Anywhere, anytime" Margin="10 0" 
                                      Style="{StaticResource ResourceKey=labelsStyle}" RenderTransformOrigin="0.722,0.613" KeyDown="RadioButton_KeyDown"/>
                     </WrapPanel>
-                    <GroupBox Grid.Row="2" Grid.ColumnSpan="2" Header="Search" 
-                              Style="{StaticResource ResourceKey=groupBoxStyle}" BorderThickness="2" Margin="10 0" KeyDown="GroupBox_KeyDown">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition Height="0.5*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="5*"></ColumnDefinition>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                            <WrapPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Bottom">
-                            <CheckBox x:Name="CheckBoxApartment" Content="Apartment" 
-                                      Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" Margin="10 0" IsChecked="{Binding ApartmentChecked}" KeyDown="CheckBox_KeyDown"/>
-                            <CheckBox x:Name="CheckBoxHouse" Content="House" 
-                                      Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Center" Margin="10 0" IsChecked="{Binding HouseChecked}" KeyDown="CheckBox_KeyDown"/>
-                            <CheckBox x:Name="CheckBoxCabin" Content="Cabin" 
-                                      Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Right" Margin="10 0" IsChecked="{Binding CabinChecked}" KeyDown="CheckBox_KeyDown"/>
-                        </WrapPanel>
-                        
-                        <Label Grid.Row="1" Grid.Column="0" Content="Name" VerticalAlignment="Center" 
-                               Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" Margin="5 0"/>
-                        <TextBox Grid.Row="1" Grid.Column="1"  x:Name="tSearchBarName" Height="20" Text="{Binding SearchedAccommodation.Name, UpdateSourceTrigger=PropertyChanged}"/>
-
-                        <Label Grid.Row="1" Grid.Column="2" Content="State" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                        <ComboBox Grid.Row="1" Grid.Column="3" x:Name="StateComboBox" Height="20" 
-                                  ItemsSource="{Binding States, UpdateSourceTrigger=PropertyChanged}" 
-                                  SelectedItem="{Binding SelectedState}">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="SelectionChanged">
-                                        <i:InvokeCommandAction Command="{Binding StateSelectionChangedCommand}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                        </ComboBox>
-
-                        <Label Grid.Row="1" Grid.Column="4" Content="City" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                        <ComboBox Grid.Row="1" Grid.Column="5" x:Name="CityComboBox"  Height="20" 
-                                  ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}"
-                                  SelectedItem="{Binding SelectedCity}" IsEnabled="{Binding CitiesComboBoxEnabled, UpdateSourceTrigger=PropertyChanged}"/>
-
-                        <Label Grid.Row="2" Content="Guests" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0"/>
-                        <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" x:Name="tSearchBarNumberOfGuests" Height="20">
-                            <xctk:IntegerUpDown.Text>
-                                <Binding Path="SearchedAccommodation.NumOfGuests" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <val:StringToIntValidationRule ValidationStep="RawProposedValue"/>
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </xctk:IntegerUpDown.Text>
-                            <Validation.ErrorTemplate>
-                                <ControlTemplate>
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition></RowDefinition>
-                                            <RowDefinition></RowDefinition>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        
-                                        <AdornedElementPlaceholder Grid.Row="0" Grid.Column="0"/>
-                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>    
-                                    </Grid>
-                                </ControlTemplate>
-                            </Validation.ErrorTemplate>
-                        </xctk:IntegerUpDown>
-
-                        <Label Grid.Row="2" Grid.Column="2" Height="30" Content="Days" 
-                               Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                        <xctk:IntegerUpDown Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" x:Name="tSearchBarNumberOfDays" Height="20">
-                                <xctk:IntegerUpDown.Text>
-                                    <Binding Path="SearchedAccommodation.NumOfDays" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <val:StringToIntValidationRule ValidationStep="RawProposedValue"/>
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </xctk:IntegerUpDown.Text>
-                                <Validation.ErrorTemplate>
-                                    <ControlTemplate>
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition></ColumnDefinition>
-                                            </Grid.ColumnDefinitions>
-
-                                            <AdornedElementPlaceholder Grid.Row="0" Grid.Column="0"/>
-                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Validation.ErrorTemplate>
-                            </xctk:IntegerUpDown>
-
-                        <Button Grid.Row="1" Grid.Column="6" x:Name="SeeAllButton" Command="{Binding SeeAllCommand}" Height="20" Width="67" Content="See all" HorizontalAlignment="Right" Margin="10 0"/>
-                            <Button Grid.Row="2" Grid.Column="6" x:Name="SearchAccommodationButton" Command="{Binding SearchAccommodationsCommand}" Height="20" Width="67" Content="Search" HorizontalAlignment="Right" Margin="10 0"/>
-                        
-                    </Grid>
-                </GroupBox>
-
-                <Button Grid.Row="3" Grid.Column="1" x:Name="ReserveAccommodationButton" Command="{Binding ReserveAccommodationsCommand}"
-                        Width="67" Content="Reserve" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10 10"/>
-                <Label Grid.Row="3" Grid.Column="0" Content="Accommodations" Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10 0"/>
-                    <DataGrid Grid.Row="4" Grid.ColumnSpan="2" x:Name="accommodationData"
-                          ItemsSource="{Binding AccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                          SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
-                           IsReadOnly="True"
-                           SelectionMode="Single"
-                           CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
-                           ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Margin="10 0 10 10" PreviewKeyDown="accommodationData_PreviewKeyDown">
-                        <DataGrid.RowStyle>
-                            <Style TargetType="DataGridRow">
-                                <Setter Property="Background" Value="#80a698"></Setter>
-                                <Setter Property="Foreground" Value="#edf2f0"></Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#597a6a"></Setter>
-                                    </Trigger>
-                                    <Trigger Property="IsSelected" Value="True">
-                                        <Setter Property="Background" Value="#597a6a"></Setter>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGrid.RowStyle>
-                        <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" CanUserResize="False"  Width="4*"/>
-                        <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False" Width="3*"/>
-                        <DataGridTextColumn Header="Type" Binding="{Binding Type}" CanUserResize="False" Width="2*"/>
-                        <DataGridTextColumn Header="Max capacity" Binding="{Binding MaxCapacity}" Width="2*"/>
-                        <DataGridTextColumn Header="Min days to use" Binding="{Binding MinDaysToUse}" Width="2.5*"/>
-                        <DataGridTextColumn Header="Min days to cancel" Binding="{Binding MinDaysToCancel}" Width="2.5*"/>
-                        <DataGridTemplateColumn Header="Images" Width="1.5*">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                        <Button x:Name="ImagesButton" Command="{Binding DataContext.OpenImagesCommand,
-                                            RelativeSource= {RelativeSource FindAncestor,
-                                            AncestorType={x:Type DataGrid}}}" Content="View"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <Label Content="Accommodations" HorizontalAlignment="Left" Margin="10,334,0,0" VerticalAlignment="Top" Height="28"/>
-            </Grid>
-        </TabItem>
+                    <Frame Grid.Row="2" Grid.Column="0" NavigationUIVisibility="Hidden" Name="fOverviewAnywhere"/>
+                </Grid>
+            </TabItem>
             <TabItem Name="tabItemRate" Header="Rate" Style="{StaticResource ResourceKey=tabItemStyle}"
                  KeyboardNavigation.TabNavigation="Cycle" 
                  FocusManager.FocusedElement="{Binding ElementName=lbStayedIn}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1.5*"></RowDefinition>
-                    <RowDefinition Height="3*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="4*"></RowDefinition>
-                    <RowDefinition Height="3*"></RowDefinition>
-                    <RowDefinition Height="1.5*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.2*"></ColumnDefinition>
-                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="5*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                
-                <Label Grid.Row="0" Grid.ColumnSpan="4" Content="Rate your accommodations" FontSize="24" FontWeight="Bold" Margin="10 0"/>
-                
-                <Label Grid.Row="1" Grid.Column="0" Content="Stayed in" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
-                <ListBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Name="lbStayedIn"
+                <TabItem.InputBindings>
+                    <KeyBinding Command="{Binding RemoveImageCommand}" Gesture="ALT+R"></KeyBinding>
+                    <KeyBinding Command="{Binding SubmitRateCommand}" Gesture="CTRL+S"></KeyBinding>
+                    <KeyBinding Command="{Binding AddImageCommand}" Gesture="ALT+A"></KeyBinding>
+                </TabItem.InputBindings>
+                <Grid Style="{StaticResource ResourceKey=gridStyle}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.5*"></RowDefinition>
+                        <RowDefinition Height="3*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="4*"></RowDefinition>
+                        <RowDefinition Height="3*"></RowDefinition>
+                        <RowDefinition Height="1.5*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.2*"></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.ColumnSpan="4" Content="Rate your accommodations" 
+                       Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24" FontWeight="Bold" Margin="10 0"/>
+
+                    <Label Grid.Row="1" Grid.Column="0" Content="Stayed in" 
+                       Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
+                    <ListBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Name="lbStayedIn"
                             ItemsSource="{Binding StayedInAccommodations}" 
                              SelectedItem="{Binding SelectedFromList, UpdateSourceTrigger=PropertyChanged}"
                              SelectionMode="Single"
                              Margin="0 5 10 10 "/>
 
-                <Label Grid.Row="2" Grid.Column="0" Content="Clean" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0"/>
-                <syncfusion:SfRating Grid.Row="2" Grid.Column="1" Name="stClean" ItemsSource="{Binding CleanRating, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Center" Width="150"/>
+                    <Label Grid.Row="2" Grid.Column="0" Content="Clean" Style="{StaticResource ResourceKey=labelsStyle}"
+                       HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0"/>
+                    <syncfusion:SfRating Grid.Row="2" Grid.Column="1" Name="stClean" Value="{Binding CleanRating, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Center" Width="150"/>
 
-                <Label Grid.Row="3" Grid.Column="0" Content="Owner" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0"/>
-                <syncfusion:SfRating Grid.Row="3" Grid.Column="1" Name="stOwner" Value="{Binding OwnersKindenssRating, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Center" Width="150"/>
-               
-                <Label Grid.Row="2" Grid.Column="2" Content="Comment" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <TextBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="3" Name="txtbComment" Text="{Binding RatingComment, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Margin="10 10 10 0"/>
-                
-                <GroupBox Grid.Row="4" Grid.ColumnSpan="4" Header="Images" Margin="10">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="3*"></RowDefinition>
-                            <RowDefinition Height="5*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>       
-                            <ColumnDefinition Width="8*"></ColumnDefinition>       
-                            <ColumnDefinition Width="1*"></ColumnDefinition>       
-                        </Grid.ColumnDefinitions>
-                        
-                        <Label Grid.Row="0" Grid.Column="0" Content="Image url" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0"/>
-                        <TextBox Grid.Row="0" Grid.Column="1" Name="tbImageUrl" Text="{Binding ImageUrl, UpdateSourceTrigger=PropertyChanged}" Height="25" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0 0 10 0"/>
+                    <Label Grid.Row="3" Grid.Column="0" Content="Owner" Style="{StaticResource ResourceKey=labelsStyle}"
+                       HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0"/>
+                    <syncfusion:SfRating Grid.Row="3" Grid.Column="1" Name="stOwner" Value="{Binding OwnersKindenssRating, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Center" Width="150"/>
+
+                    <Label Grid.Row="2" Grid.Column="2" Content="Comment" Style="{StaticResource ResourceKey=labelsStyle}"
+                       HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="3" Name="txtbComment" Text="{Binding RatingComment, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Margin="10 10 10 0"/>
+
+                    <GroupBox Grid.Row="4" Grid.ColumnSpan="4" Header="Images" Margin="10"
+                          Style="{StaticResource ResourceKey=groupBoxStyle}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="3*"></RowDefinition>
+                                <RowDefinition Height="5*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.2*"></ColumnDefinition>
+                                <ColumnDefinition Width="8*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0" Content="Image url" Style="{StaticResource ResourceKey=labelsStyle}"
+                               HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" Name="tbImageUrl" Text="{Binding ImageUrl, UpdateSourceTrigger=PropertyChanged}" Height="25" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0 0 10 0"/>
 
 
-                        <Label Grid.Row="1" Grid.Column="0" Content="Added" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
-                        <ListView Grid.Row="1" Grid.Column="1" Name="lvAddedImages" 
+                            <Label Grid.Row="1" Grid.Column="0" Content="Added" Style="{StaticResource ResourceKey=labelsStyle}"
+                               HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
+                            <ListView Grid.Row="1" Grid.Column="1" Name="lvAddedImages" 
                                      ItemsSource="{Binding AddedImages, UpdateSourceTrigger=PropertyChanged}" 
                                      SelectedItem="{Binding SelectedAddedImages, UpdateSourceTrigger=PropertyChanged}"
                                       SelectionMode="Single" Margin="0 0 10 10">
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                        </ListView>
-                        
-                        <Button Grid.Row="0" Grid.Column="2" Name="bAddImage" Command="{Binding AddImageCommand}" IsEnabled="{Binding AddImageEnabled}"
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                            </ListView>
+
+                            <Button Grid.Row="0" Grid.Column="2" Name="bAddImage" Command="{Binding AddImageCommand}" IsEnabled="{Binding AddImageEnabled}"
                                 Content="Add" HorizontalAlignment="Center" Height="23" VerticalAlignment="Center" Width="63" Margin="0 0 10 0"/>
-                        <Button Grid.Row="1" Grid.Column="2" Content="Remove" Command="{Binding RemoveImageCommand}" HorizontalAlignment="Center" Height="23" VerticalAlignment="Top" Width="63" Margin="0 0 10 0"/>     
-                    </Grid>
-                </GroupBox>
-                
-                <GroupBox Grid.Row="5" Grid.ColumnSpan="4" Header="Renovation suggestion (optional)" Margin="10 0">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="6*"></RowDefinition>   
-                            <RowDefinition Height="4*"></RowDefinition>   
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="9*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        
-                        <Label Grid.Row="0" Grid.Column="0" Content="Description" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <TextBox Grid.Row="0" Grid.Column="1" Name="txtbRenovationDescription" AcceptsReturn="True" TextWrapping="Wrap" Margin="0 10 10 0"/>
-                        <!-- Text="{Binding RenovationDescription, UpdateSourceTrigger=PropertyChanged}" --> 
-                        
-                        <Label Grid.Row="1" Grid.Column="0" Content="How urgent" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <ComboBox Grid.Row="1" Grid.Column="1" Height="24" Margin="0 0 10 0">
+                            <Button Grid.Row="1" Grid.Column="2" Content="Remove" Command="{Binding RemoveImageCommand}" HorizontalAlignment="Center" Height="23" VerticalAlignment="Top" Width="63" Margin="0 0 10 0"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Grid.Row="5" Grid.ColumnSpan="4" Header="Renovation suggestion (optional)" Margin="10 0"
+                          Style="{StaticResource ResourceKey=groupBoxStyle}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="6*"></RowDefinition>
+                                <RowDefinition Height="4*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.2*"></ColumnDefinition>
+                                <ColumnDefinition Width="9*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0" Content="Description" Style="{StaticResource ResourceKey=labelsStyle}"
+                               HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" Name="txtbRenovationDescription" AcceptsReturn="True" TextWrapping="Wrap" Margin="0 10 10 0"/>
+                            <!-- Text="{Binding RenovationDescription, UpdateSourceTrigger=PropertyChanged}" -->
+
+                            <Label Grid.Row="1" Grid.Column="0" Content="How urgent" Style="{StaticResource ResourceKey=labelsStyle}"
+                               HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <ComboBox Grid.Row="1" Grid.Column="1" Height="24" Margin="0 0 10 0">
                                 <ComboBoxItem Content="Level 1 - It would be nice to renovate some small things, but everything works perefctly without that"/>
                                 <ComboBoxItem Content="Level 2 - Accommodation needs small adjustments which would make it perfect"/>
                                 <ComboBoxItem Content="Level 3 - There are few things that should really be taken care of"/>
                                 <ComboBoxItem Content="Level 4 - There are a lot of things that should be fixed"/>
                                 <ComboBoxItem Content="Level 5 - The accommodation is in a really bad state and unless you renovate it, it's not worth staying in"/>
-                        </ComboBox>
-                    </Grid>
-                </GroupBox>
-                <Button Grid.Row="6" Grid.Column="3" Name="bSubmitRate" Command="{Binding SubmitRateCommand}" Content="Submit rate" HorizontalAlignment="Right" Height="30" VerticalAlignment="Center" Width="79" Margin="10 0"/>
-            </Grid>
-        </TabItem>
+                            </ComboBox>
+                        </Grid>
+                    </GroupBox>
+                    <Button Grid.Row="6" Grid.Column="3" Name="bSubmitRate" Command="{Binding SubmitRateCommand}" Content="Submit rate" HorizontalAlignment="Right" Height="30" VerticalAlignment="Center" Width="79" Margin="10 0"/>
+                </Grid>
+            </TabItem>
             <TabItem Name="tabItemReservations" Header="Reservations" Height="22" VerticalAlignment="Top" Style="{StaticResource ResourceKey=tabItemStyle}"
                  KeyboardNavigation.TabNavigation="Cycle"
                  FocusManager.FocusedElement="{Binding ElementName=gbAllReservations.reservationsData}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="4*"></RowDefinition>
-                    <RowDefinition Height="4*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                
-                <Label Grid.Row="0" Grid.Column="0" Content="Reservations overview" FontSize="24" FontWeight="Bold" Margin="10 0"/>
-                
-                <GroupBox Name="gbAllReservations" Grid.Row="1" Grid.Column="0" Header="All reservations" Margin="10">
-                    <Grid>
-                        <DataGrid x:Name="reservationsData"
+                <TabItem.InputBindings>
+                    <KeyBinding Command="{Binding Path=CancelReservationCommand}" Gesture="ALT+C"></KeyBinding>
+                    <KeyBinding Command="{Binding Path=PostponeReservationCommand}" Gesture="CTRL+P"></KeyBinding>
+                    <KeyBinding Command="{Binding Path=ViewCommentCommand}" Gesture="ALT+V"></KeyBinding>
+                </TabItem.InputBindings>
+                <Grid Style="{StaticResource ResourceKey=gridStyle}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="4*"></RowDefinition>
+                        <RowDefinition Height="4*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Content="Reservations overview" Style="{StaticResource ResourceKey=labelsStyle}"
+                       FontSize="24" FontWeight="Bold" Margin="10 0"/>
+
+                    <GroupBox Name="gbAllReservations" Grid.Row="1" Grid.Column="0" Header="All reservations" Margin="10"
+                          Style="{StaticResource ResourceKey=groupBoxStyle}">
+                        <Grid>
+                            <DataGrid x:Name="reservationsData"
                               ItemsSource="{Binding ReservationAccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                               SelectedItem="{Binding SelectedReservation, UpdateSourceTrigger=PropertyChanged}"
                                IsReadOnly="True"
                                SelectionMode="Single"
                                CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
-                               ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Margin="10 20 10 20">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Accommodation" Binding="{Binding AccommodationName}" CanUserResize="False"  Width="2*"/>
-                                <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False" Width="2*"/>
-                                <DataGridTextColumn Header="Start date" Binding="{Binding StartDate, Converter={cvt:DateTimeToDateOnlyConverter}}" CanUserResize="False" Width="1*"/>
-                                <DataGridTextColumn Header="End Date" Binding="{Binding EndDate, Converter={cvt:DateTimeToDateOnlyConverter}}" CanUserResize="False" Width="1*"/>
-                                <DataGridTemplateColumn Header="Reservation options" Width="2*">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                <Button x:Name="bPostpone" Command="{Binding Path=DataContext.PostponeReservationCommand,       
+                               ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" 
+                               FontSize="14" Margin="10 20 10 20">
+                                <DataGrid.RowStyle>
+                                    <Style TargetType="DataGridRow">
+                                        <Setter Property="Background" Value="#80a698"></Setter>
+                                        <Setter Property="Foreground" Value="#edf2f0"></Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#6b9481"></Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.RowStyle>
+                                <DataGrid.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#597a6a"></Setter>
+                                                <Setter Property="BorderBrush" Value="#597a6a"></Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.CellStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Accommodation" Binding="{Binding AccommodationName}" CanUserResize="False"  Width="2*"/>
+                                    <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False" Width="2*"/>
+                                    <DataGridTextColumn Header="Start date" Binding="{Binding StartDate, Converter={cvt:DateTimeToDateOnlyConverter}}" CanUserResize="False" Width="1*"/>
+                                    <DataGridTextColumn Header="End Date" Binding="{Binding EndDate, Converter={cvt:DateTimeToDateOnlyConverter}}" CanUserResize="False" Width="1*"/>
+                                    <DataGridTemplateColumn Header="Reservation options" Width="2*">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <Button x:Name="bPostpone" Command="{Binding Path=DataContext.PostponeReservationCommand,       
                                                          RelativeSource= {RelativeSource FindAncestor,
                                                          AncestorType={x:Type DataGrid}}}" 
                                                          Content="Postpone" Margin="10"/>
-                                                <Button x:Name="bCancel" Command="{Binding Path=DataContext.CancelReservationCommand,       
+                                                    <Button x:Name="bCancel" Command="{Binding Path=DataContext.CancelReservationCommand,       
                                                          RelativeSource= {RelativeSource FindAncestor,
                                                          AncestorType={x:Type DataGrid}}}" Content="Cancel" Margin="10" />
-                                            </WrapPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
-                </GroupBox>
-                <GroupBox Grid.Row="2" Grid.Column="0" Header="Reservation requests" Margin="10">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="8*"></RowDefinition>
-                            <RowDefinition Height="2*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <DataGrid Grid.Row="0" Grid.Column="0" x:Name="reservationRequestsData"
+                                                </WrapPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Grid.Row="2" Grid.Column="0" Header="Reservation requests" Margin="10"
+                          Style="{StaticResource ResourceKey=groupBoxStyle}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="8*"></RowDefinition>
+                                <RowDefinition Height="2*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <DataGrid Grid.Row="0" Grid.Column="0" x:Name="reservationRequestsData"
                               ItemsSource="{Binding ReservationRequestsDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                               SelectedItem="{Binding SelectedReservationRequestDTO, UpdateSourceTrigger=PropertyChanged}"        
                                IsReadOnly="True"
                                SelectionMode="Single"
                                CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
-                               ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Margin="10 20 10 0">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Accommodation" Binding="{Binding AccommodationName}" CanUserResize="False"  Width="2*"/>
-                                <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False" Width="2*"/>
-                                <DataGridTextColumn Header="Request" Binding="{Binding Request}" CanUserResize="False" Width="1*"/>
-                                <DataGridTextColumn Header="Status" Binding="{Binding Status}" CanUserResize="False" Width="*"/>
-                                <DataGridTemplateColumn x:Name="dgbViewOwnersComment" Header="Owner's comment" Width="*">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button x:Name="bViewOwnersComment" Command="{Binding Path=DataContext.ViewCommentCommand,       
+                               ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" 
+                               FontSize="14" Margin="10 20 10 0">
+                                <DataGrid.RowStyle>
+                                    <Style TargetType="DataGridRow">
+                                        <Setter Property="Background" Value="#80a698"></Setter>
+                                        <Setter Property="Foreground" Value="#edf2f0"></Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#6b9481"></Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.RowStyle>
+                                <DataGrid.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#597a6a"></Setter>
+                                                <Setter Property="BorderBrush" Value="#597a6a"></Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.CellStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Accommodation" Binding="{Binding AccommodationName}" CanUserResize="False"  Width="2*"/>
+                                    <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False" Width="2*"/>
+                                    <DataGridTextColumn Header="Request" Binding="{Binding Request}" CanUserResize="False" Width="1*"/>
+                                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" CanUserResize="False" Width="*"/>
+                                    <DataGridTemplateColumn x:Name="dgbViewOwnersComment" Header="Owner's comment" Width="*">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="bViewOwnersComment" Command="{Binding Path=DataContext.ViewCommentCommand,       
                                                          RelativeSource= {RelativeSource FindAncestor,
                                                          AncestorType={x:Type DataGrid}}}" Content="View" Margin="20 10"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <Button Grid.Row="1" Grid.Column="0" Content="Report" HorizontalAlignment="Right" VerticalAlignment="Center" Width="63" Height="26" Margin="10 0"/>
-                    </Grid>
-                </GroupBox>
-            </Grid>
-        </TabItem>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Button Grid.Row="1" Grid.Column="0" Content="Report" HorizontalAlignment="Right" VerticalAlignment="Center" Width="63" Height="26" Margin="10 0"/>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
             <TabItem Name="tabItemForums" Header="Forums" Style="{StaticResource ResourceKey=tabItemStyle}">
-            <Grid Background="#FFE5E5E5"/>
-        </TabItem>
-    </TabControl>
+                <Grid Style="{StaticResource ResourceKey=gridStyle}"/>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
