@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.Views.Guide"
         mc:Ignorable="d"
-        Title="SelectedCommentWindow" Height="600" Width="500">
-    <Grid>
+        Title="SelectedCommentWindow" Height="600" Width="500"
+        WindowStartupLocation="CenterScreen">
+    <Grid Background="LightGreen">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>

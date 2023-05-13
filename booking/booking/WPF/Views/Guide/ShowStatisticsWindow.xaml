@@ -5,19 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.Views.Guide"
         mc:Ignorable="d"
-        Title="ShowStatisticsWindow" Height="600" Width="450">
-    <Grid>
+        Title="ShowStatisticsWindow" Height="600" Width="450"
+        WindowStartupLocation="CenterScreen">
+    <Grid Background="LightGray">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition ></RowDefinition>
+            <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="30" FontWeight="Bold"><Run Text="{Binding SelectedAppointmentStatistics.TourName}"/></TextBlock>
         <StackPanel Grid.Row="1" Orientation="Horizontal" Height="50" HorizontalAlignment="Left" >
             <Label FontSize="20">Number of guests:</Label>
             <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.TotalGuests}" ></Label>
@@ -44,5 +45,6 @@
             <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.GuestsWithoutVoucher}" ></Label>
             <Label FontSize="20">%</Label>
         </StackPanel>
+        <Button Grid.Row="7" Width="150" Height="35" FontSize="20" Command="{Binding ExitWindowCommand}">Cancel</Button>
     </Grid>
 </Window>

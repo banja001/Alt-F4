@@ -21,7 +21,7 @@ namespace booking.View.Guide
     /// <summary>
     /// Interaction logic for GuideWindow.xaml
     /// </summary>
-    public partial class AddTourWindow : Window
+    public partial class AddTourWindow : Page
     {
         public AddTourWindow()
         {

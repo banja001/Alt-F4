@@ -47,7 +47,7 @@ namespace booking.WPF.ViewModels
                 {
                     SelectedCommentWindow showComment = new SelectedCommentWindow(SelectedComment, Guide);
                     showComment.ShowDialog();
-                    ExitWindow();
+                    //ExitWindow();
                 }
                 else
                     MessageBox.Show("Select tour!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);

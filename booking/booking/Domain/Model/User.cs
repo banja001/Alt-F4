@@ -42,5 +42,14 @@ namespace booking.Model
             Role = values[3];
             Super = Convert.ToBoolean(values[4]);
         }
+
+        public string IsSuper()
+        {
+            if (Super)
+                return "Yes";
+            else
+                return "No";
+        }
+
     }
 }

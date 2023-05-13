@@ -1,26 +1,26 @@
-﻿<Window x:Class="booking.View.Guide.TourCancellation"
+﻿<Page x:Class="booking.View.Guide.TourCancellation"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.View.Guide"
         mc:Ignorable="d"
-        Title="TourCancellation" Height="450" Width="800">
-    <Grid>
+        Title="TourCancellation" Height="666" Width="803">
+    <Grid Background="LightGray">
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="0.7*"/>
             <RowDefinition Height="4*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" FontSize="40" Height="75" HorizontalAlignment="Center">Upcoming tours:</Label>
-        <DataGrid Name="UpcomingTours" ItemsSource="{Binding UpcomingTours}" SelectedItem="{Binding SelectedTour}" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,72,0,72" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False" Grid.RowSpan="3" HorizontalAlignment="Center" Width="780">
+        <Label Grid.Row="0" FontSize="40" HorizontalAlignment="Center">Upcoming tours:</Label>
+        <DataGrid Grid.Row="1" Name="UpcomingTours" ItemsSource="{Binding UpcomingTours}" SelectedItem="{Binding SelectedTour}" AutoGenerateColumns="False" IsReadOnly="True" Margin="10" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False"  HorizontalAlignment="Center" Width="770">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" CanUserResize="False" Width="75"/>
-                <DataGridTextColumn Header="State" Binding="{Binding Location.State}" CanUserResize="False"  Width="75"/>
-                <DataGridTextColumn Header="City" Binding="{Binding Location.City}" CanUserResize="False"  Width="75"/>
-                <DataGridTextColumn Header="Language" Binding="{Binding Language}"  Width="75"/>
-                <DataGridTextColumn Header="Start time" Binding="{Binding StartTime}" CanUserResize="False"  Width="75"/>
-                <DataGridTextColumn Header="Number of guests" Binding="{Binding MaxGuests}"  Width="75"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" CanUserResize="False"  Width="*"/>
+                <DataGridTextColumn Header="State" Binding="{Binding Location.State}" CanUserResize="False"  Width="*"/>
+                <DataGridTextColumn Header="City" Binding="{Binding Location.City}" CanUserResize="False" Width="*"/>
+                <DataGridTextColumn Header="Language" Binding="{Binding Language}"  Width="*"/>
+                <DataGridTextColumn Header="Start time" Binding="{Binding StartTime}" CanUserResize="False"  Width="*"/>
+                <DataGridTextColumn Header="Number of guests" Binding="{Binding MaxGuests}"  Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -29,10 +29,10 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Height="40" Width="150" FontSize="20" Command="{Binding AbandonTourCommand}">Abandon tour</Button>
-            <Button Grid.Column="1" Height="40" Width="150" FontSize="20" Command="{Binding ExitCommand}" >Exit</Button>
+            <Button Grid.Column="0" HorizontalAlignment="Right" Margin="30" Height="35" Width="150" FontSize="20" Command="{Binding AbandonTourCommand}">Abandon tour</Button>
+            <Button Grid.Column="1" Height="35" Width="150" HorizontalAlignment="Left" Margin="30" FontSize="20" Command="{Binding ExitCommand}" >Exit</Button>
 
         </Grid>
 
     </Grid>
-</Window>
+</Page>

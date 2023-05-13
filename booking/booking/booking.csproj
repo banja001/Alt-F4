@@ -15,7 +15,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Icons\avatar.png" />
+    <None Remove="Resources\Icons\avatarico.png" />
+    <None Remove="Resources\Icons\finished.png" />
     <None Remove="Resources\Icons\home.png" />
+    <None Remove="Resources\Icons\livetrack.png" />
+    <None Remove="Resources\Icons\nesto.png" />
+    <None Remove="Resources\Icons\plus.png" />
+    <None Remove="Resources\Icons\request.png" />
+    <None Remove="Resources\Icons\statistics.png" />
+    <None Remove="Resources\Icons\upcoming.png" />
     <None Remove="Resources\Icons\whiteLogout.png" />
     <None Remove="Resources\Icons\whiteRequest.png" />
     <None Remove="Resources\Icons\whiteStatistics.png" />
@@ -32,7 +41,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Icons\avatar.png" />
+    <Resource Include="Resources\Icons\avatarico.png" />
+    <Resource Include="Resources\Icons\finished.png" />
     <Resource Include="Resources\Icons\home.png" />
+    <Resource Include="Resources\Icons\livetrack.png" />
+    <Resource Include="Resources\Icons\plus.png" />
+    <Resource Include="Resources\Icons\request.png" />
+    <Resource Include="Resources\Icons\statistics.png" />
+    <Resource Include="Resources\Icons\upcoming.png" />
     <Resource Include="Resources\Icons\whiteLogout.png" />
     <Resource Include="Resources\Icons\whiteRequest.png" />
     <Resource Include="Resources\Icons\whiteStatistics.png" />

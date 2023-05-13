@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF.Views.Guide;
 
 namespace booking.View
 {
@@ -116,9 +117,9 @@ namespace booking.View
                     else if(user.Role == "Guide")
                     {
                             
-                        GuideWindow guideWindow = new GuideWindow(user);
+                        GuideMainWindow guideWindow = new GuideMainWindow(user);
                         guideWindow.ShowDialog();
-                        //this.Close();
+                        this.Close();
                     }
                 }
                 else

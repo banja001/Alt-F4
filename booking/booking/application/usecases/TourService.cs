@@ -32,16 +32,17 @@ namespace booking.application.UseCases
 
         public ObservableCollection<Tour> FindUpcomingTours()
         {
-            ObservableCollection<Tour> tours= new ObservableCollection<Tour>();
+            ObservableCollection<Tour> tours = new ObservableCollection<Tour>();
             foreach (var t in _tourRepository.FindAll())
             {
                 if (t.StartTime.Date > DateTime.Now)
                 {
-                    t.Location=_locationRepository.GetAll().Find(l => l.Id == t.Location.Id);
+                    t.Location = _locationRepository.GetAll().Find(l => l.Id == t.Location.Id);
                     tours.Add(t);
                 }
-                       
+
             }
+
             return tours;
         }
     }

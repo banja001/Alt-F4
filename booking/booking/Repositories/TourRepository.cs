@@ -42,5 +42,10 @@ namespace booking.Repository
             tours.Remove(tours.Find(t => t.Id == tour.Id));
             serializer.ToCSV(fileName, tours);
         }
+
+        public Tour FindById(int id)
+        {
+            return tours.Find(tour => tour.Id == id);
+        }
     }
 }
