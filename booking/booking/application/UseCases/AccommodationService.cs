@@ -37,6 +37,11 @@ namespace application.UseCases
         {
             return accommodationRepository.GetById(id);
         }
+        public List<Accommodation> GetAllById(int id)
+        {
+            return accommodationRepository.GetAllByOwnerId(id);
+        }
+
         public Accommodation FindById(int id)
         {
             return accommodationRepository.FindById(id);
