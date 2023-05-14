@@ -35,17 +35,17 @@ namespace WPF.ViewModels
         public Answer Answer { get; set; }
         public List<Appointment> Appointments { get; set; }
         public Appointment CurrentAppointment { get; set; }
-        public ICommand StartCommand => new RelayCommand(StartTour);
-        public ICommand CancelCommand=> new RelayCommand(CancelTour);
+        public ICommand StartCommand => new RelayCommand(StartTour, CanStart);
+        public ICommand CancelCommand=> new RelayCommand(CancelTour, CanCancel);
         public ICommand ExitCommand => new RelayCommand(Exit);
         public bool CheckBox { get; set; }
-        public ICommand CheckPointCommand => new RelayCommand(CheckPointClick);
+        
 
         public LiveTrackingTourViewModel(User guide)
         {
             InitializeRepositories();
             Answer = new Answer();
-            SelectedTour = new Tour();
+            //SelectedTour = new Tour();
             //CheckBox=new CheckBox();
             AppointmentCheckPoints = new ObservableCollection<AppointmentCheckPoint>();
             GuestsOnTour = new ObservableCollection<TourAttendance>();
@@ -82,6 +82,17 @@ namespace WPF.ViewModels
                 }
             }
         }
+
+        public bool CanStart()
+        {
+            return SelectedTour != null && !CanCancel();
+        }
+
+        public bool CanCancel()
+        {
+            return CurrentAppointment!=null? CurrentAppointment.Active:false;
+        }
+
         private void ShowAppointment()
         {
             foreach (Appointment ap in Appointments)
@@ -214,10 +225,7 @@ namespace WPF.ViewModels
             TourEnd();
         }*/
 
-        public void CheckPointClick()
-        {
-            MessageBox.Show(CheckBox.ToString());
-        }
+        
 
         private void CancelTour()
         {

@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using booking.Model;
+using WPF.ViewModels;
 
 namespace WPF.Views.Guide
 {
@@ -19,15 +20,12 @@ namespace WPF.Views.Guide
     /// </summary>
     public partial class ProfilePage : Page
     {
-        public User Guide { get; set; }
-        public string Super { get; set; }
+        
 
         public ProfilePage(User guide)
         {
             InitializeComponent();
-            DataContext = this;
-            Guide = guide;
-            Super = Guide.IsSuper();
+            DataContext = new ProfilePageViewModel(guide);
         }
     }
 }

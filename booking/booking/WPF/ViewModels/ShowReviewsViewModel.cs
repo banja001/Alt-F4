@@ -24,7 +24,7 @@ namespace booking.WPF.ViewModels
         private readonly AppointmentService _appointmentService;
         public TourRatingDTO SelectedComment { get; set; }
         public ObservableCollection<TourRatingDTO> AllComments { get; set; }
-        public ICommand ShowCommand => new RelayCommand(Show);
+        public ICommand ShowCommand => new RelayCommand(Show,CanShow);
         public ICommand ExitWindowCommand => new RelayCommand(ExitWindow);
         public User Guide { get; set; }
 
@@ -35,8 +35,13 @@ namespace booking.WPF.ViewModels
             AllComments =
                 new ObservableCollection<TourRatingDTO>(
                     _appointmentService.MakeTourRatings(AllCommentsForThatTour, appointment));
-            SelectedComment=new TourRatingDTO();
+           // SelectedComment=new TourRatingDTO();
             Guide = guide;
+        }
+
+        public bool CanShow()
+        {
+            return SelectedComment != null;
         }
 
         public void Show()
@@ -45,9 +50,16 @@ namespace booking.WPF.ViewModels
             {
                 if (SelectedComment != null && !string.IsNullOrEmpty(SelectedComment.TourName))
                 {
+                    //ExitWindow();
                     SelectedCommentWindow showComment = new SelectedCommentWindow(SelectedComment, Guide);
                     showComment.ShowDialog();
-                    //ExitWindow();
+                    if (!SelectedComment.Rating.IsValid)
+                    {
+                        
+                        AllComments.Add(SelectedComment);
+                        AllComments.Remove(SelectedComment);
+                    }
+
                 }
                 else
                     MessageBox.Show("Select tour!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);

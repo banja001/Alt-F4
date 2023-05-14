@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.View.Guide"
         mc:Ignorable="d"
-        Title="LiveTrackingWindow" Height="666" Width="803">
+        Title="LiveTrackingWindow"  Height="650" Width="790">
     <Grid Background="LightGreen">
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="3*"/>
-            <RowDefinition/>
+            <RowDefinition Height="1.1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -44,7 +44,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckPointCHB" IsChecked="{Binding Active, Mode=TwoWay}" IsEnabled="{Binding NotChecked}" Command="{Binding CheckPointCommand}" CommandParameter="{Binding CheckBox, RelativeSource={RelativeSource Self}}"/>
+                            <CheckBox Name="CheckPointCHB" IsChecked="{Binding Active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding NotChecked,UpdateSourceTrigger=PropertyChanged}" Command="{Binding CheckPointCommand }" />
                             <TextBlock Text="{Binding Name}"/>
                         </StackPanel>
                     </DataTemplate>
@@ -66,7 +66,8 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <Button Content="Start tour" Name="StartTourB" HorizontalAlignment="Right"  VerticalAlignment="Center" Width="150" Height="35" Grid.Row="2" Margin="30" FontSize="20" Command="{Binding StartCommand}"/>
-        <Button Content="End tour" Name="CancelTourB" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Height="35" Grid.Row="2" Grid.Column="1" Margin="30" FontSize="20" Command="{Binding CancelCommand}"/>
+        <Button Background="#ea8dfc" Content="Start tour" Name="StartTourB" HorizontalAlignment="Right"  VerticalAlignment="Center" Width="150" Height="35" Grid.Row="2" Margin="30,0" FontSize="20" Command="{Binding StartCommand}"/>
+        <Button Background="#ea8dfc" Content="End tour" Name="CancelTourB" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Height="35" Grid.Row="2" Grid.Column="1" Margin="30,0" FontSize="20" Command="{Binding CancelCommand}"/>
+        <Button Background="#ea8dfc" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Width="80" Height="30" FontSize="20" Margin="10">Demo</Button>
     </Grid>
 </Page>

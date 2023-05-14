@@ -24,6 +24,7 @@ namespace WPF.ViewModels
             SelectedAppointmentStatistics =
                 _appointmentService.MakeAppointmentStatisticsDTO(AppointmentGuests.AppointmentId);
         }
+        
         private void ExitWindow()
         {
             this.CloseCurrentWindow();

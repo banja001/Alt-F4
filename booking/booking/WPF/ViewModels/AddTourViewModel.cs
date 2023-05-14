@@ -20,12 +20,13 @@ namespace WPF.ViewModels
         private CheckPointRepository _checkPointRepository { get; set; }
         private TourImageRepository _tourImageRepository { get; set; }
         public ObservableCollection<CheckPoint> CheckPointsForListBox { get; set; }
+        public ObservableCollection<TourImage> ImagesForListBox { get; set; }
         public List<TourImage> TourImages { get; set; }
         public string Image { get; set; }
         public ICommand ExitWindowCommand => new RelayCommand(ExitWindow);
         public ICommand AddCheckPointCommand => new RelayCommand(AddCheckPointToListBox);
         public ICommand AddImageCommand => new RelayCommand(AddImageToList);
-        public ICommand ConfirmTourCommand=> new RelayCommand(ConfirmTour);
+        public ICommand ConfirmTourCommand=> new RelayCommand(ConfirmTour, CanAddTour);
         public AddTourViewModel()
         {
             _tourRepository = new TourRepository();
@@ -36,6 +37,7 @@ namespace WPF.ViewModels
             CheckPoint = new CheckPoint();
             TourImages = new List<TourImage>();
             CheckPointsForListBox = new ObservableCollection<CheckPoint>();
+            ImagesForListBox=new ObservableCollection<TourImage>();
             Tour.StartTime.Date = DateTime.Now;
         }
 
@@ -59,6 +61,13 @@ namespace WPF.ViewModels
                     MessageBox.Show("Form is not properly filled!");
             }
 
+        }
+
+        public bool CanAddTour()
+        {
+            return Tour.StartTime.IsValid && !String.IsNullOrEmpty(Tour.Description) &&
+                   !string.IsNullOrEmpty(Tour.Language) && !string.IsNullOrEmpty(Tour.Name) && Tour.Duration > 0 &&
+                   Tour.MaxGuests > 0 && CheckPointsForListBox.Count > 1 && !String.IsNullOrEmpty(Tour.Location.City) && !String.IsNullOrEmpty(Tour.Location.State);
         }
 
         private void AddCheckPointToListBox()
@@ -101,6 +110,7 @@ namespace WPF.ViewModels
         {
             TourImage image = new TourImage(_tourImageRepository.MakeID() + TourImages.Count, Image, _tourRepository.MakeID());
             TourImages.Add(image);
+            ImagesForListBox.Add(image);
         }
         private void ExitWindow()
         {

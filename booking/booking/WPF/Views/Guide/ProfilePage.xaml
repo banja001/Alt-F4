@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WPF.Views.Guide"
       mc:Ignorable="d" 
-      d:DesignHeight="666" d:DesignWidth="819"
+      d:DesignHeight="650" d:DesignWidth="790"
       Title="ProfilePage">
 
     <Grid Background="LightGreen">
@@ -20,7 +20,7 @@
             <LineBreak/>
             Super-guide:  <Run Text="{Binding Super}" FontWeight="Bold"/>
         </TextBlock>
-        <Button Grid.Row="2" Width="150" Height="40" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="25" Margin="10"> Quit job</Button>
-        <Button Grid.Row="2" Width="200" Height="50" HorizontalAlignment="Center" FontSize="35"> Sign out</Button>
+        <Button Background="#ea8dfc" Grid.Row="2" Width="150" Height="40" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="25" Margin="10"> Quit job</Button>
+        <Button Background="#ea8dfc" Grid.Row="2" Width="200" Height="50" HorizontalAlignment="Center" FontSize="35" Command="{Binding SignOutCommand}"> Sign out</Button>
     </Grid>
 </Page>

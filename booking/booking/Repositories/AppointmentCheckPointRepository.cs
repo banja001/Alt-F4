@@ -46,7 +46,8 @@ namespace booking.Repository
         public void SaveOneInFile(AppointmentCheckPoint appointmentCheckPoint)
         {
            AppointmentCheckPoint ap= appointmenCheckPoints.Find(a => a.Id == appointmentCheckPoint.Id);
-           ap = appointmentCheckPoint;
+           ap.Active = appointmentCheckPoint.Active;
+           ap.NotChecked=appointmentCheckPoint.NotChecked;
             serializer.ToCSV(fileName, appointmenCheckPoints);
         }
     }

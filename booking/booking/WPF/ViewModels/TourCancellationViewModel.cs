@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using booking.Commands;
@@ -26,20 +27,25 @@ namespace WPF.ViewModels
             _tourService = new TourService();
             _reservationService= new ReservationTourService();
             UpcomingTours = _tourService.FindUpcomingTours();
-            SelectedTour = new Tour();
+            //SelectedTour = new Tour();
             Guide = guide;
         }
-        public ICommand AbandonTourCommand => new RelayCommand(AbandonTour);
+        public ICommand AbandonTourCommand => new RelayCommand(AbandonTour,CanAbandon);
         public ICommand ExitCommand => new RelayCommand(ExitWindow);
+        public bool CanAbandon()
+        {
+            return SelectedTour != null;
+        }
         public void AbandonTour()
         {
             if (SelectedTour.Id > 0)
             {
-                if (MessageBox.Show("Are you sure?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Are you sure?", "Warning", MessageBoxButton.YesNo,MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
                     _reservationService.GiveVouchers(SelectedTour,Guide);
                     _tourService.DeleteTour(SelectedTour);
-                    ExitWindow();
+                    UpcomingTours.Remove(SelectedTour);
+                    //ExitWindow();
                 }
             }
             else

@@ -21,30 +21,30 @@
         <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="30" FontWeight="Bold"><Run Text="{Binding SelectedAppointmentStatistics.TourName}"/></TextBlock>
         <StackPanel Grid.Row="1" Orientation="Horizontal" Height="50" HorizontalAlignment="Left" >
             <Label FontSize="20">Number of guests:</Label>
-            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.TotalGuests}" ></Label>
+            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.TotalGuests}"  FontWeight="Bold" ></Label>
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" Height="50" HorizontalAlignment="Left" >
             <Label FontSize="20">Number of guests under 18 years:</Label>
-            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.GuestsUnder18}" ></Label>
+            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.GuestsUnder18}"  FontWeight="Bold" ></Label>
         </StackPanel>
         <StackPanel Grid.Row="3" Orientation="Horizontal" Height="50" HorizontalAlignment="Left" >
             <Label FontSize="20">Number of guests between 18 and 50 years:</Label>
-            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.GuestsBetween18And50}" ></Label>
+            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.GuestsBetween18And50}" FontWeight="Bold" ></Label>
         </StackPanel>
         <StackPanel Grid.Row="4" Orientation="Horizontal" Height="50" HorizontalAlignment="Left" >
             <Label FontSize="20">Number of guests above 50:</Label>
-            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.GuestsAbove50}" ></Label>
+            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.GuestsAbove50}"  FontWeight="Bold" ></Label>
         </StackPanel>
         <StackPanel Grid.Row="5" Orientation="Horizontal" Height="50" HorizontalAlignment="Left" >
             <Label FontSize="20"> Number of guests with voucher:</Label>
-            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.GuestsWithVoucher}" ></Label>
-            <Label FontSize="20">%</Label>
+            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.GuestsWithVoucher}" FontWeight="Bold"  ></Label>
+            <Label FontSize="20" FontWeight="Bold" Padding="0,5,5,5" >%</Label>
         </StackPanel>
         <StackPanel Grid.Row="6" Orientation="Horizontal" Height="50" HorizontalAlignment="Left" >
             <Label FontSize="20">Number of guests without voucher:</Label>
-            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.GuestsWithoutVoucher}" ></Label>
-            <Label FontSize="20">%</Label>
+            <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.GuestsWithoutVoucher}"  FontWeight="Bold" ></Label>
+            <Label FontSize="20"  FontWeight="Bold" Padding="0,5,5,5">%</Label>
         </StackPanel>
-        <Button Grid.Row="7" Width="150" Height="35" FontSize="20" Command="{Binding ExitWindowCommand}">Cancel</Button>
+        <Button Background="#ea8dfc" Grid.Row="7" Width="150" Height="35" FontSize="20" Command="{Binding ExitWindowCommand}">Cancel</Button>
     </Grid>
 </Window>

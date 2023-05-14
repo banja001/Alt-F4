@@ -25,6 +25,17 @@ namespace booking.WPF.ViewModels
         public AppointmentGuestsDTO SelectedTour { get; set; }
         private readonly AppointmentService _appointmentService;
         private User Guide { get; set; }
+        private bool isSelected;
+
+        public bool IsSelected
+        {
+            get => isSelected;
+            set
+            {
+                isSelected = value;
+                OnPropertyChanged(nameof(IsSelected));
+            }
+        }
 
         public FinishedToursViewModel(User guide)
         {
@@ -32,13 +43,13 @@ namespace booking.WPF.ViewModels
             Years = _appointmentService.FindAllYears(guide.Id);
             FinishedTours = _appointmentService.CreateListOfFinishedTours(guide.Id);
             MostVisitedTour =new ObservableCollection<AppointmentGuestsDTO>();
-            SelectedTour =new AppointmentGuestsDTO();
+            //SelectedTour =new AppointmentGuestsDTO();
             SelectedYear = Years[0];
             Guide = guide;
         }
 
-        public ICommand ShowReviewsCommand => new RelayCommand(ShowReviews);
-        public ICommand ShowStatisticsCommand => new RelayCommand(ShowStatistics);
+        public ICommand ShowReviewsCommand => new RelayCommand(ShowReviews, CanShow);
+        public ICommand ShowStatisticsCommand => new RelayCommand(ShowStatistics, CanShow);
         public ICommand FindCommand => new RelayCommand(FindMostVisitedTour);
         
         public void ShowReviews()
@@ -58,6 +69,11 @@ namespace booking.WPF.ViewModels
                 Console.WriteLine(exception);
                 throw;
             }
+        }
+
+        public bool CanShow()
+        {
+            return SelectedTour!=null;
         }
 
         public void ShowStatistics()
