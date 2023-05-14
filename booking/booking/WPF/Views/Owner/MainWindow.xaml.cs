@@ -41,16 +41,6 @@ namespace WPF.Views.Owner
             Main.Content = OwnerWindow;
             w = this;
         }
-
-        private void OwnerDropdownClick(object sender, RoutedEventArgs e)
-        {
-
-            
-            Main.Content=OwnerWindow;
-            
-        }
-        
-
         private void BackClick(object sender, RoutedEventArgs e)
         {
             if (Main.NavigationService.CanGoBack)
@@ -66,31 +56,47 @@ namespace WPF.Views.Owner
                 Main.NavigationService.GoForward();
             }
         }
+        private void OwnerDropdownClick(object sender, RoutedEventArgs e)
+        {
+            Main.Content=OwnerWindow;
+            dropdownMenu.IsOpen = false;
+
+        }
         private void AddAccommodationDropdownClick(object sender, RoutedEventArgs e)
         {
             Main.Content=new AddAccommodationWindow(OwnerModel);
+            dropdownMenu.IsOpen = false;
         }
 
         private void ViewRatingsDropdownClick(object sender, RoutedEventArgs e)
         {
             Main.Content = new RatingViewWindow(OwnerModel);
+            dropdownMenu.IsOpen = false;
         }
 
         private void ManageReservationsDropdownClick(object sender, RoutedEventArgs e)
         {
             Main.Content = new ReservationChangeWindow(OwnerModel);
+            dropdownMenu.IsOpen = false;
         }
         private void AccommodationStatsClick(object sender, RoutedEventArgs e)
         {
             Main.Content = new AccommodationStats(OwnerModel);
+            dropdownMenu.IsOpen = false;
         }
         private void ScheduleRenovationClick(object sender, RoutedEventArgs e)
         {
             Main.Content = new ScheduleRenovation(OwnerModel);
+            dropdownMenu.IsOpen = false;
         }
         private void ViewRenovationClick(object sender, RoutedEventArgs e)
         {
             Main.Content = new RenovationView(OwnerModel);
+            dropdownMenu.IsOpen = false;
+        }
+        public void ViewForumsClick(object sender, RoutedEventArgs e)
+        {
+            dropdownMenu.IsOpen = false;
         }
 
     }

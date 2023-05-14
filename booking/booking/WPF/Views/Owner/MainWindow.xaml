@@ -8,17 +8,22 @@
         Title="MainWindow" Height="749" Width="410" WindowStartupLocation="CenterScreen">
     <Grid Background="Black">
         
+                
+           
         
         
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="DarkRed" Margin="0,0,0,641">
-            <booking:DropdownMenu Margin="336,26,16,25">
+            <booking:DropdownMenu Margin="336,26,16,25" x:Name="dropdownMenu">
                 <booking:DropdownMenu.Resources>
                     <Style TargetType="Button">
 
                         <Setter Property="Padding" Value="3 3"/>
+                        <Setter Property="Background" Value="Gray"/>
+                        <Setter Property="Height" Value="30"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
 
                     </Style>
                 </booking:DropdownMenu.Resources>
@@ -39,14 +44,15 @@
                             </StackPanel>
                         </Button.Content>
                     </Button>
-                    <Button Click="ViewRatingsDropdownClick" HorizontalContentAlignment="Left">
+                    <Button Click="AccommodationStatsClick" HorizontalContentAlignment="Left">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" >
-                                <Image Source="../../../Resources/Icons/view_ratings.png" Width="10" Height="10"/>
-                                <Label Content="View Ratings" FontSize="10"/>
+                                <Image Source="../../../Resources/Icons/accommodation_stats.png" Width="10" Height="10"/>
+                                <Label Content="Accommodation Stats" FontSize="10"/>
                             </StackPanel>
                         </Button.Content>
                     </Button>
+                    
                     <Button  Click="ManageReservationsDropdownClick" HorizontalContentAlignment="Left">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" >
@@ -55,18 +61,11 @@
                             </StackPanel>
                         </Button.Content>
                     </Button>
-                    <Button Click="AccommodationStatsClick" HorizontalContentAlignment="Left">
-                        <Button.Content>
-                            <StackPanel Orientation="Horizontal" >
-                                <Image Source="../../../Resources/Icons/owner_icon.png" Width="10" Height="10"/>
-                                <Label Content="Accommodation Stats" FontSize="10"/>
-                            </StackPanel>
-                        </Button.Content>
-                    </Button>
+                    
                     <Button Click="ScheduleRenovationClick" HorizontalContentAlignment="Left">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" >
-                                <Image Source="../../../Resources/Icons/owner_icon.png" Width="10" Height="10"/>
+                                <Image Source="../../../Resources/Icons/schedule_renovation.png" Width="10" Height="10"/>
                                 <Label Content="Schedule Renovation" FontSize="10"/>
                             </StackPanel>
                         </Button.Content>
@@ -74,8 +73,24 @@
                     <Button Click="ViewRenovationClick" HorizontalContentAlignment="Left">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" >
-                                <Image Source="../../../Resources/Icons/owner_icon.png" Width="10" Height="10"/>
+                                <Image Source="../../../Resources/Icons/view_renovations.png" Width="10" Height="10"/>
                                 <Label Content="View Renovation" FontSize="10"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button  Click="ViewForumsClick" HorizontalContentAlignment="Left">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" >
+                                <Image Source="../../../Resources/Icons/forum.png" Width="10" Height="10"/>
+                                <Label Content="View Forums" FontSize="10"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button Click="ViewRatingsDropdownClick" HorizontalContentAlignment="Left">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal" >
+                                <Image Source="../../../Resources/Icons/view_ratings.png" Width="10" Height="10"/>
+                                <Label Content="View Ratings" FontSize="10"/>
                             </StackPanel>
                         </Button.Content>
                     </Button>
