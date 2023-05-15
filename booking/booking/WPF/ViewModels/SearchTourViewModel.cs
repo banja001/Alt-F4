@@ -1,33 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using booking.DTO;
+﻿using booking.DTO;
 using booking.Model;
 using booking.Repository;
-using booking.View.Guide;
+using booking.View.Guest2;
+using booking.View;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows;
+using booking.WPF.ViewModels;
+using System.Windows.Input;
+using booking.Commands;
+using static System.Net.Mime.MediaTypeNames;
+using WPF.Views.Guest2;
 
-namespace booking.View.Guest2
+namespace WPF.ViewModels
 {
-    /// <summary>
-    /// Interaction logic for Guest2Overview.xaml
-    /// </summary>
-    public partial class Guest2Overview : Window
+    public class SearchTourViewModel : BaseViewModel
     {
-
         private readonly LocationRepository _locationRepository;
         private readonly TourRepository _tourRepository;
         private readonly TourImageRepository _tourImageRepository;
@@ -38,21 +32,29 @@ namespace booking.View.Guest2
         public ObservableCollection<TourLocationDTO> TourLocationDTOs { get; set; }
         public ObservableCollection<string> States { get; set; }
         public TourLocationDTO SelectedTour { get; set; }
-
         public string SelectedState { get; set; }
         public string SelectedCity { get; set; }
-        public User currentUser { get; set; }   
-
+        public User currentUser { get; set; }
+        public String Duration { get; set; }
+        public String Language { get; set; }
+        public String PeopleCount { get; set; }
+        public ObservableCollection<string> Cities { get; set; }
         public Answer Answer { get; set; }
-        public Guest2Overview(User user)
+        public ICommand SearchCommand => new RelayCommand(OnSearchButtonClick);
+        public ICommand SeeMoreCommand => new RelayCommand(OnMoreDetailsButtonClick);
+        public ICommand BookATourCommand => new RelayCommand(OnBookTourButtonClick, CanBookTourButtonClick);
+        public ICommand FillCitiesCommand => new RelayCommandWithParams(OnStateComboBoxSelectionChanged);
+        public SearchTourViewModel(User user)
         {
-            InitializeComponent();
-            this.DataContext = this;
             _locationRepository = new LocationRepository();
             _tourRepository = new TourRepository();
             _tourImageRepository = new TourImageRepository();
             _answerRepository = new AnswerRepository();
             _reservationTourRepository = new ReservationTourRepository();
+
+            PeopleCount = "People count";
+            Language = "Language";
+            Duration = "Duration(h)";
 
             TourLocationDTOs = new ObservableCollection<TourLocationDTO>(CreateTourDTOs());
             States = new ObservableCollection<string>();
@@ -61,25 +63,22 @@ namespace booking.View.Guest2
             RemoveFullTours();
             RemoveFormerTours();
 
-            _tourAttendanceRepository= new TourAttendanceRepository();
+            _tourAttendanceRepository = new TourAttendanceRepository();
             _appointmentCheckPointRepository = new AppointmentCheckPointRepository();
-
-            welcome.Header = "Welcome " + currentUser.Username.ToString();
-            //FindAnswer();
         }
         private void FillStateComboBox()
         {
             List<Location> locations = _locationRepository.GetAll();
-            foreach(Location location in locations)
+            foreach (Location location in locations)
             {
                 String state = location.State;
-                if(!States.Contains(state))
+                if (!States.Contains(state))
                     States.Add(state);
             }
         }
 
         public List<TourLocationDTO> CreateTourDTOs()
-        { 
+        {
             List<Location> locations = _locationRepository.GetAll();
             List<TourImage> tourImages = _tourImageRepository.findAll();
             List<TourLocationDTO> localTourLocationDTOs = new List<TourLocationDTO>();
@@ -94,82 +93,45 @@ namespace booking.View.Guest2
             }
             return localTourLocationDTOs;
         }
-        private void SetContentToDefault(TextBox selectedTextbox, string defaultText)
+        private void OnMoreDetailsButtonClick()
         {
-            if (selectedTextbox.Text.Equals(""))
-            {
-                selectedTextbox.Text = defaultText;
-                selectedTextbox.Foreground = Brushes.LightGray;
-            }
-        }
-        private void RemoveContent(TextBox selectedTextBox, string defaultText)
-        {
-            if (selectedTextBox.Text.Equals(defaultText))
-            {
-                selectedTextBox.Text = "";
-                selectedTextBox.Foreground = Brushes.Black;
-            }
-        }
-        private void PeopleCountLostFocus(object sender, RoutedEventArgs e)
-        {
-            SetContentToDefault(PeopleCount, "People count");
-        }
-
-        private void PeopleCountGotFocus(object sender, RoutedEventArgs e)
-        {
-            RemoveContent(PeopleCount, "People count");
-        }
-
-        private void LanguageGotFocus(object sender, RoutedEventArgs e)
-        {
-            RemoveContent(Language, "Language");
-        }
-
-        private void LanguageLostFocus(object sender, RoutedEventArgs e)
-        {
-            SetContentToDefault(Language, "Language");
-        }
-        private void DurationGotFocus(object sender, RoutedEventArgs e)
-        {
-            RemoveContent(Duration, "Duration(h)");
-        }
-        private void DurationLostFocus(object sender, RoutedEventArgs e)
-        {
-            SetContentToDefault(Duration, "Duration(h)");
-        }
-
-        private void MoreDetailsButtonClick(object sender, RoutedEventArgs e)
-        {
-            var moreDetailsWindow = new MoreDetailsOverview(this);
-            moreDetailsWindow.Owner = this;
-            moreDetailsWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            var moreDetailsWindow = new MoreDetailsView(SelectedTour);
             moreDetailsWindow.ShowDialog();
         }
 
-        private void BookTourButtonClick(object sender, RoutedEventArgs e)
+        private void OnBookTourButtonClick()
         {
             if (SelectedTour != null)
             {
-                var bookTourWindow = new BookTourOverview(this, currentUser);
-                bookTourWindow.Owner = this;
-                bookTourWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                var bookTourWindow = new BookTourView(SelectedTour, currentUser, this);
                 bookTourWindow.ShowDialog();
-                this.Close();
+
+                RemoveInvalidTours();
+                OnPropertyChanged(nameof(TourLocationDTOs));
             }
             else
-                MessageBox.Show("Niste izabrali turu koju zelite da rezervisete!");
+                MessageBox.Show("Choose tour for booking!");
+        }
+        private bool CanBookTourButtonClick()
+        {
+            return (SelectedTour != null);
+        }
+        public void RemoveInvalidTours()
+        {
+            RemoveFullTours();
+            RemoveFormerTours();
         }
         public void RemoveFormerTours()
         {
             foreach (TourLocationDTO tour in TourLocationDTOs.ToList<TourLocationDTO>())
             {
-                if(tour.StartTime.Date < DateTime.Now)
+                if (tour.StartTime.Date.Date < DateTime.Now.Date)
                 {
                     TourLocationDTOs.Remove(tour);
                 }
             }
         }
-        public void RemoveFullTours() 
+        public void RemoveFullTours()
         {
             foreach (TourLocationDTO tour in TourLocationDTOs.ToList<TourLocationDTO>())
             {
@@ -181,99 +143,93 @@ namespace booking.View.Guest2
             }
         }
 
-        private void StateComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OnStateComboBoxSelectionChanged(object parameter)
         {
-            if (StateComboBox.SelectedIndex != -1)
+            if (int.Parse(parameter.ToString()) != -1)
             {
-                CityComboBox.IsEnabled = true;
                 List<Location> locations = _locationRepository.GetAll();
                 List<string> cities = new List<string>();
+                if(Cities != null)
+                    Cities.Clear();
+                else
+                    Cities = new ObservableCollection<string>();
+
                 foreach (Location location in locations)
                 {
                     String city = location.City;
                     bool isValid = !cities.Contains(city) && SelectedState.Equals(location.State);
                     if (isValid)
-                        cities.Add(city);
+                    {
+                        Cities.Add(city);
+                        cities.Add(city);   
+                    }
                 }
-                CityComboBox.ItemsSource = cities;
+                OnPropertyChanged(nameof(Cities));
             }
         }
 
-        private void SearchButtonClick(object sender, RoutedEventArgs e)
+        private void OnSearchButtonClick()
         {
             if (!IsInputValid())
             {
                 MessageBox.Show("Invalid search format!", "Format warning");
-
-                PeopleCount.Text = "People count";
-                Language.Text = "Language";
-                Duration.Text = "Duration(h)";
-                PeopleCount.Foreground = Brushes.LightGray;
-                Language.Foreground = Brushes.LightGray;
-                Duration.Foreground = Brushes.LightGray;
-
-                StateComboBox.SelectedIndex = -1;
-                CityComboBox.SelectedIndex = -1;
-
                 return;
             }
             FilterTable();
+            OnPropertyChanged(nameof(TourLocationDTOs));
         }
 
         private void FilterTable()
-        { 
+        {
             TourLocationDTOs = new ObservableCollection<TourLocationDTO>(CreateTourDTOs());
             RemoveFullTours();
+            RemoveFormerTours();
 
-            if(!PeopleCount.Text.Equals("People count"))
-                FilterByPeopleCount(int.Parse(PeopleCount.Text));
-            if (!Language.Text.Equals("Language"))
-                FilterByLanguage(Language.Text);
+            if (!PeopleCount.Equals("People count"))
+                FilterByPeopleCount(int.Parse(PeopleCount));
+            if (!Language.Equals("Language"))
+                FilterByLanguage(Language);
 
             if (string.IsNullOrEmpty(SelectedState))
                 SelectedState = "";
             if (string.IsNullOrEmpty(SelectedCity))
                 SelectedCity = "";
-            FilterByLocation(SelectedState + "," + SelectedCity);
+            FilterByLocation(SelectedCity + "," + SelectedState);
 
-            if (!Duration.Text.Equals("Duration(h)"))
-                FilterByDuration(int.Parse(Duration.Text));
+            if (!Duration.Equals("Duration(h)"))
+                FilterByDuration(int.Parse(Duration));
 
-            bool checkForReset = PeopleCount.Text.Equals("People count") && Language.Text.Equals("Language")
+            bool checkForReset = PeopleCount.Equals("People count") && Language.Equals("Language")
                                  && string.IsNullOrEmpty(SelectedState) && string.IsNullOrEmpty(SelectedCity)
-                                 && Duration.Text.Equals("Duration(h)");
+                                 && Duration.Equals("Duration(h)");
             if (checkForReset)
             {
                 TourLocationDTOs = new ObservableCollection<TourLocationDTO>(CreateTourDTOs());
                 RemoveFullTours();
+                RemoveFormerTours();
             }
 
-            tourSelectionTable.ItemsSource = TourLocationDTOs;
-            StateComboBox.SelectedIndex = -1;
-            CityComboBox.SelectedIndex = -1;
-            CityComboBox.IsEnabled = false;
-            
         }
 
-        private bool IsInputValid() 
+        private bool IsInputValid()
         {
             Regex peopleCountRegex = new Regex("^[1-9][0-9]*$");
             Regex languageRegex = new Regex("^[A-ZČĆŠĐŽ]*[a-zčćšđž]*$");
             Regex durationRegex = new Regex("^[1-9][0-9]*$");
 
-            bool validPeopleCount = peopleCountRegex.IsMatch(PeopleCount.Text) || (PeopleCount.Text.Equals("People count"));
-            bool validDuration = durationRegex.IsMatch(Duration.Text) || (Duration.Text.Equals("Duration(h)"));
-            bool validLanguage = languageRegex.IsMatch(Language.Text) || (Language.Text.Equals("Language"));
+            bool validPeopleCount = peopleCountRegex.IsMatch(PeopleCount) || (PeopleCount.Equals("People count"));
+            bool validDuration = durationRegex.IsMatch(Duration) || (Duration.Equals("Duration(h)"));
+            bool validLanguage = languageRegex.IsMatch(Language) || (Language.Equals("Language"));
             bool isValid = validDuration && validLanguage && validPeopleCount;
 
             return isValid;
         }
 
         public void FilterByPeopleCount(int peopleCount)
-        {   
+        {
             List<TourLocationDTO> localDTOs = TourLocationDTOs.Where(t => t.MaxGuests >= peopleCount).ToList();
             TourLocationDTOs = new ObservableCollection<TourLocationDTO>(localDTOs);
-            
+
         }
         public void FilterByLanguage(string language)
         {
@@ -302,17 +258,6 @@ namespace booking.View.Guest2
             List<TourLocationDTO> localDTOs = TourLocationDTOs.Where(t => t.Duration <= duration).ToList();
             TourLocationDTOs = new ObservableCollection<TourLocationDTO>(localDTOs);
         }
-        private void LogOutButtonClick(object sender, RoutedEventArgs e)
-        {
-            SignInForm signInForm = new SignInForm();
-            signInForm.Show();
-            this.Close();
-        }
 
-        private void ExitButtonClick(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-        
     }
 }

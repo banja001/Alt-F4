@@ -32,7 +32,7 @@ namespace booking.Repository
         {
             return reservations.Count() + 1;
         }
-        public List<ReservationTour>  GetAllByTourId(int tourId)
+        public List<ReservationTour> GetAllByTourId(int tourId)
         {
             List<ReservationTour> foundReservations = new List<ReservationTour>();
             foreach (ReservationTour reservation in reservations)
@@ -50,6 +50,7 @@ namespace booking.Repository
 
         public int GetNumberOfGuestsForTourId(int tourId)
         {
+            Load();
             List<ReservationTour> filteredReservations = this.GetAllByTourId(tourId);
             int numberOfGuests = 0;
             foreach (ReservationTour reservation in filteredReservations)
@@ -67,7 +68,10 @@ namespace booking.Repository
             }
             return null;
         }
-
+        public void Load()
+        {
+            reservations = serializer.FromCSV(fileName);
+        }
         public void Delete(ReservationTour reservation)
         {
             reservations.Remove(reservations.Find(r=>r.Id==reservation.Id));

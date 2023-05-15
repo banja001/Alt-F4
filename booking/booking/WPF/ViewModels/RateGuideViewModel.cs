@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using System.Security.Policy;
 
 namespace booking.WPF.ViewModels
 {
@@ -20,6 +22,9 @@ namespace booking.WPF.ViewModels
         public ICommand AddPhotoCommand => new RelayCommand(AddPhoto);
         public ICommand SubmitCommand => new RelayCommand(Submit);
         public Appointment SelectedTour { get; set; }
+        public BitmapSource ImageSource { get; set; }
+        public ICommand SwipeLeftCommand => new RelayCommand(OnSwipeLeftButtonClick);
+        public ICommand SwipeRightCommand => new RelayCommand(OnSwipeRightButtonClick);
 
         private readonly GuideRatingImageService _guideRatingImageService;
         private readonly GuideRatingService _guideRatingService;
@@ -28,6 +33,7 @@ namespace booking.WPF.ViewModels
         public string Comment { get; set; }
 
         private List<GuideRatingImage> _guideRatingImages;
+        private int currentImageIndex;
 
         private StackPanel _tourEnjoymentPanel;
         private StackPanel _languageKnowledgePanel;
@@ -42,11 +48,67 @@ namespace booking.WPF.ViewModels
             _guideRatingService = new GuideRatingService();
             _appointmentService = new AppointmentService();
             _guideRatingImages = new List<GuideRatingImage>();
-
+            currentImageIndex = 0;
             _tourEnjoymentPanel = tourEnjoymentPanel as StackPanel;
             _languageKnowledgePanel = languageKnowledgePanel as StackPanel;
             _tourKnowledgePanel = tourKnowledgePanel as StackPanel;
             Guest = guest;
+        }
+        private void OnSwipeLeftButtonClick()
+        {
+            if (currentImageIndex == 0)
+            {
+                currentImageIndex = _guideRatingImages.Count - 1;
+                changePresentImage();
+            }
+            else
+            {
+                currentImageIndex--;
+                changePresentImage();
+            }
+
+        }
+        private void OnSwipeRightButtonClick()
+        {
+            if (currentImageIndex == _guideRatingImages.Count - 1)
+            {
+                currentImageIndex = 0;
+                changePresentImage();
+            }
+            else
+            {
+                currentImageIndex++;
+                changePresentImage();
+            }
+        }
+        private bool CanSwipeLeftButtonClick()
+        {
+            return _guideRatingImages.Count() > 1;
+        }
+        private bool CanSwipeRightButtonClick()
+        {
+            return (_guideRatingImages.Count() > 1);
+        }
+        private void changePresentImage()
+        {
+            if (_guideRatingImages.Count != 0)
+            {
+                BitmapImage bitmapimage = new BitmapImage();
+                bitmapimage.BeginInit();
+                if (_guideRatingImages[currentImageIndex].Url == "" || _guideRatingImages[currentImageIndex].Url == null)
+                {
+                    string url = "https://img.icons8.com/?size=512&id=N3wRcSUFuct_&format=png";
+                    bitmapimage.UriSource = new Uri(@url, UriKind.Absolute);
+                    bitmapimage.EndInit();
+                    ImageSource = bitmapimage;
+                    OnPropertyChanged(nameof(ImageSource));
+                    return;
+                }
+                bitmapimage.UriSource = new Uri(_guideRatingImages[currentImageIndex].Url, UriKind.Absolute);
+                bitmapimage.EndInit();
+                ImageSource = bitmapimage;
+                OnPropertyChanged(nameof(ImageSource));
+            }
         }
         private void Submit()
         {
@@ -69,8 +131,26 @@ namespace booking.WPF.ViewModels
         }
         private void AddPhoto()
         {
-            _guideRatingImages.Add(new GuideRatingImage(ImageUrl));
-            ImageUrl = "";
+            try
+            {
+                _guideRatingImages.Add(new GuideRatingImage(ImageUrl));
+                BitmapImage bitmapimage = new BitmapImage();
+                bitmapimage.BeginInit();
+                bitmapimage.UriSource = new Uri(@ImageUrl, UriKind.Absolute);
+                bitmapimage.EndInit();
+
+                ImageUrl = "";
+                ImageSource = bitmapimage;
+                OnPropertyChanged(nameof(ImageSource));
+                OnPropertyChanged(nameof(ImageUrl));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("The photo you tried to add cannot be loaded!", "Error");
+                _guideRatingImages.RemoveAt(_guideRatingImages.Count() - 1);
+                ImageUrl = "";
+                OnPropertyChanged(nameof(ImageUrl));
+            }
         }
         private void ExitWindow()
         {

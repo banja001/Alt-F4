@@ -16,13 +16,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using WPF.ViewModels;
 
 namespace booking.WPF.ViewModels
 {
     public class MyToursViewModel : BaseViewModel
     {
         public ICommand RateGuideCommand => new RelayCommand(RateGuide);
-        public ICommand JoinActiveTourCommand => new RelayCommand(JoinActiveTour);
+        public ICommand JoinActiveTourCommand => new RelayCommand(JoinActiveTour, CanJoinActiveTour);
         public ObservableCollection<Voucher> Vouchers { get; set; }
         public ObservableCollection<Appointment> CompletedTours { get; set; }
         public ObservableCollection<TourLocationDTO> ActiveTour { get; set; }
@@ -30,6 +31,8 @@ namespace booking.WPF.ViewModels
         public Appointment SelectedTour { get; set; }
         public Appointment ActiveAppointment { get; set; }
         private User User { get; set; }
+        public BaseViewModel SearchViewModel { get; set; }  
+        public TourAttendance TourAttendance { get; set; }
 
         private readonly AppointmentService _appointmentService;
         private readonly VoucherService _voucherService;
@@ -48,6 +51,7 @@ namespace booking.WPF.ViewModels
             Vouchers = new ObservableCollection<Voucher>(_voucherService.GetUsableVouchersByGuest2(user));
             var activeTour = _appointmentService.GetActiveAppointmentByGuest2(user).ToList();
             CheckActiveness(activeTour);
+            SearchViewModel = new SearchTourViewModel(User);
         }
 
         private void RateGuide()
@@ -59,15 +63,20 @@ namespace booking.WPF.ViewModels
             else 
             {
                 var rateGuideWindow = new RateGuideView(SelectedTour, User);
-                rateGuideWindow.Show();
+                rateGuideWindow.ShowDialog();
+                OnPropertyChanged(nameof(CompletedTours));
             }
             
         }
         private void JoinActiveTour()
         {
-            var tourAttendance = new TourAttendance(-1, User.Id, CurrentCheckpoint.Id, true);
-            _tourAttendanceService.Add(tourAttendance, ActiveAppointment);
+            TourAttendance = new TourAttendance(-1, User.Id, CurrentCheckpoint.Id, true);
+            _tourAttendanceService.Add(TourAttendance, ActiveAppointment);
             MessageBox.Show("Successfully joined a tour!", "Success", MessageBoxButton.OK);
+        }
+        private bool CanJoinActiveTour()
+        {
+            return (TourAttendance == null);
         }
         private void CheckActiveness(List<Appointment> activeTour)
         {

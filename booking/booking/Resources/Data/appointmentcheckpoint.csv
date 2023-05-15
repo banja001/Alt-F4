@@ -199,3 +199,11 @@
 209|Neki point|False|True|43|2
 210|Jos meki|False|True|43|3
 211|Krajnji point|False|True|43|4
+212|Muzej|True|False|44|1
+213|Neki point|True|False|44|2
+214|Jos meki|True|False|44|3
+215|Krajnji point|True|False|44|4
+216|Muzej|True|False|45|1
+217|Neki point|True|False|45|2
+218|Jos meki|True|False|45|3
+219|Krajnji point|False|True|45|4
