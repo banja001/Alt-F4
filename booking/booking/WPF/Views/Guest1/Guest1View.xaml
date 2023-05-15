@@ -188,12 +188,12 @@
 
                             <Label Grid.Row="0" Grid.Column="0" Content="Description" Style="{StaticResource ResourceKey=labelsStyle}"
                                HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox Grid.Row="0" Grid.Column="1" Name="txtbRenovationDescription" AcceptsReturn="True" TextWrapping="Wrap" Margin="0 10 10 0"/>
-                            <!-- Text="{Binding RenovationDescription, UpdateSourceTrigger=PropertyChanged}" -->
+                            <TextBox Grid.Row="0" Grid.Column="1" Name="txtbRenovationDescription" Text="{Binding RenovationDescription, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Margin="0 10 10 0"/>
 
                             <Label Grid.Row="1" Grid.Column="0" Content="How urgent" Style="{StaticResource ResourceKey=labelsStyle}"
                                HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <ComboBox Grid.Row="1" Grid.Column="1" Height="24" Margin="0 0 10 0">
+                            <ComboBox Grid.Row="1" Grid.Column="1" Height="24" 
+                                      SelectedItem="{Binding SelectedUrgency}" Margin="0 0 10 0">
                                 <ComboBoxItem Content="Level 1 - It would be nice to renovate some small things, but everything works perefctly without that"/>
                                 <ComboBoxItem Content="Level 2 - Accommodation needs small adjustments which would make it perfect"/>
                                 <ComboBoxItem Content="Level 3 - There are few things that should really be taken care of"/>

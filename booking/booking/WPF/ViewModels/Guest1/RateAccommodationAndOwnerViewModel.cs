@@ -160,6 +160,34 @@ namespace WPF.ViewModels.Guest1
             } 
         }
 
+        private string renovationDescription;
+        public string RenovationDescription
+        {
+            get { return renovationDescription; }
+            set
+            {
+                if(renovationDescription != value)
+                {
+                    renovationDescription = value;
+                    OnPropertyChanged(nameof(RenovationDescription));
+                }
+            }
+        }
+
+        private string selectedUrgency;
+        public string SelectedUrgency
+        {
+            get { return selectedUrgency; }
+            set
+            {
+                if(selectedUrgency != value)
+                {
+                    selectedUrgency = value;
+                    OnPropertyChanged(nameof(selectedUrgency));
+                }
+            }
+        }
+
         private readonly OwnerRatingService _ownerRatingService;
         private readonly OwnerRatingImageService _ownerRatingImageService;
         private readonly OwnerNotificationsService _ownerNotificationsService;
@@ -245,7 +273,8 @@ namespace WPF.ViewModels.Guest1
             ReservedDates reservedDate = UpdateReservedDatesGuestRatedFlag();
             Accommodation accommodation = _accommodationService.GetById(reservedDate.AccommodationId);
 
-            OwnerRating ownerRating = new OwnerRating(_ownerRatingService.MakeId(), accommodation.OwnerId, Convert.ToInt32(CleanRating), Convert.ToInt32(OwnersKindenssRating), RatingComment);
+            OwnerRating ownerRating = new OwnerRating(_ownerRatingService.MakeId(), accommodation.OwnerId, Convert.ToInt32(CleanRating), 
+                Convert.ToInt32(OwnersKindenssRating), RatingComment, RenovationDescription, SelectedUrgency.Split('-')[0]);
             ownerRating.ReservationId = SelectedStayedInAccommodation.ReservationId;
 
             return ownerRating;
