@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.WPF.Views.Guest1"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="PostponeReservation" Height="363" Width="703" WindowStartupLocation="CenterScreen">
     <Window.InputBindings>
@@ -54,14 +56,26 @@
         <Label Grid.Row="0" Grid.ColumnSpan="4" Content="Postpone your reservation" FontSize="24" FontWeight="Bold" Style="{StaticResource ResourceKey=labelsStyle}" Margin="10 0"/>
 
         <Label Grid.Row="1" Grid.Column="0" Content="New start date" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ResourceKey=labelsStyle}" Margin="10 0"/>
-        <Calendar Grid.Row="1" Grid.Column="1" Name="cNewStartDate" SelectedDate="{Binding Path=NewDate.StartDate}"/>
+        <Calendar Grid.Row="1" Grid.Column="1" Name="cNewStartDate" SelectedDate="{Binding Path=NewDate.StartDate}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectedDatesChanged">
+                    <i:InvokeCommandAction Command="{Binding SelectedDateChangedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Calendar>
 
         <Label Grid.Row="1" Grid.Column="2" Content="New end date" HorizontalAlignment="Center" VerticalAlignment="Top" Style="{StaticResource ResourceKey=labelsStyle}"/>
-        <Calendar Grid.Row="1" Grid.Column="3" Name="cNewEndDate" SelectedDate="{Binding Path=NewDate.EndDate}" Margin="0 0 5 0"/>
+        <Calendar Grid.Row="1" Grid.Column="3" Name="cNewEndDate" SelectedDate="{Binding Path=NewDate.EndDate}" Margin="0 0 5 0">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectedDatesChanged">
+                    <i:InvokeCommandAction Command="{Binding SelectedDateChangedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Calendar>
 
         <WrapPanel Grid.Row="2" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Command="{Binding CloseCommand}" Content="Cancel" x:Name="bCancel" Height="30" Width="78" Margin="10 0"/>
-            <Button Command="{Binding SendPostponeRequestCommand}" Content="Send" Name="bSend" Height="30" Width="78" Margin="10 0"/>
+            <Button Command="{Binding SendPostponeRequestCommand}" IsEnabled="{Binding PostponeButtonEnabled, UpdateSourceTrigger=PropertyChanged}" Content="Send" Name="bSend" Height="30" Width="78" Margin="10 0"/>
         </WrapPanel>
         
     </Grid>

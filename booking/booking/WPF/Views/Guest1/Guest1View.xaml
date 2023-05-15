@@ -81,7 +81,7 @@
                  KeyboardNavigation.TabNavigation="Cycle" 
                  FocusManager.FocusedElement="{Binding ElementName=lbStayedIn}">
                 <TabItem.InputBindings>
-                    <KeyBinding Command="{Binding RemoveImageCommand}" Gesture="ALT+R"></KeyBinding>
+                    <KeyBinding Command="{Binding RemoveImageCommand}" Gesture="CTRL+R"></KeyBinding>
                     <KeyBinding Command="{Binding SubmitRateCommand}" Gesture="CTRL+S"></KeyBinding>
                     <KeyBinding Command="{Binding AddImageCommand}" Gesture="ALT+A"></KeyBinding>
                 </TabItem.InputBindings>
@@ -111,7 +111,13 @@
                             ItemsSource="{Binding StayedInAccommodations}" 
                              SelectedItem="{Binding SelectedFromList, UpdateSourceTrigger=PropertyChanged}"
                              SelectionMode="Single"
-                             Margin="0 5 10 10 "/>
+                             Margin="0 5 10 10 ">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectedStayedInChangedCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListBox>
 
                     <Label Grid.Row="2" Grid.Column="0" Content="Clean" Style="{StaticResource ResourceKey=labelsStyle}"
                        HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0"/>
@@ -149,6 +155,11 @@
                                      ItemsSource="{Binding AddedImages, UpdateSourceTrigger=PropertyChanged}" 
                                      SelectedItem="{Binding SelectedAddedImages, UpdateSourceTrigger=PropertyChanged}"
                                       SelectionMode="Single" Margin="0 0 10 10">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SelectedImageChangedCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
                                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -157,9 +168,9 @@
                                 </ListView.ItemContainerStyle>
                             </ListView>
 
-                            <Button Grid.Row="0" Grid.Column="2" Name="bAddImage" Command="{Binding AddImageCommand}" IsEnabled="{Binding AddImageEnabled}"
+                            <Button Grid.Row="0" Grid.Column="2" Name="bAddImage" Command="{Binding AddImageCommand}" IsEnabled="{Binding AddImageEnabled, UpdateSourceTrigger=PropertyChanged}"
                                 Content="Add" HorizontalAlignment="Center" Height="23" VerticalAlignment="Center" Width="63" Margin="0 0 10 0"/>
-                            <Button Grid.Row="1" Grid.Column="2" Content="Remove" Command="{Binding RemoveImageCommand}" HorizontalAlignment="Center" Height="23" VerticalAlignment="Top" Width="63" Margin="0 0 10 0"/>
+                            <Button Grid.Row="1" Grid.Column="2" Content="Remove" Command="{Binding RemoveImageCommand}" IsEnabled="{Binding RemoveImageEnabled, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Height="23" VerticalAlignment="Top" Width="63" Margin="0 0 10 0"/>
                         </Grid>
                     </GroupBox>
 
@@ -191,7 +202,7 @@
                             </ComboBox>
                         </Grid>
                     </GroupBox>
-                    <Button Grid.Row="6" Grid.Column="3" Name="bSubmitRate" Command="{Binding SubmitRateCommand}" Content="Submit rate" HorizontalAlignment="Right" Height="30" VerticalAlignment="Center" Width="79" Margin="10 0"/>
+                    <Button Grid.Row="6" Grid.Column="3" Name="bSubmitRate" Command="{Binding SubmitRateCommand}" IsEnabled="{Binding SubmitEnabled, UpdateSourceTrigger=PropertyChanged}" Content="Submit rate" HorizontalAlignment="Right" Height="30" VerticalAlignment="Center" Width="79" Margin="10 0"/>
                 </Grid>
             </TabItem>
             <TabItem Name="tabItemReservations" Header="Reservations" Height="22" VerticalAlignment="Top" Style="{StaticResource ResourceKey=tabItemStyle}"

@@ -8,13 +8,14 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:val="clr-namespace:booking.Validation"
         mc:Ignorable="d"
         Title="Reservation" Height="781" Width="661" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown">
     <Window.Resources>
         <ControlTemplate x:Key="ValidationTemplate">
             <StackPanel>
                 <!-- Placeholder for the TextBox itself -->
-                <AdornedElementPlaceholder x:Name="textBox" />
+                <AdornedElementPlaceholder x:Name="IntegerUpDown" />
                 <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" />
             </StackPanel>
         </ControlTemplate>
@@ -47,6 +48,7 @@
     <Window.InputBindings>
         <KeyBinding Command="{Binding CloseWindowCommand}" Gesture="ESC"></KeyBinding>
         <KeyBinding Command="{Binding ReserveAccommodationClickCommand}" Gesture="CTRL+R"></KeyBinding>
+        <KeyBinding Command="{Binding SearchFreeDatesCommand}" Gesture="CTRL+S"></KeyBinding>
     </Window.InputBindings>
     <Grid KeyboardNavigation.TabNavigation="Cycle"
           FocusManager.FocusedElement="{Binding ElementName=gbSearch.cStartDate}"
@@ -74,7 +76,7 @@
                     <RowDefinition Height="2*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="2.5*"></ColumnDefinition>
                     <ColumnDefinition Width="4*"></ColumnDefinition>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                     <ColumnDefinition Width="4*"></ColumnDefinition>
@@ -102,8 +104,30 @@
                 </Calendar>
 
                 <Label Grid.Row="1" Grid.Column="0" Content="Num of days" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource ResourceKey=labelsStyle}" Margin="5 0"/>
-                <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" Name="NumOfDaysTextBox" Text="{Binding NumOfDays, UpdateSourceTrigger=PropertyChanged}"
-                                    Height="25"/>
+                <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" Name="NumOfDaysTextBox" Text="{Binding NumOfDays, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True,  NotifyOnValidationError=True}"
+                                    Height="25">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <i:InvokeCommandAction Command="{Binding NumValueChangedCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <AdornedElementPlaceholder Grid.Row="0" Grid.Column="0"/>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                </xctk:IntegerUpDown>
 
                 <Button Grid.Row="1" Grid.Column="4" Name="SearchFreeDatesButton" Height="20" Width="67" Content="Search" Margin="5 0" HorizontalAlignment="Right" Command="{Binding SearchFreeDatesCommand}" IsEnabled="{Binding SearchButtonEnabled, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
@@ -119,6 +143,11 @@
                            SelectionMode="Single"
                            CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
                            ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Margin="10 0 10 10" PreviewKeyDown="accommodationData_PreviewKeyDown">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding FreeDateSelectionChangedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <Setter Property="Background" Value="#80a698"></Setter>
@@ -147,11 +176,36 @@
         </DataGrid>
 
         <Label Grid.Row="4" Grid.Column="0" Content="Num of guests" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0"/>
-        <xctk:IntegerUpDown x:Name="udNumOfGuests" Grid.Row="4" Grid.Column="1" Text="{Binding Path=GuestsNumber, UpdateSourceTrigger=PropertyChanged}" Height="20" Margin="0 0 10 0" KeyDown="udNumOfGuests_KeyDown"></xctk:IntegerUpDown>
+        <xctk:IntegerUpDown x:Name="udNumOfGuests" Grid.Row="4" Grid.Column="1" Height="20" Margin="0 0 10 0" KeyDown="udNumOfGuests_KeyDown">
+            <xctk:IntegerUpDown.Text>
+                <Binding Path="GuestsNumber" UpdateSourceTrigger="PropertyChanged"/>
+            </xctk:IntegerUpDown.Text>
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <AdornedElementPlaceholder  Grid.Column="0" Grid.Row="0"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </Grid>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="ValueChanged">
+                    <i:InvokeCommandAction Command="{Binding GuestsNumValueChangedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </xctk:IntegerUpDown>
 
         <WrapPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Height="20" Width="67" Content="Cancel" Margin="10 0" Command="{Binding CloseWindowCommand}"/>
-            <Button Name="ReserveAccommodationButton" Height="20" Width="67" Content="Reserve" Margin="10 0" Command="{Binding ReserveAccommodationClickCommand}"/>
+            <Button Name="ReserveAccommodationButton" Height="20" Width="67" Content="Reserve" Margin="10 0" Command="{Binding ReserveAccommodationClickCommand}" IsEnabled="{Binding ReserveButtonEnabled, UpdateSourceTrigger=PropertyChanged}"/>
         </WrapPanel>
     </Grid>
 </Window>

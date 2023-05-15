@@ -22,9 +22,50 @@ namespace WPF.ViewModels.Guest1
     {
         public static ObservableCollection<AccommodationLocationDTO> AccommodationDTOs { get; set; }
         public static AccommodationLocationDTO SelectedAccommodation { get; set; }
-        public SearchedAccomodationDTO SearchedAccommodation { get; set; }
+
+        private SearchedAccomodationDTO searchedAccommodation;
+        public SearchedAccomodationDTO SearchedAccommodation 
+        {
+            get { return searchedAccommodation; }
+            set
+            {
+                if (searchedAccommodation != value)
+                {
+                    searchedAccommodation = value;
+                    OnPropertyChanged(nameof(SearchedAccommodation));
+                }
+            } 
+        }
         public ObservableCollection<string> States { get; set; }
         public ObservableCollection<string> Cities { get; set; }
+
+        private bool searchButtonEnabled;
+        public bool SearchButtonEnabled
+        {
+            get { return searchButtonEnabled; }
+            set
+            {
+                if(searchButtonEnabled != value)
+                {
+                    searchButtonEnabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool reserveButtonEnabled;
+        public bool ReserveButtonEnabled
+        {
+            get { return reserveButtonEnabled; }
+            set
+            {
+                if (reserveButtonEnabled != value)
+                {
+                    reserveButtonEnabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private bool citiesComboBoxEnabled;
         public bool CitiesComboBoxEnabled
@@ -72,12 +113,13 @@ namespace WPF.ViewModels.Guest1
         private readonly UserService _userService;
         private readonly LocationService _locationService;
         private readonly Guest1NotificationsService _guest1NotificationsService;
-
         public ICommand SearchAccommodationsCommand => new RelayCommand(SearchAccommodations);
         public ICommand ReserveAccommodationsCommand => new RelayCommand(ReserveAccommodations);
         public ICommand OpenImagesCommand => new RelayCommand(OpenImages);
         public ICommand SeeAllCommand => new RelayCommand(SeeAll);
         public ICommand StateSelectionChangedCommand => new RelayCommand(StateSelectionChanged);
+        public ICommand AccommodationSelectionChangedCommand => new RelayCommand(AccommodationSelectionChanged);
+        public ICommand NumValueChangedCommand => new RelayCommand(NumValueChanged);
 
         public OverviewViewModel(int id)
         {
@@ -96,6 +138,7 @@ namespace WPF.ViewModels.Guest1
             _notificationsService.NotifyGuest1(userId);
 
             InitializeDTOs();
+            InitializeCheckBoxes();
             FillStateComboBox();
         }
 
@@ -103,6 +146,13 @@ namespace WPF.ViewModels.Guest1
         {
             SearchedAccommodation = new SearchedAccomodationDTO();
             AccommodationDTOs = _accommodationService.SortAccommodationDTOs(_accommodationService.CreateAccomodationDTOs());
+        }
+
+        private void InitializeCheckBoxes()
+        {
+            ApartmentChecked = true;
+            HouseChecked = true;
+            CabinChecked = true;
         }
 
         private void FillStateComboBox()
@@ -124,34 +174,37 @@ namespace WPF.ViewModels.Guest1
 
         private void SearchAccommodations()
         {
-            SetAccommodationTypes();
-
-            SearchedAccommodation.City = (SelectedCity == null) ? "" : SelectedCity;
-            SearchedAccommodation.Country = (SelectedState == null) ? "" : SelectedState;
-
-            List<AccommodationLocationDTO> accommodationList = _accommodationService.CreateAccomodationDTOs().ToList();
-
-
-            while (AccommodationDTOs.Count > 0)
+            if (SearchedAccommodation.IsValid)
             {
-                AccommodationDTOs.RemoveAt(0);
-            }
+                SetAccommodationTypes();
 
-            foreach (AccommodationLocationDTO accommodation in accommodationList)
-            {
-                AddAccommodationToList(accommodation);
-            }
+                SearchedAccommodation.City = (SelectedCity == null) ? "" : SelectedCity;
+                SearchedAccommodation.Country = (SelectedState == null) ? "" : SelectedState;
 
-            ObservableCollection<AccommodationLocationDTO> SortedAccommodationDTOs = _accommodationService.SortAccommodationDTOs(AccommodationDTOs);
+                List<AccommodationLocationDTO> accommodationList = _accommodationService.CreateAccomodationDTOs().ToList();
 
-            while (AccommodationDTOs.Count > 0)
-            {
-                AccommodationDTOs.RemoveAt(0);
-            }
 
-            foreach (var sortedAccommodation in SortedAccommodationDTOs)
-            {
-                AccommodationDTOs.Add(sortedAccommodation);
+                while (AccommodationDTOs.Count > 0)
+                {
+                    AccommodationDTOs.RemoveAt(0);
+                }
+
+                foreach (AccommodationLocationDTO accommodation in accommodationList)
+                {
+                    AddAccommodationToList(accommodation);
+                }
+
+                ObservableCollection<AccommodationLocationDTO> SortedAccommodationDTOs = _accommodationService.SortAccommodationDTOs(AccommodationDTOs);
+
+                while (AccommodationDTOs.Count > 0)
+                {
+                    AccommodationDTOs.RemoveAt(0);
+                }
+
+                foreach (var sortedAccommodation in SortedAccommodationDTOs)
+                {
+                    AccommodationDTOs.Add(sortedAccommodation);
+                }
             }
         }
 
@@ -201,7 +254,7 @@ namespace WPF.ViewModels.Guest1
 
         private void ReserveAccommodations()
         {
-            if (SelectedAccommodation != null)
+            if (SelectedAccommodation != null && ReserveButtonEnabled)
             {
                 ReserveAccommodation reserveAccommodation = new ReserveAccommodation(userId);
                 reserveAccommodation.ShowDialog();
@@ -231,5 +284,14 @@ namespace WPF.ViewModels.Guest1
             CitiesComboBoxEnabled = true;
         }
 
+        private void AccommodationSelectionChanged()
+        {
+            ReserveButtonEnabled = (SelectedAccommodation != null) ? true : false;
+        }
+
+        private void NumValueChanged()
+        {
+            SearchButtonEnabled = SearchedAccommodation.IsValid;
+        }
     }
 }
