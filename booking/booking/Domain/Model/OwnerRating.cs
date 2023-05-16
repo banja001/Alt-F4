@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace booking.Model
 {
-    public enum Urgency { Level1, Level2, Level3, Level4, Level5};
+    public enum Urgency { Blank, Level1, Level2, Level3, Level4, Level5};
     public class OwnerRating : ISerializable
     {
         public int Id { get; set; }
@@ -22,7 +22,7 @@ namespace booking.Model
         public Urgency Urgency { get; set; }
 
         public OwnerRating() { }
-        public OwnerRating(int id, int guestid, int cleanRating, int rulesrating, string comment, string renovationDescription, string urgency)
+        public OwnerRating(int id, int guestid, int cleanRating, int rulesrating, string comment, string renovationDescription = "", string urgency = "")
         {
             Id = id;
             OwnerId = guestid;
@@ -37,24 +37,24 @@ namespace booking.Model
         {
             switch (s)
             {
-                case "Level1":
+                case "Level 1":
                     return Urgency.Level1;
                     break;
-                case "Level2":
+                case "Level 2":
                     return Urgency.Level2;
                     break;
-                case "Level3":
+                case "Level 3":
                     return Urgency.Level3;
                     break;
-                case "Level4":
+                case "Level 4":
                     return Urgency.Level4;
                     break;
-                case "Level5":
+                case "Level 5":
                     return Urgency.Level5;
                     break;
+                default:
+                    return Urgency.Blank;
             }
-
-            return Urgency.Level1;
         }
 
         public string[] ToCSV()

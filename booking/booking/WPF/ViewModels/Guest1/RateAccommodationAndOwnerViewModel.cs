@@ -18,6 +18,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using WPF.Views.Guest1;
 
 namespace WPF.ViewModels.Guest1
 {
@@ -255,7 +256,8 @@ namespace WPF.ViewModels.Guest1
                 ResetLists();
                 EmptyForm();
 
-                MessageBox.Show("Rating successfully added!");
+                SuccessfullyRatedView popUpWindow = new SuccessfullyRatedView(userId);
+                popUpWindow.Show();
 
                 InitializeAccommodationDTO();
             }
@@ -272,9 +274,10 @@ namespace WPF.ViewModels.Guest1
         {
             ReservedDates reservedDate = UpdateReservedDatesGuestRatedFlag();
             Accommodation accommodation = _accommodationService.GetById(reservedDate.AccommodationId);
+            string selectedUrgencyLevel = string.IsNullOrEmpty(SelectedUrgency) ? "" : SelectedUrgency.Split('-')[0];
 
             OwnerRating ownerRating = new OwnerRating(_ownerRatingService.MakeId(), accommodation.OwnerId, Convert.ToInt32(CleanRating), 
-                Convert.ToInt32(OwnersKindenssRating), RatingComment, RenovationDescription, SelectedUrgency.Split('-')[0]);
+                Convert.ToInt32(OwnersKindenssRating), RatingComment, RenovationDescription, selectedUrgencyLevel);
             ownerRating.ReservationId = SelectedStayedInAccommodation.ReservationId;
 
             return ownerRating;

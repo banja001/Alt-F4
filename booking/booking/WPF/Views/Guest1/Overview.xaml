@@ -167,14 +167,14 @@
                     </Validation.ErrorTemplate>
                 </xctk:IntegerUpDown>
 
-                <Button Grid.Row="1" Grid.Column="6" x:Name="SeeAllButton" Command="{Binding SeeAllCommand}" Height="20" Width="67" Content="See all" HorizontalAlignment="Right" Margin="10 0"/>
+                <Button Grid.Row="1" Grid.Column="6" x:Name="SeeAllButton" Command="{Binding SeeAllCommand}" Height="22" Width="67" Content="See all" HorizontalAlignment="Right" Margin="10 0"/>
                 <Button Grid.Row="2" Grid.Column="6" x:Name="SearchAccommodationButton" Command="{Binding SearchAccommodationsCommand}" 
-                        IsEnabled="{Binding SearchButtonEnabled, UpdateSourceTrigger=PropertyChanged}" Height="20" Width="67" Content="Search" HorizontalAlignment="Right" Margin="10 0"/>
+                        IsEnabled="{Binding SearchButtonEnabled, UpdateSourceTrigger=PropertyChanged}" Height="22" Width="67" Content="Search" HorizontalAlignment="Right" Margin="10 0"/>
             </Grid>
         </GroupBox>
 
         <Button Grid.Row="1" Grid.Column="1" x:Name="ReserveAccommodationButton" Command="{Binding ReserveAccommodationsCommand}"
-                        Width="67" Content="Reserve" IsEnabled="{Binding ReserveButtonEnabled, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10 10"/>
+                        Width="67" Height="25" Content="Reserve" IsEnabled="{Binding ReserveButtonEnabled, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10 10"/>
         <Label Grid.Row="1" Grid.Column="0" Content="Accommodations" Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10 0"/>
         <DataGrid Grid.Row="2" Grid.ColumnSpan="2" x:Name="accommodationData"
                           ItemsSource="{Binding AccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
