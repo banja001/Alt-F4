@@ -21,7 +21,7 @@
                     <Style TargetType="Button">
 
                         <Setter Property="Padding" Value="3 3"/>
-                        <Setter Property="Background" Value="Gray"/>
+                        <Setter Property="Background" Value="LightGray"/>
                         <Setter Property="Height" Value="30"/>
                         <Setter Property="BorderBrush" Value="Black"/>
 
