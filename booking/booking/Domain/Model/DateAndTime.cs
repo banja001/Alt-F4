@@ -58,8 +58,8 @@ namespace booking.Model
                     if (this[property] != null)
                         return false;
                 }
-
-                return true;
+                    return Date.Date >= DateTime.Now.Date;
+                
             }
         }
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

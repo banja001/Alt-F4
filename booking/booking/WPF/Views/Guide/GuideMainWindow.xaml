@@ -1,0 +1,80 @@
+﻿<Window x:Class="WPF.Views.Guide.GuideMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF.Views.Guide"
+        mc:Ignorable="d"
+        Title="GuideMainWindow" Height="768" Width="1024"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.1*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Grid.ColumnSpan="2"  Background="LightGreen"></Border>
+        <TextBlock Grid.Column="0" Grid.Row="0" FontSize="34" VerticalAlignment="Center" FontWeight="Bold">Hi, 
+            <Run Text="{Binding Guide.Username}" FontWeight="Bold"/>!
+        </TextBlock>
+        <Frame Grid.Row="1" Grid.Column="1" x:Name="Content" NavigationUIVisibility="Hidden"/>
+        <Button Grid.Row="0" Grid.Column="1" Width="50" Height="50" HorizontalAlignment="Right" Command="{Binding ProfilePageCommand}">
+            <Button.Background>
+                <ImageBrush ImageSource="/Resources/Icons/avatarico.png"></ImageBrush>
+            </Button.Background>
+        </Button>
+        <Grid Grid.Column="0" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                
+            </Grid.RowDefinitions>
+
+            <Button Grid.Row="0" HorizontalContentAlignment="Left" Background="LightGray" Command="{Binding AddTourCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/Icons/plus.png" Width="25" Height="25" Margin="5"/>
+                    <TextBlock Grid.Row="1" FontSize="24" VerticalAlignment="Center">Add tour</TextBlock>
+                </StackPanel>
+            </Button>
+
+            <Button Grid.Row="1" HorizontalContentAlignment="Left" Background="LightGreen" Command="{Binding LiveTrackCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/Icons/livetrack.png" Width="25" Height="25" Margin="5"/>
+                    <TextBlock Grid.Row="1" FontSize="24" VerticalAlignment="Center">Live-track</TextBlock>
+                </StackPanel>
+            </Button>
+
+            <Button Grid.Row="2" Background="LightGray" Command="{Binding UpcomingToursCommand}" HorizontalContentAlignment="Left">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/Icons/upcoming.png" Width="25" Height="25" Margin="5"/>
+                    <TextBlock Grid.Row="2" FontSize="24" VerticalAlignment="Center">Upcoming tours</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Grid.Row="3" Background="LightGreen" Command="{Binding FinishedToursCommand}" HorizontalContentAlignment="Left">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/Icons/finished.png" Width="25" Height="25" Margin="5"/>
+                    <TextBlock Grid.Row="3" FontSize="24" VerticalAlignment="Center">Finished tours</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Grid.Row="4" Background="LightGray" Command="{Binding TourRequestsCommand}" HorizontalContentAlignment="Left">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/Icons/request.png" Width="25" Height="25" Margin="5"/>
+                    <TextBlock Grid.Row="4" FontSize="24" VerticalAlignment="Center">Tour requests</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Grid.Row="5" Background="LightGreen" Command="{Binding TourRequestsStatisticsCommand}" HorizontalContentAlignment="Left">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/Icons/statistics.png" Width="25" Height="25" Margin="5"/>
+                    <TextBlock Grid.Row="5" FontSize="24" VerticalAlignment="Center"> Tour requests<LineBreak/>statistics</TextBlock>
+                </StackPanel>
+            </Button>
+        </Grid>
+     </Grid>
+</Window>

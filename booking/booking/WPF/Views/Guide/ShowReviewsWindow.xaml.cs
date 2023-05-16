@@ -26,7 +26,7 @@ namespace booking.WPF.Views.Guide
         {
             InitializeComponent();
             DataContext = new ShowReviewsViewModel(guide,appointment );
-            LooksOfDataGrid(AllCommentsDataGrid);
+            //LooksOfDataGrid(AllCommentsDataGrid);
         }
         public void LooksOfDataGrid(DataGrid d)
         {

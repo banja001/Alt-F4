@@ -17,13 +17,13 @@ using WPF.ViewModels;
 namespace booking.View.Guide
 {
 
-    public partial class TourCancellation : Window
+    public partial class TourCancellation : Page
     {
         public TourCancellation(User guide)
         {
             InitializeComponent();
             DataContext = new TourCancellationViewModel(guide);
-            LooksOfDataGrid(UpcomingTours);
+            //LooksOfDataGrid(UpcomingTours);
         }
         public void LooksOfDataGrid(DataGrid d)
         {

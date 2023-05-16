@@ -11,5 +11,7 @@ namespace Domain.RepositoryInterfaces
         User GetByUsername(string userName);
         string GetUserNameById(int id);
         void UpdateById(int id, bool b);
+
+        int GetScoreById(int id);
     }
 }

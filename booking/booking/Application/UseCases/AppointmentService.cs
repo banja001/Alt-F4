@@ -173,6 +173,7 @@ namespace booking.application.UseCases
             List<ReservationTour> reservation = _reservationTourRepository.GetAll();
             AppointmentStatisticsDTO appointmentStatistics = new AppointmentStatisticsDTO();
             CalculateStatistics(appId, appointmentStatistics, tourAttendances, reservation);
+            appointmentStatistics.TourName = FindTourName(appId);
             return appointmentStatistics;
         }
 
@@ -215,6 +216,13 @@ namespace booking.application.UseCases
             }
 
         }
+
+        public string FindTourName(int appId)
+        {
+            Appointment selectedAppointment = _appointmentRepository.FindAll().Find(ap => ap.Id == appId);
+            return _tourRepository.FindById(selectedAppointment.Tour.Id).Name;
+        }
+
         public List<Appointment> GetAllCompletedAppointments(List<ReservationTour> reservedTours, List<Appointment> appointments)
         {
             var completedAppointments = new List<Appointment>();

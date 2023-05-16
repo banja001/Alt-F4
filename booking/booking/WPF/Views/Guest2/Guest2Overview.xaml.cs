@@ -163,7 +163,7 @@ namespace booking.View.Guest2
         {
             foreach (TourLocationDTO tour in TourLocationDTOs.ToList<TourLocationDTO>())
             {
-                if(tour.StartTime.Date < DateTime.Now)
+                if(tour.StartTime.Date.Date < DateTime.Now.Date)
                 {
                     TourLocationDTOs.Remove(tour);
                 }

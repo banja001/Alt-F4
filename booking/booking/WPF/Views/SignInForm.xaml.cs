@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF.Views.Guide;
 using WPF.Views.Owner;
 
 namespace booking.View
@@ -30,8 +31,6 @@ namespace booking.View
         private readonly UserRepository _repository;
         private readonly OwnerRatingRepository _ownerRatingsRepository;
         private string _userName;
-        
-        
 
         public string UserName
         {
@@ -115,9 +114,9 @@ namespace booking.View
                     else if(user.Role == "Guide")
                     {
                             
-                        GuideWindow guideWindow = new GuideWindow(user);
+                        GuideMainWindow guideWindow = new GuideMainWindow(user);
                         guideWindow.ShowDialog();
-                        //this.Close();
+                        this.Close();
                     }
                 }
                 else

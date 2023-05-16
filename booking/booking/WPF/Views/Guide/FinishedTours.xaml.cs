@@ -19,14 +19,14 @@ namespace booking.WPF.Views.Guide
     /// <summary>
     /// Interaction logic for ShowReviews.xaml
     /// </summary>
-    public partial class ShowReviews : Window
+    public partial class ShowReviews : Page
     {
         public ShowReviews(User guide)
         {
             InitializeComponent();
             DataContext = new FinishedToursViewModel(guide);
-            LooksOfDataGrid(AllTours);
-            LooksOfDataGrid(MostVisitedTourInThatYear);
+            //LooksOfDataGrid(AllTours);
+            //LooksOfDataGrid(MostVisitedTourInThatYear);
         }
         public void LooksOfDataGrid(DataGrid d)
         {
