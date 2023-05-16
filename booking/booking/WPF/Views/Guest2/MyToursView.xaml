@@ -97,34 +97,36 @@
             <ContentControl Content="{Binding SearchViewModel}"></ContentControl>
         </TabItem>
         <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="Vouchers" MinWidth="100">
-            <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <Label Style="{DynamicResource LightHeaderLabel}" Content="Available vouchers" VerticalAlignment="Center" Margin="15,20,0,10"/>
-                <ItemsControl ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="15,0,0,0" ItemsSource="{Binding Vouchers, Mode=TwoWay}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border HorizontalAlignment="Left" Width="300" Margin="8" BorderBrush="#7588c4" Background="White" BorderThickness="2" CornerRadius="3">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="1*"></RowDefinition>
-                                        <RowDefinition Height="1*"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1.2*"/>
-                                        <ColumnDefinition Width="1.5*"/>
-                                        <ColumnDefinition Width="1.5*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Border Padding="1" Grid.Column="0" Grid.RowSpan="2" Width="36" Height="36" VerticalAlignment="Center" BorderBrush="#7588c4" Background="White" BorderThickness="2" CornerRadius="18">
-                                        <Label Style="{DynamicResource LightHeaderLabel}" Margin="5,0,0,0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Content="{Binding Id, Mode=TwoWay}"></Label>
+                <ScrollViewer Height="490" VerticalScrollBarVisibility="Hidden" Width="400" HorizontalAlignment="Left">
+                    <ItemsControl  Margin="15,0,15,0" ItemsSource="{Binding Vouchers, Mode=TwoWay}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border HorizontalAlignment="Left" Width="300" Margin="8" BorderBrush="#7588c4" Background="White" BorderThickness="2" CornerRadius="3">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="1*"></RowDefinition>
+                                                <RowDefinition Height="1*"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1.2*"/>
+                                                <ColumnDefinition Width="1.5*"/>
+                                                <ColumnDefinition Width="1.5*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Padding="1" Grid.Column="0" Grid.RowSpan="2" Width="36" Height="36" VerticalAlignment="Center" BorderBrush="#7588c4" Background="White" BorderThickness="2" CornerRadius="18">
+                                                <Label Style="{DynamicResource LightHeaderLabel}" Margin="5,0,0,0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Content="{Binding Id, Mode=TwoWay}"></Label>
+                                            </Border>
+                                            <Label Style="{DynamicResource VoucherHeader}" Margin="0,0,5,0" Grid.Column="1" Grid.Row="0">Obtain date:</Label>
+                                            <Label Style="{DynamicResource VoucherHeader}" Margin="0,0,5,0" Grid.Column="1" Grid.Row="1">Expiry date:</Label>
+                                            <Label Style="{DynamicResource LightHeaderLabel}" FontWeight="Medium" Grid.Column="3" Grid.Row="0" Margin="5,0,0,0" Content="{Binding ObtainDate.Date, Mode=TwoWay,Converter={cvt:DateTimeToDateOnlyConverter}}" Width="90"/>
+                                            <Label Style="{DynamicResource LightHeaderLabel}" FontWeight="Medium" Grid.Column="3" Grid.Row="1" Margin="5,0,0,0" Content="{Binding ExpirationDate.Date, Mode=TwoWay,Converter={cvt:DateTimeToDateOnlyConverter}}" Width="90"/>
+                                        </Grid>
                                     </Border>
-                                    <Label Style="{DynamicResource VoucherHeader}" Margin="0,0,5,0" Grid.Column="1" Grid.Row="0">Obtain date:</Label>
-                                    <Label Style="{DynamicResource VoucherHeader}" Margin="0,0,5,0" Grid.Column="1" Grid.Row="1">Expiry date:</Label>
-                                    <Label Style="{DynamicResource LightHeaderLabel}" FontWeight="Medium" Grid.Column="3" Grid.Row="0" Margin="5,0,0,0" Content="{Binding ObtainDate.Date, Mode=TwoWay,Converter={cvt:DateTimeToDateOnlyConverter}}" Width="90"/>
-                                    <Label Style="{DynamicResource LightHeaderLabel}" FontWeight="Medium" Grid.Column="3" Grid.Row="1" Margin="5,0,0,0" Content="{Binding ExpirationDate.Date, Mode=TwoWay,Converter={cvt:DateTimeToDateOnlyConverter}}" Width="90"/>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
             </StackPanel>
         </TabItem>
     </TabControl>

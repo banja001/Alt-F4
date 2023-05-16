@@ -24,6 +24,7 @@
     <None Remove="Resources\Icons\plus.png" />
     <None Remove="Resources\Icons\request.png" />
     <None Remove="Resources\Icons\statistics.png" />
+    <None Remove="Resources\Icons\taskbarIcon.png" />
     <None Remove="Resources\Icons\upcoming.png" />
     <None Remove="Resources\Icons\add_accommodation.png" />
     <None Remove="Resources\Icons\back_icon.png" />
@@ -56,6 +57,7 @@
     <Resource Include="Resources\Icons\plus.png" />
     <Resource Include="Resources\Icons\request.png" />
     <Resource Include="Resources\Icons\statistics.png" />
+    <Resource Include="Resources\Icons\taskbarIcon.png" />
     <Resource Include="Resources\Icons\upcoming.png" />
     <Resource Include="Resources\Icons\add_accommodation.png" />
     <Resource Include="Resources\Icons\back_icon.png" />

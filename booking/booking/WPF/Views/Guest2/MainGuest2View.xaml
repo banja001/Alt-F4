@@ -8,7 +8,7 @@
         xmlns:viewmodels="clr-namespace:booking.WPF.ViewModels"
         mc:Ignorable="d"
         Height="700" Width="1250" AllowsTransparency="True" Background="Transparent" WindowStyle="None"
-       WindowStartupLocation="CenterScreen">
+       WindowStartupLocation="CenterScreen" Icon="/Resources/Icons/taskbarIcon.png">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
