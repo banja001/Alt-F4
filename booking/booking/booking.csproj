@@ -28,7 +28,6 @@
     <None Remove="Resources\Icons\add_accommodation.png" />
     <None Remove="Resources\Icons\back_icon.png" />
     <None Remove="Resources\Icons\forward_icon.png" />
-    <None Remove="Resources\Icons\home.png" />
     <None Remove="Resources\Icons\manage_reservations.png" />
     <None Remove="Resources\Icons\owner_icon.png" />
     <None Remove="Resources\Icons\view_ratings.png" />
@@ -60,7 +59,6 @@
     <Resource Include="Resources\Icons\add_accommodation.png" />
     <Resource Include="Resources\Icons\back_icon.png" />
     <Resource Include="Resources\Icons\forward_icon.png" />
-    <Resource Include="Resources\Icons\home.png" />
     <Resource Include="Resources\Icons\manage_reservations.png" />
     <Resource Include="Resources\Icons\owner_icon.png" />
     <Resource Include="Resources\Icons\view_ratings.png" />
