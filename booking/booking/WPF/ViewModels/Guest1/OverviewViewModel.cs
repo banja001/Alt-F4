@@ -1,5 +1,6 @@
 ﻿using application.UseCases;
 using booking.application.usecases;
+using booking.application.UseCases;
 using booking.Commands;
 using booking.DTO;
 using booking.Model;
@@ -144,8 +145,25 @@ namespace WPF.ViewModels.Guest1
 
         private void InitializeDTOs()
         {
+            RenovationDatesService _renovationService=new RenovationDatesService();
             SearchedAccommodation = new SearchedAccomodationDTO();
-            AccommodationDTOs = _accommodationService.SortAccommodationDTOs(_accommodationService.CreateAccomodationDTOs());
+
+            //dodaje (New) ukoliko je skoro renoviran
+            ObservableCollection<AccommodationLocationDTO> accList = _accommodationService.CreateAccomodationDTOs();
+            foreach(AccommodationLocationDTO acc in accList)
+            {
+                foreach(RenovationDates renovation in _renovationService.GetAll())
+                {
+                    if(renovation.EndDate<=DateTime.Now && renovation.EndDate<DateTime.Now.AddYears(1) && renovation.AccommodationId == acc.AccommodationId && !acc.Name.Contains("(New)"))
+                    {
+                        acc.Name += "(New)";
+                    }
+                }
+            }
+
+
+
+            AccommodationDTOs = _accommodationService.SortAccommodationDTOs(accList);
         }
 
         private void InitializeCheckBoxes()
