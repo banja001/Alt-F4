@@ -99,7 +99,7 @@
         <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="Vouchers" MinWidth="100">
             <StackPanel Orientation="Vertical">
                 <Label Style="{DynamicResource LightHeaderLabel}" Content="Available vouchers" VerticalAlignment="Center" Margin="15,20,0,10"/>
-                <ItemsControl Margin="15,0,0,0" ItemsSource="{Binding Vouchers, Mode=TwoWay}">
+                <ItemsControl ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="15,0,0,0" ItemsSource="{Binding Vouchers, Mode=TwoWay}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border HorizontalAlignment="Left" Width="300" Margin="8" BorderBrush="#7588c4" Background="White" BorderThickness="2" CornerRadius="3">

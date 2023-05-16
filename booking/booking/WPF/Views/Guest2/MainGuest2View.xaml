@@ -34,7 +34,7 @@
                 <Button Command="{Binding NavigateWindowsCommand}" CommandParameter="MyTours" Style="{DynamicResource StackPanelButtonStyle}" Content="My Tours" local:ButtonProperties.ImageSource="/Resources/Icons/whiteTraveler.png"></Button>
                 <Button Style="{DynamicResource StackPanelButtonStyle}" Content="Requests" local:ButtonProperties.ImageSource="/Resources/Icons/whiteRequest.png"></Button>
                 <Button Command="{Binding NavigateWindowsCommand}" CommandParameter="Statistics" Style="{DynamicResource StackPanelButtonStyle}" Content="Statistics" local:ButtonProperties.ImageSource="/Resources/Icons/whiteStatistics.png"></Button>
-                <Button Margin="0,180,0,5" Command="{Binding LogOutButtonCommand}" Style="{DynamicResource StackPanelButtonStyle}" Content="Log out" local:ButtonProperties.ImageSource="/Resources/Icons/whiteLogOut.png"></Button>
+                <Button Margin="0,180,0,5" Command="{Binding LogOutButtonCommand}" Style="{DynamicResource StackPanelButtonStyle}" Content="Log out" local:ButtonProperties.ImageSource="/Resources/Icons/whiteLogout.png"></Button>
             </StackPanel>
             <GroupBox Style="{DynamicResource LightGroupBox}" Margin="0,0,10,7" Header="{Binding HeaderMessage}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
                 <StackPanel Margin="10,10,10,10" Orientation="Vertical" >
