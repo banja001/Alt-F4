@@ -29,10 +29,13 @@ namespace booking.Repository
 
         public void Add(Guest1Rating acci)
         {
-
             Guest1Ratings.Add(acci);
             Serializer.ToCSV(fileName, Guest1Ratings);
+        }
 
+        public List<Guest1Rating> GetAllByGuest1Id(int guestId)
+        {
+            return Guest1Ratings.Where(r => r.GuestId == guestId).ToList();
         }
     }
 }

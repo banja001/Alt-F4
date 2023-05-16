@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF.ViewModels.Guest1;
 
 namespace WPF.Views.Guest1
 {
@@ -20,6 +21,8 @@ namespace WPF.Views.Guest1
         public ReviewView(int userId)
         {
             InitializeComponent();
+
+            this.DataContext = new ReviewViewModel(userId);
         }
     }
 }

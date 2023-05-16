@@ -86,6 +86,21 @@ namespace WPF.ViewModels.Guest1
             }
         }
 
+        private bool ratingsIGotEnabled;
+
+        public bool RatingsIGotEnabled
+        {
+            get { return ratingsIGotEnabled; }
+            set
+            {
+                if(ratingsIGotEnabled != value)
+                {
+                    ratingsIGotEnabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private static object selectedFromList;
         public object SelectedFromList 
         {

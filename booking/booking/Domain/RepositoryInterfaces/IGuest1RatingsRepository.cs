@@ -9,5 +9,6 @@ namespace Domain.RepositoryInterfaces
     {
         List<Guest1Rating> GetAll();
         void Add(Guest1Rating acci);
+        List<Guest1Rating> GetAllByGuest1Id(int userId);
     }
 }

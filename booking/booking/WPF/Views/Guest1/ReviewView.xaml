@@ -31,7 +31,7 @@
             Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Bottom" FontSize="24" FontWeight="Bold" Margin="10 0"/>
 
         <DataGrid x:Name="reservationsData" Grid.Row="1" Grid.Column="0"
-                              ItemsSource="{Binding ReservationAccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding Reviews, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                IsReadOnly="True"
                                CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
                                ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" 
@@ -58,26 +58,12 @@
                 </Style>
             </DataGrid.CellStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Clean" Binding="{Binding Clean}" CanUserResize="False"  Width="1*"/>
-                <DataGridTextColumn Header="Following rules" Binding="{Binding FollowingRules}" CanUserResize="False" Width="2*"/>
-                <DataGridTemplateColumn Header="Comment" Width="8*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Button x:Name="bPostpone" Command="{Binding Path=DataContext.PostponeReservationCommand,       
-                                                         RelativeSource= {RelativeSource FindAncestor,
-                                                         AncestorType={x:Type DataGrid}}}" 
-                                                         Content="Postpone" Margin="10"/>
-                                <Button x:Name="bCancel" Command="{Binding Path=DataContext.CancelReservationCommand,       
-                                                         RelativeSource= {RelativeSource FindAncestor,
-                                                         AncestorType={x:Type DataGrid}}}" Content="Cancel" Margin="10" />
-                            </WrapPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Clean" Binding="{Binding CleanRating}" CanUserResize="False"  Width="1*"/>
+                <DataGridTextColumn Header="Following rules" Binding="{Binding RulesRating}" CanUserResize="False" Width="2*"/>
+                <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" Width="8*"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Grid.Row="2" Grid.Column="0" Name="bClose" Content="Close" HorizontalAlignment="Right" Width="79" Height="30" Margin="10 0"/>
+        <Button Grid.Row="2" Grid.Column="0" Name="bClose" Content="Close" Command="{Binding CloseCommand}" HorizontalAlignment="Right" Width="79" Height="30" Margin="10 0"/>
     </Grid>
 </Window>
