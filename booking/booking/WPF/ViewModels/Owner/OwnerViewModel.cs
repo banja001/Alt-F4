@@ -158,6 +158,7 @@ namespace WPF.ViewModels.Owner
                 guestsToRate.EndDate = date.EndDate.ToShortDateString();
                 guestsToRate.GuestName = users.Find(u => u.Id == date.UserId).Username;
                 guestsToRate.AccommodationName = accommodations.Find(u => u.Id == date.AccommodationId).Name;
+                //guestsToRate.ReservationId=date.
                 tempList.Add(guestsToRate);
             }
             return tempList;
