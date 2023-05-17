@@ -30,15 +30,27 @@ namespace Domain.Model
             DateRange = new DateRange();
             Location = new Location();
         }
-        public SimpleRequest(int id, string description, Location location, string language, int numberOfGuests,DateTime startDate, DateTime endDate, SimpleRequestStatus status)
+        public SimpleRequest( string description, int locationId, string language, int numberOfGuests,DateTime startDate, DateTime endDate, SimpleRequestStatus status)
         {
-            Id = id;
+            Location = new Location();
+
+            Id = -1;
             Description = description;
-            Location = location;
+            Location.Id = locationId;
             Language = language;
             NumberOfGuests = numberOfGuests;
             DateRange = new DateRange(startDate, endDate);
             Status = status;
+        }
+        public SimpleRequest(int id, SimpleRequest simpleRequest)
+        {
+            Id = id;
+            Description = simpleRequest.Description;
+            Location = simpleRequest.Location;
+            Language = simpleRequest.Language;
+            NumberOfGuests = simpleRequest.NumberOfGuests;
+            DateRange = simpleRequest.DateRange;
+            Status = simpleRequest.Status;  
         }
         public string[] ToCSV()
         {
@@ -75,6 +87,20 @@ namespace Domain.Model
                     break;
                 default:
                     throw new ArgumentException("Simple request Status in CSV does not exist");
+            }
+        }
+        public string GetStatusUri()
+        {
+            switch (Status)
+            {
+                case SimpleRequestStatus.APPROVED:
+                    return "../../../Resources/Icons/approved.png";
+                case SimpleRequestStatus.ON_HOLD:
+                    return "../../../Resources/Icons/onhold.png";
+                case SimpleRequestStatus.INVALID:
+                    return "../../../Resources/Icons/invalid.png";
+                default:
+                    return "../../../Resources/Icons/unknown.png";
             }
         }
     }

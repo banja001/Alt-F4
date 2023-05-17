@@ -43,8 +43,8 @@
                         <Label Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}" Grid.Row="6" Grid.Column="0" Content="*Description:" />
 
                         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <TextBox Text="{Binding State}" Width="130" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            <TextBox Text="{Binding City}" Width="130" Margin="15,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox  LostFocus="StateLostFocus" GotFocus="StateGotFocus" x:Name="StateTextBox" Text="{Binding State}" Width="130" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox  LostFocus="CityLostFocus" GotFocus="CityGotFocus" x:Name="CityTextBox" Text="{Binding City}" Width="130" Margin="15,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -53,19 +53,19 @@
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <TextBox Text="{Binding NumberOfGuests}" Width="130" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            <TextBox Text="{Binding Language}" Width="130" Margin="15,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox  LostFocus="LanguageLostFocus" GotFocus="LanguageGotFocus" x:Name="LanguageTextBox" Text="{Binding Language}" Width="130" Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox  LostFocus="NumberOfGuestsLostFocus" GotFocus="NumberOfGuestsGotFocus" x:Name="NumberOfGuestsTextBox" Text="{Binding NumberOfGuests}" Width="130" Margin="15,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </StackPanel>
 
-                        <TextBox TextWrapping="Wrap" Text="{Binding Language}" Margin="30,0,0,0" Width="275" HorizontalAlignment="Left" Grid.Row="7" Grid.RowSpan="2" Grid.Column="0" />
+                        <TextBox LostFocus="DescriptionLostFocus" GotFocus="DescriptionGotFocus" x:Name="DescriptionTextBox" TextWrapping="Wrap" Text="{Binding Description}" Margin="30,0,0,0" Width="275" HorizontalAlignment="Left" Grid.Row="7" Grid.RowSpan="2" Grid.Column="0" />
                         <Label Margin="10,0,0,0" Grid.Row="0" Grid.Column="1" Content="Former requests:" Style="{DynamicResource LightHeaderLabel}"/>
                         <DataGrid Grid.Row="1" Grid.Column="1" Grid.RowSpan="9" Margin="15,0,15,5">
 
                         </DataGrid>
                     </Grid>
                     <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <Button Command="{Binding CancelSimpleRequest}" Content="Cancel" Margin="93,10,5,0" Width="100" Height="30" Style="{DynamicResource LightClearButton}"/>
-                        <Button Command="{Binding SubmitSimpleRequest}" Content="Request" Margin="5,10,0,0" Width="100" Height="30" Style="{DynamicResource LightButton}"/>
+                        <Button Command="{Binding CancelSimpleRequestCommand}" Content="Cancel" Margin="93,10,5,0" Width="100" Height="30" Style="{DynamicResource LightClearButton}"/>
+                        <Button Command="{Binding SubmitSimpleRequestCommand}" Content="Request" Margin="5,10,0,0" Width="100" Height="30" Style="{DynamicResource LightButton}"/>
                     </StackPanel>
                 </Grid>
             </TabItem>

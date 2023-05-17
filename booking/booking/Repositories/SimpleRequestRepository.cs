@@ -55,7 +55,7 @@ namespace Repositories
         public int MakeId()
         {
             Load();
-            return _simpleRequests[_simpleRequests.Count - 1].Id + 1;
+            return _simpleRequests.Count != 0 ? _simpleRequests[_simpleRequests.Count - 1].Id + 1 : 0;
         }
 
         public void Add(SimpleRequest simpleRequest)

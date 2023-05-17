@@ -25,5 +25,63 @@ namespace booking.WPF.Views.Guest2
             InitializeComponent();
             DataContext = new MyRequestsViewModel();
         }
+        private void SetContentToDefault(TextBox selectedTextbox, string defaultText)
+        {
+            if (selectedTextbox.Text.Equals(""))
+            {
+                selectedTextbox.Text = defaultText;
+                selectedTextbox.Foreground = Brushes.LightGray;
+            }
+        }
+        private void RemoveContent(TextBox selectedTextBox, string defaultText)
+        {
+            if (selectedTextBox.Text.Equals(defaultText))
+            {
+                selectedTextBox.Text = "";
+                selectedTextBox.Foreground = Brushes.Black;
+            }
+        }
+        private void DescriptionLostFocus(object sender, RoutedEventArgs e)
+        {
+            SetContentToDefault(DescriptionTextBox, "Description");
+        }
+
+        private void DescriptionGotFocus(object sender, RoutedEventArgs e)
+        {
+            RemoveContent(DescriptionTextBox, "Description");
+        }
+
+        private void LanguageGotFocus(object sender, RoutedEventArgs e)
+        {
+            RemoveContent(LanguageTextBox, "Language");
+        }
+        private void LanguageLostFocus(object sender, RoutedEventArgs e)
+        {
+            SetContentToDefault(LanguageTextBox, "Language");
+        }
+        private void NumberOfGuestsGotFocus(object sender, RoutedEventArgs e)
+        {
+            RemoveContent(NumberOfGuestsTextBox, "NumberOfGuests");
+        }
+        private void NumberOfGuestsLostFocus(object sender, RoutedEventArgs e)
+        {
+            SetContentToDefault(NumberOfGuestsTextBox, "NumberOfGuests");
+        }
+        private void CityGotFocus(object sender, RoutedEventArgs e)
+        {
+            RemoveContent(CityTextBox, "City");
+        }
+        private void CityLostFocus(object sender, RoutedEventArgs e)
+        {
+            SetContentToDefault(CityTextBox, "City");
+        }
+        private void StateGotFocus(object sender, RoutedEventArgs e)
+        {
+            RemoveContent(StateTextBox, "State");
+        }
+        private void StateLostFocus(object sender, RoutedEventArgs e)
+        {
+            SetContentToDefault(StateTextBox, "State");
+        }
     }
 }
