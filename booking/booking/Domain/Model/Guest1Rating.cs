@@ -42,7 +42,6 @@ namespace booking.Model
             CleanRating = Convert.ToInt32(values[3]);
             RulesRating = Convert.ToInt32(values[4]);
             Comment = values[5];
-
         }
     }
 }

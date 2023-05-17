@@ -43,6 +43,10 @@ namespace booking.Repository
             Load();
             return reservedDates.Where(d => d.Id == id).ToList()[0];
         }
+        public List<ReservedDates> GetByGuestId(int guestId)
+        {
+            return reservedDates.Where(d => d.UserId == guestId).ToList();
+        }
         public void Update(ReservedDates reservedDate)
         {
             reservedDates.Remove(reservedDates.Find(s => reservedDate.Id == s.Id));

@@ -19,6 +19,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using WPF.Views.Guest1;
+using Domain.DTO;
 
 namespace WPF.ViewModels.Guest1
 {
@@ -26,6 +27,8 @@ namespace WPF.ViewModels.Guest1
     {
         public List<OwnerRatingImage> OwnerRatingImages { get; set; }
         public static ObservableCollection<ReservationAccommodationDTO> StayedInAccommodations { get; set; }
+        public static ObservableCollection<Guest1RatingAccommodationDTO> Guest1RatingAccommodationDTOs { get; set; }
+        public List<Guest1Rating> Guest1Ratings { get; set; }
 
         private ObservableCollection<Image> addedImages;
         public ObservableCollection<Image> AddedImages 
@@ -211,6 +214,8 @@ namespace WPF.ViewModels.Guest1
         private readonly ReservationService _reservationService;
         private readonly AccommodationService _accommodationService;
         private readonly UserService _userService;
+        private readonly Guest1RatingsService _guest1RatingsService;
+        private readonly LocationService _locationService;
 
         public ICommand SubmitRateCommand => new RelayCommand(SubmitRate);
         public ICommand AddImageCommand => new RelayCommand(AddImage);
@@ -230,6 +235,8 @@ namespace WPF.ViewModels.Guest1
             _reservationService = new ReservationService();
             _accommodationService = new AccommodationService();
             _userService = new UserService();
+            _guest1RatingsService = new Guest1RatingsService();
+            _locationService = new LocationService();
 
             guest1ViewWindow = guest1View;
             userId = id;
@@ -237,13 +244,38 @@ namespace WPF.ViewModels.Guest1
             StayedInAccommodations = new ObservableCollection<ReservationAccommodationDTO>(CreateStayedInAccommodations());
             AddedImages = new ObservableCollection<Image>();
             OwnerRatingImages = new List<OwnerRatingImage>();
+            Guest1RatingAccommodationDTOs = new ObservableCollection<Guest1RatingAccommodationDTO>();
 
             SetRatingsIGotEnabled();   
         }
 
         public void SetRatingsIGotEnabled()
         {
-            RatingsIGotEnabled = true;
+            List<Guest1Rating> guestsRatings = _guest1RatingsService.GetAllByGuest1Id(userId);
+
+            Guest1Ratings = new List<Guest1Rating>();
+            Guest1RatingAccommodationDTOs.Clear();
+            List<ReservedDates> guest1RatedDates = _reservedDatesService.GetByGuestId(userId).Where(r => r.RatedByGuest).ToList();
+
+            Guest1Rating rating;
+            foreach (ReservedDates dates in guest1RatedDates)
+            {
+                rating = guestsRatings.Find(r => r.ReservationId == dates.Id);
+                if (rating != null)
+                {
+                    Guest1Ratings.Add(rating);
+
+                    Accommodation accommodation = _accommodationService.GetById(dates.AccommodationId);
+                    Location location = _locationService.GetById(accommodation.LocationId);
+                    Guest1Rating lastAddedRating = Guest1Ratings[Guest1Ratings.Count() - 1];
+                    Guest1RatingAccommodationDTO guest1RatingAccommodationDTO = new Guest1RatingAccommodationDTO(dates.Id, lastAddedRating.CleanRating, lastAddedRating.RulesRating, lastAddedRating.Comment,
+                        accommodation.Name, location.State + ", " + location.City, dates.StartDate, dates.EndDate);
+
+                    Guest1RatingAccommodationDTOs.Add(guest1RatingAccommodationDTO);
+                }
+            }
+
+            RatingsIGotEnabled = Guest1RatingAccommodationDTOs.Count > 0 ? true : false;
         }
 
         public List<ReservationAccommodationDTO> CreateStayedInAccommodations()
@@ -279,7 +311,9 @@ namespace WPF.ViewModels.Guest1
                 ResetLists();
                 EmptyForm();
 
-                SuccessfullyRatedView popUpWindow = new SuccessfullyRatedView(userId);
+                SetRatingsIGotEnabled();
+
+                SuccessfullyRatedView popUpWindow = new SuccessfullyRatedView(userId, Guest1RatingAccommodationDTOs);
                 popUpWindow.Show();
 
                 InitializeAccommodationDTO();
@@ -444,7 +478,7 @@ namespace WPF.ViewModels.Guest1
 
         private void OpetRecievedRatings()
         {
-            ReviewView reviewViewModel = new ReviewView(userId);
+            ReviewView reviewViewModel = new ReviewView(userId, Guest1RatingAccommodationDTOs);
             reviewViewModel.Show();
         }
 

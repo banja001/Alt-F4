@@ -27,6 +27,11 @@ namespace application.UseCases
         {
             return _reservedDatesRepository.GetById(id);
         }
+
+        public List<ReservedDates> GetByGuestId(int guestId)
+        {
+            return _reservedDatesRepository.GetByGuestId(guestId);
+        }
         public void Update(ReservedDates reservedDate)
         {
             _reservedDatesRepository.Update(reservedDate);

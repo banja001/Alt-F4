@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.Views.Guest1"
+        xmlns:cvt="clr-namespace:booking.Converter"
         mc:Ignorable="d"
-        Title="ReviewView" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="ReviewView" Height="450" Width="1123" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <SolidColorBrush x:Key="GreenBrush" Color="#597a6a" />
 
@@ -58,8 +59,12 @@
                 </Style>
             </DataGrid.CellStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Clean" Binding="{Binding CleanRating}" CanUserResize="False"  Width="1*"/>
-                <DataGridTextColumn Header="Following rules" Binding="{Binding RulesRating}" CanUserResize="False" Width="2*"/>
+                <DataGridTextColumn Header="Accommodation name" Binding="{Binding AccommodtionName}" CanUserResize="False"  Width="4*"/>
+                <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False"  Width="4*"/>
+                <DataGridTextColumn Header="Start date" Binding="{Binding StartDate, Converter={cvt:DateTimeToDateOnlyConverter}}" CanUserResize="False"  Width="2.5*"/>
+                <DataGridTextColumn Header="End date" Binding="{Binding EndDate, Converter={cvt:DateTimeToDateOnlyConverter}}" CanUserResize="False"  Width="2.5*"/>
+                <DataGridTextColumn Header="Clean" Binding="{Binding CleanRating}" CanUserResize="False"  Width="2*"/>
+                <DataGridTextColumn Header="Following rules" Binding="{Binding RulesRating}" CanUserResize="False" Width="3*"/>
                 <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" Width="8*"/>
             </DataGrid.Columns>
         </DataGrid>

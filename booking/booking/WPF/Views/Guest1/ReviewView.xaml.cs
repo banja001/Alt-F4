@@ -1,5 +1,8 @@
-﻿using System;
+﻿using booking.Model;
+using Domain.DTO;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,11 +21,11 @@ namespace WPF.Views.Guest1
     /// </summary>
     public partial class ReviewView : Window
     {
-        public ReviewView(int userId)
+        public ReviewView(int userId, ObservableCollection<Guest1RatingAccommodationDTO> guest1RatingAccommodationDTOs)
         {
             InitializeComponent();
 
-            this.DataContext = new ReviewViewModel(userId);
+            this.DataContext = new ReviewViewModel(userId, guest1RatingAccommodationDTOs);
         }
     }
 }
