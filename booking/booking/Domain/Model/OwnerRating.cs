@@ -57,9 +57,33 @@ namespace booking.Model
             }
         }
 
+        private string ConvertToStringFromUrgency(Urgency u)
+        {
+            switch (u)
+            {
+                case Urgency.Level1:
+                    return "Level 1";
+                    break;
+                case Urgency.Level2:
+                    return "Level 2";
+                    break;
+                case Urgency.Level3:
+                    return "Level 3";
+                    break;
+                case Urgency.Level4:
+                    return "Level 4";
+                    break;
+                case Urgency.Level5:
+                    return "Level 5";
+                    break;
+                default:
+                    return "";
+            }
+        }
+
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), OwnerId.ToString(), CleanRating.ToString(), KindRating.ToString(), Comment, ReservationId.ToString(), RenovationDescription, Urgency.ToString() };
+            string[] csvValues = { Id.ToString(), OwnerId.ToString(), CleanRating.ToString(), KindRating.ToString(), Comment, ReservationId.ToString(), RenovationDescription, ConvertToStringFromUrgency(Urgency) };
             return csvValues;
         }
 

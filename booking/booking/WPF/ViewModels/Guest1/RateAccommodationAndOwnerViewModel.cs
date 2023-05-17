@@ -331,7 +331,7 @@ namespace WPF.ViewModels.Guest1
         {
             ReservedDates reservedDate = UpdateReservedDatesGuestRatedFlag();
             Accommodation accommodation = _accommodationService.GetById(reservedDate.AccommodationId);
-            string selectedUrgencyLevel = string.IsNullOrEmpty(SelectedUrgency) ? "" : SelectedUrgency.Split('-')[0];
+            string selectedUrgencyLevel = string.IsNullOrEmpty(SelectedUrgency) ? "" : SelectedUrgency.ToString().Split(" - ")[0].Split("System.Windows.Controls.ComboBoxItem: ")[1];
 
             OwnerRating ownerRating = new OwnerRating(_ownerRatingService.MakeId(), accommodation.OwnerId, Convert.ToInt32(CleanRating), 
                 Convert.ToInt32(OwnersKindenssRating), RatingComment, RenovationDescription, selectedUrgencyLevel);
