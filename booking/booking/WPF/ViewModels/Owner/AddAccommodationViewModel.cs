@@ -218,7 +218,7 @@ namespace WPF.ViewModels.Owner
             this.CityList = new ObservableCollection<string>();
             StateLabel = "State";
             CityLabel = "City";
-            ImaSlika = false;//////////////////////
+            ImaSlika = false;
         }
 
         public void StateComboBox_SelectionChanged()
@@ -270,6 +270,7 @@ namespace WPF.ViewModels.Owner
                 ImageUrl = "";
             }
             ShowImage();
+
             ImaSlika = true;
         }
         
@@ -281,6 +282,10 @@ namespace WPF.ViewModels.Owner
                 MessageBox.Show("Image removed", "Message");
             }
             ShowImage();
+            if (accommodationImagesUrl.Count == 0)
+            {
+                ImaSlika = false;
+            }
         }
 
         public void SetImageSource(string url)

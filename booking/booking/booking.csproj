@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Icons\accommodation_stats.png" />
     <None Remove="Resources\Icons\avatar.png" />
     <None Remove="Resources\Icons\avatarico.png" />
     <None Remove="Resources\Icons\finished.png" />
@@ -27,10 +28,13 @@
     <None Remove="Resources\Icons\upcoming.png" />
     <None Remove="Resources\Icons\add_accommodation.png" />
     <None Remove="Resources\Icons\back_icon.png" />
+    <None Remove="Resources\Icons\forum.png" />
     <None Remove="Resources\Icons\forward_icon.png" />
     <None Remove="Resources\Icons\manage_reservations.png" />
     <None Remove="Resources\Icons\owner_icon.png" />
+    <None Remove="Resources\Icons\schedule_renovation.png" />
     <None Remove="Resources\Icons\view_ratings.png" />
+    <None Remove="Resources\Icons\view_renovations.png" />
     <None Remove="Resources\Icons\whiteLogout.png" />
     <None Remove="Resources\Icons\whiteRequest.png" />
     <None Remove="Resources\Icons\whiteStatistics.png" />
@@ -38,6 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Icons\accommodation_stats.png" />
     <COMReference Include="{215d64d2-031c-33c7-96e3-61794cd1ee61}">
       <WrapperTool>tlbimp</WrapperTool>
       <VersionMinor>4</VersionMinor>
@@ -58,10 +63,13 @@
     <Resource Include="Resources\Icons\upcoming.png" />
     <Resource Include="Resources\Icons\add_accommodation.png" />
     <Resource Include="Resources\Icons\back_icon.png" />
+    <Resource Include="Resources\Icons\forum.png" />
     <Resource Include="Resources\Icons\forward_icon.png" />
     <Resource Include="Resources\Icons\manage_reservations.png" />
     <Resource Include="Resources\Icons\owner_icon.png" />
+    <Resource Include="Resources\Icons\schedule_renovation.png" />
     <Resource Include="Resources\Icons\view_ratings.png" />
+    <Resource Include="Resources\Icons\view_renovations.png" />
     <Resource Include="Resources\Icons\whiteLogout.png" />
     <Resource Include="Resources\Icons\whiteRequest.png" />
     <Resource Include="Resources\Icons\whiteStatistics.png" />

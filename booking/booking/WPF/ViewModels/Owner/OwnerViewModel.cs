@@ -138,6 +138,7 @@ namespace WPF.ViewModels.Owner
             }
             if (i == 0) AverageRating = 0;
             else AverageRating =sum / (i * 2);
+            AverageRating = Math.Round(AverageRating,2);////////
             AverageLabel = AverageRating.ToString();
             if (AverageRating >= 4.5 && i >= 3)
             {
@@ -157,6 +158,7 @@ namespace WPF.ViewModels.Owner
                 guestsToRate.EndDate = date.EndDate.ToShortDateString();
                 guestsToRate.GuestName = users.Find(u => u.Id == date.UserId).Username;
                 guestsToRate.AccommodationName = accommodations.Find(u => u.Id == date.AccommodationId).Name;
+                //guestsToRate.ReservationId=date.
                 tempList.Add(guestsToRate);
             }
             return tempList;

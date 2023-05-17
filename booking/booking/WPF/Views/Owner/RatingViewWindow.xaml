@@ -97,7 +97,7 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <Label Content="Rating table:" FontSize="17" Foreground="#E69138" FontWeight="Bold" VerticalAlignment="Bottom"/>
-        <DataGrid Grid.Row="1" Grid.ColumnSpan="2" x:Name="dgrMain" ItemsSource="{Binding OwnerRatings, UpdateSourceTrigger=PropertyChanged}" 
+        <DataGrid GridLinesVisibility="None" Grid.Row="1" Grid.ColumnSpan="2" x:Name="dgrMain" ItemsSource="{Binding OwnerRatings, UpdateSourceTrigger=PropertyChanged}" 
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False" Width="330" Height="140" HorizontalAlignment="Center" VerticalAlignment="Center"
                   ColumnHeaderStyle="{StaticResource HeaderStyle}" >
