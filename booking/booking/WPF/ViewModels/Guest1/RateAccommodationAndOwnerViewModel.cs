@@ -217,6 +217,7 @@ namespace WPF.ViewModels.Guest1
         public ICommand RemoveImageCommand => new RelayCommand(RemoveImage);
         public ICommand SelectedStayedInChangedCommand => new RelayCommand(SelectedStayedInChanged);
         public ICommand SelectedImageChangedCommand => new RelayCommand(SelectedImageChanged);
+        public ICommand OpetRecievedRatingsCommand => new RelayCommand(OpetRecievedRatings);
 
         private Guest1View guest1ViewWindow;
         private int userId;
@@ -236,6 +237,13 @@ namespace WPF.ViewModels.Guest1
             StayedInAccommodations = new ObservableCollection<ReservationAccommodationDTO>(CreateStayedInAccommodations());
             AddedImages = new ObservableCollection<Image>();
             OwnerRatingImages = new List<OwnerRatingImage>();
+
+            SetRatingsIGotEnabled();   
+        }
+
+        public void SetRatingsIGotEnabled()
+        {
+            RatingsIGotEnabled = true;
         }
 
         public List<ReservationAccommodationDTO> CreateStayedInAccommodations()
@@ -432,6 +440,12 @@ namespace WPF.ViewModels.Guest1
             {
                 MessageBox.Show("You have to select an image you want to remove!");
             }
+        }
+
+        private void OpetRecievedRatings()
+        {
+            ReviewView reviewViewModel = new ReviewView(userId);
+            reviewViewModel.Show();
         }
 
         private void StayedInSelectionChanged(object selectedFromList)

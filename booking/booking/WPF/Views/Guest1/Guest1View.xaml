@@ -105,7 +105,7 @@
                     <Label Grid.Row="0" Grid.ColumnSpan="3" Content="Rate your accommodations" 
                        Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24" FontWeight="Bold" Margin="10"/>
 
-                    <Button Grid.Row="0" Grid.Column="3" Content="Ratings I got" IsEnabled="{Binding RatingsIGotEnabled}" Width="79" Height="30" HorizontalAlignment="Right" Margin="10 0"/>
+                    <Button Grid.Row="0" Grid.Column="3" Content="Ratings I got" Command="{Binding OpetRecievedRatingsCommand}" IsEnabled="{Binding RatingsIGotEnabled}" Width="79" Height="30" HorizontalAlignment="Right" Margin="10 0"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="Stayed in" 
                        Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
