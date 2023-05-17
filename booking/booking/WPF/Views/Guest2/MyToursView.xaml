@@ -20,7 +20,7 @@
     </UserControl.Resources>
     <TabControl BorderThickness="0" Background="#E6E9F4" Margin="0,0,0,0">
         <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="Active tour" MinWidth="100">
-            <Grid Background="#E6E9F4">
+            <Grid Style="{DynamicResource LightBackground}">
                 <Grid.Resources>
                     <Style x:Key="LightHeaderStyle" TargetType="DataGridColumnHeader">
                         <Setter Property="FontSize" Value="12"/>
