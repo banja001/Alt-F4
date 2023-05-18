@@ -68,6 +68,14 @@ namespace application.UseCases
         {
             locationRepository.Add(loc);
         }
+        public bool Contains(Location location)
+        {
+            return locationRepository.GetAll().Find(l => l.State.Equals(location.State) && l.City.Equals(location.City)) == null ? false : true; ;
+        }
+        public int GetId(string state, string city)
+        {
+            return locationRepository.GetAll().FindLastIndex(l => l.State == state && l.City == city);
+        }
 
     }
 }

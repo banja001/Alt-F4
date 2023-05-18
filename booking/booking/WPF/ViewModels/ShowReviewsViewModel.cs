@@ -35,7 +35,6 @@ namespace booking.WPF.ViewModels
             AllComments =
                 new ObservableCollection<TourRatingDTO>(
                     _appointmentService.MakeTourRatings(AllCommentsForThatTour, appointment));
-           // SelectedComment=new TourRatingDTO();
             Guide = guide;
         }
 

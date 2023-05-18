@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WPF.ViewModels;
 
 namespace booking.WPF.ViewModels
 {
@@ -43,7 +44,12 @@ namespace booking.WPF.ViewModels
                         HeaderMessage = " My Tours ";
                         OnPropertyChanged(nameof(HeaderMessage));
                         break;
-
+                    case "MyRequests":
+                        UserControlInstance = new MyRequestsViewModel(User);
+                        OnPropertyChanged(nameof(UserControlInstance));
+                        HeaderMessage = " My Requests ";
+                        OnPropertyChanged(nameof(HeaderMessage));
+                        break;
                     default:
                         break;
                 }
