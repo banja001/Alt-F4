@@ -65,12 +65,26 @@ namespace application.UseCases
             List<SimpleAndComplexTourRequestsDTO> simpleRequests=new List<SimpleAndComplexTourRequestsDTO>();
             foreach(SimpleRequest simpleRequest in _simpleRequestRepository.GetAll())
             {
-                SimpleAndComplexTourRequestsDTO SaCTRDTO=new SimpleAndComplexTourRequestsDTO(simpleRequest);
-                SaCTRDTO.Location = _locaRepository.GetAll().Find(l => l.Id == SaCTRDTO.Location.Id);
-                simpleRequests.Add( SaCTRDTO );
+                if (simpleRequest.Status == SimpleRequestStatus.ON_HOLD)
+                {
+                    SimpleAndComplexTourRequestsDTO SaCTRDTO = new SimpleAndComplexTourRequestsDTO(simpleRequest);
+                    SaCTRDTO.Location = _locationService.GetAll().Find(l => l.Id == SaCTRDTO.Location.Id);
+                    simpleRequests.Add(SaCTRDTO);
+                }
             }
             return simpleRequests;
         }
-        
+        public List<SimpleRequest> GetAll()
+        {
+            return _simpleRequestRepository.GetAll();
+        }
+        public SimpleRequest GetById(int id) 
+        { 
+            return _simpleRequestRepository.GetById(id);
+        }
+        public void Update(SimpleRequest simpleRequest)
+        {
+            _simpleRequestRepository.Update(simpleRequest);
+        }
     }
 }

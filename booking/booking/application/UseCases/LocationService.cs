@@ -90,5 +90,18 @@ namespace application.UseCases
             }
             return states;
         }
+        public List<string> FillListWithCities(string SelectedState)
+        {
+            List<string> cities = new List<string>();
+
+            foreach (Location loc in locationRepository.GetAll())
+            {
+                if (SelectedState == loc.State)
+                {
+                    cities.Add(loc.City);
+                }
+            }
+            return cities;
+        }
     }
 }

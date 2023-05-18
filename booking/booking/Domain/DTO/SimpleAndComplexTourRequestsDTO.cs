@@ -9,6 +9,7 @@ namespace Domain.DTO
 {
     public class SimpleAndComplexTourRequestsDTO
     {
+        public int SimpleTourRequestId { get; set; }
         public string Description { get; set; }
         public Location Location { get; set; }
         public string Language { get; set; }
@@ -40,6 +41,7 @@ namespace Domain.DTO
             StartDate.Date = Convert.ToDateTime(simpleRequest.DateRange.StartDate, CultureInfo.GetCultureInfo("es-ES"));
             EndDate.Date = Convert.ToDateTime(simpleRequest.DateRange.EndDate, CultureInfo.GetCultureInfo("es-ES"));
             IsPartOfComplex = false;
+            SimpleTourRequestId = simpleRequest.Id;
         }
     }
 }
