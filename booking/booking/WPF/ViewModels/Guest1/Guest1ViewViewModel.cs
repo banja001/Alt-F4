@@ -39,9 +39,24 @@ namespace WPF.ViewModels.Guest1
 
         private int userId;
         public string UserName { get; set; }
-        public string Score { get; set; }
+
+        private string score;
+        public string Score 
+        {
+            get { return score; }
+            set
+            {
+                if(score != value)
+                {
+                    score = value;
+                    OnPropertyChanged(nameof(Score));
+                }
+            } 
+        }
+        public User User { get; set; }
 
         private readonly UserService _userService;
+        private readonly ReservedDatesService _reservedDatesService;
 
         public ICommand OpenFirstTabCommand => new RelayCommand(OpenFirstTab);
         public ICommand OpenSecondTabCommand => new RelayCommand(OpenSecondTab);
@@ -51,6 +66,7 @@ namespace WPF.ViewModels.Guest1
         public Guest1ViewViewModel(int userId)
         {
             _userService = new UserService();
+            _reservedDatesService = new ReservedDatesService();
 
             this.userId = userId;
 
@@ -60,8 +76,27 @@ namespace WPF.ViewModels.Guest1
         }
         private void InitializeStatus()
         {
-            UserName = _userService.GetUserNameById(userId);
-            Score = _userService.GetScoreById(userId).ToString();
+            User = _userService.GetById(userId);
+
+            UserName = User.Username;
+
+            if ((DateTime.Now - User.DateOfBecomingSuper).Days < 365 && User.Super)
+                Score = User.Score.ToString();
+            else
+            {
+                if (User.NumOfAccommodationReservations >= 10)
+                {
+                    User.NumOfAccommodationReservations = 0;
+                    User.Score = 5;
+                    User.DateOfBecomingSuper = User.DateOfBecomingSuper.AddDays(365);
+
+                    _userService.Update(User);
+
+                    Score = User.Score.ToString();
+                }
+                else
+                    Score = "0";
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

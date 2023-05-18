@@ -33,7 +33,7 @@ namespace booking.Model
             Super = super;
             Score = score;
             if (!dateOfBecomingSuper.HasValue)
-                dateOfBecomingSuper = DateTime.Now;
+                dateOfBecomingSuper = new DateTime(01, 01, 0001);
             DateOfBecomingSuper = dateOfBecomingSuper.Value;
             NumOfAccommodationReservations = numOfAccommodationReservations;
         }

@@ -23,8 +23,6 @@ namespace WPF.ViewModels.Guest1
 {
     public class ReserveAccommodationViewModel : BaseViewModel, INotifyPropertyChanged, IDataErrorInfo
     {
-        public RenovationDatesService _renovationService { get; set; }
-
         public ReservedDates NewDate { get; set; }
         public int NumOfDays { get; set; }
         public static ObservableCollection<ReservedDates> FreeDates { get; set; }
@@ -78,6 +76,8 @@ namespace WPF.ViewModels.Guest1
 
         private readonly ReservedDatesService _reservedDatesService;
         private readonly AccommodationService _accommodationService;
+        public RenovationDatesService _renovationService { get; set; }
+        private readonly UserService _userService;
 
         public ICommand ReserveAccommodationClickCommand => new RelayCommand(ReserveAccommodationClick);
         public ICommand CloseWindowCommand => new RelayCommand(CloseWindow);
@@ -88,13 +88,16 @@ namespace WPF.ViewModels.Guest1
         public ICommand GuestsNumValueChangedCommand => new RelayCommand(GuestsNumValueChanged);
 
         private int userId;
+        public User User { get; set; }
         public ReserveAccommodationViewModel(int userId)
         {
             _renovationService = new RenovationDatesService();
             _reservedDatesService = new ReservedDatesService();
             _accommodationService = new AccommodationService();
+            _userService = new UserService();
 
             this.userId = userId;
+            User = _userService.GetById(userId);
             selectedAccommodation = OverviewViewModel.SelectedAccommodation;
             AlternativeDatesVisibility = Visibility.Hidden;
 
@@ -131,6 +134,11 @@ namespace WPF.ViewModels.Guest1
 
                 SetSelectedDatesParameters();
                 _reservedDatesService.Add(SelectedDates);
+
+                ++User.NumOfAccommodationReservations;
+                if(User.Score > 0)
+                    --User.Score;
+                _userService.Update(User);
 
                 MessageBox.Show("Your reservation has been successfully made!");
 

@@ -40,6 +40,7 @@ namespace WPF.ViewModels.Guest1
         public ICommand CancelReservationCommand => new RelayCommand(CancelReservation);
         public ICommand ViewCommentCommand => new RelayCommand(ViewComment);
 
+        private User user;
         private int userId;
         private Guest1View guest1ViewWindow;
 
@@ -54,6 +55,8 @@ namespace WPF.ViewModels.Guest1
             _reservationRequestsService = new ReservationRequestsService();
             _ownerNotificationsService = new OwnerNotificationsService();
             _userService = new UserService();
+
+            user = _userService.GetById(userId);
 
             InitializeDTOs();
         }
@@ -103,6 +106,11 @@ namespace WPF.ViewModels.Guest1
                 UpdateDataGrids();
                 int ownerId = _accommodationService.GetById(reservedDate.AccommodationId).OwnerId;
                 _ownerNotificationsService.Add(new OwnerNotification(_ownerNotificationsService.MakeId(), ownerId, accomodation, reservedDate, _userService.GetUserNameById(userId)));
+
+                ++user.Score;
+                if(user.NumOfAccommodationReservations > 0)
+                    --user.NumOfAccommodationReservations;
+                _userService.Update(user);
 
                 MessageBox.Show("Your reservation is deleted!");
             }

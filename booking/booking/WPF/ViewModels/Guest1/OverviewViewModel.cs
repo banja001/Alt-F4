@@ -90,8 +90,6 @@ namespace WPF.ViewModels.Guest1
         public string SelectedCity { get; set; }
 
         private int userId;
-        public string UserName { get; set; }
-        public string Score { get; set; }
 
         private List<Guest1Notifications> guest1Notifications;
 
