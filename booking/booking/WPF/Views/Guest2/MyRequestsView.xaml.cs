@@ -1,4 +1,5 @@
 ﻿using booking.Domain.Model;
+using booking.Model;
 using booking.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,11 @@ namespace booking.WPF.Views.Guest2
         public MyRequestsView()
         {
             InitializeComponent();
-            DataContext = new MyRequestsViewModel();
+        }
+        public MyRequestsView(User user)
+        {
+            InitializeComponent();
+            this.DataContext = new MyRequestsViewModel(user);
         }
         private void SetContentToDefault(TextBox selectedTextbox, string defaultText)
         {

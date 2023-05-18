@@ -18,6 +18,7 @@ namespace Domain.Model
     public class SimpleRequest : ISerializable
     {
         public int Id { get; set; }
+        public User User { get; set; }
         public string Description { get; set; }
         public Location Location { get; set; }  
         public string Language { get; set; }    
@@ -27,14 +28,17 @@ namespace Domain.Model
 
         public SimpleRequest()
         {
+            this.User = new User();
             DateRange = new DateRange();
             Location = new Location();
         }
-        public SimpleRequest( string description, int locationId, string language, int numberOfGuests,DateTime startDate, DateTime endDate, SimpleRequestStatus status)
+        public SimpleRequest( int userId, string description, int locationId, string language, int numberOfGuests,DateTime startDate, DateTime endDate, SimpleRequestStatus status)
         {
             Location = new Location();
+            User = new User();
 
             Id = -1;
+            User.Id = userId;
             Description = description;
             Location.Id = locationId;
             Language = language;
@@ -45,6 +49,7 @@ namespace Domain.Model
         public SimpleRequest(int id, SimpleRequest simpleRequest)
         {
             Id = id;
+            User = simpleRequest.User;
             Description = simpleRequest.Description;
             Location = simpleRequest.Location;
             Language = simpleRequest.Language;
@@ -55,6 +60,7 @@ namespace Domain.Model
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(),
+                                   User.Id.ToString(),
                                    Description,            
                                    Location.Id.ToString(),
                                    Language,
@@ -68,21 +74,22 @@ namespace Domain.Model
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
-            Description = Convert.ToString(values[1]);  
-            Location.Id = Convert.ToInt32(values[2]);   
-            Language = Convert.ToString(values[3]);
-            NumberOfGuests = Convert.ToInt32(values[4]);
-            DateRange.StartDate = Convert.ToDateTime(values[5], CultureInfo.GetCultureInfo("es-ES"));
-            DateRange.EndDate = Convert.ToDateTime(values[6], CultureInfo.GetCultureInfo("es-ES"));
-            switch(values[7])
+            User.Id = Convert.ToInt32(values[1]);
+            Description = Convert.ToString(values[2]);  
+            Location.Id = Convert.ToInt32(values[3]);   
+            Language = Convert.ToString(values[4]);
+            NumberOfGuests = Convert.ToInt32(values[5]);
+            DateRange.StartDate = Convert.ToDateTime(values[6], CultureInfo.GetCultureInfo("es-ES"));
+            DateRange.EndDate = Convert.ToDateTime(values[7], CultureInfo.GetCultureInfo("es-ES"));
+            switch(values[8])
             {
-                case "0":
+                case "APPROVED":
                     Status = SimpleRequestStatus.APPROVED;
                     break;
-                case "1":
+                case "ON_HOLD":
                     Status = SimpleRequestStatus.ON_HOLD;
                     break;
-                case "2":
+                case "INVALID":
                     Status = SimpleRequestStatus.INVALID;
                     break;
                 default:

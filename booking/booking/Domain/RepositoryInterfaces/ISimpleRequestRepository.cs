@@ -16,5 +16,6 @@ namespace Domain.RepositoryInterfaces
         public void Add(SimpleRequest simpleRequest);
         public void Save();
         public void Delete(SimpleRequest simpleRequest);
+        public List<SimpleRequest> GetAllByGuest2(User user);
     }
 }

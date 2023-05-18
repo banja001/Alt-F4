@@ -4,6 +4,7 @@ using Domain.Model;
 using Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 
@@ -45,6 +46,7 @@ namespace Repositories
             if (idx >= 0)
             {
                 _simpleRequests[idx] = simpleRequest;
+                Save();
             }
             else
             {
@@ -55,7 +57,7 @@ namespace Repositories
         public int MakeId()
         {
             Load();
-            return _simpleRequests.Count != 0 ? _simpleRequests[_simpleRequests.Count - 1].Id + 1 : 0;
+            return _simpleRequests.Count == 0 ? 0 : _simpleRequests.Max(n => n.Id) + 1;
         }
 
         public void Add(SimpleRequest simpleRequest)
@@ -75,6 +77,11 @@ namespace Repositories
             Load();
             _simpleRequests.Remove(simpleRequest);
             Save();
+        }
+        public List<SimpleRequest> GetAllByGuest2(User user)
+        {
+            Load();
+            return _simpleRequests.FindAll(s => s.User.Id == user.Id);
         }
     }
 }

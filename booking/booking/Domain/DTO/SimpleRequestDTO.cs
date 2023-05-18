@@ -1,4 +1,5 @@
-﻿using Domain.Model;
+﻿using booking.Model;
+using Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,13 +15,15 @@ namespace Domain.DTO
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string StatusUri { get; set; } 
+        public Location Location { get; set; }
 
         public SimpleRequestDTO() 
         {
             StartDate = new DateTime();
-            EndDate = new DateTime();   
+            EndDate = new DateTime();  
+            Location = new Location();  
         }
-        public SimpleRequestDTO(int id, string description, int numberOfGuests, string language, DateTime startDate, DateTime endDate, string statusUri)
+        public SimpleRequestDTO(int id, string description, int numberOfGuests, string language, DateTime startDate, DateTime endDate, string statusUri, Location location)
         {
             Id = id;
             Description = description;
@@ -29,6 +32,7 @@ namespace Domain.DTO
             StartDate = startDate;
             EndDate = endDate;
             StatusUri = statusUri;
+            Location = location;
         }
     }
 }
