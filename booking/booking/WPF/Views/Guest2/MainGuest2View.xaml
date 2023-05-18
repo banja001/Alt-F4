@@ -3,13 +3,27 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:booking.View.Guest2.Windows" xmlns:viewmodels="clr-namespace:booking.WPF.ViewModels" 
+        xmlns:local="clr-namespace:Utilities" 
+        xmlns:views="clr-namespace:booking.WPF.Views.Guest2"
+        xmlns:viewmodels="clr-namespace:booking.WPF.ViewModels"
         mc:Ignorable="d"
         Height="700" Width="1250" AllowsTransparency="True" Background="Transparent" WindowStyle="None"
-       WindowStartupLocation="CenterScreen">
-    <!--DataContext="{d:DesignInstance Type=viewmodels:MainGuest2ViewModel}" bilo na liniji 6-->
-    <Border CornerRadius="10" BorderBrush="#91AFDD" BorderThickness="4">
-        <Grid Background="#91AFDD">
+       WindowStartupLocation="CenterScreen" Icon="/Resources/Icons/taskbarIcon.png">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Utilities/Themes/Guest2Themes.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type viewmodels:MyToursViewModel}">
+                <views:MyToursView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:MyRequestsViewModel}">
+                <views:MyRequestsView/>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Border CornerRadius="10" BorderBrush="#E6E9F4" BorderThickness="4">
+        <Grid Background="#E6E9F4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="5*"/>
@@ -18,56 +32,22 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="25*"/>
             </Grid.RowDefinitions>
-            <StackPanel Margin="10,10,10,10"  Orientation="Vertical" Grid.Column="0" Grid.RowSpan="2" Background="#6191da">
-                <Label VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="20,60,0,5" IsHitTestVisible="False" >
-                    <Label.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="/Resources/Icons/home.png" Width="25" Height="25"/>
-                            <TextBox Text="Home" Background="#6191da" FontSize="16" Margin="10" BorderBrush="#6191da" Foreground="White"/>
-                        </StackPanel>
-                    </Label.Content>
-                </Label>
-                <Button Command="{Binding NavigateWindowsCommand}" CommandParameter="MyTours" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderBrush="Transparent" Background="Transparent" Margin="0,5,0,5">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="/Resources/Icons/whiteTraveler.png" Width="25" Height="25"/>
-                            <TextBox  MinWidth="100" IsHitTestVisible="False" Text="Tours" Background="#6191da" FontSize="16" Margin="10" BorderBrush="#6191da" Foreground="White"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Label VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="20,5,0,5" IsHitTestVisible="False" >
-                    <Label.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="/Resources/Icons/whiteRequest.png" Width="25" Height="25"/>
-                            <TextBox Text="Requests" Background="#6191da" FontSize="16" Margin="10" BorderBrush="#6191da" Foreground="White"/>
-                        </StackPanel>
-                    </Label.Content>
-                </Label>
-                <Label VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="20,5,0,5" IsHitTestVisible="False" >
-                    <Label.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="/Resources/Icons/whiteStatistics.png" Width="25" Height="25"/>
-                            <TextBox Text="Statistics" Background="#6191da" FontSize="16" Margin="10" BorderBrush="#6191da" Foreground="White"/>
-                        </StackPanel>
-                    </Label.Content>
-                </Label>
-                    <Button Command="{Binding LogOutButtonCommand}" BorderBrush="Transparent" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Margin="0,300,0,5">
-                        <Button.Content>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="/Resources/Icons/whiteLogout.png" Width="25" Height="25"/>
-                                <TextBox MinWidth="100" IsHitTestVisible="False" Text="Log out" Background="#6191da" FontSize="16" Margin="10" BorderBrush="#6191da" Foreground="White"/>
-                            </StackPanel>
-                        </Button.Content>
-                    </Button>
+            <StackPanel Margin="10,10,10,10"  Orientation="Vertical" Grid.Column="0" Grid.RowSpan="2" Background="#7588c4">
+                <Button Command="{Binding NavigateWindowsCommand}" CommandParameter="Home" Margin="0,25,0,0" Style="{DynamicResource StackPanelButtonStyle}" Content="Home" local:ButtonProperties.ImageSource="/Resources/Icons/home.png"></Button>
+                <Button Command="{Binding NavigateWindowsCommand}" CommandParameter="MyTours" Style="{DynamicResource StackPanelButtonStyle}" Content="My Tours" local:ButtonProperties.ImageSource="/Resources/Icons/whiteTraveler.png"></Button>
+                <Button Command="{Binding NavigateWindowsCommand}" CommandParameter="MyRequests" Style="{DynamicResource StackPanelButtonStyle}" Content="Requests" local:ButtonProperties.ImageSource="/Resources/Icons/whiteRequest.png"></Button>
+                <Button Command="{Binding NavigateWindowsCommand}" CommandParameter="Statistics" Style="{DynamicResource StackPanelButtonStyle}" Content="Statistics" local:ButtonProperties.ImageSource="/Resources/Icons/whiteStatistics.png"></Button>
+                <Button Margin="0,180,0,5" Command="{Binding LogOutButtonCommand}" Style="{DynamicResource StackPanelButtonStyle}" Content="Log out" local:ButtonProperties.ImageSource="/Resources/Icons/whiteLogout.png"></Button>
             </StackPanel>
-            <StackPanel Margin="10,10,10,10" Orientation="Vertical" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
-                <Label Name="WelcomeLabel" Content="" FontSize="20" Margin="20,0,20,5" Foreground="White"/>
-                <ContentControl Content="{Binding UserControlInstance}" Height="605" Margin="15,0,15,0"></ContentControl>
-            </StackPanel>
+            <GroupBox Style="{DynamicResource LightGroupBox}" Margin="0,0,10,7" Header="{Binding HeaderMessage}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
+                <StackPanel Margin="10,10,10,10" Orientation="Vertical" >
+                    <ContentControl Content="{Binding UserControlInstance}" Height="605" Margin="15,0,15,0"></ContentControl>
+                </StackPanel>
+            </GroupBox>
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Stretch">
                 <Button Background="Transparent" BorderBrush="Transparent" Padding="0,-5,0,0" Command="{Binding ExitButtonCommand}">
                     <Button.Content>
-                        <Label Content="X" FontSize="16" Foreground="White" Margin="0,0,0,0" />
+                        <Label Content="X" FontSize="16" Foreground="#7588c4" Margin="0,0,0,0" />
                     </Button.Content>
                 </Button>
             </StackPanel>

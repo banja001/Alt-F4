@@ -1,0 +1,78 @@
+﻿using booking.Model;
+using booking.Repository;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using booking.WPF.ViewModels;
+using WPF.ViewModels;
+
+namespace WPF.Views.Guest2
+{
+    /// <summary>
+    /// Interaction logic for SearchTourView.xaml
+    /// </summary>
+    public partial class SearchTourView : UserControl
+    {
+        public SearchTourView()
+        {
+            InitializeComponent();
+        }
+        public SearchTourView(User user)
+        {
+            InitializeComponent();
+            this.DataContext = new SearchTourViewModel(user);
+        }
+        private void SetContentToDefault(TextBox selectedTextbox, string defaultText)
+        {
+            if (selectedTextbox.Text.Equals(""))
+            {
+                selectedTextbox.Text = defaultText;
+                selectedTextbox.Foreground = Brushes.LightGray;
+            }
+        }
+        private void RemoveContent(TextBox selectedTextBox, string defaultText)
+        {
+            if (selectedTextBox.Text.Equals(defaultText))
+            {
+                selectedTextBox.Text = "";
+                selectedTextBox.Foreground = Brushes.Black;
+            }
+        }
+        private void PeopleCountLostFocus(object sender, RoutedEventArgs e)
+        {
+            SetContentToDefault(PeopleCount, "People count");
+        }
+
+        private void PeopleCountGotFocus(object sender, RoutedEventArgs e)
+        {
+            RemoveContent(PeopleCount, "People count");
+        }
+
+        private void LanguageGotFocus(object sender, RoutedEventArgs e)
+        {
+            RemoveContent(Language, "Language");
+        }
+
+        private void LanguageLostFocus(object sender, RoutedEventArgs e)
+        {
+            SetContentToDefault(Language, "Language");
+        }
+        private void DurationGotFocus(object sender, RoutedEventArgs e)
+        {
+            RemoveContent(Duration, "Duration(h)");
+        }
+        private void DurationLostFocus(object sender, RoutedEventArgs e)
+        {
+            SetContentToDefault(Duration, "Duration(h)");
+        }
+    }
+}

@@ -1,5 +1,6 @@
 ﻿using booking.Model;
 using booking.WPF.ViewModels;
+using booking.WPF.Views.Guest2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,6 @@ namespace booking.View.Guest2.Windows
             _mainGuest2ViewModel = new MainGuest2ViewModel(user);
             DataContext = _mainGuest2ViewModel;
             User = user;
-            WelcomeLabel.Content = "Welcome " + User.Username;
         }
     }
 }

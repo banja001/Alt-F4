@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WPF.ViewModels;
 
 namespace booking.WPF.ViewModels
 {
@@ -22,12 +23,13 @@ namespace booking.WPF.ViewModels
         public ICommand ExitButtonCommand => new RelayCommand(ExitWindow);
         public ICommand LogOutButtonCommand => new RelayCommand(LogOut);
         public ICommand NavigateWindowsCommand => new RelayCommandWithParams(NavigateWindows);
-        public FrameworkElement UserControlInstance { get; set; }
+        public BaseViewModel UserControlInstance { get; set; }
         public User User { get; set; }
+        public String HeaderMessage { get; set; }
         public MainGuest2ViewModel(User user) 
         {
             this.User = user;
-            UserControlInstance = new MyToursView(User);
+            HeaderMessage = " Welcome " + User.Username.ToString() + " ";
         }
 
         private void NavigateWindows(object parameter)
@@ -37,10 +39,17 @@ namespace booking.WPF.ViewModels
                 switch (parameter.ToString())
                 {
                     case "MyTours":
-                        var tourWindow = new Guest2Overview(User);
-                        tourWindow.Show();
+                        UserControlInstance = new MyToursViewModel(User);
+                        OnPropertyChanged(nameof(UserControlInstance));
+                        HeaderMessage = " My Tours ";
+                        OnPropertyChanged(nameof(HeaderMessage));
                         break;
-
+                    case "MyRequests":
+                        UserControlInstance = new MyRequestsViewModel(User);
+                        OnPropertyChanged(nameof(UserControlInstance));
+                        HeaderMessage = " My Requests ";
+                        OnPropertyChanged(nameof(HeaderMessage));
+                        break;
                     default:
                         break;
                 }

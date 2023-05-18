@@ -24,6 +24,10 @@ namespace booking.WPF.Views.Guest2
     {
         private readonly MyToursViewModel _myTourViewModel;
         private User User { get; set; } 
+        public MyToursView()
+        {
+            InitializeComponent();
+        }
         public MyToursView(User user)
         {
             User = user;
