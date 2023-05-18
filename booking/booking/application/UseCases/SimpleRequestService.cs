@@ -14,11 +14,11 @@ namespace application.UseCases
     public class SimpleRequestService
     {
         private readonly ISimpleRequestRepository _simpleRequestRepository;
-        private readonly ILocationRepository _locaRepository;
+        private readonly LocationService _locationService;
         public SimpleRequestService() 
         {
             _simpleRequestRepository = Injector.CreateInstance<ISimpleRequestRepository>();
-            _locaRepository = Injector.CreateInstance<ILocationRepository>();
+            _locationService = new LocationService();
         }
         public void Add(SimpleRequest simpleRequest)
         {
@@ -42,7 +42,7 @@ namespace application.UseCases
                                                            simpleRequest.DateRange.StartDate,
                                                            simpleRequest.DateRange.EndDate,
                                                            simpleRequest.GetStatusUri(),
-                                                           _locaRepository.GetById(simpleRequest.Location.Id)
+                                                           _locationService.GetById(simpleRequest.Location.Id)
                                                             ));
             }
             return simpleRequestDTOs;
