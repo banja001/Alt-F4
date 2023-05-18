@@ -20,6 +20,9 @@
             <DataTemplate DataType="{x:Type viewmodels:MyRequestsViewModel}">
                 <views:MyRequestsView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
+                <views:HomeView/>
+            </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
     <Border CornerRadius="10" BorderBrush="#E6E9F4" BorderThickness="4">
