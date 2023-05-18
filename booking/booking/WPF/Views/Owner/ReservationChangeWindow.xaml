@@ -55,7 +55,7 @@
 
         <Label Content="Pick a reservation change" Grid.ColumnSpan="2" HorizontalAlignment="Left" FontSize="17" Foreground="#E69138" Padding="10" Margin="15,0,0,0"/>
 
-        <DataGrid x:Name="ReservationChangeGrid" ItemsSource="{Binding requestsObservable, UpdateSourceTrigger=PropertyChanged}" 
+        <DataGrid x:Name="ReservationChangeGrid" GridLinesVisibility="None" ItemsSource="{Binding requestsObservable, UpdateSourceTrigger=PropertyChanged}" 
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False" Grid.ColumnSpan="2" ColumnHeaderStyle="{StaticResource HeaderStyle}" Margin="25,64,25,64" Grid.RowSpan="3">
             <DataGrid.Resources>

@@ -12,6 +12,14 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Overview">
     <Page.Resources>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <StackPanel>
+                <!-- Placeholder for the TextBox itself -->
+                <AdornedElementPlaceholder x:Name="IntegerUpDown" />
+                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" />
+            </StackPanel>
+        </ControlTemplate>
+        
         <SolidColorBrush x:Key="GreenBrush" Color="#597a6a" />
 
         <Style x:Key="labelsStyle" TargetType="{x:Type Control}">
@@ -104,12 +112,13 @@
 
                 <Label Grid.Row="2" Content="Guests" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0"/>
                 <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" x:Name="tSearchBarNumberOfGuests" Height="22">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <i:InvokeCommandAction Command="{Binding NumValueChangedCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <xctk:IntegerUpDown.Text>
-                        <Binding Path="SearchedAccommodation.NumOfGuests" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <val:StringToIntValidationRule ValidationStep="RawProposedValue"/>
-                            </Binding.ValidationRules>
-                        </Binding>
+                        <Binding Path="SearchedAccommodation.NumOfGuests" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True"/>
                     </xctk:IntegerUpDown.Text>
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
@@ -132,12 +141,13 @@
                 <Label Grid.Row="2" Grid.Column="2" Height="30" Content="Days" 
                                Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 <xctk:IntegerUpDown Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" x:Name="tSearchBarNumberOfDays" Height="22">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <i:InvokeCommandAction Command="{Binding NumValueChangedCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <xctk:IntegerUpDown.Text>
-                        <Binding Path="SearchedAccommodation.NumOfDays" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <val:StringToIntValidationRule ValidationStep="RawProposedValue"/>
-                            </Binding.ValidationRules>
-                        </Binding>
+                        <Binding Path="SearchedAccommodation.NumOfDays" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True"/>
                     </xctk:IntegerUpDown.Text>
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
@@ -157,13 +167,14 @@
                     </Validation.ErrorTemplate>
                 </xctk:IntegerUpDown>
 
-                <Button Grid.Row="1" Grid.Column="6" x:Name="SeeAllButton" Command="{Binding SeeAllCommand}" Height="20" Width="67" Content="See all" HorizontalAlignment="Right" Margin="10 0"/>
-                <Button Grid.Row="2" Grid.Column="6" x:Name="SearchAccommodationButton" Command="{Binding SearchAccommodationsCommand}" Height="20" Width="67" Content="Search" HorizontalAlignment="Right" Margin="10 0"/>
+                <Button Grid.Row="1" Grid.Column="6" x:Name="SeeAllButton" Command="{Binding SeeAllCommand}" Height="22" Width="67" Content="See all" HorizontalAlignment="Right" Margin="10 0"/>
+                <Button Grid.Row="2" Grid.Column="6" x:Name="SearchAccommodationButton" Command="{Binding SearchAccommodationsCommand}" 
+                        IsEnabled="{Binding SearchButtonEnabled, UpdateSourceTrigger=PropertyChanged}" Height="22" Width="67" Content="Search" HorizontalAlignment="Right" Margin="10 0"/>
             </Grid>
         </GroupBox>
 
         <Button Grid.Row="1" Grid.Column="1" x:Name="ReserveAccommodationButton" Command="{Binding ReserveAccommodationsCommand}"
-                        Width="67" Content="Reserve" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10 10"/>
+                        Width="67" Height="25" Content="Reserve" IsEnabled="{Binding ReserveButtonEnabled, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10 10"/>
         <Label Grid.Row="1" Grid.Column="0" Content="Accommodations" Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10 0"/>
         <DataGrid Grid.Row="2" Grid.ColumnSpan="2" x:Name="accommodationData"
                           ItemsSource="{Binding AccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
@@ -173,6 +184,11 @@
                            CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
                            ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" FontSize="14"
                            Margin="10 0 10 10" PreviewKeyDown="accommodationData_PreviewKeyDown">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding AccommodationSelectionChangedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <Setter Property="Background" Value="#80a698"></Setter>

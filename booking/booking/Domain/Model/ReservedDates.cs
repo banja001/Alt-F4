@@ -71,7 +71,7 @@ namespace booking.Model
                 {
                     if (StartDate < DateTime.Today)
                     {
-                        MessageBox.Show("Start date has to be some date after todays date");
+                        //MessageBox.Show("Start date has to be some date after todays date");
                         return "greater than today's date";
                     }
                 }
@@ -80,7 +80,7 @@ namespace booking.Model
                 {
                     if ((EndDate < StartDate && EndDate.Date > DateTime.Today.Date) || (EndDate.Date < DateTime.Today.Date))
                     {
-                        MessageBox.Show("End date has to be set to some date after the starting one");
+                        //MessageBox.Show("End date has to be set to some date after the starting one");
                         return "greater than Start date";
                     }
                 }

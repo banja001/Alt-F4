@@ -18,6 +18,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using WPF.Views.Guest1;
+using Domain.DTO;
 
 namespace WPF.ViewModels.Guest1
 {
@@ -25,12 +27,82 @@ namespace WPF.ViewModels.Guest1
     {
         public List<OwnerRatingImage> OwnerRatingImages { get; set; }
         public static ObservableCollection<ReservationAccommodationDTO> StayedInAccommodations { get; set; }
-        public static ObservableCollection<Image> AddedImages { get; set; }
+        public static ObservableCollection<Guest1RatingAccommodationDTO> Guest1RatingAccommodationDTOs { get; set; }
+        public List<Guest1Rating> Guest1Ratings { get; set; }
+
+        private ObservableCollection<Image> addedImages;
+        public ObservableCollection<Image> AddedImages 
+        {
+            get { return addedImages; }
+            set
+            {
+                if(addedImages != value)
+                {
+                    addedImages = value;
+                    OnPropertyChanged(nameof(AddedImages));
+                }
+            }
+        }
         public static ReservationAccommodationDTO SelectedStayedInAccommodation { get; set; }
+
+        private bool submitEnabled;
+        public bool SubmitEnabled
+        {
+            get { return submitEnabled; }
+            set
+            {
+                if(submitEnabled != value)
+                {
+                    submitEnabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public Image SelectedAddedImages { get; set; }
 
-        public static bool AddImageEnabled { get; set; }
+        private bool addImageEnabled;
+        public bool AddImageEnabled 
+        {
+            get { return addImageEnabled; }
+            set
+            {
+                if(addImageEnabled != value)
+                {
+                    addImageEnabled = value;
+                    OnPropertyChanged();
+                }
+            } 
+        }
+
+        private bool removeImageEnabled;
+        public bool RemoveImageEnabled
+        {
+            get { return removeImageEnabled; }
+            set
+            {
+                if(removeImageEnabled != value)
+                {
+                    removeImageEnabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool ratingsIGotEnabled;
+
+        public bool RatingsIGotEnabled
+        {
+            get { return ratingsIGotEnabled; }
+            set
+            {
+                if(ratingsIGotEnabled != value)
+                {
+                    ratingsIGotEnabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private static object selectedFromList;
         public object SelectedFromList 
@@ -55,7 +127,9 @@ namespace WPF.ViewModels.Guest1
                 if(cleanRating != value)
                 {
                     cleanRating = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(CleanRating));
+
+                    SubmitEnabled = OwnersKindenssRating > 0 && SelectedFromList != null;
                 }
             }
         }
@@ -69,12 +143,69 @@ namespace WPF.ViewModels.Guest1
                 if (ownersKidnessRating != value)
                 {
                     ownersKidnessRating = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(OwnersKindenssRating));
+
+                    SubmitEnabled = CleanRating > 0 && SelectedFromList != null;
                 }
             } 
         }
-        public string RatingComment { get; set; }
-        public string ImageUrl { get; set; }
+        private string ratingComment;
+        public string RatingComment 
+        { 
+            get { return ratingComment; }
+            set
+            {
+                if(ratingComment != value)
+                {
+                    ratingComment = value;
+                    OnPropertyChanged(nameof(RatingComment));
+                }
+            }
+        }
+
+        private string imageUrl;
+        public string ImageUrl 
+        {
+            get { return imageUrl; }
+            set
+            {
+                if(imageUrl != value)
+                {
+                    imageUrl = value;
+                    OnPropertyChanged(nameof(ImageUrl));
+
+                    AddImageEnabled = true;
+                }
+            } 
+        }
+
+        private string renovationDescription;
+        public string RenovationDescription
+        {
+            get { return renovationDescription; }
+            set
+            {
+                if(renovationDescription != value)
+                {
+                    renovationDescription = value;
+                    OnPropertyChanged(nameof(RenovationDescription));
+                }
+            }
+        }
+
+        private string selectedUrgency;
+        public string SelectedUrgency
+        {
+            get { return selectedUrgency; }
+            set
+            {
+                if(selectedUrgency != value)
+                {
+                    selectedUrgency = value;
+                    OnPropertyChanged(nameof(selectedUrgency));
+                }
+            }
+        }
 
         private readonly OwnerRatingService _ownerRatingService;
         private readonly OwnerRatingImageService _ownerRatingImageService;
@@ -83,10 +214,15 @@ namespace WPF.ViewModels.Guest1
         private readonly ReservationService _reservationService;
         private readonly AccommodationService _accommodationService;
         private readonly UserService _userService;
+        private readonly Guest1RatingsService _guest1RatingsService;
+        private readonly LocationService _locationService;
 
         public ICommand SubmitRateCommand => new RelayCommand(SubmitRate);
         public ICommand AddImageCommand => new RelayCommand(AddImage);
         public ICommand RemoveImageCommand => new RelayCommand(RemoveImage);
+        public ICommand SelectedStayedInChangedCommand => new RelayCommand(SelectedStayedInChanged);
+        public ICommand SelectedImageChangedCommand => new RelayCommand(SelectedImageChanged);
+        public ICommand OpetRecievedRatingsCommand => new RelayCommand(OpetRecievedRatings);
 
         private Guest1View guest1ViewWindow;
         private int userId;
@@ -99,14 +235,47 @@ namespace WPF.ViewModels.Guest1
             _reservationService = new ReservationService();
             _accommodationService = new AccommodationService();
             _userService = new UserService();
+            _guest1RatingsService = new Guest1RatingsService();
+            _locationService = new LocationService();
 
             guest1ViewWindow = guest1View;
             userId = id;
-            AddImageEnabled = true;
 
             StayedInAccommodations = new ObservableCollection<ReservationAccommodationDTO>(CreateStayedInAccommodations());
             AddedImages = new ObservableCollection<Image>();
             OwnerRatingImages = new List<OwnerRatingImage>();
+            Guest1RatingAccommodationDTOs = new ObservableCollection<Guest1RatingAccommodationDTO>();
+
+            SetRatingsIGotEnabled();   
+        }
+
+        public void SetRatingsIGotEnabled()
+        {
+            List<Guest1Rating> guestsRatings = _guest1RatingsService.GetAllByGuest1Id(userId);
+
+            Guest1Ratings = new List<Guest1Rating>();
+            Guest1RatingAccommodationDTOs.Clear();
+            List<ReservedDates> guest1RatedDates = _reservedDatesService.GetByGuestId(userId).Where(r => r.RatedByGuest).ToList();
+
+            Guest1Rating rating;
+            foreach (ReservedDates dates in guest1RatedDates)
+            {
+                rating = guestsRatings.Find(r => r.ReservationId == dates.Id);
+                if (rating != null)
+                {
+                    Guest1Ratings.Add(rating);
+
+                    Accommodation accommodation = _accommodationService.GetById(dates.AccommodationId);
+                    Location location = _locationService.GetById(accommodation.LocationId);
+                    Guest1Rating lastAddedRating = Guest1Ratings[Guest1Ratings.Count() - 1];
+                    Guest1RatingAccommodationDTO guest1RatingAccommodationDTO = new Guest1RatingAccommodationDTO(dates.Id, lastAddedRating.CleanRating, lastAddedRating.RulesRating, lastAddedRating.Comment,
+                        accommodation.Name, location.State + ", " + location.City, dates.StartDate, dates.EndDate);
+
+                    Guest1RatingAccommodationDTOs.Add(guest1RatingAccommodationDTO);
+                }
+            }
+
+            RatingsIGotEnabled = Guest1RatingAccommodationDTOs.Count > 0 ? true : false;
         }
 
         public List<ReservationAccommodationDTO> CreateStayedInAccommodations()
@@ -125,30 +294,47 @@ namespace WPF.ViewModels.Guest1
 
         private void SubmitRate()
         {
-            OwnerRating ownerRating = CreateOwnerRating();
-
-            _ownerRatingService.Add(ownerRating);
-
-            foreach (var ownerRatingImage in OwnerRatingImages)
+            if (SubmitEnabled)
             {
-                ownerRatingImage.Id = _ownerRatingImageService.MakeId();
-                _ownerRatingImageService.Add(ownerRatingImage);
+                OwnerRating ownerRating = CreateOwnerRating();
+
+                _ownerRatingService.Add(ownerRating);
+
+                foreach (var ownerRatingImage in OwnerRatingImages)
+                {
+                    ownerRatingImage.Id = _ownerRatingImageService.MakeId();
+                    _ownerRatingImageService.Add(ownerRatingImage);
+                }
+
+                StayedInAccommodations.Remove(StayedInAccommodations.Where(a => a.ReservationId == SelectedStayedInAccommodation.ReservationId).ToList()[0]);
+
+                ResetLists();
+                EmptyForm();
+
+                SetRatingsIGotEnabled();
+
+                SuccessfullyRatedView popUpWindow = new SuccessfullyRatedView(userId, Guest1RatingAccommodationDTOs);
+                popUpWindow.Show();
+
+                InitializeAccommodationDTO();
             }
+        }
 
-            StayedInAccommodations.Remove(StayedInAccommodations.Where(a => a.ReservationId == SelectedStayedInAccommodation.ReservationId).ToList()[0]);
-
-            ResetLists();
-            MessageBox.Show("Rating successfully added!");
-
-            InitializeAccommodationDTO();
+        private void EmptyForm()
+        {
+            RatingComment = "";
+            CleanRating = 0;
+            OwnersKindenssRating = 0;
         }
 
         private OwnerRating CreateOwnerRating()
         {
             ReservedDates reservedDate = UpdateReservedDatesGuestRatedFlag();
             Accommodation accommodation = _accommodationService.GetById(reservedDate.AccommodationId);
+            string selectedUrgencyLevel = string.IsNullOrEmpty(SelectedUrgency) ? "" : SelectedUrgency.ToString().Split(" - ")[0].Split("System.Windows.Controls.ComboBoxItem: ")[1];
 
-            OwnerRating ownerRating = new OwnerRating(_ownerRatingService.MakeId(), accommodation.OwnerId, Convert.ToInt32(CleanRating), Convert.ToInt32(OwnersKindenssRating), RatingComment);
+            OwnerRating ownerRating = new OwnerRating(_ownerRatingService.MakeId(), accommodation.OwnerId, Convert.ToInt32(CleanRating), 
+                Convert.ToInt32(OwnersKindenssRating), RatingComment, RenovationDescription, selectedUrgencyLevel);
             ownerRating.ReservationId = SelectedStayedInAccommodation.ReservationId;
 
             return ownerRating;
@@ -194,9 +380,6 @@ namespace WPF.ViewModels.Guest1
             {
                 OverviewViewModel.AccommodationDTOs.Add(item);
             }
-            /*Guest1View.AccommodationDTOs = guest1ViewWindow.CreateAccomodationDTOs(_accommodationService.GetAll());
-            Guest1View.AccommodationDTOs = guest1ViewWindow.SortAccommodationDTOs();
-            guest1ViewWindow.accommodationData.ItemsSource = Guest1View.AccommodationDTOs;*/
         }
 
         private void ResetLists()
@@ -214,21 +397,31 @@ namespace WPF.ViewModels.Guest1
 
         private void AddImage()
         {
-            AddedImages.Add(CreateImageFromBitMap());
-            if (!AddImageEnabled)
+            if (AddImageEnabled)
             {
-                RemoveLastAddedImage();
-                return;
+                AddedImages.Add(CreateImageFromBitMap());
+                if (!AddImageEnabled)
+                {
+                    RemoveLastAddedImage();
+                    return;
+                }
+
+                if (OwnerRatingImages.Find(i => i.Url == ImageUrl) != null)
+                {
+                    ImageUrl = "";
+                    RemoveLastAddedImage();
+                    MessageBox.Show("You have already added that image, please choose a different one!", "Warning");
+                    return;
+                }
+
+                OwnerRatingImages.Add(new OwnerRatingImage(-1, ImageUrl, SelectedStayedInAccommodation.ReservationId));
+
+                ImageUrl = "";
             }
-
-            if (OwnerRatingImages.Find(i => i.Url == ImageUrl) != null)
+            else
             {
-                MessageBox.Show("You have already added that image, please choose a different one!", "Warning");
-                RemoveLastAddedImage();
-                return;
-            } 
-
-            OwnerRatingImages.Add(new OwnerRatingImage(-1, ImageUrl, SelectedStayedInAccommodation.ReservationId));
+                MessageBox.Show("You have to select an accommodation you have stayed in before adding an image", "Warning");
+            }
         }
 
         private void RemoveLastAddedImage()
@@ -271,7 +464,7 @@ namespace WPF.ViewModels.Guest1
 
         private void RemoveImage()
         {
-            if(SelectedAddedImages != null)
+            if(SelectedAddedImages != null && RemoveImageEnabled)
             {
                 
                 OwnerRatingImages.RemoveAt(guest1ViewWindow.lvAddedImages.SelectedIndex);
@@ -281,6 +474,12 @@ namespace WPF.ViewModels.Guest1
             {
                 MessageBox.Show("You have to select an image you want to remove!");
             }
+        }
+
+        private void OpetRecievedRatings()
+        {
+            ReviewView reviewViewModel = new ReviewView(userId, Guest1RatingAccommodationDTOs);
+            reviewViewModel.Show();
         }
 
         private void StayedInSelectionChanged(object selectedFromList)
@@ -295,6 +494,17 @@ namespace WPF.ViewModels.Guest1
 
                 SelectedStayedInAccommodation = new ReservationAccommodationDTO(stayedInAccommodation);
             }
+        }
+
+        private void SelectedStayedInChanged()
+        {
+            SubmitEnabled = ((selectedFromList != null) ? true : false) && CleanRating > 0 && OwnersKindenssRating > 0;
+            AddImageEnabled = (selectedFromList != null) ? true : false;
+        }
+
+        private void SelectedImageChanged()
+        {
+            RemoveImageEnabled = (SelectedAddedImages != null) ? true : false;
         }
     }
 }

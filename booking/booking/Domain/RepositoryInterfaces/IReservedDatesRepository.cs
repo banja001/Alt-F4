@@ -11,6 +11,7 @@ namespace Domain.RepositoryInterfaces
         public List<ReservedDates> GetAll();
         public List<ReservedDates> GetAllByAccommodationId(int id);
         public ReservedDates GetById(int id);
+        public List<ReservedDates> GetByGuestId(int guestId);
         public void Update(ReservedDates reservedDates);
         public int MakeId();
         public void Add(ReservedDates reservedDate);

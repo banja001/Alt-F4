@@ -24,7 +24,10 @@ namespace application.UseCases
             guest1RatingRepository.Add(acci);
         }
 
-
+        public List<Guest1Rating> GetAllByGuest1Id(int guestId)
+        {
+            return guest1RatingRepository.GetAllByGuest1Id(guestId);
+        }
     }
 
 

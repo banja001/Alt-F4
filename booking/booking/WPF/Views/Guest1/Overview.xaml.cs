@@ -43,14 +43,6 @@ namespace WPF.Views.Guest1
             _overviewViewModel = new OverviewViewModel(id);
 
             this.DataContext = _overviewViewModel;
-
-            InitializeCheckBoxes();
-        }
-        private void InitializeCheckBoxes()
-        {
-            CheckBoxApartment.IsChecked = true;
-            CheckBoxCabin.IsChecked = true;
-            CheckBoxHouse.IsChecked = true;
         }
 
         private void CheckBox_KeyDown(object sender, KeyEventArgs e)

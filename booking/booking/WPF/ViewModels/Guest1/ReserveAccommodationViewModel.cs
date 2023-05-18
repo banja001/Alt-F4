@@ -1,9 +1,11 @@
 ﻿using application.UseCases;
+using booking.application.UseCases;
 using booking.Commands;
 using booking.DTO;
 using booking.Model;
 using booking.View;
 using booking.WPF.ViewModels;
+using Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +13,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -18,8 +21,10 @@ using WPF.Views.Guest1;
 
 namespace WPF.ViewModels.Guest1
 {
-    public class ReserveAccommodationViewModel : BaseViewModel, INotifyPropertyChanged
+    public class ReserveAccommodationViewModel : BaseViewModel, INotifyPropertyChanged, IDataErrorInfo
     {
+        public RenovationDatesService _renovationService { get; set; }
+
         public ReservedDates NewDate { get; set; }
         public int NumOfDays { get; set; }
         public static ObservableCollection<ReservedDates> FreeDates { get; set; }
@@ -57,6 +62,20 @@ namespace WPF.ViewModels.Guest1
             }
         }
 
+        private bool reserveButtonEnabled;
+        public bool ReserveButtonEnabled
+        {
+            get { return reserveButtonEnabled; }
+            set
+            {
+                if (reserveButtonEnabled != value)
+                {
+                    reserveButtonEnabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private readonly ReservedDatesService _reservedDatesService;
         private readonly AccommodationService _accommodationService;
 
@@ -64,17 +83,20 @@ namespace WPF.ViewModels.Guest1
         public ICommand CloseWindowCommand => new RelayCommand(CloseWindow);
         public ICommand SelectedDateChangedCommand => new RelayCommand(SelectedDateChanged);
         public ICommand SearchFreeDatesCommand => new RelayCommand(SearchFreeDates);
+        public ICommand NumValueChangedCommand => new RelayCommand(NumValueChanged);
+        public ICommand FreeDateSelectionChangedCommand => new RelayCommand(FreeDateSelectionChanged);
+        public ICommand GuestsNumValueChangedCommand => new RelayCommand(GuestsNumValueChanged);
 
         private int userId;
         public ReserveAccommodationViewModel(int userId)
         {
+            _renovationService = new RenovationDatesService();
             _reservedDatesService = new ReservedDatesService();
             _accommodationService = new AccommodationService();
 
             this.userId = userId;
             selectedAccommodation = OverviewViewModel.SelectedAccommodation;
             AlternativeDatesVisibility = Visibility.Hidden;
-            SearchButtonEnabled = true;
 
             NewDate = new ReservedDates(DateTime.Now, DateTime.Now, selectedAccommodation.Id);
 
@@ -91,26 +113,29 @@ namespace WPF.ViewModels.Guest1
 
         private void ReserveAccommodationClick()
         {
-            if (SelectedDates == null)
+            if (ReserveButtonEnabled)
             {
-                MessageBox.Show("You have to pick a date before making a reservation!", "Warning");
-                return;
+                if (SelectedDates == null)
+                {
+                    MessageBox.Show("You have to pick a date before making a reservation!", "Warning");
+                    return;
+                }
+
+                int maxCapacity = _accommodationService.FindById(SelectedDates.AccommodationId).MaxCapacity;
+
+                if (GuestsNumber > maxCapacity)
+                {
+                    MessageBox.Show("Max guest capacity for this accommodation is " + maxCapacity);
+                    return;
+                }
+
+                SetSelectedDatesParameters();
+                _reservedDatesService.Add(SelectedDates);
+
+                MessageBox.Show("Your reservation has been successfully made!");
+
+                this.CloseCurrentWindow();
             }
-
-            int maxCapacity = _accommodationService.FindById(SelectedDates.AccommodationId).MaxCapacity;
-
-            if (GuestsNumber > maxCapacity)
-            {
-                MessageBox.Show("Max guest capacity for this accommodation is " + maxCapacity);
-                return;
-            }
-
-            SetSelectedDatesParameters();
-            _reservedDatesService.Add(SelectedDates);
-
-            MessageBox.Show("Your reservation has been successfully made!");
-
-            this.CloseCurrentWindow();
         }
 
         private void SetSelectedDatesParameters()
@@ -128,27 +153,44 @@ namespace WPF.ViewModels.Guest1
 
         private void SearchFreeDates()
         {
-            if (NumOfDays < selectedAccommodation.MinDaysToUse)
+            if (SearchButtonEnabled)
             {
-                MessageBox.Show("You can reserve this accommodation for at least " + selectedAccommodation.MinDaysToUse + " days");
-                return;
-            }
+                if (NumOfDays < selectedAccommodation.MinDaysToUse)
+                {
+                    MessageBox.Show("You can reserve this accommodation for at least " + selectedAccommodation.MinDaysToUse + " days");
+                    return;
+                }
 
-            FilterReservedDatesByMonth();
-            if (NumOfDays > (NewDate.EndDate - NewDate.StartDate).Days)
-            {
-                OfferAlternativeDates();
-            }
-            else
-            {
-                FreeDates.Clear();
-                AlternativeDatesVisibility = Visibility.Hidden;
-
-                CreateDateIntervals(NewDate.StartDate, NewDate.EndDate);
-                RemoveReservedDatesFromIntervals();
-
-                if (FreeDates.Count == 0)
+                FilterReservedDatesByMonth();
+                if (NumOfDays > (NewDate.EndDate - NewDate.StartDate).Days)
+                {
                     OfferAlternativeDates();
+                }
+                else
+                {
+                    FreeDates.Clear();
+                    AlternativeDatesVisibility = Visibility.Hidden;
+
+                    CreateDateIntervals(NewDate.StartDate, NewDate.EndDate);
+                    RemoveReservedDatesFromIntervals();
+
+                    if (FreeDates.Count == 0)
+                        OfferAlternativeDates();
+                }
+
+                //brise iz FreeDates sve datume koji se poklapaju sa renoviranjem
+                foreach(ReservedDates reservation in FreeDates.ToList())
+                {
+                    foreach(RenovationDates renovation in _renovationService.GetAll())
+                    {
+                        if(!(reservation.StartDate>=renovation.EndDate || reservation.EndDate <= renovation.StartDate) && reservation.AccommodationId==renovation.AccommodationId)
+                        {
+                            FreeDates.Remove(reservation);
+                        }
+                    }
+                }
+
+
             }
         }
 
@@ -244,12 +286,68 @@ namespace WPF.ViewModels.Guest1
 
         private void SelectedDateChanged()
         {
-            SearchButtonEnabled = NewDate.IsValid;
+            SearchButtonEnabled = NewDate.IsValid && IsValid;
+        }
+
+        private void NumValueChanged()
+        {
+            SearchButtonEnabled = NewDate.IsValid && IsValid;
+        }
+
+        private void FreeDateSelectionChanged()
+        {
+            if(GuestsNumber > 0 && GuestsNumber <= 10)
+                ReserveButtonEnabled = (SelectedDates != null) ? true : false;
+        }
+
+        private void GuestsNumValueChanged()
+        {
+            ReserveButtonEnabled = SelectedDates != null && (GuestsNumber > 0 && GuestsNumber <= 10);
         }
 
         private void CloseWindow()
         {
             this.CloseCurrentWindow();
+        }
+
+        public override string ToString()
+        {
+            return $"{NumOfDays}";
+        }
+
+        public string Error => null;
+
+        private Regex _numOfDays = new Regex("^[1-9]+$");
+        private Regex _numOfGuests = new Regex("^([1-9]|10)$");
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName == "NumOfDays")
+                {
+                    Match match = _numOfDays.Match(NumOfDays.ToString());
+                    if (!match.Success)
+                        return "format: numbers greater than 1";
+                }
+                return null;
+            }
+        }
+
+        private readonly string[] _validatedProperties = { "NumOfDays" };
+
+        public bool IsValid
+        {
+            get
+            {
+                foreach (var property in _validatedProperties)
+                {
+                    if (this[property] != null)
+                        return false;
+                }
+
+                return true;
+            }
         }
     }
 }
