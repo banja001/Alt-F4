@@ -54,6 +54,7 @@ namespace WPF.ViewModels
 
         private void TourRequestsOpen()
         {
+            Content.NavigationService.Navigate(new TourRequestAcceptancePage(Guide));
         }
 
         private void TourRequestsStatisticsOpen()

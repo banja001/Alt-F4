@@ -59,5 +59,18 @@ namespace application.UseCases
                 _simpleRequestRepository.Update(simpleRequest);
             }
         }
+
+        public List<SimpleAndComplexTourRequestsDTO> CreateListOfSimpleRequests()
+        {
+            List<SimpleAndComplexTourRequestsDTO> simpleRequests=new List<SimpleAndComplexTourRequestsDTO>();
+            foreach(SimpleRequest simpleRequest in _simpleRequestRepository.GetAll())
+            {
+                SimpleAndComplexTourRequestsDTO SaCTRDTO=new SimpleAndComplexTourRequestsDTO(simpleRequest);
+                SaCTRDTO.Location = _locaRepository.GetAll().Find(l => l.Id == SaCTRDTO.Location.Id);
+                simpleRequests.Add( SaCTRDTO );
+            }
+            return simpleRequests;
+        }
+        
     }
 }

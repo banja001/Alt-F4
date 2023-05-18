@@ -76,6 +76,19 @@ namespace application.UseCases
         {
             return locationRepository.GetAll().FindLastIndex(l => l.State == state && l.City == city);
         }
+        public List<string> InitializeListOfStates()
+        {
+            List<string> states = new List<string>();
+            foreach (Location loc in locationRepository.GetAll())
+            {
 
+                if (states.Find(m => m == loc.State) == null)
+                {
+                    states.Add(loc.State);
+                }
+
+            }
+            return states;
+        }
     }
 }

@@ -40,6 +40,7 @@ namespace booking.Model
         public DateAndTime() 
         {
             Date = new DateTime();
+            Time = "00:00";
         }
 
         public override string ToString()
