@@ -45,5 +45,9 @@ namespace booking.application.UseCases
 
             return tours;
         }
+        public Tour GetById(int id)
+        {
+            return _tourRepository.FindById(id);
+        }
     }
 }

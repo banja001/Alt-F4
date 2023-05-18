@@ -1,4 +1,5 @@
-﻿using booking.Injector;
+﻿using booking.application.UseCases;
+using booking.Injector;
 using booking.Model;
 using Domain.DTO;
 using Domain.Model;
@@ -15,10 +16,14 @@ namespace application.UseCases
     {
         private readonly ISimpleRequestRepository _simpleRequestRepository;
         private readonly LocationService _locationService;
+        private readonly SimpleRequestTourService _simpleRequestTourService;
+        private readonly TourService _tourService;
         public SimpleRequestService() 
         {
             _simpleRequestRepository = Injector.CreateInstance<ISimpleRequestRepository>();
             _locationService = new LocationService();
+            _simpleRequestTourService = new SimpleRequestTourService();
+            _tourService = new TourService();
         }
         public void Add(SimpleRequest simpleRequest)
         {
@@ -29,13 +34,14 @@ namespace application.UseCases
         {
             List<SimpleRequestDTO> simpleRequestDTOs = new List<SimpleRequestDTO>();
             var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
-            int madeId = simpleRequests.Count == 0 ? 1 : simpleRequests.Max(r => r.Id) + 1;
+            int idx = 0;
+                //simpleRequests.Count == 0 ? 1 : simpleRequests.Max(r => r.Id) + 1;
 
             foreach (var simpleRequest in simpleRequests)
             {
                 if (simpleRequest.User.Id != user.Id)
                     continue;
-                simpleRequestDTOs.Add(new SimpleRequestDTO(madeId++,
+                simpleRequestDTOs.Add(new SimpleRequestDTO(idx++,
                                                            simpleRequest.Description,
                                                            simpleRequest.NumberOfGuests,
                                                            simpleRequest.Language,
@@ -46,6 +52,43 @@ namespace application.UseCases
                                                             ));
             }
             return simpleRequestDTOs;
+        }
+        public List<SimpleRequestTourDTO> CreateNotificationsByGuest2(User user)
+        {
+            List<SimpleRequestTourDTO> simpleRequestTourDTOs = new List<SimpleRequestTourDTO>();
+            var simpleRequestTours = _simpleRequestTourService.GetAllByGuest2(user);
+            int idx = 0;
+            foreach (var simpleRequestTour in simpleRequestTours)
+            {
+                simpleRequestTourDTOs.Add(new SimpleRequestTourDTO(idx,
+                                                                   _tourService.GetById(simpleRequestTour.Tour.Id),
+                                                                   _simpleRequestRepository.GetById(simpleRequestTour.SimpleRequest.Id)));
+            }
+            return simpleRequestTourDTOs;
+        }
+        public List<SimpleRequestTourDTO> CreateApprovedNotificationsByGuest2(User user)
+        {
+            var notifications = CreateNotificationsByGuest2(user);
+
+            foreach (var notification in notifications)
+            {
+                if (notification.SimpleRequest.Status == SimpleRequestStatus.APPROVED)
+                    continue;
+                notifications.Remove(notification);
+            }
+            return notifications;
+        }
+        public List<SimpleRequestTourDTO> CreateSuggestionNotificationsByGuest2(User user)
+        {
+            var notifications = CreateNotificationsByGuest2(user);
+
+            foreach (var notification in notifications)
+            {
+                if (notification.SimpleRequest.Status == SimpleRequestStatus.INVALID)
+                    continue;
+                notifications.Remove(notification);
+            }
+            return notifications;
         }
         public void CheckApproval()
         {

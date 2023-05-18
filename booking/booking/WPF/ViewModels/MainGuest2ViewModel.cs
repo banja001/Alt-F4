@@ -29,7 +29,10 @@ namespace booking.WPF.ViewModels
         public MainGuest2ViewModel(User user) 
         {
             this.User = user;
+            UserControlInstance = new HomeViewModel(User);
+            OnPropertyChanged(nameof(UserControlInstance));
             HeaderMessage = " Welcome " + User.Username.ToString() + " ";
+            OnPropertyChanged(nameof(HeaderMessage));
         }
 
         private void NavigateWindows(object parameter)
@@ -38,6 +41,12 @@ namespace booking.WPF.ViewModels
             {
                 switch (parameter.ToString())
                 {
+                    case "Home":
+                        UserControlInstance = new HomeViewModel(User);
+                        OnPropertyChanged(nameof(UserControlInstance));
+                        HeaderMessage = " Welcome " + User.Username.ToString() + " ";
+                        OnPropertyChanged(nameof(HeaderMessage));
+                        break;
                     case "MyTours":
                         UserControlInstance = new MyToursViewModel(User);
                         OnPropertyChanged(nameof(UserControlInstance));
