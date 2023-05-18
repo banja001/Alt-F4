@@ -8,7 +8,7 @@
       d:DesignHeight="650" d:DesignWidth="790"
       Title="ProfilePage">
 
-    <Grid Background="LightGreen">
+    <Grid Background="#73fab4">
         <Grid.RowDefinitions>
             <RowDefinition Height="3.5*"/>
             <RowDefinition Height="*"/>

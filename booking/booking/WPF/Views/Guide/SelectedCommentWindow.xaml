@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="SelectedCommentWindow" Height="600" Width="500"
         WindowStartupLocation="CenterScreen">
-    <Grid Background="LightGreen">
+    <Grid Background="#73fab4">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>

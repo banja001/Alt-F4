@@ -1,9 +1,11 @@
 ﻿using application.UseCases;
+using booking.application.UseCases;
 using booking.Commands;
 using booking.DTO;
 using booking.Model;
 using booking.View;
 using booking.WPF.ViewModels;
+using Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,6 +23,8 @@ namespace WPF.ViewModels.Guest1
 {
     public class ReserveAccommodationViewModel : BaseViewModel, INotifyPropertyChanged, IDataErrorInfo
     {
+        public RenovationDatesService _renovationService { get; set; }
+
         public ReservedDates NewDate { get; set; }
         public int NumOfDays { get; set; }
         public static ObservableCollection<ReservedDates> FreeDates { get; set; }
@@ -86,6 +90,7 @@ namespace WPF.ViewModels.Guest1
         private int userId;
         public ReserveAccommodationViewModel(int userId)
         {
+            _renovationService = new RenovationDatesService();
             _reservedDatesService = new ReservedDatesService();
             _accommodationService = new AccommodationService();
 
@@ -172,6 +177,20 @@ namespace WPF.ViewModels.Guest1
                     if (FreeDates.Count == 0)
                         OfferAlternativeDates();
                 }
+
+                //brise iz FreeDates sve datume koji se poklapaju sa renoviranjem
+                foreach(ReservedDates reservation in FreeDates.ToList())
+                {
+                    foreach(RenovationDates renovation in _renovationService.GetAll())
+                    {
+                        if(!(reservation.StartDate>=renovation.EndDate || reservation.EndDate <= renovation.StartDate) && reservation.AccommodationId==renovation.AccommodationId)
+                        {
+                            FreeDates.Remove(reservation);
+                        }
+                    }
+                }
+
+
             }
         }
 

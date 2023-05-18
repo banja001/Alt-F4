@@ -56,7 +56,7 @@
             <TabItem Name="tabItemOverview" Header="Overview" Height="22" VerticalAlignment="Top" Style="{StaticResource ResourceKey=tabItemStyle}"
                  KeyboardNavigation.TabNavigation="Cycle"
                  FocusManager.FocusedElement="{Binding ElementName=wpRadioButtons.rbOverview}">
-                
+
                 <Grid Style="{StaticResource ResourceKey=gridStyle}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.5*"></RowDefinition>
@@ -102,8 +102,10 @@
                         <ColumnDefinition Width="5*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Grid.ColumnSpan="4" Content="Rate your accommodations" 
-                       Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24" FontWeight="Bold" Margin="10 0"/>
+                    <Label Grid.Row="0" Grid.ColumnSpan="3" Content="Rate your accommodations" 
+                       Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24" FontWeight="Bold" Margin="10"/>
+
+                    <Button Grid.Row="0" Grid.Column="3" Content="Ratings I got" Command="{Binding OpetRecievedRatingsCommand}" IsEnabled="{Binding RatingsIGotEnabled}" Width="79" Height="30" HorizontalAlignment="Right" Margin="10 0"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="Stayed in" 
                        Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
@@ -220,14 +222,15 @@
                         <RowDefinition Height="4*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="41*"></ColumnDefinition>
+                        <ColumnDefinition Width="379*"/>
                     </Grid.ColumnDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0" Content="Reservations overview" Style="{StaticResource ResourceKey=labelsStyle}"
-                       FontSize="24" FontWeight="Bold" Margin="10 0"/>
+                       FontSize="24" FontWeight="Bold" Margin="10,0,10,0" Grid.ColumnSpan="2"/>
 
-                    <GroupBox Name="gbAllReservations" Grid.Row="1" Grid.Column="0" Header="All reservations" Margin="10"
-                          Style="{StaticResource ResourceKey=groupBoxStyle}">
+                    <GroupBox Name="gbAllReservations" Grid.Row="1" Grid.Column="0" Header="All reservations" Margin="10,10,10,10"
+                          Style="{StaticResource ResourceKey=groupBoxStyle}" Grid.ColumnSpan="2">
                         <Grid>
                             <DataGrid x:Name="reservationsData"
                               ItemsSource="{Binding ReservationAccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
@@ -282,8 +285,8 @@
                             </DataGrid>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Grid.Row="2" Grid.Column="0" Header="Reservation requests" Margin="10"
-                          Style="{StaticResource ResourceKey=groupBoxStyle}">
+                    <GroupBox Grid.Row="2" Grid.Column="0" Header="Reservation requests" Margin="10,10,10,10"
+                          Style="{StaticResource ResourceKey=groupBoxStyle}" Grid.ColumnSpan="2">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="8*"></RowDefinition>

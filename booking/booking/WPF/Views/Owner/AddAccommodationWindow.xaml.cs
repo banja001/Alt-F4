@@ -47,9 +47,9 @@ namespace booking.View
             DaysToCancelTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             TypeComboBox.GetBindingExpression(ComboBox.TextProperty).UpdateSource();
             StateComboBox.GetBindingExpression(ComboBox.TextProperty).UpdateSource();
-            CityComboBox.GetBindingExpression(ComboBox.TextProperty).UpdateSource();
-            
+            CityComboBox.GetBindingExpression(ComboBox.TextProperty).UpdateSource();    
         }
 
+        
     }
 }

@@ -21,7 +21,8 @@
                             </CheckBox.Template>
                         </CheckBox>
                         <Popup IsOpen="{TemplateBinding IsOpen}" StaysOpen="False"
-                               Placement="Left">
+                               Placement="Left" HorizontalOffset="30">
+                            
                             <ContentControl Content="{TemplateBinding Content}"/>
                         </Popup>
                         

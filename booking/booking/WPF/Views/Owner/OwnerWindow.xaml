@@ -134,7 +134,7 @@
 
 
 
-        <DataGrid x:Name="DataGridRaatings" ItemsSource="{Binding ListToRate, UpdateSourceTrigger=PropertyChanged}"
+        <DataGrid x:Name="DataGridRaatings" GridLinesVisibility="None" ItemsSource="{Binding ListToRate, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="6" Grid.ColumnSpan="2" Width="360" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center"
                   ColumnHeaderStyle="{StaticResource HeaderStyle}" >

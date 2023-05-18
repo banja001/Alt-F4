@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.Views.Guest1"
         mc:Ignorable="d"
-        Title="SuccessfullyRatedView" Height="210" Width="800">
+        Title="SuccessfullyRatedView" Height="210" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="labelsStyle" TargetType="{x:Type Control}">
             <Setter Property="Foreground" Value="#edf2f0"></Setter>
@@ -17,17 +17,21 @@
     </Window.Resources>
     <Grid Style="{StaticResource ResourceKey=gridStyle}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="1.5*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Name="lbHeader" Content="You have successfully rated this accommodation" 
-            Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24" FontWeight="Bold" Margin="10 20"/>
+            Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" Margin="10,0,10,0"/>
         <Label Grid.Row="1" Grid.Column="0" Name="lbSomeText" Content="Since you have submited your rating, you can now checkout the ratings accommodation owner gave you"
-               Style="{StaticResource ResourceKey=labelsStyle}" Margin="10 0"/>
+               Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Top" Margin="10 0"/>
+        <WrapPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Name="bClose" Content="Close" Command="{Binding CloseCommand}" Width="67" Height="25" Margin="10 0"></Button>
+            <Button Name="bRatingIGot" Content="Rating I got" Command="{Binding ViewReviewCommand}" Width="80" Height="25" Margin="10 0 20 0"></Button>
+        </WrapPanel>
     </Grid>
 </Window>

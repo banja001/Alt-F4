@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace booking.Model
 {
-    public enum Urgency { Level1, Level2, Level3, Level4, Level5};
+    public enum Urgency { Blank, Level1, Level2, Level3, Level4, Level5};
     public class OwnerRating : ISerializable
     {
         public int Id { get; set; }
@@ -22,7 +22,7 @@ namespace booking.Model
         public Urgency Urgency { get; set; }
 
         public OwnerRating() { }
-        public OwnerRating(int id, int guestid, int cleanRating, int rulesrating, string comment, string renovationDescription, string urgency)
+        public OwnerRating(int id, int guestid, int cleanRating, int rulesrating, string comment, string renovationDescription = "", string urgency = "")
         {
             Id = id;
             OwnerId = guestid;
@@ -37,29 +37,53 @@ namespace booking.Model
         {
             switch (s)
             {
-                case "Level1":
+                case "Level 1":
                     return Urgency.Level1;
                     break;
-                case "Level2":
+                case "Level 2":
                     return Urgency.Level2;
                     break;
-                case "Level3":
+                case "Level 3":
                     return Urgency.Level3;
                     break;
-                case "Level4":
+                case "Level 4":
                     return Urgency.Level4;
                     break;
-                case "Level5":
+                case "Level 5":
                     return Urgency.Level5;
                     break;
+                default:
+                    return Urgency.Blank;
             }
+        }
 
-            return Urgency.Level1;
+        private string ConvertToStringFromUrgency(Urgency u)
+        {
+            switch (u)
+            {
+                case Urgency.Level1:
+                    return "Level 1";
+                    break;
+                case Urgency.Level2:
+                    return "Level 2";
+                    break;
+                case Urgency.Level3:
+                    return "Level 3";
+                    break;
+                case Urgency.Level4:
+                    return "Level 4";
+                    break;
+                case Urgency.Level5:
+                    return "Level 5";
+                    break;
+                default:
+                    return "";
+            }
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), OwnerId.ToString(), CleanRating.ToString(), KindRating.ToString(), Comment, ReservationId.ToString(), RenovationDescription, Urgency.ToString() };
+            string[] csvValues = { Id.ToString(), OwnerId.ToString(), CleanRating.ToString(), KindRating.ToString(), Comment, ReservationId.ToString(), RenovationDescription, ConvertToStringFromUrgency(Urgency) };
             return csvValues;
         }
 

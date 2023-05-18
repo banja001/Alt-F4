@@ -17,15 +17,15 @@ using WPF.ViewModels.Guest1;
 namespace WPF.Views.Guest1
 {
     /// <summary>
-    /// Interaction logic for SuccessfullyRatedView.xaml
+    /// Interaction logic for ReviewView.xaml
     /// </summary>
-    public partial class SuccessfullyRatedView : Window
+    public partial class ReviewView : Window
     {
-        public SuccessfullyRatedView(int userId, ObservableCollection<Guest1RatingAccommodationDTO> Guest1RatingAccommodationDTOs)
+        public ReviewView(int userId, ObservableCollection<Guest1RatingAccommodationDTO> guest1RatingAccommodationDTOs)
         {
             InitializeComponent();
 
-            this.DataContext = new SuccessfullyRatedViewModel(userId, Guest1RatingAccommodationDTOs);
+            this.DataContext = new ReviewViewModel(userId, guest1RatingAccommodationDTOs);
         }
     }
 }
