@@ -250,7 +250,7 @@ namespace WPF.ViewModels
             Appointments.Find(a => a.Id == CurrentAppointment.Id).End.Date = DateTime.Now;
             Appointments.Find(a => a.Id == CurrentAppointment.Id).End.Time = DateTime.Now.ToString("HH:mm");
             _appointmentRepository.Save(Appointments);
-            MessageBox.Show("Tour is over!");
+            MessageBox.Show("Tour is over!","Tour Over", MessageBoxButton.OK,MessageBoxImage.Information);
         }
     }
 }

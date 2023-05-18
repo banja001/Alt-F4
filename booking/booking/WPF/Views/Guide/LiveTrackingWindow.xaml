@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:booking.View.Guide"
         mc:Ignorable="d"
         Title="LiveTrackingWindow"  Height="650" Width="790">
-    <Grid Background="LightGreen">
+    <Grid Background="#73fab4">
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="3*"/>

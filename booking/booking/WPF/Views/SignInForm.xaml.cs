@@ -113,9 +113,9 @@ namespace booking.View
                     } 
                     else if(user.Role == "Guide")
                     {
-                            
+                        
                         GuideMainWindow guideWindow = new GuideMainWindow(user);
-                        guideWindow.ShowDialog();
+                        guideWindow.Show();
                         this.Close();
                     }
                 }

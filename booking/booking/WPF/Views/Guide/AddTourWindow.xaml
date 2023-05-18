@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Add Tour window"  Height="650" Width="790">
     <Grid  Height="650" Width="790">
-        <Grid Background="LightGray" Margin="0,0,0,0">
+        <Grid Background="LightGray">
             <Label Content="Name: " HorizontalAlignment="Left" Margin="20,30,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
             
             <TextBox x:Name="NameTB" HorizontalAlignment="Left" Text="{Binding Path=Tour.Name, UpdateSourceTrigger=PropertyChanged}"  Margin="90,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26" IsEnabled="True">
@@ -28,7 +28,7 @@
 
             <Label Content="County: " HorizontalAlignment="Left" Margin="20,103,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
             
-            <TextBox x:Name="CountyTB" HorizontalAlignment="Left" Text="{Binding Path=Tour.Location.State, UpdateSourceTrigger=PropertyChanged}" Margin="90,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26" IsEnabled="True"/>
+            <TextBox x:Name="CountyTB" HorizontalAlignment="Left" Text="{Binding Path=Tour.Location.State,UpdateSourceTrigger=PropertyChanged}" Margin="90,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26" IsEnabled="True"/>
             
             <Label Content="City: " HorizontalAlignment="Left" Margin="20,166,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
             
