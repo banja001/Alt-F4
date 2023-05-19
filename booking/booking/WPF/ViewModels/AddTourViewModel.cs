@@ -35,7 +35,7 @@ namespace WPF.ViewModels
         public ICommand AddCheckPointCommand => new RelayCommand(AddCheckPointToListBox);
         public ICommand AddImageCommand => new RelayCommand(AddImageToList);
         public ICommand ConfirmTourCommand=> new RelayCommand(ConfirmTour, CanAddTour);
-        public AddTourViewModel()
+        public AddTourViewModel(User guide)
         {
             _tourRepository = new TourRepository();
             _checkPointRepository = new CheckPointRepository();
@@ -51,7 +51,7 @@ namespace WPF.ViewModels
             Tour.StartTime.Date = DateTime.Now;
             IsNotRequest = true;
         }
-        public AddTourViewModel(SimpleAndComplexTourRequestsDTO simpleRequest, DateTime startDate, bool isNotRequest)
+        public AddTourViewModel(SimpleAndComplexTourRequestsDTO simpleRequest, DateTime startDate, bool isNotRequest, User guide)
         {
             _tourRepository = new TourRepository();
             _checkPointRepository = new CheckPointRepository();

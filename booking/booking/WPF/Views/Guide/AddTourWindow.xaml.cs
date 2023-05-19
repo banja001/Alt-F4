@@ -24,15 +24,15 @@ namespace booking.View.Guide
     /// </summary>
     public partial class AddTourWindow : Page
     {
-        public AddTourWindow()
+        public AddTourWindow(User guide)
         {
             InitializeComponent();
-            DataContext = new AddTourViewModel();
+            DataContext = new AddTourViewModel(guide);
         }
-        public AddTourWindow(SimpleAndComplexTourRequestsDTO simpleRequest, DateTime startDate,bool isNotRequest)
+        public AddTourWindow(SimpleAndComplexTourRequestsDTO simpleRequest, DateTime startDate,bool isNotRequest, User guide)
         {
             InitializeComponent();
-            DataContext = new AddTourViewModel(simpleRequest,startDate,isNotRequest);
+            DataContext = new AddTourViewModel(simpleRequest,startDate,isNotRequest, guide);
         }
     }
 }

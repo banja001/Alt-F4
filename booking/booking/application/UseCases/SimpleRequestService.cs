@@ -162,7 +162,7 @@ namespace application.UseCases
             }
         }
 
-        public List<SimpleAndComplexTourRequestsDTO> CreateListOfSimpleRequests()
+        public List<SimpleAndComplexTourRequestsDTO> CreateListOfSimpleRequestsDTO()
         {
             List<SimpleAndComplexTourRequestsDTO> simpleRequests=new List<SimpleAndComplexTourRequestsDTO>();
             foreach(SimpleRequest simpleRequest in _simpleRequestRepository.GetAll())
@@ -180,6 +180,16 @@ namespace application.UseCases
         {
             return _simpleRequestRepository.GetAll();
         }
+        public List<SimpleRequest> GetAllWithLocation()
+        {
+            List<SimpleRequest> list= new List<SimpleRequest>();
+            foreach (SimpleRequest sr in _simpleRequestRepository.GetAll())
+            {
+                sr.Location = _locationService.GetAll().Find(l => l.Id == sr.Location.Id);
+                list.Add(sr);
+            }
+            return list;
+        }
         public SimpleRequest GetById(int id) 
         { 
             return _simpleRequestRepository.GetById(id);
@@ -191,6 +201,94 @@ namespace application.UseCases
         public void UpdateStatus(int id, SimpleRequestStatus status) 
         {
             _simpleRequestRepository.UpdateStatus(id,status);
+        }
+        public List<string> GetAllYears()
+        {
+            List<string>years=new List<string>();
+            foreach(SimpleRequest s in _simpleRequestRepository.GetAll())
+            {
+                if (!years.Contains(s.DateRange.StartDate.Year.ToString()))
+                {
+                    years.Add(s.DateRange.StartDate.Year.ToString());
+                }
+            }
+            years.Sort();
+            return years;
+        }
+        public List<string> GetAllMonthsForYear(string year)
+        {
+            List<string> months = new List<string>();
+            List<string> monthsNumber = new List<string>();
+            foreach (SimpleRequest s in _simpleRequestRepository.GetAll())
+            {
+                if (!monthsNumber.Contains(s.DateRange.StartDate.Month.ToString()) && s.DateRange.StartDate.Year.ToString()==year)
+                {
+                    monthsNumber.Add(s.DateRange.StartDate.Month.ToString());
+                }
+            }
+            monthsNumber.Sort();
+            foreach (string s in monthsNumber)
+            {
+                months.Add(MonthNumberToString(s));
+            }
+            return months;
+        }
+
+        public int NumberOfSpecificTourRequests()
+        {
+            int numberOfTourRequests = 0;
+            return numberOfTourRequests;
+        }
+
+
+
+
+        public string MonthNumberToString(string monthNumber)
+        {
+            string monthName;
+            switch (Convert.ToInt32(monthNumber))
+            {
+                case 1:
+                    monthName = "January";
+                    break;
+                case 2:
+                    monthName = "February";
+                    break;
+                case 3:
+                    monthName = "March";
+                    break;
+                case 4:
+                    monthName = "April";
+                    break;
+                case 5:
+                    monthName = "May";
+                    break;
+                case 6:
+                    monthName = "June";
+                    break;
+                case 7:
+                    monthName = "July";
+                    break;
+                case 8:
+                    monthName = "August";
+                    break;
+                case 9:
+                    monthName = "September";
+                    break;
+                case 10:
+                    monthName = "October";
+                    break;
+                case 11:
+                    monthName = "November";
+                    break;
+                case 12:
+                    monthName = "December";
+                    break;
+                default:
+                    monthName = "Invalid month number";
+                    break;
+            }
+            return monthName;
         }
     }
 }
