@@ -41,8 +41,8 @@ namespace booking.WPF.ViewModels
         public MyRequestsViewModel(User user)
         {
             User = user;
-            StartDate = new DateTime();
-            EndDate = new DateTime();
+            StartDate = DateTime.Now;
+            EndDate = DateTime.Now;
             _simpleRequestService = new SimpleRequestService();
             _locationService = new LocationService();
             Requests = new ObservableCollection<SimpleRequestDTO>(_simpleRequestService.CreateDTOsByGuest2(user));

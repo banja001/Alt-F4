@@ -156,7 +156,7 @@ namespace WPF.ViewModels
         }
         private void RejectSimpleTourRequest()
         {
-            SimpleRequest simpleRequest = _simpleRequestsService.GetById(SelectedTourRequest.SimpleTourRequestId);
+            SimpleRequest simpleRequest = _simpleRequestsService.GetById(SelectedTourRequest.SimpleRequestId);
             simpleRequest.Status = SimpleRequestStatus.INVALID;
             _simpleRequestsService.Update(simpleRequest);
             if(MessageBox.Show("Are you sure you want to reject this tour?", "Warning", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning)==MessageBoxResult.Yes)

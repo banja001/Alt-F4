@@ -24,5 +24,10 @@ namespace application.UseCases
         {
             return _simpleRequestTourRepository.GetAllByGuest2(user);
         }
+        public void Add(SimpleRequestTour srt)
+        {
+            srt.Id = _simpleRequestTourRepository.MakeId();
+            _simpleRequestTourRepository.Add(srt);
+        }
     }
 }

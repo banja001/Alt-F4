@@ -83,5 +83,19 @@ namespace Repositories
             Load();
             return _simpleRequests.FindAll(s => s.User.Id == user.Id);
         }
+        public void UpdateStatus(int id,SimpleRequestStatus status)
+        {
+            Load();
+            int idx = _simpleRequests.FindIndex(r => r.Id == id);
+            if (idx >= 0)
+            {
+                _simpleRequests[idx].Status = status;
+                Save();
+            }
+            else
+            {
+                throw new ArgumentException("The specified simpleRequest does not exist in the CSV.");
+            }
+        }
     }
 }

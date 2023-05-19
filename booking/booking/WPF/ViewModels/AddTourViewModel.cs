@@ -9,6 +9,9 @@ using booking.WPF.ViewModels;
 using booking.Commands;
 using System.Windows.Input;
 using Domain.DTO;
+using Domain.Model;
+using Repositories;
+using application.UseCases;
 
 namespace WPF.ViewModels
 {
@@ -20,9 +23,12 @@ namespace WPF.ViewModels
         private LocationRepository _locationRepository { get; set; }
         private CheckPointRepository _checkPointRepository { get; set; }
         private TourImageRepository _tourImageRepository { get; set; }
+        private SimpleRequestTourService _simpleRequestTourService { get; set; }
+        private SimpleRequestService _simpleRequestService { get; set; }
         public ObservableCollection<CheckPoint> CheckPointsForListBox { get; set; }
         public ObservableCollection<TourImage> ImagesForListBox { get; set; }
         public List<TourImage> TourImages { get; set; }
+        private SimpleRequest SimpleRequest;
         public bool IsNotRequest { get; set; }
         public string Image { get; set; }
         public ICommand ExitWindowCommand => new RelayCommand(ExitWindow);
@@ -35,6 +41,8 @@ namespace WPF.ViewModels
             _checkPointRepository = new CheckPointRepository();
             _locationRepository = new LocationRepository();
             _tourImageRepository = new TourImageRepository();
+            _simpleRequestTourService= new SimpleRequestTourService();
+            _simpleRequestService = new SimpleRequestService();
             Tour = new Tour();
             CheckPoint = new CheckPoint();
             TourImages = new List<TourImage>();
@@ -49,6 +57,8 @@ namespace WPF.ViewModels
             _checkPointRepository = new CheckPointRepository();
             _locationRepository = new LocationRepository();
             _tourImageRepository = new TourImageRepository();
+            _simpleRequestTourService=new SimpleRequestTourService();
+            _simpleRequestService=new SimpleRequestService();
             Tour = new Tour();
             CheckPoint = new CheckPoint();
             TourImages = new List<TourImage>();
@@ -60,6 +70,8 @@ namespace WPF.ViewModels
             Tour.Language = simpleRequest.Language;
             Tour.Location = simpleRequest.Location;
             IsNotRequest = isNotRequest;
+            SimpleRequest = new SimpleRequest();
+            SimpleRequest.Id = simpleRequest.SimpleRequestId;
         }
 
         private void ConfirmTour()
@@ -78,6 +90,20 @@ namespace WPF.ViewModels
                         _tourRepository.Add(Tour);
                         MessageBox.Show("Tour is addded!");
                         //this.CloseCurrentWindow();
+                    }
+                    else
+                    {
+                        Tour.Id = _tourRepository.MakeID();
+                        _checkPointRepository.AddRange(ObservableToList(CheckPointsForListBox));
+                        _tourImageRepository.AddRange(TourImages);
+                        _tourRepository.Add(Tour);
+                        SimpleRequestTour SRT=new SimpleRequestTour();
+                        SRT.Tour = Tour;
+                        SRT.Guest2 = _simpleRequestService.GetById(SimpleRequest.Id).User; 
+                        SRT.SimpleRequest=SimpleRequest;
+                        _simpleRequestTourService.Add(SRT);
+                        _simpleRequestService.UpdateStatus(SimpleRequest.Id, SimpleRequestStatus.APPROVED);
+                        MessageBox.Show("Tour is addded!");
                     }
                 }
                 else

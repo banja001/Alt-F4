@@ -49,5 +49,16 @@ namespace booking.application.UseCases
         {
             return _tourRepository.FindById(id);
         }
+        public bool CheckAvailability(DateTime date)
+        {
+            
+            List<Tour> allTours=_tourRepository.FindAll();
+            foreach (var t in allTours) 
+            {
+                if (t.StartTime.Date.Date == date.Date)
+                    return false;
+            }
+            return true;
+        }
     }
 }

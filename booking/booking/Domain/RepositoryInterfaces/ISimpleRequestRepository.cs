@@ -17,5 +17,6 @@ namespace Domain.RepositoryInterfaces
         public void Save();
         public void Delete(SimpleRequest simpleRequest);
         public List<SimpleRequest> GetAllByGuest2(User user);
+        public void UpdateStatus(int id, SimpleRequestStatus status);
     }
 }

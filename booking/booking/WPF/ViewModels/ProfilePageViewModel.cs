@@ -27,9 +27,10 @@ namespace WPF.ViewModels
             if (MessageBox.Show("Are you sure you want to sign out?", "Warning", MessageBoxButton.YesNo,MessageBoxImage.Warning) ==
                 MessageBoxResult.Yes)
             {
-                this.CloseCurrentWindow();
+                
                 SignInForm signIn = new SignInForm();
                 signIn.Show();
+                this.CloseCurrentWindow();
             }
         }
     }

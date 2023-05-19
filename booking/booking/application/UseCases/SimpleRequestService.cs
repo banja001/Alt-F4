@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Media.Animation;
 
 namespace application.UseCases
 {
@@ -186,6 +187,10 @@ namespace application.UseCases
         public void Update(SimpleRequest simpleRequest)
         {
             _simpleRequestRepository.Update(simpleRequest);
+        }
+        public void UpdateStatus(int id, SimpleRequestStatus status) 
+        {
+            _simpleRequestRepository.UpdateStatus(id,status);
         }
     }
 }
