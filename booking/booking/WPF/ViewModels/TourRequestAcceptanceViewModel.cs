@@ -1,6 +1,8 @@
 ﻿using application.UseCases;
 using booking.Commands;
 using booking.Model;
+using booking.View.Guide;
+using booking.WPF.ViewModels;
 using Domain.DTO;
 using Domain.Model;
 using Syncfusion.Windows.Controls;
@@ -13,10 +15,12 @@ using System.Net.Mail;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
+using WPF.Views.Guide;
 
 namespace WPF.ViewModels
 {
-    class TourRequestAcceptanceViewModel:INotifyPropertyChanged
+    class TourRequestAcceptanceViewModel : BaseViewModel,INotifyPropertyChanged
     {
         public User Guide { get; set; }   
         public ObservableCollection<SimpleAndComplexTourRequestsDTO> AllRequests { get; set; }
@@ -56,7 +60,8 @@ namespace WPF.ViewModels
         public ICommand CutRangeCommand => new RelayCommand(CutRange);
         public ICommand RejectCommand => new RelayCommand(RejectSimpleTourRequest,CanClick);
         public ICommand AcceptCommand => new RelayCommand(AcceptSimpleTourRequest, CanClick);
-        public TourRequestAcceptanceViewModel(User guide) 
+        private NavigationService navigationService;
+        public TourRequestAcceptanceViewModel(User guide, NavigationService navigationService) 
         {
             Guide = guide;
             AllRequests = new ObservableCollection<SimpleAndComplexTourRequestsDTO>();
@@ -67,6 +72,7 @@ namespace WPF.ViewModels
             SelectedStartDate= DateTime.Now;
             SelectedEndDate= DateTime.Now;
             displayDateStart = DateTime.Now;
+            this.navigationService = navigationService;
             LoadRequests();
         }
 
@@ -161,7 +167,14 @@ namespace WPF.ViewModels
         }
         private void AcceptSimpleTourRequest()
         {
-            
+            SelectDateForTourRequestWindow window=new SelectDateForTourRequestWindow(SelectedTourRequest);
+            window.ShowDialog();
+
+            bool accept = SelectDateForTourRequestViewModel.Accept;
+            DateTime SelectedDate = SelectDateForTourRequestViewModel.selectedDate;
+            if (accept)
+                navigationService.Navigate(new AddTourWindow(SelectedTourRequest, SelectedDate,false));
+
         }
         private bool CanClick()
         {

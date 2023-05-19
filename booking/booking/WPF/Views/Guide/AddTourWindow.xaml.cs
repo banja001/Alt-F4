@@ -1,5 +1,6 @@
 ﻿using booking.Model;
 using booking.Repository;
+using Domain.DTO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +28,11 @@ namespace booking.View.Guide
         {
             InitializeComponent();
             DataContext = new AddTourViewModel();
+        }
+        public AddTourWindow(SimpleAndComplexTourRequestsDTO simpleRequest, DateTime startDate,bool isNotRequest)
+        {
+            InitializeComponent();
+            DataContext = new AddTourViewModel(simpleRequest,startDate,isNotRequest);
         }
     }
 }

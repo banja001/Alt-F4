@@ -27,29 +27,29 @@
             </TextBox>
 
             <Label Content="County: " HorizontalAlignment="Left" Margin="20,103,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
-            
-            <TextBox x:Name="CountyTB" HorizontalAlignment="Left" Text="{Binding Path=Tour.Location.State,UpdateSourceTrigger=PropertyChanged}" Margin="90,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26" IsEnabled="True"/>
+
+            <TextBox x:Name="CountyTB"  IsEnabled="{Binding IsNotRequest}" HorizontalAlignment="Left" Text="{Binding Path=Tour.Location.State,UpdateSourceTrigger=PropertyChanged}" Margin="90,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26" />
             
             <Label Content="City: " HorizontalAlignment="Left" Margin="20,166,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
-            
-            <TextBox x:Name="CityTB" HorizontalAlignment="Left" Margin="90,166,0,0" Text="{Binding Path=Tour.Location.City, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26" IsEnabled="True"/>
-            
+
+            <TextBox x:Name="CityTB" IsEnabled="{Binding IsNotRequest}"  HorizontalAlignment="Left" Margin="90,166,0,0" Text="{Binding Path=Tour.Location.City, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26" />
+
             <Label Content="Language: " HorizontalAlignment="Left" Margin="356,103,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
-            
-            <TextBox x:Name="LanguageTB" HorizontalAlignment="Left" Margin="496,103,0,0" Text="{Binding Path=Tour.Language, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26" IsEnabled="True"/>
+
+            <TextBox x:Name="LanguageTB"  IsEnabled="{Binding IsNotRequest}" HorizontalAlignment="Left" Margin="496,103,0,0" Text="{Binding Path=Tour.Language, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26"/>
             
             <Label Content="Duration: " HorizontalAlignment="Left" Margin="20,392,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
             
             <TextBox x:Name="DurationTB" HorizontalAlignment="Left" Margin="90,392,0,0" Text="{Binding Path=Tour.Duration, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26" IsEnabled="True"/>
             
             <Label Content="Description: " HorizontalAlignment="Left" Margin="20,472,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
-            <TextBox x:Name="DescriptionTB" HorizontalAlignment="Left" Margin="90,472,0,0" Text="{Binding Path=Tour.Description, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="134" IsEnabled="True"/>
+            <TextBox x:Name="DescriptionTB"  IsEnabled="{Binding IsNotRequest}" HorizontalAlignment="Left" Margin="90,472,0,0" Text="{Binding Path=Tour.Description, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="134"/>
             <Label Content="Date: " HorizontalAlignment="Left" Margin="20,235,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
-            <DatePicker Name="DateDTP" HorizontalAlignment="Left" Margin="90,235,0,0" SelectedDate="{Binding Path=Tour.StartTime.Date}" DisplayDate="01.04.2023." VerticalAlignment="Top" Height="26" Width="200" SelectedDateFormat="Short" FirstDayOfWeek="Monday" IsTodayHighlighted="True"/>
+            <DatePicker IsEnabled="{Binding IsNotRequest}" Name="DateDTP" HorizontalAlignment="Left" Margin="90,235,0,0" SelectedDate="{Binding Path=Tour.StartTime.Date}" DisplayDate="01.04.2023." VerticalAlignment="Top" Height="26" Width="200" SelectedDateFormat="Short" FirstDayOfWeek="Monday" IsTodayHighlighted="True"/>
             <Label Content="Time: " HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="1.379,0.404"/>
             <TextBox Name="TimeTB" HorizontalAlignment="Left" Margin="90,0,0,0" Text="{Binding Path=Tour.StartTime.Time, UpdateSourceTrigger=PropertyChanged}"  TextWrapping="Wrap" VerticalAlignment="Center" Width="200" Height="26"/>
             <Label Content="Max number of guests: " HorizontalAlignment="Left" Margin="356,30,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
-            <TextBox x:Name="MaxNumGuestsTB" HorizontalAlignment="Left" Margin="496,30,0,0" Text="{Binding Path=Tour.MaxGuests, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26"/>
+            <TextBox x:Name="MaxNumGuestsTB" IsEnabled="{Binding IsNotRequest}"  HorizontalAlignment="Left" Margin="496,30,0,0" Text="{Binding Path=Tour.MaxGuests, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26"/>
             <Label Content="Key point: " HorizontalAlignment="Left" Margin="355,392,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.379,0.404"/>
             <TextBox Name="CheckPointTB" HorizontalAlignment="Left" Margin="496,392,0,0" Text="{Binding Path=CheckPoint.Name, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="26"/>
             <Button Name="AddCheckPoint" Content="+" HorizontalAlignment="Left" Margin="722,392,0,0" VerticalAlignment="Top" Height="26" Width="26" Command="{Binding AddCheckPointCommand}"/>

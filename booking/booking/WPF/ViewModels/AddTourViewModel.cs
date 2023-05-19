@@ -8,6 +8,7 @@ using System.Windows;
 using booking.WPF.ViewModels;
 using booking.Commands;
 using System.Windows.Input;
+using Domain.DTO;
 
 namespace WPF.ViewModels
 {
@@ -22,6 +23,7 @@ namespace WPF.ViewModels
         public ObservableCollection<CheckPoint> CheckPointsForListBox { get; set; }
         public ObservableCollection<TourImage> ImagesForListBox { get; set; }
         public List<TourImage> TourImages { get; set; }
+        public bool IsNotRequest { get; set; }
         public string Image { get; set; }
         public ICommand ExitWindowCommand => new RelayCommand(ExitWindow);
         public ICommand AddCheckPointCommand => new RelayCommand(AddCheckPointToListBox);
@@ -39,8 +41,26 @@ namespace WPF.ViewModels
             CheckPointsForListBox = new ObservableCollection<CheckPoint>();
             ImagesForListBox=new ObservableCollection<TourImage>();
             Tour.StartTime.Date = DateTime.Now;
+            IsNotRequest = true;
         }
-
+        public AddTourViewModel(SimpleAndComplexTourRequestsDTO simpleRequest, DateTime startDate, bool isNotRequest)
+        {
+            _tourRepository = new TourRepository();
+            _checkPointRepository = new CheckPointRepository();
+            _locationRepository = new LocationRepository();
+            _tourImageRepository = new TourImageRepository();
+            Tour = new Tour();
+            CheckPoint = new CheckPoint();
+            TourImages = new List<TourImage>();
+            CheckPointsForListBox = new ObservableCollection<CheckPoint>();
+            ImagesForListBox = new ObservableCollection<TourImage>();
+            Tour.StartTime.Date = startDate;
+            Tour.Description = simpleRequest.Description;
+            Tour.MaxGuests = simpleRequest.NumberOfGuests;
+            Tour.Language = simpleRequest.Language;
+            Tour.Location = simpleRequest.Location;
+            IsNotRequest = isNotRequest;
+        }
 
         private void ConfirmTour()
         {
@@ -48,14 +68,17 @@ namespace WPF.ViewModels
             {
                 if (Tour.StartTime.IsValid)
                 {
-                    Tour.Id = _tourRepository.MakeID();
-                    Tour.Location.Id = _locationRepository.MakeID();
-                    _checkPointRepository.AddRange(ObservableToList(CheckPointsForListBox));
-                    _tourImageRepository.AddRange(TourImages);
-                    _locationRepository.Add(Tour.Location);
-                    _tourRepository.Add(Tour);
-                    MessageBox.Show("Tour is addded!");
-                    this.CloseCurrentWindow();
+                    if (IsNotRequest)
+                    {
+                        Tour.Id = _tourRepository.MakeID();
+                        Tour.Location.Id = _locationRepository.MakeID();
+                        _checkPointRepository.AddRange(ObservableToList(CheckPointsForListBox));
+                        _tourImageRepository.AddRange(TourImages);
+                        _locationRepository.Add(Tour.Location);
+                        _tourRepository.Add(Tour);
+                        MessageBox.Show("Tour is addded!");
+                        //this.CloseCurrentWindow();
+                    }
                 }
                 else
                     MessageBox.Show("Form is not properly filled!");

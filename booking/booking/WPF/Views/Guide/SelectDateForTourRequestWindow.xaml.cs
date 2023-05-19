@@ -1,4 +1,4 @@
-﻿using booking.Model;
+﻿using Domain.DTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,21 +9,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF.ViewModels;
 
 namespace WPF.Views.Guide
 {
     /// <summary>
-    /// Interaction logic for TourRequestAcceptancePage.xaml
+    /// Interaction logic for SelectDateForTourRequestWindow.xaml
     /// </summary>
-    public partial class TourRequestAcceptancePage : Page
+    public partial class SelectDateForTourRequestWindow : Window
     {
-        public TourRequestAcceptancePage(User guide,NavigationService ns)
+
+        public SelectDateForTourRequestWindow(SimpleAndComplexTourRequestsDTO selectedTour)
         {
             InitializeComponent();
-            DataContext=new TourRequestAcceptanceViewModel(guide,ns);
+            DataContext = new SelectDateForTourRequestViewModel(selectedTour);
         }
     }
 }
