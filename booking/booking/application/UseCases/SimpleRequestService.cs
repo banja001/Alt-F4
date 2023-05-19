@@ -19,12 +19,27 @@ namespace application.UseCases
         private readonly LocationService _locationService;
         private readonly SimpleRequestTourService _simpleRequestTourService;
         private readonly TourService _tourService;
-        public SimpleRequestService() 
+        public SimpleRequestService()
         {
             _simpleRequestRepository = Injector.CreateInstance<ISimpleRequestRepository>();
             _locationService = new LocationService();
             _simpleRequestTourService = new SimpleRequestTourService();
             _tourService = new TourService();
+        }
+        public int GetApprovedRequestsRatioByGuest2(User user, DateTime desiredYear)
+        {
+            var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
+            if (desiredYear == null)
+                return simpleRequests.Count(s => s.Status == SimpleRequestStatus.APPROVED) / simpleRequests.Count();
+            return simpleRequests.Count(s => s.Status == SimpleRequestStatus.APPROVED && s.DateRange.StartDate.Year == desiredYear.Year) / simpleRequests.Count(s => s.DateRange.StartDate.Year == desiredYear.Year);
+
+        }
+        public int GetInvalidRequestsRatioByGuest2(User user, DateTime desiredYear)
+        {
+            var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
+            if (desiredYear == null)
+                return simpleRequests.Count(s => s.Status == SimpleRequestStatus.INVALID) / simpleRequests.Count();
+            return simpleRequests.Count(s => s.Status == SimpleRequestStatus.INVALID && s.DateRange.StartDate.Year == desiredYear.Year) / simpleRequests.Count(s => s.DateRange.StartDate.Year == desiredYear.Year);
         }
         public void Add(SimpleRequest simpleRequest)
         {

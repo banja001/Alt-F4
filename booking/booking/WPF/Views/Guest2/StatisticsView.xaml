@@ -1,0 +1,58 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF.Views.Guest2"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="booking.WPF.Views.Guest2.StatisticsView"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Utilities/Themes/Guest2Themes.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Style="{DynamicResource LightBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1.1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="0">
+            <StackPanel Orientation="Horizontal">
+                <Label Style="{DynamicResource VoucherHeader}" Margin="15,0,0,0">Choose year:</Label>
+                <ComboBox Margin="15,0,0,0" Height="25" Width="100"></ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Foreground="#039487" Style="{DynamicResource LightHeaderLabel}" FontSize="36" Margin="15,0,0,0" Content="25%"></Label>
+                <Label  Style="{DynamicResource LightHeaderLabel}" VerticalAlignment="Center" Margin="5,0,0,0" Content="Of total tour requests were approved."></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Foreground="#FF0000" Style="{DynamicResource LightHeaderLabel}" FontSize="36" Margin="15,0,0,0" Content="25%"></Label>
+                <Label Style="{DynamicResource LightHeaderLabel}" VerticalAlignment="Center" Margin="5,0,0,0" Content="Of total tour requests were rejected."></Label>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="2">
+            <StackPanel Orientation="Horizontal">
+                <Label Style="{DynamicResource VoucherHeader}" Margin="0,0,0,0">Choose year:</Label>
+                <ComboBox Margin="15,0,0,0" Height="25" Width="100"></ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Style="{DynamicResource LightHeaderLabel}" FontSize="36" Margin="0,0,0,0" Content="25%"></Label>
+                <Label Style="{DynamicResource LightHeaderLabel}"  VerticalAlignment="Center" Margin="5,0,0,0" Content="Average people count in approved requests"></Label>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
