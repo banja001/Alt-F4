@@ -29,10 +29,15 @@ namespace booking.View.Guide
             InitializeComponent();
             DataContext = new AddTourViewModel(guide);
         }
-        public AddTourWindow(SimpleAndComplexTourRequestsDTO simpleRequest, DateTime startDate,bool isNotRequest, User guide)
+        public AddTourWindow(SimpleAndComplexTourRequestsDTO simpleRequest, DateTime startDate, bool isNotRequest, User guide)
         {
             InitializeComponent();
-            DataContext = new AddTourViewModel(simpleRequest,startDate,isNotRequest, guide);
+            DataContext = new AddTourViewModel(simpleRequest, startDate, isNotRequest, guide);
+        }
+        public AddTourWindow(string[] parameters,User guide)
+        {
+            InitializeComponent();
+            DataContext = new AddTourViewModel(parameters,guide);
         }
     }
 }

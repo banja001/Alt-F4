@@ -59,7 +59,7 @@ namespace WPF.ViewModels
 
         private void TourRequestsStatisticsOpen()
         {
-            Content.NavigationService.Navigate(new TourRequestsStatisticsPage(Guide));
+            Content.NavigationService.Navigate(new TourRequestsStatisticsPage(Guide, Content.NavigationService));
         }
     }
 }

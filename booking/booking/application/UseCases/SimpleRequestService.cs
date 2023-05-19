@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Media.Animation;
 
 namespace application.UseCases
@@ -234,14 +235,48 @@ namespace application.UseCases
             return months;
         }
 
-        public int NumberOfSpecificTourRequests()
+        public string CreateTourWithHelpOfStatistics(string parameter)
         {
-            int numberOfTourRequests = 0;
-            return numberOfTourRequests;
+
+            List<SimpleRequest> AllRequests = GetAllWithLocation();
+            List<SimpleRequest> AllRequestsFiltered = AllRequests.FindAll(r => r.DateRange.StartDate.Date < DateTime.Now.AddDays(365));
+            string maxLanguage = MaxLanguage(AllRequests);
+            string maxState=MaxState(AllRequests);
+            string maxCity=MaxCity(AllRequests);
+            switch (parameter)
+            {
+                case "State":
+                    return maxState+",State";
+                    break;
+                case "City":
+                    return maxCity + ",City," + maxState;
+                    break;
+                case "Language":
+                    return maxLanguage + ",Language";
+                    break;
+                case "All":
+                    return maxState+"|"+maxCity+"|"+maxLanguage;
+                    break;
+                default:
+                    return "error";
+                    break;
+            }
         }
-
-
-
+        public string MaxLanguage(List<SimpleRequest> AllRequests)
+        {
+            Dictionary<string, int> listOfLanguage = AllRequests.GroupBy(r => r.Language).ToDictionary(r => r.Key, r => r.Count());
+            return listOfLanguage.OrderByDescending(l => l.Value).First().Key;
+        }
+        public string MaxState(List<SimpleRequest> AllRequests) 
+        {
+            Dictionary<string, int> listOfStates = AllRequests.GroupBy(r => r.Location.State).ToDictionary(r => r.Key, r => r.Count());
+            return listOfStates.OrderByDescending(l => l.Value).First().Key;
+        }
+        public string MaxCity(List<SimpleRequest> AllRequests)
+        {
+            Dictionary<string, int> listOfLCities = AllRequests.GroupBy(r => r.Location.City).ToDictionary(r => r.Key, r => r.Count());
+            return listOfLCities.OrderByDescending(l => l.Value).First().Key;
+        }
 
         public string MonthNumberToString(string monthNumber)
         {

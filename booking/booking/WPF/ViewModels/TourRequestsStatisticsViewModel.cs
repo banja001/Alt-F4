@@ -1,6 +1,7 @@
 ﻿using application.UseCases;
 using booking.Commands;
 using booking.Model;
+using booking.View.Guide;
 using booking.WPF.ViewModels;
 using Domain.DTO;
 using Domain.Model;
@@ -10,7 +11,11 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
+using WPF.Views.Guide;
 
 namespace WPF.ViewModels
 {
@@ -108,8 +113,10 @@ namespace WPF.ViewModels
         public ICommand SearchCommand => new RelayCommand(Search);
         public ICommand FillCityCBCommand => new RelayCommand(FillCities);
         public ICommand FillMonthsCBCommand => new RelayCommand(FillMonths);
-       
-        public TourRequestsStatisticsViewModel(User guide) 
+        public ICommand CreateCommand => new RelayCommand(CreateTourWithHelpOfStatistics);
+        public User Guide { get; set; }
+        private NavigationService navigationService;
+        public TourRequestsStatisticsViewModel(User guide, NavigationService navigationService) 
         {
             _locationService=new LocationService();
             _simpleRequestService=new SimpleRequestService();
@@ -118,6 +125,8 @@ namespace WPF.ViewModels
             Years=new ObservableCollection<string>(_simpleRequestService.GetAllYears());
             Months=new ObservableCollection<string>();
             AllRequests=new ObservableCollection<SimpleRequest>();
+            Guide = guide;
+            this.navigationService=navigationService;
             LoadRequests();
         }
 
@@ -149,6 +158,17 @@ namespace WPF.ViewModels
             foreach (var year in _simpleRequestService.GetAllMonthsForYear(SelectedYear))
             {
                 Months.Add(year);
+            }
+        }
+        private void CreateTourWithHelpOfStatistics()
+        {
+            ParametarOfStatisticsForTourCreationWindow window = new ParametarOfStatisticsForTourCreationWindow();
+            window.ShowDialog();
+
+            if (ParametarOfStatisticsForTourCreationVIewModel.Accept)
+            {
+                string [] parameters= ParametarOfStatisticsForTourCreationVIewModel.Parameter.Split("|");
+                navigationService.Navigate(new AddTourWindow(parameters, Guide));
             }
         }
         private void Search()

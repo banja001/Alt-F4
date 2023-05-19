@@ -1,5 +1,4 @@
-﻿using booking.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -9,21 +8,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF.ViewModels;
 
 namespace WPF.Views.Guide
 {
     /// <summary>
-    /// Interaction logic for TourRequestsStatisticsPage.xaml
+    /// Interaction logic for ParametarOfStatisticsForTourCreationWindow.xaml
     /// </summary>
-    public partial class TourRequestsStatisticsPage : Page
+    public partial class ParametarOfStatisticsForTourCreationWindow : Window
     {
-        public TourRequestsStatisticsPage(User guide, NavigationService navigationService)
+        public ParametarOfStatisticsForTourCreationWindow()
         {
             InitializeComponent();
-            DataContext=new TourRequestsStatisticsViewModel(guide, navigationService);
+            DataContext = new ParametarOfStatisticsForTourCreationVIewModel();
         }
     }
 }

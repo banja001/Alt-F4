@@ -12,6 +12,8 @@ using Domain.DTO;
 using Domain.Model;
 using Repositories;
 using application.UseCases;
+using System.Linq;
+using System.Reflection.Metadata;
 
 namespace WPF.ViewModels
 {
@@ -50,6 +52,63 @@ namespace WPF.ViewModels
             ImagesForListBox=new ObservableCollection<TourImage>();
             Tour.StartTime.Date = DateTime.Now;
             IsNotRequest = true;
+        }
+        public AddTourViewModel(string[] parameters,User guide)
+        {
+            _tourRepository = new TourRepository();
+            _checkPointRepository = new CheckPointRepository();
+            _locationRepository = new LocationRepository();
+            _tourImageRepository = new TourImageRepository();
+            _simpleRequestTourService = new SimpleRequestTourService();
+            _simpleRequestService = new SimpleRequestService();
+            Tour = new Tour();
+            CheckPoint = new CheckPoint();
+            TourImages = new List<TourImage>();
+            CheckPointsForListBox = new ObservableCollection<CheckPoint>();
+            ImagesForListBox = new ObservableCollection<TourImage>();
+            Tour.StartTime.Date = DateTime.Now;
+            IsNotRequest = true;
+            InitilazeFields(parameters);
+        }
+        private void InitilazeFields(string[] parameters)
+        {
+            if(parameters.Count() == 1)
+            {
+                ParameterSwitch(parameters[0]);
+            }
+            else
+            {
+                if (parameters.Count() == 3)
+                {
+                    Tour.Location.State = parameters[0];
+                    Tour.Location.City = parameters[1];
+                    Tour.Language = parameters[2];
+                }
+                else
+                {
+                    MessageBox.Show("Invalid parameter.");
+                }
+            }
+        }
+        private void ParameterSwitch(string parameter)
+        {
+
+            switch (parameter.Split(",")[1])
+            {
+                case "State":
+                    Tour.Location.State = parameter.Split(',')[0];
+                    break;
+                case "City":
+                    Tour.Location.City = parameter.Split(',')[0];
+                    Tour.Location.State = parameter.Split(',')[2];
+                    break;
+                case "Language":
+                    Tour.Language = parameter.Split(',')[0];
+                    break;
+                default:
+                    MessageBox.Show("Invalid parameter.");
+                    break;
+            }
         }
         public AddTourViewModel(SimpleAndComplexTourRequestsDTO simpleRequest, DateTime startDate, bool isNotRequest, User guide)
         {
