@@ -8,7 +8,7 @@
         xmlns:viewmodels="clr-namespace:booking.WPF.ViewModels"
         mc:Ignorable="d"
         Height="700" Width="1250" AllowsTransparency="True" Background="Transparent" WindowStyle="None"
-       WindowStartupLocation="CenterScreen">
+       WindowStartupLocation="CenterScreen" Icon="/Resources/Icons/taskbarIcon.png">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -16,6 +16,9 @@
             </ResourceDictionary.MergedDictionaries>
             <DataTemplate DataType="{x:Type viewmodels:MyToursViewModel}">
                 <views:MyToursView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:MyRequestsViewModel}">
+                <views:MyRequestsView/>
             </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
@@ -32,7 +35,7 @@
             <StackPanel Margin="10,10,10,10"  Orientation="Vertical" Grid.Column="0" Grid.RowSpan="2" Background="#7588c4">
                 <Button Command="{Binding NavigateWindowsCommand}" CommandParameter="Home" Margin="0,25,0,0" Style="{DynamicResource StackPanelButtonStyle}" Content="Home" local:ButtonProperties.ImageSource="/Resources/Icons/home.png"></Button>
                 <Button Command="{Binding NavigateWindowsCommand}" CommandParameter="MyTours" Style="{DynamicResource StackPanelButtonStyle}" Content="My Tours" local:ButtonProperties.ImageSource="/Resources/Icons/whiteTraveler.png"></Button>
-                <Button Style="{DynamicResource StackPanelButtonStyle}" Content="Requests" local:ButtonProperties.ImageSource="/Resources/Icons/whiteRequest.png"></Button>
+                <Button Command="{Binding NavigateWindowsCommand}" CommandParameter="MyRequests" Style="{DynamicResource StackPanelButtonStyle}" Content="Requests" local:ButtonProperties.ImageSource="/Resources/Icons/whiteRequest.png"></Button>
                 <Button Command="{Binding NavigateWindowsCommand}" CommandParameter="Statistics" Style="{DynamicResource StackPanelButtonStyle}" Content="Statistics" local:ButtonProperties.ImageSource="/Resources/Icons/whiteStatistics.png"></Button>
                 <Button Margin="0,180,0,5" Command="{Binding LogOutButtonCommand}" Style="{DynamicResource StackPanelButtonStyle}" Content="Log out" local:ButtonProperties.ImageSource="/Resources/Icons/whiteLogout.png"></Button>
             </StackPanel>
