@@ -105,7 +105,11 @@ namespace booking.WPF.ViewModels
             }
             location.Id = !_locationService.Contains(location) ? _locationService.MakeID() : location.Id = _locationService.GetId(location.State, location.City);
             if (StartDate.ToDateTime().Date <= DateTime.Now.AddDays(2))
+            {
                 MessageBox.Show("The start date of request should be at least 48h earlier than actual date of tour", "Alert");
+                return;
+            }
+
             simpleRequest.User.Id = User.Id;
             simpleRequest.Description = Description;
             simpleRequest.Location.Id = location.Id;
