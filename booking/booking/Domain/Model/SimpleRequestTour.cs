@@ -12,20 +12,20 @@ namespace Domain.Model
         public int Id { get; set; }
         public SimpleRequest SimpleRequest { get; set; }    
         public Tour Tour { get; set; }
-        public User User { get; set; }
+        public User Guest2 { get; set; }
 
         public SimpleRequestTour() 
         {
             SimpleRequest = new SimpleRequest();
             Tour = new Tour();
-            User = new User();
+            Guest2 = new User();
         }  
         public SimpleRequestTour(int id, int simpleRequestId, int tourId, int userId)
         {
             Id = id;
             SimpleRequest.Id = simpleRequestId;
             Tour.Id = tourId;
-            User.Id = userId;
+            Guest2.Id = userId;
         }
 
         public void FromCSV(string[] values)
@@ -33,13 +33,13 @@ namespace Domain.Model
             Id = Convert.ToInt32(values[0]);
             SimpleRequest.Id = Convert.ToInt32(values[1]);
             Tour.Id = Convert.ToInt32(values[2]);
-            User.Id= Convert.ToInt32(values[3]);
+            Guest2.Id= Convert.ToInt32(values[3]);
 
         }
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), SimpleRequest.Id.ToString(), Tour.Id.ToString(), User.Id.ToString() };
+            string[] csvValues = { Id.ToString(), SimpleRequest.Id.ToString(), Tour.Id.ToString(), Guest2.Id.ToString() };
             return csvValues;
         }
     }
