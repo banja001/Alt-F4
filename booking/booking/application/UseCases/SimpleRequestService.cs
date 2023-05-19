@@ -30,12 +30,35 @@ namespace application.UseCases
             simpleRequest.Id = _simpleRequestRepository.MakeId();
             _simpleRequestRepository.Add(simpleRequest);
         }
+        public List<Location> GetInvalidRequestsLocationsForGuest2(User user)
+        {
+            var locations = new List<Location>();
+            var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
+            foreach (SimpleRequest simpleRequest in simpleRequests) 
+            {
+                if (simpleRequest.Status != SimpleRequestStatus.INVALID)
+                    continue;
+                locations.Add(_locationService.GetById(simpleRequest.Location.Id));
+            }
+            return locations;
+        }
+        public List<string> GetInvlaidRequestsLanguagesForGuest2(User user)
+        {
+            var languages = new List<string>();
+            var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
+            foreach (SimpleRequest simpleRequest in simpleRequests)
+            {
+                if (simpleRequest.Status != SimpleRequestStatus.INVALID)
+                    continue;
+                languages.Add(simpleRequest.Language);
+            }
+            return languages;
+        }
         public List<SimpleRequestDTO> CreateDTOsByGuest2(User user)
         {
             List<SimpleRequestDTO> simpleRequestDTOs = new List<SimpleRequestDTO>();
             var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
             int idx = 0;
-                //simpleRequests.Count == 0 ? 1 : simpleRequests.Max(r => r.Id) + 1;
 
             foreach (var simpleRequest in simpleRequests)
             {
@@ -60,36 +83,71 @@ namespace application.UseCases
             int idx = 0;
             foreach (var simpleRequestTour in simpleRequestTours)
             {
-                simpleRequestTourDTOs.Add(new SimpleRequestTourDTO(idx,
-                                                                   _tourService.GetById(simpleRequestTour.Tour.Id),
-                                                                   _simpleRequestRepository.GetById(simpleRequestTour.SimpleRequest.Id)));
+                var dto = new SimpleRequestTourDTO(idx++,
+                                                   _tourService.GetById(simpleRequestTour.Tour.Id),
+                                                   _simpleRequestRepository.GetById(simpleRequestTour.SimpleRequest.Id));
+                dto.Tour.Location = _locationService.GetById(dto.Tour.Location.Id);
+                simpleRequestTourDTOs.Add(dto);
+            }
+            return simpleRequestTourDTOs;
+        }
+        public List<SimpleRequestTourDTO> CreateNotifications()
+        {
+            List<SimpleRequestTourDTO> simpleRequestTourDTOs = new List<SimpleRequestTourDTO>();
+            var simpleRequestTours = _simpleRequestTourService.GetAll();
+            int idx = 0;
+            foreach (var simpleRequestTour in simpleRequestTours)
+            {
+                var dto = new SimpleRequestTourDTO(idx++,
+                                                   _tourService.GetById(simpleRequestTour.Tour.Id),
+                                                   _simpleRequestRepository.GetById(simpleRequestTour.SimpleRequest.Id));
+                dto.Tour.Location = _locationService.GetById(dto.Tour.Location.Id);
+                simpleRequestTourDTOs.Add(dto);
             }
             return simpleRequestTourDTOs;
         }
         public List<SimpleRequestTourDTO> CreateApprovedNotificationsByGuest2(User user)
         {
             var notifications = CreateNotificationsByGuest2(user);
+            List<SimpleRequestTourDTO> approvedNotifications = new List<SimpleRequestTourDTO>();
 
             foreach (var notification in notifications)
             {
-                if (notification.SimpleRequest.Status == SimpleRequestStatus.APPROVED)
+                if (notification.SimpleRequest.Status != SimpleRequestStatus.APPROVED)
                     continue;
-                notifications.Remove(notification);
+                approvedNotifications.Add(notification);
             }
-            return notifications;
+            return approvedNotifications;
         }
         public List<SimpleRequestTourDTO> CreateSuggestionNotificationsByGuest2(User user)
         {
-            var notifications = CreateNotificationsByGuest2(user);
+            var notifications = CreateNotifications();
+            var invalidRequestLocations = GetInvalidRequestsLocationsForGuest2(user);
+            var invalidRequestsLanguages = GetInvlaidRequestsLanguagesForGuest2(user);
+            List<SimpleRequestTourDTO> suggestionNotifications = new List<SimpleRequestTourDTO>();
 
             foreach (var notification in notifications)
             {
-                if (notification.SimpleRequest.Status == SimpleRequestStatus.INVALID)
-                    continue;
-                notifications.Remove(notification);
+                if(notification.SimpleRequest.Status == SimpleRequestStatus.APPROVED && notification.SimpleRequest.User.Id != user.Id)
+                {
+                    CheckRequestCompatibility(invalidRequestLocations, invalidRequestsLanguages, suggestionNotifications, notification);
+                }
             }
-            return notifications;
+            return suggestionNotifications;
         }
+
+        private void CheckRequestCompatibility(List<Location> invalidRequestLocations, List<string> invalidRequestsLanguages, List<SimpleRequestTourDTO> suggestionNotifications, SimpleRequestTourDTO notification)
+        {
+            var notificationLocation = notification.Tour.Location;
+
+            notificationLocation = _locationService.GetById(notificationLocation.Id);
+            bool containsLocation = invalidRequestLocations.Any(l => l.State.Equals(notificationLocation.State) && l.City.Equals(notificationLocation.City));
+            bool containsLanguage = invalidRequestsLanguages.Any(l => l.Equals(notification.Tour.Language));
+
+            if (containsLocation || containsLanguage)
+                suggestionNotifications.Add(notification);
+        }
+
         public void CheckApproval()
         {
             var simpleRequests = _simpleRequestRepository.GetAll();

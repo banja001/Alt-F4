@@ -81,7 +81,7 @@ namespace Repositories
         public List<SimpleRequestTour> GetAllByGuest2(User user)
         {
             Load();
-            return _simpleRequestTours.FindAll(s => s.User.Id == user.Id);
+            return _simpleRequestTours.FindAll(s => s.Guest2.Id == user.Id);
         }
     }
 }
