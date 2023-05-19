@@ -107,16 +107,17 @@ namespace WPF.ViewModels.Guest1
                 int ownerId = _accommodationService.GetById(reservedDate.AccommodationId).OwnerId;
                 _ownerNotificationsService.Add(new OwnerNotification(_ownerNotificationsService.MakeId(), ownerId, accomodation, reservedDate, _userService.GetUserNameById(userId)));
 
-                ++user.Score;
-                if(user.NumOfAccommodationReservations > 0)
-                    --user.NumOfAccommodationReservations;
-                _userService.Update(user);
+                if (user.Score < 5 && user.Super)
+                {
+                    ++user.Score;
+                    _userService.Update(user);
+                }
 
                 MessageBox.Show("Your reservation is deleted!");
             }
             else
             {
-                MessageBox.Show("You can cancle your reservation only 24h or " + accomodation.MinDaysToCancel + "days before!");
+                MessageBox.Show("You can cancel your reservation only 24h or " + accomodation.MinDaysToCancel + "days before!");
             }
         }
 
