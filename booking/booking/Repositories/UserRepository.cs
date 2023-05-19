@@ -22,6 +22,10 @@ namespace booking.Repository
             _serializer = new Serializer<User>();
             _users = _serializer.FromCSV(FilePath);
         }
+        public User GetById(int id)
+        {
+            return _users.Find(u => u.Id == id);
+        }
         public List<User> GetAll()
         {
             return _serializer.FromCSV(FilePath);
@@ -58,6 +62,14 @@ namespace booking.Repository
         public int GetScoreById(int id)
         {
             return _users.Find(u => u.Id == id).Score;
+        }
+
+        public void Update(User user)
+        {
+            int i = _users.FindIndex(u => u.Id == user.Id);
+
+            _users[i] = user;
+            _serializer.ToCSV(FilePath, _users);
         }
     }
 }

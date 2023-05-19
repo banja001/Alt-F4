@@ -63,9 +63,7 @@ namespace booking.View
             fOverviewAnywhere.DataContext = _overview;
             tabItemRate.DataContext = _rateAccommodationAndOwner;
             tabItemReservations.DataContext = _reservationViewModel;
-            tabItemForums.DataContext = this;
-
-            
+            tabItemForums.DataContext = this;   
         }
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
