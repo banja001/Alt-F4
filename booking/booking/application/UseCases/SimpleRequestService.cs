@@ -26,20 +26,36 @@ namespace application.UseCases
             _simpleRequestTourService = new SimpleRequestTourService();
             _tourService = new TourService();
         }
-        public int GetApprovedRequestsRatioByGuest2(User user, DateTime desiredYear)
+        public List<string> GetAvailableRequestsYears(User user)
         {
             var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
-            if (desiredYear == null)
-                return simpleRequests.Count(s => s.Status == SimpleRequestStatus.APPROVED) / simpleRequests.Count();
-            return simpleRequests.Count(s => s.Status == SimpleRequestStatus.APPROVED && s.DateRange.StartDate.Year == desiredYear.Year) / simpleRequests.Count(s => s.DateRange.StartDate.Year == desiredYear.Year);
+            var years = simpleRequests.Select(y => y.DateRange.StartDate.Year.ToString()).Distinct().ToList();
+            return years;
+        }
+        public double GetApprovedRequestsRatioByGuest2(User user, DateTime desiredYear)
+        {
+            var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
+            if (desiredYear == new DateTime())
+                return ((double)simpleRequests.Count(s => s.Status == SimpleRequestStatus.APPROVED) /  simpleRequests.Count());
+            return (double)simpleRequests.Count(s => s.Status == SimpleRequestStatus.APPROVED && s.DateRange.StartDate.Year == desiredYear.Year) / simpleRequests.Count(s => s.DateRange.StartDate.Year == desiredYear.Year);
 
         }
-        public int GetInvalidRequestsRatioByGuest2(User user, DateTime desiredYear)
+        public double GetInvalidRequestsRatioByGuest2(User user, DateTime desiredYear)
         {
             var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
-            if (desiredYear == null)
-                return simpleRequests.Count(s => s.Status == SimpleRequestStatus.INVALID) / simpleRequests.Count();
-            return simpleRequests.Count(s => s.Status == SimpleRequestStatus.INVALID && s.DateRange.StartDate.Year == desiredYear.Year) / simpleRequests.Count(s => s.DateRange.StartDate.Year == desiredYear.Year);
+            if (desiredYear == new DateTime())
+                return ((double)simpleRequests.Count(s => s.Status == SimpleRequestStatus.INVALID) / simpleRequests.Count());
+            return (double)simpleRequests.Count(s => s.Status == SimpleRequestStatus.INVALID && s.DateRange.StartDate.Year == desiredYear.Year) / simpleRequests.Count(s => s.DateRange.StartDate.Year == desiredYear.Year);
+        }
+        public double GetAveragePeopleCountByGuest2(User user, DateTime desiredYear)
+        {
+            var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
+            if (desiredYear == new DateTime())
+                return simpleRequests.FindAll(s => s.User.Id == user.Id).Average(s => s.NumberOfGuests);
+
+            var validRequests = simpleRequests.FindAll(s => s.Status == SimpleRequestStatus.APPROVED && s.User.Id == user.Id && s.DateRange.StartDate.Year == desiredYear.Year);
+
+            return validRequests.Count == 0 ? 0 : validRequests.Average(s => s.NumberOfGuests);
         }
         public void Add(SimpleRequest simpleRequest)
         {

@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:WPF.Views.Guest2"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="booking.WPF.Views.Guest2.StatisticsView"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -32,14 +33,21 @@
         <StackPanel Orientation="Vertical" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <Label Style="{DynamicResource VoucherHeader}" Margin="15,0,0,0">Choose year:</Label>
-                <ComboBox Margin="15,0,0,0" Height="25" Width="100"></ComboBox>
+                <ComboBox FontSize="14" x:Name="PercentageComboBox" ItemsSource="{Binding RequestsYears}" Margin="15,0,0,0" Height="25" Width="100">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding FilterRequestPercentageCommand}"
+                             CommandParameter="{Binding ElementName=PercentageComboBox, Path=SelectedItem}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Foreground="#039487" Style="{DynamicResource LightHeaderLabel}" FontSize="36" Margin="15,0,0,0" Content="25%"></Label>
-                <Label  Style="{DynamicResource LightHeaderLabel}" VerticalAlignment="Center" Margin="5,0,0,0" Content="Of total tour requests were approved."></Label>
+                <Label MinWidth="110" Foreground="#039487" Style="{DynamicResource LightHeaderLabel}" FontSize="36" Margin="15,0,0,0" Content="{Binding ApprovedPercentage}"></Label>
+                <Label Style="{DynamicResource LightHeaderLabel}" VerticalAlignment="Center" Margin="5,0,0,0" Content="Of total tour requests were approved."></Label>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Foreground="#FF0000" Style="{DynamicResource LightHeaderLabel}" FontSize="36" Margin="15,0,0,0" Content="25%"></Label>
+                <Label MinWidth="110" Foreground="#FF0000" Style="{DynamicResource LightHeaderLabel}" FontSize="36" Margin="15,0,0,0" Content="{Binding InvalidPercentage}"></Label>
                 <Label Style="{DynamicResource LightHeaderLabel}" VerticalAlignment="Center" Margin="5,0,0,0" Content="Of total tour requests were rejected."></Label>
             </StackPanel>
         </StackPanel>
@@ -47,10 +55,17 @@
         <StackPanel Orientation="Vertical" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="2">
             <StackPanel Orientation="Horizontal">
                 <Label Style="{DynamicResource VoucherHeader}" Margin="0,0,0,0">Choose year:</Label>
-                <ComboBox Margin="15,0,0,0" Height="25" Width="100"></ComboBox>
+                <ComboBox FontSize="14" x:Name="AveragePeopleCountComboBox" ItemsSource="{Binding RequestsYears}" Margin="15,0,0,0" Height="25" Width="100">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding FilterAveragePeopleCountCommand}"
+                             CommandParameter="{Binding ElementName=AveragePeopleCountComboBox, Path=SelectedItem}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Style="{DynamicResource LightHeaderLabel}" FontSize="36" Margin="0,0,0,0" Content="25%"></Label>
+                <Label Style="{DynamicResource LightHeaderLabel}" FontSize="36" Margin="0,0,0,0" Content="{Binding AveragePeopleCount}"></Label>
                 <Label Style="{DynamicResource LightHeaderLabel}"  VerticalAlignment="Center" Margin="5,0,0,0" Content="Average people count in approved requests"></Label>
             </StackPanel>
         </StackPanel>
