@@ -30,7 +30,7 @@ namespace booking.View.Guide
 
         private void AddTour(object sender, RoutedEventArgs e)
         {
-            AddTourWindow addTourWindow = new AddTourWindow();
+            //AddTourWindow addTourWindow = new AddTourWindow();
            // addTourWindow.ShowDialog();
         }
 

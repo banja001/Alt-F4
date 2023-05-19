@@ -33,7 +33,7 @@ namespace WPF.ViewModels
 
         private void AddTourWindowOpen()
         {
-            Content.NavigationService.Navigate(new AddTourWindow());
+            Content.NavigationService.Navigate(new AddTourWindow(Guide));
         }
         private void LiveTrackingWindowOpen()
         {
@@ -59,6 +59,7 @@ namespace WPF.ViewModels
 
         private void TourRequestsStatisticsOpen()
         {
+            Content.NavigationService.Navigate(new TourRequestsStatisticsPage(Guide));
         }
     }
 }

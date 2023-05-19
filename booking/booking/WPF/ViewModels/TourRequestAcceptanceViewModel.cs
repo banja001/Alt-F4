@@ -86,7 +86,7 @@ namespace WPF.ViewModels
         private void LoadRequests()
         {
             AllRequests.Clear();
-            foreach (var request in _simpleRequestsService.CreateListOfSimpleRequests()) 
+            foreach (var request in _simpleRequestsService.CreateListOfSimpleRequestsDTO()) 
             {
                     AllRequests.Add(request);
             }
@@ -173,12 +173,13 @@ namespace WPF.ViewModels
             bool accept = SelectDateForTourRequestViewModel.Accept;
             DateTime SelectedDate = SelectDateForTourRequestViewModel.selectedDate;
             if (accept)
-                navigationService.Navigate(new AddTourWindow(SelectedTourRequest, SelectedDate,false));
+                navigationService.Navigate(new AddTourWindow(SelectedTourRequest, SelectedDate,false,Guide));
 
         }
         private bool CanClick()
         {
             return SelectedTourRequest != null;
         }
+
     }
 }

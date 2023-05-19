@@ -88,6 +88,7 @@ namespace application.UseCases
                 }
 
             }
+            states.Sort();
             return states;
         }
         public List<string> FillListWithCities(string SelectedState)
@@ -96,11 +97,12 @@ namespace application.UseCases
 
             foreach (Location loc in locationRepository.GetAll())
             {
-                if (SelectedState == loc.State)
+                if (SelectedState == loc.State && !cities.Contains(loc.City))
                 {
                     cities.Add(loc.City);
                 }
             }
+            cities.Sort();
             return cities;
         }
     }
