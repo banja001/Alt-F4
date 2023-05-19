@@ -34,7 +34,8 @@ namespace booking.Injector
             {typeof(ITourAttendanceRepository), new TourAttendanceRepository() },
             {typeof(IReservationTourRepository), new ReservationTourRepository() },
             {typeof(IRenovationDatesRepository), new RenovationDatesRepository() },
-            {typeof(ISimpleRequestRepository), new SimpleRequestRepository() }
+            {typeof(ISimpleRequestRepository), new SimpleRequestRepository() },
+            {typeof(ISimpleRequestTourRepository), new SimpleRequestTourRepository() }
 
         };
 

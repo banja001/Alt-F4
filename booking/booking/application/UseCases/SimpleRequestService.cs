@@ -1,4 +1,5 @@
-﻿using booking.Injector;
+﻿using booking.application.UseCases;
+using booking.Injector;
 using booking.Model;
 using Domain.DTO;
 using Domain.Model;
@@ -15,27 +16,55 @@ namespace application.UseCases
     {
         private readonly ISimpleRequestRepository _simpleRequestRepository;
         private readonly LocationService _locationService;
+        private readonly SimpleRequestTourService _simpleRequestTourService;
+        private readonly TourService _tourService;
         public SimpleRequestService() 
         {
             _simpleRequestRepository = Injector.CreateInstance<ISimpleRequestRepository>();
             _locationService = new LocationService();
+            _simpleRequestTourService = new SimpleRequestTourService();
+            _tourService = new TourService();
         }
         public void Add(SimpleRequest simpleRequest)
         {
             simpleRequest.Id = _simpleRequestRepository.MakeId();
             _simpleRequestRepository.Add(simpleRequest);
         }
+        public List<Location> GetInvalidRequestsLocationsForGuest2(User user)
+        {
+            var locations = new List<Location>();
+            var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
+            foreach (SimpleRequest simpleRequest in simpleRequests) 
+            {
+                if (simpleRequest.Status != SimpleRequestStatus.INVALID)
+                    continue;
+                locations.Add(_locationService.GetById(simpleRequest.Location.Id));
+            }
+            return locations;
+        }
+        public List<string> GetInvlaidRequestsLanguagesForGuest2(User user)
+        {
+            var languages = new List<string>();
+            var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
+            foreach (SimpleRequest simpleRequest in simpleRequests)
+            {
+                if (simpleRequest.Status != SimpleRequestStatus.INVALID)
+                    continue;
+                languages.Add(simpleRequest.Language);
+            }
+            return languages;
+        }
         public List<SimpleRequestDTO> CreateDTOsByGuest2(User user)
         {
             List<SimpleRequestDTO> simpleRequestDTOs = new List<SimpleRequestDTO>();
             var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
-            int madeId = simpleRequests.Count == 0 ? 1 : simpleRequests.Max(r => r.Id) + 1;
+            int idx = 0;
 
             foreach (var simpleRequest in simpleRequests)
             {
                 if (simpleRequest.User.Id != user.Id)
                     continue;
-                simpleRequestDTOs.Add(new SimpleRequestDTO(madeId++,
+                simpleRequestDTOs.Add(new SimpleRequestDTO(idx++,
                                                            simpleRequest.Description,
                                                            simpleRequest.NumberOfGuests,
                                                            simpleRequest.Language,
@@ -47,6 +76,78 @@ namespace application.UseCases
             }
             return simpleRequestDTOs;
         }
+        public List<SimpleRequestTourDTO> CreateNotificationsByGuest2(User user)
+        {
+            List<SimpleRequestTourDTO> simpleRequestTourDTOs = new List<SimpleRequestTourDTO>();
+            var simpleRequestTours = _simpleRequestTourService.GetAllByGuest2(user);
+            int idx = 0;
+            foreach (var simpleRequestTour in simpleRequestTours)
+            {
+                var dto = new SimpleRequestTourDTO(idx++,
+                                                   _tourService.GetById(simpleRequestTour.Tour.Id),
+                                                   _simpleRequestRepository.GetById(simpleRequestTour.SimpleRequest.Id));
+                dto.Tour.Location = _locationService.GetById(dto.Tour.Location.Id);
+                simpleRequestTourDTOs.Add(dto);
+            }
+            return simpleRequestTourDTOs;
+        }
+        public List<SimpleRequestTourDTO> CreateNotifications()
+        {
+            List<SimpleRequestTourDTO> simpleRequestTourDTOs = new List<SimpleRequestTourDTO>();
+            var simpleRequestTours = _simpleRequestTourService.GetAll();
+            int idx = 0;
+            foreach (var simpleRequestTour in simpleRequestTours)
+            {
+                var dto = new SimpleRequestTourDTO(idx++,
+                                                   _tourService.GetById(simpleRequestTour.Tour.Id),
+                                                   _simpleRequestRepository.GetById(simpleRequestTour.SimpleRequest.Id));
+                dto.Tour.Location = _locationService.GetById(dto.Tour.Location.Id);
+                simpleRequestTourDTOs.Add(dto);
+            }
+            return simpleRequestTourDTOs;
+        }
+        public List<SimpleRequestTourDTO> CreateApprovedNotificationsByGuest2(User user)
+        {
+            var notifications = CreateNotificationsByGuest2(user);
+            List<SimpleRequestTourDTO> approvedNotifications = new List<SimpleRequestTourDTO>();
+
+            foreach (var notification in notifications)
+            {
+                if (notification.SimpleRequest.Status != SimpleRequestStatus.APPROVED)
+                    continue;
+                approvedNotifications.Add(notification);
+            }
+            return approvedNotifications;
+        }
+        public List<SimpleRequestTourDTO> CreateSuggestionNotificationsByGuest2(User user)
+        {
+            var notifications = CreateNotifications();
+            var invalidRequestLocations = GetInvalidRequestsLocationsForGuest2(user);
+            var invalidRequestsLanguages = GetInvlaidRequestsLanguagesForGuest2(user);
+            List<SimpleRequestTourDTO> suggestionNotifications = new List<SimpleRequestTourDTO>();
+
+            foreach (var notification in notifications)
+            {
+                if(notification.SimpleRequest.Status == SimpleRequestStatus.APPROVED && notification.SimpleRequest.User.Id != user.Id)
+                {
+                    CheckRequestCompatibility(invalidRequestLocations, invalidRequestsLanguages, suggestionNotifications, notification);
+                }
+            }
+            return suggestionNotifications;
+        }
+
+        private void CheckRequestCompatibility(List<Location> invalidRequestLocations, List<string> invalidRequestsLanguages, List<SimpleRequestTourDTO> suggestionNotifications, SimpleRequestTourDTO notification)
+        {
+            var notificationLocation = notification.Tour.Location;
+
+            notificationLocation = _locationService.GetById(notificationLocation.Id);
+            bool containsLocation = invalidRequestLocations.Any(l => l.State.Equals(notificationLocation.State) && l.City.Equals(notificationLocation.City));
+            bool containsLanguage = invalidRequestsLanguages.Any(l => l.Equals(notification.Tour.Language));
+
+            if (containsLocation || containsLanguage)
+                suggestionNotifications.Add(notification);
+        }
+
         public void CheckApproval()
         {
             var simpleRequests = _simpleRequestRepository.GetAll();

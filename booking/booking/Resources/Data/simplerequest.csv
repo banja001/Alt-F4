@@ -1,11 +1,11 @@
 0|4|Neki opis|14|Srpski|10|10/2/2025|10/3/2025|ON_HOLD
-1|4|Neki opis|14|Nemacki|10|12/2/2024|12/5/2024|ON_HOLD
-2|4|Opis opis opis|14|Srpski|10|20/2/2024|2/3/2024|ON_HOLD
-3|4|Neki opis|14|Srpski|10|2/1/2024|2/5/2024|ON_HOLD
+1|4|Neki opis|14|Nemacki|10|12/2/2024|12/5/2024|APPROVED
+2|4|Opis opis opis|14|Srpski|10|20/2/2024|2/3/2024|APPROVED
+3|4|Neki opis|14|Srpski|10|2/1/2024|2/5/2024|APPROVED
 4|4|Neki opis|14|Srpski|10|24/2/2025|26/3/2025|ON_HOLD
 5|4|Opis opis opis|14|Engleski|15|25/2/2026|28/2/2026|ON_HOLD
 6|4|Opis|14|Engleski|10|25/2/2027|30/3/2028|ON_HOLD
 7|4|opis|14|Srpski|50|25/2/2024|30/6/2024|ON_HOLD
-8|4|Opis opis|14|Engleski|24|25/2/2025|25/3/2025|ON_HOLD
-9|4|Opis opis|14|Engleski|24|25/2/2025|25/3/2025|ON_HOLD
-10|4|Opis neki|14|Srpski|30|13/2/2025|14/3/2025|ON_HOLD
+8|4|Opis opis|14|Engleski|24|25/2/2025|25/3/2025|INVALID
+9|4|Opis opis|14|Engleski|24|25/2/2025|25/3/2025|INVALID
+10|4|Opis neki|14|Srpski|30|13/2/2025|14/3/2025|INVALID
