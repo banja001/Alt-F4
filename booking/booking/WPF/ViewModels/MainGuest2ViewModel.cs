@@ -59,6 +59,12 @@ namespace booking.WPF.ViewModels
                         HeaderMessage = " My Requests ";
                         OnPropertyChanged(nameof(HeaderMessage));
                         break;
+                    case "Statistics":
+                        UserControlInstance = new StatisticsViewModel(User);
+                        OnPropertyChanged(nameof(UserControlInstance));
+                        HeaderMessage = " Requests Statistics ";
+                        OnPropertyChanged(nameof(HeaderMessage));
+                        break;
                     default:
                         break;
                 }
