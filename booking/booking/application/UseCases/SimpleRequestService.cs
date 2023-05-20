@@ -7,9 +7,11 @@ using Domain.RepositoryInterfaces;
 using Repositories;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace application.UseCases
 {
@@ -26,10 +28,18 @@ namespace application.UseCases
             _simpleRequestTourService = new SimpleRequestTourService();
             _tourService = new TourService();
         }
+        public void InitializeTimer(EventHandler dispatcherTicker, int incrementer)
+        {
+            DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Interval = TimeSpan.FromHours(1);
+            dispatcherTimer.Tick += dispatcherTicker;
+            dispatcherTimer.Start();
+        }
+        
         public Dictionary<string, int> GetLanguageChartByGuest2(User user)
         {
-            var simpleRequests = _simpleRequestRepository.GetAll();
-            var languages = simpleRequests.Select(s => s.Language).Distinct();
+            var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
+            var languages = simpleRequests.Where(s => s.Status == SimpleRequestStatus.APPROVED).Select(s => s.Language).Distinct();
             Dictionary<string, int> languageRequestCountPairs = new Dictionary<string, int>();
             foreach (var language in languages)
             {
@@ -40,8 +50,8 @@ namespace application.UseCases
         }
         public Dictionary<string, int> GetLocationChartByGuest2(User user)
         {
-            var simpleRequests = _simpleRequestRepository.GetAll();
-            var locationIds = simpleRequests.Select(s => s.Location.Id).Distinct();
+            var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
+            var locationIds = simpleRequests.Where(s => s.Status == SimpleRequestStatus.APPROVED).Select(s => s.Location.Id).Distinct();
             var locations = locationIds.Select(l => _locationService.GetById(l).CityState).Distinct();
             Dictionary<string, int> LocationsRequestCountPairs = new Dictionary<string, int>();
             foreach (var location in locations)
@@ -75,11 +85,13 @@ namespace application.UseCases
         public double GetAveragePeopleCountByGuest2(User user, DateTime desiredYear)
         {
             var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
+            List<SimpleRequest> validRequests;
             if (desiredYear == new DateTime())
-                return simpleRequests.FindAll(s => s.User.Id == user.Id).Average(s => s.NumberOfGuests);
-
-            var validRequests = simpleRequests.FindAll(s => s.Status == SimpleRequestStatus.APPROVED && s.User.Id == user.Id && s.DateRange.StartDate.Year == desiredYear.Year);
-
+            {
+                validRequests = simpleRequests.FindAll(s => s.Status == SimpleRequestStatus.APPROVED && s.User.Id == user.Id);
+                return validRequests.Count == 0 ? 0 : validRequests.Average(s => s.NumberOfGuests);
+            }
+            validRequests = simpleRequests.FindAll(s => s.Status == SimpleRequestStatus.APPROVED && s.User.Id == user.Id && s.DateRange.StartDate.Year == desiredYear.Year);
             return validRequests.Count == 0 ? 0 : validRequests.Average(s => s.NumberOfGuests);
         }
         public void Add(SimpleRequest simpleRequest)

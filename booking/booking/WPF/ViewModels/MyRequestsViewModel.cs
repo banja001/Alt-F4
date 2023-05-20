@@ -47,15 +47,9 @@ namespace booking.WPF.ViewModels
             _locationService = new LocationService();
             Requests = new ObservableCollection<SimpleRequestDTO>(_simpleRequestService.CreateDTOsByGuest2(user));
 
-            InitializeTimer();
+            _simpleRequestService.InitializeTimer(DispatcherTicker, dispatcherIncrementer);
         }
-        private void InitializeTimer()
-        {
-            DispatcherTimer dispatcherTimer = new DispatcherTimer();
-            dispatcherTimer.Interval = TimeSpan.FromHours(1);
-            dispatcherTimer.Tick += DispatcherTicker;
-            dispatcherTimer.Start();
-        }
+
         private void DispatcherTicker(object sender, EventArgs e)
         {
             dispatcherIncrementer++;
