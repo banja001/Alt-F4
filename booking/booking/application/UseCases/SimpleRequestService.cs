@@ -7,6 +7,7 @@ using Domain.RepositoryInterfaces;
 using Repositories;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -233,6 +234,44 @@ namespace application.UseCases
                 months.Add(MonthNumberToString(s));
             }
             return months;
+        }
+
+        public List<SimpleAndComplexTourRequestsDTO> FilterState(List<SimpleAndComplexTourRequestsDTO> AllRequests, string SelectedState)
+        {
+            List<SimpleAndComplexTourRequestsDTO> list = AllRequests.Where(req => req.Location.State == SelectedState).ToList();
+            AllRequests = new List<SimpleAndComplexTourRequestsDTO>(list);
+            return AllRequests;
+        }
+        public List<SimpleAndComplexTourRequestsDTO> FilterCity(List<SimpleAndComplexTourRequestsDTO> AllRequests, string SelectedCity)
+        {
+            List<SimpleAndComplexTourRequestsDTO> list = AllRequests.Where(req => req.Location.City == SelectedCity).ToList();
+            AllRequests = new List<SimpleAndComplexTourRequestsDTO>(list);
+            return AllRequests;
+        }
+        public List<SimpleAndComplexTourRequestsDTO> FilterLanguage(List<SimpleAndComplexTourRequestsDTO> AllRequests, string Language)
+        {
+            List<SimpleAndComplexTourRequestsDTO> list = AllRequests.Where(req => req.Language.ToLower() == Language.ToLower()).ToList();
+            AllRequests = new List<SimpleAndComplexTourRequestsDTO>(list);
+            return AllRequests;
+
+        }
+        public List<SimpleAndComplexTourRequestsDTO> FilterNumberOfGuests(List<SimpleAndComplexTourRequestsDTO> AllRequests, string MaxGuests)
+        {
+            List<SimpleAndComplexTourRequestsDTO> list = AllRequests.Where(req => req.NumberOfGuests <= Convert.ToInt32(MaxGuests)).ToList();
+            AllRequests = new List<SimpleAndComplexTourRequestsDTO>(list);
+            return AllRequests;
+        }
+        public List<SimpleAndComplexTourRequestsDTO> FilterStartDate(List<SimpleAndComplexTourRequestsDTO> AllRequests, DateTime SelectedStartDate)
+        {
+            List<SimpleAndComplexTourRequestsDTO> list = AllRequests.Where(req => req.StartDate.Date >= SelectedStartDate).ToList();
+            AllRequests = new List<SimpleAndComplexTourRequestsDTO>(list);
+            return AllRequests;
+        }
+        public List<SimpleAndComplexTourRequestsDTO> FilterEndDate(List<SimpleAndComplexTourRequestsDTO> AllRequests, DateTime SelectedEndDate)
+        {
+            List<SimpleAndComplexTourRequestsDTO> list = AllRequests.Where(req => req.EndDate.Date <= SelectedEndDate).ToList();
+            AllRequests = new List<SimpleAndComplexTourRequestsDTO>(list);
+            return AllRequests;
         }
 
         public string CreateTourWithHelpOfStatistics(string parameter)

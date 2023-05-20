@@ -103,17 +103,17 @@ namespace WPF.ViewModels
         {
             LoadRequests();
             if(!string.IsNullOrEmpty(SelectedState))
-                FilterState();
+                AllRequests=new ObservableCollection<SimpleAndComplexTourRequestsDTO>( _simpleRequestsService.FilterState(AllRequests.ToList(),SelectedState));
             if (!string.IsNullOrEmpty(SelectedCity))
-                FilterCity();
+                AllRequests = new ObservableCollection<SimpleAndComplexTourRequestsDTO>(_simpleRequestsService.FilterCity(AllRequests.ToList(), SelectedCity));
             if (!string.IsNullOrEmpty(Language))
-                FilterLanguage();
+                AllRequests = new ObservableCollection<SimpleAndComplexTourRequestsDTO>(_simpleRequestsService.FilterLanguage(AllRequests.ToList(), Language));
             if (!string.IsNullOrEmpty(MaxGuests))
-                FilterNumberOfGuests();
+                AllRequests = new ObservableCollection<SimpleAndComplexTourRequestsDTO>(_simpleRequestsService.FilterNumberOfGuests(AllRequests.ToList(), MaxGuests));
             if (SelectedStartDate.Date.Date>=DateTime.Now.Date)
-                FilterStartDate();
+                AllRequests = new ObservableCollection<SimpleAndComplexTourRequestsDTO>(_simpleRequestsService.FilterStartDate(AllRequests.ToList(), SelectedStartDate));
             if (SelectedEndDate.Date.Date!= SelectedStartDate.Date.Date)
-                FilterEndDate();
+                AllRequests = new ObservableCollection<SimpleAndComplexTourRequestsDTO>(_simpleRequestsService.FilterEndDate(AllRequests.ToList(), SelectedEndDate));
             OnPropertyChanged(nameof(AllRequests));
         }
         private void CutRange() 
@@ -123,37 +123,7 @@ namespace WPF.ViewModels
                 SelectedEndDate = SelectedStartDate;
             OnPropertyChanged(nameof(DisplayDateStart));
         }
-        private void FilterState()
-        {
-            List<SimpleAndComplexTourRequestsDTO> list = AllRequests.Where(req => req.Location.State == SelectedState).ToList();
-            AllRequests = new ObservableCollection<SimpleAndComplexTourRequestsDTO>(list);
-        }
-        private void FilterCity()
-        {
-            List<SimpleAndComplexTourRequestsDTO> list = AllRequests.Where(req => req.Location.City == SelectedCity).ToList();
-            AllRequests = new ObservableCollection<SimpleAndComplexTourRequestsDTO>(list);
-        }
-        private void FilterLanguage()
-        {
-            List<SimpleAndComplexTourRequestsDTO> list = AllRequests.Where(req => req.Language.ToLower() == Language.ToLower()).ToList();
-            AllRequests = new ObservableCollection<SimpleAndComplexTourRequestsDTO>(list);
-
-        }
-        private void FilterNumberOfGuests()
-        {
-            List<SimpleAndComplexTourRequestsDTO> list = AllRequests.Where(req => req.NumberOfGuests<=Convert.ToInt32(MaxGuests)).ToList();
-            AllRequests = new ObservableCollection<SimpleAndComplexTourRequestsDTO>(list);
-        }
-        private void FilterStartDate()
-        {
-            List<SimpleAndComplexTourRequestsDTO> list = AllRequests.Where(req => req.StartDate.Date >= SelectedStartDate).ToList();
-            AllRequests = new ObservableCollection<SimpleAndComplexTourRequestsDTO>(list);
-        }
-        private void FilterEndDate()
-        {
-            List<SimpleAndComplexTourRequestsDTO> list = AllRequests.Where(req => req.EndDate.Date <= SelectedEndDate).ToList();
-            AllRequests = new ObservableCollection<SimpleAndComplexTourRequestsDTO>(list);
-        }
+      
         private void RejectSimpleTourRequest()
         {
             SimpleRequest simpleRequest = _simpleRequestsService.GetById(SelectedTourRequest.SimpleRequestId);
