@@ -29,7 +29,15 @@
             <ColumnDefinition Width="1.1*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        
+
+        <Label Grid.Row="0" Grid.Column="0" Margin="15,0,0,0" Style="{DynamicResource VoucherHeader}" Content="Language chart: " VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Label Grid.Row="0" Grid.Column="2" Margin="15,0,0,0" Style="{DynamicResource VoucherHeader}" Content="Location chart: " VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <lvc:CartesianChart x:Name="LanguageChart" Series="{Binding LanguageSeries}" AxisX="{Binding LangugeAxis}" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="15,25,15,25">
+        </lvc:CartesianChart>
+
+        <lvc:CartesianChart Grid.Row="0" Grid.Column="2" Series="{Binding LocationSeries}" AxisX="{Binding LocationAxis}" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="15,25,15,25">
+        </lvc:CartesianChart>
+
         <StackPanel Orientation="Vertical" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <Label Style="{DynamicResource VoucherHeader}" Margin="15,0,0,0">Choose year:</Label>

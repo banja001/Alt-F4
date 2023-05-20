@@ -26,6 +26,31 @@ namespace application.UseCases
             _simpleRequestTourService = new SimpleRequestTourService();
             _tourService = new TourService();
         }
+        public Dictionary<string, int> GetLanguageChartByGuest2(User user)
+        {
+            var simpleRequests = _simpleRequestRepository.GetAll();
+            var languages = simpleRequests.Select(s => s.Language).Distinct();
+            Dictionary<string, int> languageRequestCountPairs = new Dictionary<string, int>();
+            foreach (var language in languages)
+            {
+                int requestCount = simpleRequests.Count(s => s.Language == language);
+                languageRequestCountPairs.Add(language, requestCount);
+            }
+            return languageRequestCountPairs;
+        }
+        public Dictionary<string, int> GetLocationChartByGuest2(User user)
+        {
+            var simpleRequests = _simpleRequestRepository.GetAll();
+            var locationIds = simpleRequests.Select(s => s.Location.Id).Distinct();
+            var locations = locationIds.Select(l => _locationService.GetById(l).CityState).Distinct();
+            Dictionary<string, int> LocationsRequestCountPairs = new Dictionary<string, int>();
+            foreach (var location in locations)
+            {
+                int requestCount = simpleRequests.Count(s => _locationService.GetById(s.Location.Id).CityState == location);
+                LocationsRequestCountPairs.Add(location, requestCount);
+            }
+            return LocationsRequestCountPairs;
+        }
         public List<string> GetAvailableRequestsYears(User user)
         {
             var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
