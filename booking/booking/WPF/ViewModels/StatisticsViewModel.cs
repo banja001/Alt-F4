@@ -80,6 +80,13 @@ namespace booking.WPF.ViewModels
 
         private void OnFilterAveragePeopleCount(object parameter)
         {
+            if(parameter == null)
+            {
+                AveragePeopleCount = Math.Round(_simpleRequestService.GetAveragePeopleCountByGuest2(User, new DateTime()), 1).ToString();
+                OnPropertyChanged(nameof(AveragePeopleCount));
+                return;
+            }
+
             int year = (int)Convert.ToInt64(parameter);
             DateTime desiredYear = new DateTime(year, 1, 1);
             AveragePeopleCount = Math.Round(_simpleRequestService.GetAveragePeopleCountByGuest2(User, desiredYear), 1).ToString();
@@ -87,6 +94,14 @@ namespace booking.WPF.ViewModels
         }
         private void OnFilterRequestPercentage(object parameter)
         {
+            if (parameter == null)
+            {
+                ApprovedPercentage = Math.Round(_simpleRequestService.GetApprovedRequestsRatioByGuest2(User, new DateTime()) * 100, 1).ToString() + "%";
+                InvalidPercentage = Math.Round(_simpleRequestService.GetInvalidRequestsRatioByGuest2(User, new DateTime()) * 100, 1).ToString() + "%";
+                OnPropertyChanged(nameof(InvalidPercentage));
+                OnPropertyChanged(nameof(ApprovedPercentage));
+                return;
+            }
             int year = (int)Convert.ToInt64(parameter);
             DateTime desiredYear = new DateTime(year, 1, 1);
             ApprovedPercentage = (Math.Round(_simpleRequestService.GetApprovedRequestsRatioByGuest2(User, desiredYear), 1)*100).ToString() + "%";
