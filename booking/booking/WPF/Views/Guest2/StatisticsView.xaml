@@ -1,0 +1,81 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF.Views.Guest2"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="booking.WPF.Views.Guest2.StatisticsView"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Utilities/Themes/Guest2Themes.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Style="{DynamicResource LightBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1.1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Margin="15,0,0,0" Style="{DynamicResource VoucherHeader}" Content="Language chart: " VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Label Grid.Row="0" Grid.Column="2" Margin="15,0,0,0" Style="{DynamicResource VoucherHeader}" Content="Location chart: " VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <lvc:CartesianChart x:Name="LanguageChart" Series="{Binding LanguageSeries}" AxisX="{Binding LangugeAxis}" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="15,25,15,25">
+        </lvc:CartesianChart>
+
+        <lvc:CartesianChart Grid.Row="0" Grid.Column="2" Series="{Binding LocationSeries}" AxisX="{Binding LocationAxis}" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="15,25,15,25">
+        </lvc:CartesianChart>
+
+        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="0">
+            <StackPanel Orientation="Horizontal">
+                <Label Style="{DynamicResource VoucherHeader}" Margin="15,0,0,0">Choose year:</Label>
+                <ComboBox FontSize="14" x:Name="PercentageComboBox" ItemsSource="{Binding RequestsYears}" Margin="15,0,0,0" Height="25" Width="100">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding FilterRequestPercentageCommand}"
+                             CommandParameter="{Binding ElementName=PercentageComboBox, Path=SelectedItem}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label MinWidth="110" Foreground="#039487" Style="{DynamicResource LightHeaderLabel}" FontSize="36" Margin="15,0,0,0" Content="{Binding ApprovedPercentage}"></Label>
+                <Label Style="{DynamicResource LightHeaderLabel}" VerticalAlignment="Center" Margin="5,0,0,0" Content="Of total tour requests were approved."></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label MinWidth="110" Foreground="#FF0000" Style="{DynamicResource LightHeaderLabel}" FontSize="36" Margin="15,0,0,0" Content="{Binding InvalidPercentage}"></Label>
+                <Label Style="{DynamicResource LightHeaderLabel}" VerticalAlignment="Center" Margin="5,0,0,0" Content="Of total tour requests were rejected."></Label>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="2">
+            <StackPanel Orientation="Horizontal">
+                <Label Style="{DynamicResource VoucherHeader}" Margin="0,0,0,0">Choose year:</Label>
+                <ComboBox FontSize="14" x:Name="AveragePeopleCountComboBox" ItemsSource="{Binding RequestsYears}" Margin="15,0,0,0" Height="25" Width="100">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding FilterAveragePeopleCountCommand}"
+                             CommandParameter="{Binding ElementName=AveragePeopleCountComboBox, Path=SelectedItem}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Style="{DynamicResource LightHeaderLabel}" FontSize="36" Margin="0,0,0,0" Content="{Binding AveragePeopleCount}"></Label>
+                <Label Style="{DynamicResource LightHeaderLabel}"  VerticalAlignment="Center" Margin="5,0,0,0" Content="Average people count in approved requests"></Label>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
