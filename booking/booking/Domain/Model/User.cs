@@ -15,7 +15,6 @@ namespace booking.Model
         public string Username { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
-
         public bool Super { get; set; }
         public DateTime DateOfBecomingSuper { get; set; }
         public int Score { get; set; }

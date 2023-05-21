@@ -72,7 +72,6 @@ namespace WPF.ViewModels.Guest1
 
             this.userId = userId;
 
-            CountReservations();
             InitializeGuestStatus();
             KeepTrackOfScore();
 
@@ -106,25 +105,21 @@ namespace WPF.ViewModels.Guest1
         }
         private void InitializeGuestStatus()
         {
+            CountReservations();
+
             UserName = User.Username;
 
             if (User.Super)
             {
-                if ((DateTime.Now - User.DateOfBecomingSuper).Days < 365)
-                    Score = User.Score.ToString();
-                else
+                if ((DateTime.Now - User.DateOfBecomingSuper).Days >= 365)
                 {
                     if (User.NumOfAccommodationReservations >= 10)
                     {
-                        User.NumOfAccommodationReservations = 0;
-                        User.Score = 5;
-                        User.DateOfBecomingSuper = User.DateOfBecomingSuper.AddDays(365);
+                        UpdateGuestsFields(User.Super, User.DateOfBecomingSuper.AddDays(365), 5, 0);
                     }
                     else
                     {
-                        User.Score = 0;
-                        User.Super = false;
-                        User.DateOfBecomingSuper = new DateTime(0001, 01, 01);
+                        UpdateGuestsFields(false, new DateTime(0001, 01, 01), 0, User.NumOfAccommodationReservations);
                     }
                 }
             }
@@ -132,10 +127,7 @@ namespace WPF.ViewModels.Guest1
             {
                 if (User.NumOfAccommodationReservations >= 10)
                 {
-                    User.NumOfAccommodationReservations = 0;
-                    User.Score = 5;
-                    User.DateOfBecomingSuper = DateTime.Now;
-                    User.Super = true;
+                    UpdateGuestsFields(true, DateTime.Now, 5, 0);
 
                     MessageBox.Show("Congratulations! You have made 10 reservations and now have become a super guest.\n\n" +
                         "You will be granted 5 points to spend on your next 5 reservations during the next year(starting today) " +
@@ -146,6 +138,14 @@ namespace WPF.ViewModels.Guest1
             _userService.Update(User);
 
             Score = User.Score.ToString();
+        }
+
+        private void UpdateGuestsFields(bool super, DateTime dateOfBecomingSuper, int score, int numOfAcommodationreservations)
+        {
+            User.Super = super;
+            User.DateOfBecomingSuper = dateOfBecomingSuper;
+            User.Score = score;
+            User.NumOfAccommodationReservations = numOfAcommodationreservations;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

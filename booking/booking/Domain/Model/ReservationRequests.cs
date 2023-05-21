@@ -41,7 +41,7 @@ namespace booking.Domain.Model
         }
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), ReservationId.ToString(), NewStartDate.ToString("dd/MM/yyyy"), NewEndDate.ToString("dd/MM/yyyy"),isCanceled.ToString(),Comment};
+            string[] csvValues = { Id.ToString(), ReservationId.ToString(), NewStartDate.ToString("dd/MM/yyyy"), NewEndDate.ToString("dd/MM/yyyy"), RequestType.ToString(),isCanceled.ToString(),Comment};
             return csvValues;
         }
 
@@ -51,13 +51,13 @@ namespace booking.Domain.Model
             ReservationId = Convert.ToInt32(values[1]);
             NewStartDate = DateTime.ParseExact(values[2], "dd/MM/yyyy", CultureInfo.InvariantCulture);
             NewEndDate = DateTime.ParseExact(values[3], "dd/MM/yyyy", CultureInfo.InvariantCulture);
-
-            if (values[4] == "Pending") 
+            RequestType = (values[4] == "Postpone") ? RequestType.Postpone : RequestType.Cancel;
+            if (values[5] == "Pending") 
                 isCanceled = RequestStatus.Pending;
-            else if (values[4] == "Postponed") 
+            else if (values[5] == "Postponed") 
                 isCanceled = RequestStatus.Postponed;
             else isCanceled = RequestStatus.Canceled;
-            Comment = values[5];
+            Comment = values[6];
         }
     }
 }

@@ -135,15 +135,20 @@ namespace WPF.ViewModels.Guest1
                 SetSelectedDatesParameters();
                 _reservedDatesService.Add(SelectedDates);
 
-                if (User.Score > 0 && User.Super)
-                {
-                    --User.Score;
-                    _userService.Update(User);
-                }
+                DecreaseScoreOfSuper();
 
                 MessageBox.Show("Your reservation has been successfully made!");
 
                 this.CloseCurrentWindow();
+            }
+        }
+
+        private void DecreaseScoreOfSuper()
+        {
+            if (User.Score > 0 && User.Super)
+            {
+                --User.Score;
+                _userService.Update(User);
             }
         }
 

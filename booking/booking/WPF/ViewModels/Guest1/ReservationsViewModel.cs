@@ -100,24 +100,32 @@ namespace WPF.ViewModels.Guest1
 
             if (isMoreThan24H || isMoreThanMinDays)
             {
-                _reservedDatesService.Delete(reservedDate);
+                //_reservedDatesService.Delete(reservedDate);
+                ReservationRequests request = new ReservationRequests(_reservationRequestsService.MakeId(), reservedDate, "Cancel");
+                _reservationRequestsService.Add(request);
+
                 _reservationRequestsService.RemoveAllByReservationId(reservedDate.Id);
 
                 UpdateDataGrids();
                 int ownerId = _accommodationService.GetById(reservedDate.AccommodationId).OwnerId;
                 _ownerNotificationsService.Add(new OwnerNotification(_ownerNotificationsService.MakeId(), ownerId, accomodation, reservedDate, _userService.GetUserNameById(userId)));
 
-                if (user.Score < 5 && user.Super)
-                {
-                    ++user.Score;
-                    _userService.Update(user);
-                }
+                IncreaseScoreOfSuper();
 
                 MessageBox.Show("Your reservation is deleted!");
             }
             else
             {
                 MessageBox.Show("You can cancel your reservation only 24h or " + accomodation.MinDaysToCancel + "days before!");
+            }
+        }
+
+        private void IncreaseScoreOfSuper()
+        {
+            if (user.Score < 5 && user.Super)
+            {
+                ++user.Score;
+                _userService.Update(user);
             }
         }
 
