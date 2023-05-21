@@ -19,5 +19,6 @@ namespace Domain.RepositoryInterfaces
         public void Save();
         public void Delete(ReservedDates reservedDate);
         public void UpdateRating(int id);
+        public void AddCanceled(ReservedDates reservedDate);
     }
 }

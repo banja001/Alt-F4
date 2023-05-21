@@ -15,11 +15,13 @@ namespace booking.Repository
     {
         private List<ReservedDates> reservedDates;
         private Serializer<ReservedDates> serializer;
+        private List<ReservedDates> canceledDates;
         private readonly string fileName = "../../../Resources/Data/reservedDates.csv";
-
+        private readonly string fileNameCancel = "../../../Resources/Data/canceledDates.csv";
         public ReservedDatesRepository()
         {
             serializer = new Serializer<ReservedDates>();
+            canceledDates = serializer.FromCSV(fileNameCancel);
             Load();
         }
         public void Load()
@@ -70,7 +72,13 @@ namespace booking.Repository
             reservedDates.Add(reservedDate);
             Save();
         }
+        public void AddCanceled(ReservedDates reservedDate)
+        {
 
+            canceledDates = serializer.FromCSV(fileNameCancel);
+            canceledDates.Add(reservedDate);
+            serializer.ToCSV(fileNameCancel, canceledDates);
+        }
         public void Remove(ReservedDates reservedDate)
         {
             //Load();

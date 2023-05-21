@@ -44,6 +44,10 @@ namespace application.UseCases
         {
             _reservedDatesRepository.Add(reservedDate);
         }
+        public void AddCanceled(ReservedDates reservedDate)
+        {
+            _reservedDatesRepository.AddCanceled(reservedDate);
+        }
         public void Remove(ReservedDates reservedDate)
         {
             _reservedDatesRepository.Remove(reservedDate);
