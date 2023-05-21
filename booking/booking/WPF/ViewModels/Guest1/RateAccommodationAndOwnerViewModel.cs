@@ -312,11 +312,23 @@ namespace WPF.ViewModels.Guest1
                 EmptyForm();
 
                 SetRatingsIGotEnabled();
-
-                SuccessfullyRatedView popUpWindow = new SuccessfullyRatedView(userId, Guest1RatingAccommodationDTOs);
-                popUpWindow.Show();
+                Inform();
 
                 InitializeAccommodationDTO();
+            }
+        }
+
+        private void Inform()
+        {
+            if (Guest1RatingAccommodationDTOs.Count > 0)
+            {
+                SuccessfullyRatedView popUpWindow = new SuccessfullyRatedView(userId, Guest1RatingAccommodationDTOs);
+                popUpWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("You have successfully rated the accommodation and owner. Once the owner do the same,\n" +
+                    "you will be able to see rating you've got!");
             }
         }
 

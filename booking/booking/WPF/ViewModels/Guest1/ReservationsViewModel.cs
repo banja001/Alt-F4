@@ -106,16 +106,15 @@ namespace WPF.ViewModels.Guest1
                 _reservationRequestsService.Add(request);
                 */
                 _reservationRequestsService.RemoveAllByReservationId(reservedDate.Id);
-                
                 _reservedDatesService.AddCanceled(reservedDate); 
-
-                UpdateDataGrids();
+                
                 int ownerId = _accommodationService.GetById(reservedDate.AccommodationId).OwnerId;
 
                 _reservedDatesService.Delete(reservedDate);
 
                 _ownerNotificationsService.Add(new OwnerNotification(_ownerNotificationsService.MakeId(), ownerId, accomodation, reservedDate, _userService.GetUserNameById(userId)));
 
+                UpdateDataGrids();
                 IncreaseScoreOfSuper();
 
                 MessageBox.Show("Your reservation is deleted!");
