@@ -26,12 +26,18 @@ namespace booking.Repository
         }
         public void Load()
         {
+            canceledDates = serializer.FromCSV(fileNameCancel);
             reservedDates = serializer.FromCSV(fileName);
         }
         public List<ReservedDates> GetAll()
         {
             Load();
             return reservedDates;
+        }
+
+        public List<ReservedDates> GetAllCanceled()
+        {
+            return canceledDates;
         }
 
         public List<ReservedDates> GetAllByAccommodationId(int id)

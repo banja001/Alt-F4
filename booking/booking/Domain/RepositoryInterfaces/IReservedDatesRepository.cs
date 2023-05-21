@@ -9,6 +9,7 @@ namespace Domain.RepositoryInterfaces
     {
         public void Load();
         public List<ReservedDates> GetAll();
+        public List<ReservedDates> GetAllCanceled();
         public List<ReservedDates> GetAllByAccommodationId(int id);
         public ReservedDates GetById(int id);
         public List<ReservedDates> GetByGuestId(int guestId);

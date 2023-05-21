@@ -1,4 +1,5 @@
-﻿using booking.application.usecases;
+﻿using application.UseCases;
+using booking.application.usecases;
 using booking.Domain.Model;
 using booking.Model;
 using booking.WPF.ViewModels;
@@ -89,6 +90,15 @@ namespace WPF.ViewModels.Owner
                 var lastDayOfTheYear = new DateTime(year, 12, 31);
                 CalculateMaxYear(ref max, ref maxTemp, year, lastDayOfTheYear);
                 FindPostponedReservations(year);
+
+                foreach(ReservedDates res in ownerViewModel.reservedDatesService.GetAllCanceled())
+                {
+                    if (res.AccommodationId == accommodationId && res.StartDate.Year == year)
+                    {
+                        CanceledReservations++;
+                    }
+                }
+
                 AccommodationYearlyStatsDTO statsPerYear = new AccommodationYearlyStatsDTO(year, NumberOfReservations, CanceledReservations, PostponedReservations);
                 DatagridYearList.Add(statsPerYear);
             }
@@ -134,6 +144,11 @@ namespace WPF.ViewModels.Owner
                 NumberOfReservations = 0;
                 CanceledReservations = 0;
                 PostponedReservations = 0;
+                foreach (ReservedDates res in ownerViewModel.reservedDatesService.GetAllCanceled())
+                { 
+                    if (res.StartDate.Month == i && res.StartDate.Year == SelectedItem.year && accommodationId == res.AccommodationId) CanceledReservations++;
+                }
+
                 GetNumberOfReservations(i);
                 GetPostponedrenovations(i);
                 AccommodationMonthlyStatsDTO statsPerMonth = new AccommodationMonthlyStatsDTO(Months[i - 1], NumberOfReservations, CanceledReservations, PostponedReservations);

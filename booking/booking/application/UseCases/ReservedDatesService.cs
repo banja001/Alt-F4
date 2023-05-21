@@ -19,6 +19,10 @@ namespace application.UseCases
         {
             return _reservedDatesRepository.GetAll();
         }
+        public List<ReservedDates> GetAllCanceled()
+        {
+            return _reservedDatesRepository.GetAllCanceled();
+        }
         public List<ReservedDates> GetAllByAccommodationId(int id)
         {
             return _reservedDatesRepository.GetAllByAccommodationId(id);
