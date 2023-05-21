@@ -355,12 +355,14 @@ namespace application.UseCases
                     return maxState+",State";
                     break;
                 case "City":
+                    maxState = _locationService.GetAll().Find(l => l.City == maxCity).State;
                     return maxCity + ",City," + maxState;
                     break;
                 case "Language":
                     return maxLanguage + ",Language";
                     break;
                 case "All":
+                    maxState = _locationService.GetAll().Find(l =>l.City==maxCity).State;
                     return maxState+"|"+maxCity+"|"+maxLanguage;
                     break;
                 default:
@@ -383,6 +385,7 @@ namespace application.UseCases
             Dictionary<string, int> listOfLCities = AllRequests.GroupBy(r => r.Location.City).ToDictionary(r => r.Key, r => r.Count());
             return listOfLCities.OrderByDescending(l => l.Value).First().Key;
         }
+
 
         public string MonthNumberToString(string monthNumber)
         {

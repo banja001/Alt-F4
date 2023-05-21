@@ -29,8 +29,8 @@ namespace WPF.ViewModels
             {
                 
                 SignInForm signIn = new SignInForm();
-                signIn.Show();
                 this.CloseCurrentWindow();
+                signIn.Show();
             }
         }
     }
