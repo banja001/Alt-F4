@@ -107,7 +107,7 @@ namespace WPF.ViewModels.Guest1
                 */
                 _reservationRequestsService.RemoveAllByReservationId(reservedDate.Id);
                 
-                _reservedDatesService.AddCanceled(reservedDate);
+                _reservedDatesService.AddCanceled(reservedDate); 
 
                 UpdateDataGrids();
                 int ownerId = _accommodationService.GetById(reservedDate.AccommodationId).OwnerId;
