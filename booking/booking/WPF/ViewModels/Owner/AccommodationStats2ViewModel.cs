@@ -42,6 +42,7 @@ namespace WPF.ViewModels.Owner
         private int NumberOfReservations;
         private int CanceledReservations;
         private int PostponedReservations;
+        private int RenovationRequests;
         ReservationRequestsService res;
         public List<ReservedDates> reservedDates;
         public ObservableCollection<AccommodationYearlyStatsDTO> DatagridYearList { get; set; }
@@ -63,44 +64,66 @@ namespace WPF.ViewModels.Owner
                 }
             }
         }
+        OwnerRatingService _service;
 
         public AccommodationStats2ViewModel(int accId,OwnerViewModel ownerViewModel)
         {
             accommodationId = accId;
-            this.ownerViewModel=ownerViewModel;
+            this.ownerViewModel = ownerViewModel;
             YearList = new List<int>();
             res = new ReservationRequestsService();
-            for(int i=2018;i<=DateTime.Now.Year; i++)
+            for (int i = 2018; i <= DateTime.Now.Year; i++)
             {
                 YearList.Add(i);
             }
-            
+
             reservedDates = ownerViewModel.reservedDatesService.GetAll();
-            DatagridYearList=new ObservableCollection<AccommodationYearlyStatsDTO>();
+            DatagridYearList = new ObservableCollection<AccommodationYearlyStatsDTO>();
             DatagridMonthList = new ObservableCollection<AccommodationMonthlyStatsDTO>();
             int max = -1;
             MaxYear = -1;
-            int maxTemp;
+            int maxTemp = 0;
+            _service = new OwnerRatingService();
+            FindMaxYear(ownerViewModel, ref max, ref maxTemp);
+        }
+
+        private void FindMaxYear(OwnerViewModel ownerViewModel, ref int max, ref int maxTemp)
+        {
             foreach (int year in YearList)
             {
                 maxTemp = 0;
                 NumberOfReservations = 0;
                 CanceledReservations = 0;
                 PostponedReservations = 0;
+                RenovationRequests = 0;
                 var lastDayOfTheYear = new DateTime(year, 12, 31);
                 CalculateMaxYear(ref max, ref maxTemp, year, lastDayOfTheYear);
                 FindPostponedReservations(year);
-
-                foreach(ReservedDates res in ownerViewModel.reservedDatesService.GetAllCanceled())
-                {
-                    if (res.AccommodationId == accommodationId && res.StartDate.Year == year)
-                    {
-                        CanceledReservations++;
-                    }
-                }
-
-                AccommodationYearlyStatsDTO statsPerYear = new AccommodationYearlyStatsDTO(year, NumberOfReservations, CanceledReservations, PostponedReservations);
+                FindCanceledReservations(ownerViewModel, year);
+                FindRenovationRequests(year);
+                AccommodationYearlyStatsDTO statsPerYear = new AccommodationYearlyStatsDTO(year, NumberOfReservations, CanceledReservations, PostponedReservations, RenovationRequests);
                 DatagridYearList.Add(statsPerYear);
+            }
+        }
+
+        private void FindCanceledReservations(OwnerViewModel ownerViewModel, int year)
+        {
+            foreach (ReservedDates res in ownerViewModel.reservedDatesService.GetAllCanceled())
+            {
+                if (res.AccommodationId == accommodationId && res.StartDate.Year == year)
+                {
+                    CanceledReservations++;
+                }
+            }
+        }
+
+        private void FindRenovationRequests(int year)
+        {
+            foreach (OwnerRating rating in _service.GetAll())
+            {
+                ReservedDates date = reservedDates.Find(a => a.Id == rating.ReservationId);
+                if (date.AccommodationId == accommodationId && date.StartDate.Year == year && rating.Urgency != Urgency.Blank) RenovationRequests++;
+
             }
         }
 
@@ -111,9 +134,9 @@ namespace WPF.ViewModels.Owner
                 ReservedDates date = reservedDates.Find(a => a.Id == request.ReservationId);
                 if (date.AccommodationId == accommodationId && date.StartDate.Year == year)
                 {
-                    //if (request.isCanceled == RequestStatus.Canceled) CanceledReservations++;
+                    
                     if (request.isCanceled == RequestStatus.Postponed) PostponedReservations++;
-                }//Preporuk za renoviranje fali
+                }
             }
         }
 
@@ -144,18 +167,34 @@ namespace WPF.ViewModels.Owner
                 NumberOfReservations = 0;
                 CanceledReservations = 0;
                 PostponedReservations = 0;
-                foreach (ReservedDates res in ownerViewModel.reservedDatesService.GetAllCanceled())
-                { 
-                    if (res.StartDate.Month == i && res.StartDate.Year == SelectedItem.year && accommodationId == res.AccommodationId) CanceledReservations++;
-                }
-
+                RenovationRequests = 0;
+                GetcanceledReservations(i);
+                GetrenovationRequests(i);
                 GetNumberOfReservations(i);
                 GetPostponedrenovations(i);
-                AccommodationMonthlyStatsDTO statsPerMonth = new AccommodationMonthlyStatsDTO(Months[i - 1], NumberOfReservations, CanceledReservations, PostponedReservations);
+                AccommodationMonthlyStatsDTO statsPerMonth = new AccommodationMonthlyStatsDTO(Months[i - 1], NumberOfReservations, CanceledReservations, PostponedReservations, RenovationRequests);
                 DatagridMonthList.Add(statsPerMonth);
 
             }
 
+        }
+
+        private void GetcanceledReservations(int i)
+        {
+            foreach (ReservedDates res in ownerViewModel.reservedDatesService.GetAllCanceled())
+            {
+                if (res.StartDate.Month == i && res.StartDate.Year == SelectedItem.year && accommodationId == res.AccommodationId) CanceledReservations++;
+            }
+        }
+
+        private void GetrenovationRequests(int i)
+        {
+            foreach (OwnerRating rating in _service.GetAll())
+            {
+                ReservedDates date = reservedDates.Find(a => a.Id == rating.ReservationId);
+                if (date.AccommodationId == accommodationId && date.StartDate.Month == i && date.StartDate.Year == SelectedItem.year && rating.Urgency != Urgency.Blank) RenovationRequests++;
+
+            }
         }
 
         private void GetPostponedrenovations(int i)
@@ -165,9 +204,9 @@ namespace WPF.ViewModels.Owner
                 ReservedDates date = reservedDates.Find(a => a.Id == request.ReservationId);
                 if (date.AccommodationId == accommodationId && date.StartDate.Month == i && date.StartDate.Year == SelectedItem.year)
                 {
-                    //if (request.isCanceled == RequestStatus.Canceled) CanceledReservations++;
+                    
                     if (request.isCanceled == RequestStatus.Postponed) PostponedReservations++;
-                }//Preporuk za renoviranje fali
+                }
             }
         }
 

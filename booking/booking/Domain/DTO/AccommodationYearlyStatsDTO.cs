@@ -13,13 +13,13 @@ namespace Domain.DTO
 
         public int RenovationSuggestions { get; set; }
 
-        public AccommodationYearlyStatsDTO(int y, int numberOfReservations, int canceledReservations, int postponedReservations)
+        public AccommodationYearlyStatsDTO(int y, int numberOfReservations, int canceledReservations, int postponedReservations,int ren)
         {
             year = y;
             NumberOfReservations = numberOfReservations;
             CanceledReservations = canceledReservations;
             PostponedReservations = postponedReservations;
-            RenovationSuggestions = 0;
+            RenovationSuggestions = ren;
         }
     }
 }
