@@ -121,53 +121,67 @@ namespace WPF.ViewModels.Owner
             DateTime startDate = DateTime.Parse(FromDate);
             DateTime endDate = DateTime.Parse(ToDate);
             DateTime tempDate = startDate.AddDays(Duration);
-            bool check=false;
-            while(tempDate.Date<=endDate.Date)
+            bool check = false;
+            IterateDateIntervals(ref startDate, endDate, ref tempDate, ref check);
+        }
+
+        private void IterateDateIntervals(ref DateTime startDate, DateTime endDate, ref DateTime tempDate, ref bool check)
+        {
+            while (tempDate.Date <= endDate.Date)
             {
                 check = true;
-                foreach(var reservation in ownerViewModel.reservedDatesService.GetAll())//checks for reserved date range
+                check = IsOverlapingReservations(startDate, tempDate, check);
+                if (check)
                 {
-                    if (reservation.AccommodationId == SelectedAccommodation.Id)
-                    {
-                        if (!(startDate.Date >= reservation.EndDate.Date || tempDate.Date <= reservation.StartDate))
-                        {
-                            check = false;
-                            break;
-                        } 
-                    }
+                    check = IsOverlapingRenovations(startDate, tempDate, check);
                 }
-                if (check)//checks for renovation date range
-                {
-                    foreach(var renovation in ownerViewModel.renovationDatesService.GetAll())
-                    {
-                        if (renovation.AccommodationId == SelectedAccommodation.Id)
-                        {
-                            if (!(startDate.Date >= renovation.EndDate.Date || tempDate.Date <= renovation.StartDate))
-                            {
-                                check = false;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-
                 if (check)
                 {
                     DateIntervalDTO interval = new DateIntervalDTO(startDate, tempDate);
                     IntervalList.Add(interval);
                 }
-
-                tempDate=tempDate.AddDays(1);
+                tempDate = tempDate.AddDays(1);
                 startDate = startDate.AddDays(1);
             }
+        }
 
+        private bool IsOverlapingRenovations(DateTime startDate, DateTime tempDate, bool check)
+        {
+            foreach (var renovation in ownerViewModel.renovationDatesService.GetAll())
+            {
+                if (renovation.AccommodationId == SelectedAccommodation.Id)
+                {
+                    if (!(startDate.Date >= renovation.EndDate.Date || tempDate.Date <= renovation.StartDate))
+                    {
+                        check = false;
+                        break;
+                    }
+                }
+            }
 
+            return check;
+        }
+
+        private bool IsOverlapingReservations(DateTime startDate, DateTime tempDate, bool check)
+        {
+            foreach (var reservation in ownerViewModel.reservedDatesService.GetAll())
+            {
+                if (reservation.AccommodationId == SelectedAccommodation.Id)
+                {
+                    if (!(startDate.Date >= reservation.EndDate.Date || tempDate.Date <= reservation.StartDate))
+                    {
+                        check = false;
+                        break;
+                    }
+                }
+            }
+
+            return check;
         }
 
         private void ScheduleRenovation()
         {
-            LeaveCommentRenovationWindow win = new LeaveCommentRenovationWindow(SelectedInterval,SelectedAccommodation.Id);
+            LeaveCommentRenovationWindow win = new LeaveCommentRenovationWindow(SelectedInterval,SelectedAccommodation.Id,ownerViewModel.renovationDatesService);
             win.ShowDialog();
             IntervalList.Clear();
             

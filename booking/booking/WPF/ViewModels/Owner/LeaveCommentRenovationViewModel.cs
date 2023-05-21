@@ -20,11 +20,11 @@ namespace WPF.ViewModels.Owner
         private DateIntervalDTO selectedInterval;
         private int accommodationId;
         public ICommand SaveCommentCommand => new RelayCommand(SaveCommentClick);
-        public LeaveCommentRenovationViewModel(DateIntervalDTO s,int accid)
+        public LeaveCommentRenovationViewModel(DateIntervalDTO s,int accid,RenovationDatesService ren)
         {
             selectedInterval = s;
             accommodationId=accid;
-            repository = new RenovationDatesService();
+            repository = ren;//moze biti prob
         }
 
 
