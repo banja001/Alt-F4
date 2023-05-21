@@ -1,4 +1,6 @@
-﻿using Domain.DTO;
+﻿using booking.application.UseCases;
+using Domain.DTO;
+using Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,10 +21,10 @@ namespace WPF.Views.Owner
     /// </summary>
     public partial class LeaveCommentRenovationWindow : Window
     {
-        public LeaveCommentRenovationWindow(DateIntervalDTO s, int accid)
+        public LeaveCommentRenovationWindow(DateIntervalDTO s, int accid,RenovationDatesService ren)
         {
             InitializeComponent();
-            DataContext = new LeaveCommentRenovationViewModel(s,accid);
+            DataContext = new LeaveCommentRenovationViewModel(s,accid,ren);
         }
     }
 }

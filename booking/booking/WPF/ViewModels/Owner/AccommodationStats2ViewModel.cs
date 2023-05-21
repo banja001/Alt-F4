@@ -87,71 +87,82 @@ namespace WPF.ViewModels.Owner
                 CanceledReservations = 0;
                 PostponedReservations = 0;
                 var lastDayOfTheYear = new DateTime(year, 12, 31);
-                foreach(var reservation in reservedDates)
-                { 
-                    
-                    if(reservation.StartDate.Year==year && accommodationId==reservation.AccommodationId)
-                    {
-                        NumberOfReservations++;
-                        if(reservation.EndDate>=lastDayOfTheYear) maxTemp += (int)(lastDayOfTheYear - reservation.StartDate).TotalDays;
-                        else maxTemp += (int)(reservation.EndDate - reservation.StartDate).TotalDays;
-                    }
-                        
-
-                   
-                    
-                    
-                }
-                if (maxTemp >= max)
-                {
-                    max = maxTemp;
-                    MaxYear = year;
-                }
-
-                foreach (var request in res.GetAll())
-                {
-                    ReservedDates date = reservedDates.Find(a => a.Id == request.ReservationId);
-                    if (date.AccommodationId==accommodationId && date.StartDate.Year==year)
-                    {
-                        if (request.isCanceled == RequestStatus.Canceled) CanceledReservations++;
-                        if (request.isCanceled == RequestStatus.Postponed) PostponedReservations++;
-                    }//Preporuk za renoviranje fali
-                }
-                
-                AccommodationYearlyStatsDTO statsPerYear = new AccommodationYearlyStatsDTO(year,NumberOfReservations,CanceledReservations,PostponedReservations);
+                CalculateMaxYear(ref max, ref maxTemp, year, lastDayOfTheYear);
+                FindPostponedReservations(year);
+                AccommodationYearlyStatsDTO statsPerYear = new AccommodationYearlyStatsDTO(year, NumberOfReservations, CanceledReservations, PostponedReservations);
                 DatagridYearList.Add(statsPerYear);
             }
-            
-            
+        }
+
+        private void FindPostponedReservations(int year)
+        {
+            foreach (var request in res.GetAll())
+            {
+                ReservedDates date = reservedDates.Find(a => a.Id == request.ReservationId);
+                if (date.AccommodationId == accommodationId && date.StartDate.Year == year)
+                {
+                    //if (request.isCanceled == RequestStatus.Canceled) CanceledReservations++;
+                    if (request.isCanceled == RequestStatus.Postponed) PostponedReservations++;
+                }//Preporuk za renoviranje fali
+            }
+        }
+
+        private void CalculateMaxYear(ref int max, ref int maxTemp, int year, DateTime lastDayOfTheYear)
+        {
+            foreach (var reservation in reservedDates)
+            {
+
+                if (reservation.StartDate.Year == year && accommodationId == reservation.AccommodationId)
+                {
+                    NumberOfReservations++;
+                    if (reservation.EndDate >= lastDayOfTheYear) maxTemp += (int)(lastDayOfTheYear - reservation.StartDate).TotalDays;
+                    else maxTemp += (int)(reservation.EndDate - reservation.StartDate).TotalDays;
+                }
+            }
+            if (maxTemp >= max)
+            {
+                max = maxTemp;
+                MaxYear = year;
+            }
         }
 
         public void DatagridSelectionChange()
         {
             DatagridMonthList.Clear();
-            for(int i=1;i <= 12; i++){
-            NumberOfReservations = 0;
-            CanceledReservations = 0;
-            PostponedReservations = 0;
-                foreach (var reservation in reservedDates)
-                {
-                    if (reservation.StartDate.Month == i && reservation.StartDate.Year == SelectedItem.year && accommodationId == reservation.AccommodationId) NumberOfReservations++;
-                }
-                foreach (var request in res.GetAll())
-                {
-                    ReservedDates date = reservedDates.Find(a => a.Id == request.ReservationId);
-                    if (date.AccommodationId == accommodationId && date.StartDate.Month == i && date.StartDate.Year==SelectedItem.year)
-                    {
-                        if (request.isCanceled == RequestStatus.Canceled) CanceledReservations++;
-                        if (request.isCanceled == RequestStatus.Postponed) PostponedReservations++;
-                    }//Preporuk za renoviranje fali
-                }
-                AccommodationMonthlyStatsDTO statsPerMonth = new AccommodationMonthlyStatsDTO(Months[i-1], NumberOfReservations, CanceledReservations, PostponedReservations);
+            for(int i=1;i <= 12; i++)
+            {
+                NumberOfReservations = 0;
+                CanceledReservations = 0;
+                PostponedReservations = 0;
+                GetNumberOfReservations(i);
+                GetPostponedrenovations(i);
+                AccommodationMonthlyStatsDTO statsPerMonth = new AccommodationMonthlyStatsDTO(Months[i - 1], NumberOfReservations, CanceledReservations, PostponedReservations);
                 DatagridMonthList.Add(statsPerMonth);
 
             }
 
         }
 
+        private void GetPostponedrenovations(int i)
+        {
+            foreach (var request in res.GetAll())
+            {
+                ReservedDates date = reservedDates.Find(a => a.Id == request.ReservationId);
+                if (date.AccommodationId == accommodationId && date.StartDate.Month == i && date.StartDate.Year == SelectedItem.year)
+                {
+                    //if (request.isCanceled == RequestStatus.Canceled) CanceledReservations++;
+                    if (request.isCanceled == RequestStatus.Postponed) PostponedReservations++;
+                }//Preporuk za renoviranje fali
+            }
+        }
+
+        private void GetNumberOfReservations(int i)
+        {
+            foreach (var reservation in reservedDates)
+            {
+                if (reservation.StartDate.Month == i && reservation.StartDate.Year == SelectedItem.year && accommodationId == reservation.AccommodationId) NumberOfReservations++;
+            }
+        }
 
 
 
