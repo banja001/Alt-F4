@@ -12,15 +12,17 @@ namespace booking.Model
     {
         public int Id { get; set; }
         public int GuestId { get; set; }
+        public int ReservationId { get; set; }
         public int CleanRating { get; set; }
         public int RulesRating { get; set; }
         public string Comment { get; set; }
 
         public Guest1Rating() { }
-        public Guest1Rating(int id,int guestid, int cleanRating, int rulesrating, string comment)
+        public Guest1Rating(int id,int guestid, int cleanRating, int rulesrating, string comment,int res)
         {
             Id = id;
             GuestId = guestid;
+            ReservationId = res;
             CleanRating = cleanRating;
             RulesRating = rulesrating;
             Comment = comment;
@@ -28,7 +30,7 @@ namespace booking.Model
 
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), GuestId.ToString(),CleanRating.ToString(),RulesRating.ToString(),Comment};
+            string[] csvValues = { Id.ToString(), GuestId.ToString(),ReservationId.ToString(),CleanRating.ToString(),RulesRating.ToString(),Comment};
             return csvValues;
         }
 
@@ -36,10 +38,10 @@ namespace booking.Model
         {
             Id = Convert.ToInt32(values[0]);
             GuestId = Convert.ToInt32(values[1]);
-            CleanRating = Convert.ToInt32(values[2]);
-            RulesRating = Convert.ToInt32(values[3]);
-            Comment = values[4];
-
+            ReservationId = Convert.ToInt32(values[2]);
+            CleanRating = Convert.ToInt32(values[3]);
+            RulesRating = Convert.ToInt32(values[4]);
+            Comment = values[5];
         }
     }
 }

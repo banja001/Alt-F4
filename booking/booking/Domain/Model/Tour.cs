@@ -27,7 +27,7 @@ namespace booking.Model
                 if (value != id)
                 {
                     id = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(Id));
                 }
             }
         }
@@ -39,7 +39,7 @@ namespace booking.Model
                 if (value != name)
                 {
                     name = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(Name));
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace booking.Model
                 if (value != description)
                 {
                     description = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(Description));
                 }
             }
         }
@@ -64,7 +64,7 @@ namespace booking.Model
                 if (value != language)
                 {
                     language= value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(Language));
                 }
             }
         }
@@ -76,7 +76,7 @@ namespace booking.Model
                 if (value != maxGuests)
                 {
                     maxGuests = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(MaxGuests));
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace booking.Model
                 if (value != startTime)
                 {
                     startTime = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(StartTime));
                 }
             }
         }
@@ -101,7 +101,7 @@ namespace booking.Model
                 if (value != duration)
                 {
                     duration = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(Duration));
                 }
             }
         }
@@ -161,53 +161,61 @@ namespace booking.Model
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly string[] _validatedProperties = { "Name", "MaxGuests", "StartTime" };
 
-        public bool IsValid
-        {
-            get
-            {
-                foreach (var property in _validatedProperties)
-                {
-                    if (this[property] != null)
-                        return false;
-                }
+        //public bool IsValid
+        //{
+        //    get
+        //    {
+        //        foreach (var property in _validatedProperties)
+        //        {
+        //            if (this[property] != null)
+        //                return false;
+        //        }
 
-                return true;
-            }
-        }
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        //        return true;
+        //    }
+        //}
+
+        protected virtual void OnPropertyChanged(string name)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        public string this[string columnName]
-        {
-            get 
+            if (PropertyChanged != null)
             {
-                if (columnName == "Name")
-                {
-                    if (string.IsNullOrEmpty(Name))
-                        return "*name";
-                    Match match = _nameRegex.Match(Name);
-                    if (!match.Success)
-                        return "example: Name";
-                }
-                else if (columnName == "MaxGuests")
-                {
-                    if (MaxGuests == 0)
-                        return "*maxGuests";
-                    Match match = _numberRegex.Match(MaxGuests.ToString());
-                    if (!match.Success)
-                        return "example: MaxGuests";
-                }
-                else if (columnName == "StartTime")
-                {
-                    if (string.IsNullOrEmpty(StartTime.Time))
-                        return "*startTime";
-                    Match match=_timeRegex.Match(StartTime.Time.ToString());
-                    if (!match.Success)
-                        return "example: StartTime.Time";
-                }
-                return null;
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
+        //protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        //{
+        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        //}
+        //public string this[string columnName]
+        //{
+        //    get 
+        //    {
+        //        if (columnName == "Name")
+        //        {
+        //            if (string.IsNullOrEmpty(Name))
+        //                return "*name";
+        //            Match match = _nameRegex.Match(Name);
+        //            if (!match.Success)
+        //                return "example: Name";
+        //        }
+        //        else if (columnName == "MaxGuests")
+        //        {
+        //            if (MaxGuests == 0)
+        //                return "*maxGuests";
+        //            Match match = _numberRegex.Match(MaxGuests.ToString());
+        //            if (!match.Success)
+        //                return "example: MaxGuests";
+        //        }
+        //        else if (columnName == "StartTime")
+        //        {
+        //            if (string.IsNullOrEmpty(StartTime.Time))
+        //                return "*startTime";
+        //            Match match=_timeRegex.Match(StartTime.Time.ToString());
+        //            if (!match.Success)
+        //                return "example: StartTime.Time";
+        //        }
+        //        return null;
+        //    }
+        //}
     }
 }

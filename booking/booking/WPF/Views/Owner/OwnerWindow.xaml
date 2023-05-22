@@ -1,44 +1,197 @@
-﻿<Window x:Class="booking.View.OwnerWindow"
+﻿<Page x:Class="booking.View.OwnerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:booking.View"
+        xmlns:local="clr-namespace:booking.View" xmlns:booking="clr-namespace:booking"
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-        Title="OwnerWindow" Height="450" Width="800"
-        WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="797*"/>
-        </Grid.ColumnDefinitions>
-        <Button Content="Add" Command="{Binding AddAccommodationCommand}" HorizontalAlignment="Left" Margin="29,34,0,0" VerticalAlignment="Top" Height="32" Width="136"  Grid.Column="1"/>
-        <Button Name="RateGuests" Command="{Binding RateGuestsCommand}" Content="Rate guests" HorizontalAlignment="Left" Margin="571,228,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.842,-1.682" Height="24" Width="78"  Grid.Column="1">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="0.362"/>
-                    <TranslateTransform X="0.334" Y="-0.659"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
+        Title="OwnerWindow" Height="641" Width="400"
+        >
 
-        <DataGrid x:Name="DataGridRaatings" ItemsSource="{Binding ListToRate, UpdateSourceTrigger=PropertyChanged}"
+    <Grid>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding NotifyUserCommand}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid.Resources>
+            <Style TargetType="DataGridCell">
+                <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#E69138"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    </Trigger>
+            </Style.Triggers>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                
+
+            </Style>
+            
+            <Style TargetType="DataGrid">
+                <Setter Property="Foreground" Value="LightGray"/>
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="CanUserResizeColumns" Value="False"/>
+                <Setter Property="CanUserResizeRows" Value="False"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
+
+            </Style>
+            <Style TargetType="DataGridRow" x:Name="DatagridRowStyle">
+                <Setter  Property="Background" Value="black"/>
+                
+            </Style>
+            <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="DarkRed"/>
+                <Setter Property="Height" Value="20"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            </Style>
+
+            
+            
+
+            <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
+            <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
+            <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
+            <Style TargetType="{x:Type ToggleButton}" x:Key="IPhoneSwitch">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <Viewbox>
+                                <Border x:Name="Border" CornerRadius="10"
+                            Background="#FFFFFFFF"
+                            Width="40" Height="20">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="0.5" Direction="0" Opacity="0.3" />
+                                    </Border.Effect>
+                                    <Ellipse x:Name="Ellipse" Fill="#FFFFFFFF" Stretch="Uniform"
+                                 Margin="2 1 2 1"
+                                 Stroke="Gray" StrokeThickness="0.2"
+                                 HorizontalAlignment="Stretch">
+                                        <Ellipse.Effect>
+                                            <DropShadowEffect BlurRadius="10" ShadowDepth="1" Opacity="0.3" Direction="260" />
+                                        </Ellipse.Effect>
+                                    </Ellipse>
+                                </Border>
+                            </Viewbox>
+                            <ControlTemplate.Triggers>
+                                <EventTrigger RoutedEvent="Checked">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Border"
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    To="#FF4CD661"
+                                                    Duration="0:0:0.1" />
+                                            <ThicknessAnimation Storyboard.TargetName="Ellipse"
+                                                        Storyboard.TargetProperty="Margin"
+                                                        To="20 1 2 1"
+                                                        Duration="0:0:0.1" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="Unchecked">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Border"
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    To="White"
+                                                    Duration="0:0:0.1" />
+                                            <ThicknessAnimation Storyboard.TargetName="Ellipse"
+                                                        Storyboard.TargetProperty="Margin"
+                                                        To="2 1 2 1"
+                                                        Duration="0:0:0.1" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="3.5*"/>
+
+            <RowDefinition Height="0.25*"/>
+            <RowDefinition Height="1*"/>
+
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.25*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        <Button Name="RateGuests" Command="{Binding RateGuestsCommand}" Content="Rate" FontSize="17" Width="100" Grid.Row="5" Grid.Column="1"/>
+
+
+
+        <DataGrid x:Name="DataGridRaatings" GridLinesVisibility="None" ItemsSource="{Binding ListToRate, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
-                  IsReadOnly="True" AutoGenerateColumns="False" Margin="397,267,10,16" Grid.Column="1" >
+                  IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="6" Grid.ColumnSpan="2" Width="360" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center"
+                  ColumnHeaderStyle="{StaticResource HeaderStyle}" >
+            
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
+            </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Guest" Width="90" Binding="{Binding GuestName}"/>
-                <DataGridTextColumn Header="Accommodation" Width="120" Binding="{Binding AccommodationName}"/>
-                <DataGridTextColumn Header="Start date" Width="90" Binding="{Binding StartDate}"/>
-                <DataGridTextColumn Header="End date" Width="90" Binding="{Binding EndDate}"/>
+                
+                <DataGridTextColumn Header="Guest" Width="2.5*" Binding="{Binding GuestName}"/>
+                <DataGridTextColumn Header="Accommodation" Width="3*" Binding="{Binding AccommodationName}"/>
+                <DataGridTextColumn Header="Start date" Width="2.25*" Binding="{Binding StartDate}"/>
+                <DataGridTextColumn Header="End date" Width="2.25*" Binding="{Binding EndDate}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Column="1" Command="{Binding ViewRatingsCommand}" Content="View Rating" HorizontalAlignment="Left" Margin="565,100,0,0" VerticalAlignment="Top" Height="44" Width="99" />
-        <Label x:Name="AverageLabel" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="48,217,0,0" VerticalAlignment="Top" Width="188" Background="Gray"/>
-        <Button Grid.Column="1" Command="{Binding ReservationChangeCommand}" Content="ReservationChange" HorizontalAlignment="Left" Margin="118,355,0,0" VerticalAlignment="Top" />
-        <Label x:Name="SuperOwnerLabel" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="48,267,0,0" VerticalAlignment="Top" Width="188" Background="Gray"/>
+
+        <Label Content="Best locations&#10;(most booked)" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2"/>
+        <Line X2="1"  Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Line X2="1"  Grid.Row="4" Grid.ColumnSpan="2"/>
+        <Label Content="Worst locations&#xA;(least booked)" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
+        <Label Content="Sremski Karlovci"  Grid.Row="3" Foreground="Green" FontSize="17"/>
+        <Label Content="Bijeljina"  Grid.Row="3" Foreground="Red" FontSize="17" Grid.Column="1" />
+        <Label Content="Rate Guests"  Grid.Row="5" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="14,0,0,0" FontSize="17" FontWeight="Bold" Foreground="#E69138"/>
+        <Label Content="Please select guest to rate"  Grid.Row="5" Margin="0,31,0,0" VerticalAlignment="Top" />
+
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2.5*"/>
+                <RowDefinition Height="1.25*"/>
+                <RowDefinition Height="1.25*"/>
+                <RowDefinition Height="2.5*"/>
+                <RowDefinition Height="2.5*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Owner info:"   Grid.Row="0"  FontWeight="Bold" Foreground="#E69138" FontSize="20" VerticalAlignment="Bottom"/>
+            <Label Content="Name:" Grid.Row="1" HorizontalAlignment="Left" Margin="44,0,0,0"/>
+            <Label Content="{Binding UserName}" Grid.Row="1" HorizontalAlignment="Left" FontWeight="Bold" Margin="103,0,0,0" Width="72"/>
+            <Label Content="Owner rating:" Grid.Row="2" HorizontalAlignment="Left" Margin="44,0,0,0"/>
+            <Label Content="{Binding AverageLabel}" FontWeight="Bold" Grid.Row="2" HorizontalAlignment="Left" Margin="139,0,0,0"/>
+            <Label Content="Type of owner:" Grid.Row="3" FontWeight="Bold" Foreground="#E69138" VerticalAlignment="Bottom"/>
+            <Label Content="{Binding SuperOwnerLabel}" Grid.Row="4" FontWeight="Bold" VerticalAlignment="Top"/>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2.5*"/>
+                <RowDefinition Height="2.5*"/>
+                <RowDefinition Height="2.5*"/>
+                <RowDefinition Height="2.5*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Tooltip help" HorizontalContentAlignment="Center" VerticalAlignment="Top"  FontSize="16" Foreground="#E69138" FontWeight="Bold" Margin="0,21,0,0"/>
+            <ToggleButton x:Name="ha" Grid.Row="1" Style="{DynamicResource IPhoneSwitch}" Width="50" Height="20" VerticalAlignment="Top"/>
+            <Label Content="Download pdf file:" Grid.Row="2" VerticalAlignment="Bottom" FontWeight="Bold" Foreground="#E69138"/>
+            <Button Content="Grade average" Grid.Row="3" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="100"/>
+
+
+        </Grid>
 
 
     </Grid>
-</Window>
+</Page>

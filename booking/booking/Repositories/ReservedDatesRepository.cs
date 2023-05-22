@@ -15,21 +15,29 @@ namespace booking.Repository
     {
         private List<ReservedDates> reservedDates;
         private Serializer<ReservedDates> serializer;
+        private List<ReservedDates> canceledDates;
         private readonly string fileName = "../../../Resources/Data/reservedDates.csv";
-
+        private readonly string fileNameCancel = "../../../Resources/Data/canceledDates.csv";
         public ReservedDatesRepository()
         {
             serializer = new Serializer<ReservedDates>();
+            canceledDates = serializer.FromCSV(fileNameCancel);
             Load();
         }
         public void Load()
         {
+            canceledDates = serializer.FromCSV(fileNameCancel);
             reservedDates = serializer.FromCSV(fileName);
         }
         public List<ReservedDates> GetAll()
         {
             Load();
             return reservedDates;
+        }
+
+        public List<ReservedDates> GetAllCanceled()
+        {
+            return canceledDates;
         }
 
         public List<ReservedDates> GetAllByAccommodationId(int id)
@@ -42,6 +50,10 @@ namespace booking.Repository
         {
             Load();
             return reservedDates.Where(d => d.Id == id).ToList()[0];
+        }
+        public List<ReservedDates> GetByGuestId(int guestId)
+        {
+            return reservedDates.Where(d => d.UserId == guestId).ToList();
         }
         public void Update(ReservedDates reservedDate)
         {
@@ -66,7 +78,13 @@ namespace booking.Repository
             reservedDates.Add(reservedDate);
             Save();
         }
+        public void AddCanceled(ReservedDates reservedDate)
+        {
 
+            canceledDates = serializer.FromCSV(fileNameCancel);
+            canceledDates.Add(reservedDate);
+            serializer.ToCSV(fileNameCancel, canceledDates);
+        }
         public void Remove(ReservedDates reservedDate)
         {
             //Load();

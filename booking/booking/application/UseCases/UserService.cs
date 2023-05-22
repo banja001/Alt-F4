@@ -17,6 +17,10 @@ namespace application.UseCases
             this.userRepository = Injector.CreateInstance<IUserRepository>();
         }
 
+        public User GetById(int id)
+        {
+            return userRepository.GetById(id);
+        }
         public List<User> GetAll()
         {
             return userRepository.GetAll();
@@ -32,6 +36,16 @@ namespace application.UseCases
         public void UpdateById(int id, bool b)
         {
             userRepository.UpdateById(id, b);
+        }
+
+        public int GetScoreById(int id)
+        {
+            return userRepository.GetScoreById(id);
+        }
+
+        public void Update(User user)
+        {
+            userRepository.Update(user);
         }
     }
 }

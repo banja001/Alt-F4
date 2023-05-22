@@ -7,10 +7,11 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace booking.DTO
 {
-    public class SearchedAccomodationDTO : INotifyPropertyChanged
+    public class SearchedAccomodationDTO : INotifyPropertyChanged, IDataErrorInfo
     {
 
         int numOfGuests;
@@ -72,7 +73,15 @@ namespace booking.DTO
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private Regex _numbers = new Regex("^[0-9]+$");
+        public override string ToString()
+        {
+            return $"{NumOfGuests} {NumOfDays}";
+        }
+
+        public string Error => null;
+
+        private Regex _numOfGuests = new Regex("^([1-9]|10)$");
+        private Regex _numOfDays = new Regex("^[1-9]+$");
 
         public string this[string columnName]
         {
@@ -80,15 +89,16 @@ namespace booking.DTO
             {
                 if (columnName == "NumOfGuests")
                 {
-                    Match match = _numbers.Match(NumOfGuests.ToString());
+                    Match match = _numOfGuests.Match(NumOfGuests.ToString());
+
                     if (!match.Success)
-                        return "example: 1";
+                        return "format: numbers between 1 - 10";
                 }
                 else if (columnName == "NumOfDays")
                 {
-                    Match match = _numbers.Match(NumOfDays.ToString());
+                    Match match = _numOfDays.Match(NumOfDays.ToString());
                     if (!match.Success)
-                        return "example: 1";
+                        return "format: numbers greater than 1";
                 }
                 return null;
             }

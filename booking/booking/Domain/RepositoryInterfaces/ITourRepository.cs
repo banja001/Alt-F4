@@ -14,5 +14,6 @@ namespace Domain.RepositoryInterfaces
         public int MakeID();
 
         public void Delete(Tour tour);
+        public Tour FindById(int id);
     }
 }

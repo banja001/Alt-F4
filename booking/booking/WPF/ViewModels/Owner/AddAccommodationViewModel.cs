@@ -20,17 +20,54 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using booking.Commands;
 using booking.WPF.ViewModels;
+using WPF.Views.Owner;
+using System.Collections.ObjectModel;
 
 namespace WPF.ViewModels.Owner
 {
-    public class AddAccommodationViewModel : BaseViewModel
+    public class AddAccommodationViewModel : BaseViewModel,INotifyPropertyChanged
     {
         
         private List<string> accommodationImagesUrl;
         public OwnerViewModel ownerViewModel;
         //public List<string> StateList;
 
+        private bool nextEnabled;
+        public bool NextEnabled
+        {
+            get
+            {
+                return nextEnabled;
+            }
+            set
+            {
+                if (value != nextEnabled)
+                {
+                    nextEnabled = value;
+                    OnPropertyChanged("NextEnabled");
+                }
+            }
+        }
+
+        private bool prevEnabled;
+        public bool PrevEnabled
+        {
+            get
+            {
+                return prevEnabled;
+            }
+            set
+            {
+                if (value != prevEnabled)
+                {
+                    prevEnabled = value;
+                    OnPropertyChanged("PrevEnabled");
+                }
+            }
+        }
+        
         public string State { get; set; }
+        
         public string City { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
@@ -38,11 +75,85 @@ namespace WPF.ViewModels.Owner
         public string MinDaysToUse { get; set; }
         public string DaysToCancel { get; set; }
 
-        public string SelectedItemCity { get; set; }
-        public string SelectedItemState { get; set; }
-        
+        private string image;
+        public string ImageUrl {
+            get
+            {
+                return image;
+            }
+            set
+            {
+                if (value != image)
+                {
+                    image = value;
+                    OnPropertyChanged("ImageUrl");
+                }
+            }
+            }
+        private string selectedItemCity;
+        public string SelectedItemCity {
+            get
+            {
+                return selectedItemCity;
+            }
+            set
+            {
+                if (value != selectedItemCity)
+                {
+                    selectedItemCity = value;
+                    OnPropertyChanged("SelectedItemCity");
+                    CityLabel = "";
+
+                }
+
+            }
+        }
+
+        private string selectedItemState;
+        public string SelectedItemState {
+            get
+            {
+                return selectedItemState;
+            }
+            set
+            {
+                if (value != selectedItemState)
+                {
+                    selectedItemState = value;
+                    OnPropertyChanged("SelectedItemState");
+                    StateComboBox_SelectionChanged();
+                    CityLabel = "City";
+                }
+
+            }
+
+        }
+
+        private BitmapImage slika;
+        public BitmapImage Slika { 
+            get
+            {
+                return slika;
+            }
+            set
+            {
+                if (value != slika)
+                {
+                    slika = value;
+                    OnPropertyChanged("Slika");
+                }
+                
+            }
+            }
+        public int ActiveImageIndx { get; set; }
         public List<string> StateList { get; set; }
+
+        public ObservableCollection<string> CityList { get; set; }
+        public ICommand NextPictureCommand => new RelayCommand(NextPictureClick);
+        public ICommand PrevPictureCommand => new RelayCommand(PrevImageButtonClick);
         public ICommand ConfirmCommand => new RelayCommand(Confirm);
+
+        public ICommand CancelCommand => new RelayCommand(Cancel);
         public ICommand AddImageCommand => new RelayCommand(AddImageClick);
         //public ICommand ComboboxSelectionChangedCommand => new RelayCommand(StateComboBox_SelectionChanged);
         public ICommand RemoveImageCommand => new RelayCommand(RemoveImageClick);
@@ -50,67 +161,92 @@ namespace WPF.ViewModels.Owner
         
         public Regex intRegex = new Regex("^[0-9]{1,4}$");
 
+        private string stateLabel;
+        public string StateLabel {
+            get
+            {
+                return stateLabel;
+            }
+            set
+            {
+                if (value != stateLabel)
+                {
+                    stateLabel = value;
+                    OnPropertyChanged("StateLabel");
+                }
+
+            }
+        }
+        private string cityLabel;
+        public string CityLabel
+        {
+            get
+            {
+                return cityLabel;
+            }
+            set
+            {
+                if (value != cityLabel)
+                {
+                    cityLabel = value;
+                    OnPropertyChanged("CityLabel");
+                }
+
+            }
+        }
+        private bool imaSlika;
+        public bool ImaSlika {
+            get
+            {
+                return imaSlika;
+            }
+            set
+            {
+                if (value != imaSlika)
+                {
+                    imaSlika = value;
+                    OnPropertyChanged("ImaSlika");
+                }
+
+            }
+        }
         public AddAccommodationViewModel(OwnerViewModel ownerViewModel)
         {
             this.accommodationImagesUrl = new List<string>();
             this.ownerViewModel = ownerViewModel;
             StateList = ownerViewModel.locationService.InitializeStateList(new List<string>(), ownerViewModel.locations);
-
+            this.CityList = new ObservableCollection<string>();
+            StateLabel = "State";
+            CityLabel = "City";
+            ImaSlika = false;
         }
-        
-        private bool isValid()
+
+        public void StateComboBox_SelectionChanged()
         {
-            if (string.IsNullOrEmpty(State) || string.IsNullOrEmpty(City) || string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Type) ||
-                string.IsNullOrEmpty(MaxVisitors) || string.IsNullOrEmpty(MinDaysToUse) || string.IsNullOrEmpty(DaysToCancel))
+            StateLabel = "";
+            
+            List<string> listTemp = new List<string>();
+            SelectedItemCity = null;
+            listTemp = ownerViewModel.locationService.FillCityList(listTemp, SelectedItemState.ToString(), ownerViewModel.locations);
+            CityList.Clear();
+            foreach(string item in listTemp)
             {
-                MessageBox.Show("Please fill in all of the textboxes", "Error");
-                return false;
+                CityList.Add(item);
             }
-            Match match = intRegex.Match(MaxVisitors);
-            if (!match.Success)
-            {
-                MessageBox.Show("Max visitors should be a valid number", "Error");
-                return false; ;
-            }
-            match = intRegex.Match(MinDaysToUse);
-            if (!match.Success)
-            {
-                MessageBox.Show("Min reservation should be a valid number", "Error");
-                return false;
-            }
-            match = intRegex.Match(DaysToCancel);
-            if (!match.Success)
-            {
-                MessageBox.Show("Days to cancel should be a valid number", "Error");
-                return false;
-            }
-            if (accommodationImagesUrl.Count() == 0)
-            {
-                MessageBox.Show("Please enter atleast one image", "Error");
-                return false;
-            }
-            if (Name.Last().Equals('*'))
-            {
-                MessageBox.Show("Accommodation name cant end with *", "Error");
-                return false;
-            }
+        }
 
-
-            return true;
+        private void Cancel()
+        {
+            MainWindow.w.Main.Navigate(MainWindow.w.OwnerWindow);
         }
 
         private void Confirm()
         {
-            
-            if (!isValid())
-            {
-                return;
-            }
 
             Accommodation a = AddAccommodation();
             ownerViewModel.accommodationService.Add(a);
             ownerViewModel.accommodationImageService.AddImages(a, accommodationImagesUrl, ownerViewModel.accommodationImages);
-            this.CloseCurrentWindow();
+            MainWindow.w.Main.Navigate(MainWindow.w.OwnerWindow);
         }
 
         private Accommodation AddAccommodation()
@@ -123,29 +259,89 @@ namespace WPF.ViewModels.Owner
 
         private void AddImageClick()
         {
+            if (string.IsNullOrEmpty(ImageUrl))
+            {
+                MessageBox.Show("Please enter atleast one image", "Error");
+                
+            }
+            else
+            {
+                accommodationImagesUrl.Insert(0, ImageUrl);
+                ImageUrl = "";
+            }
+            ShowImage();
 
-            AddAccommodationImageWindow win = new AddAccommodationImageWindow(accommodationImagesUrl);
-            win.ShowDialog();
-            
-
+            ImaSlika = true;
         }
-        /*
-        private void StateComboBox_SelectionChanged()
-        {
-            List<string> CityList = new List<string>();
-            SelectedItemCity = null;
-            string SelectedState = SelectedItemState.ToString();
-            CityList = ownerViewModel.locationService.FillCityList(CityList, SelectedState, ownerViewModel.locations);
-            //CityComboBox.ItemsSource = CityList;
-        }*/
+        
         private void RemoveImageClick()
         {
             if (accommodationImagesUrl.Count() > 0)
             {
-                accommodationImagesUrl.RemoveAt(accommodationImagesUrl.Count() - 1);
+                accommodationImagesUrl.RemoveAt(ActiveImageIndx);
                 MessageBox.Show("Image removed", "Message");
             }
+            ShowImage();
+            if (accommodationImagesUrl.Count == 0)
+            {
+                ImaSlika = false;
+            }
+        }
 
+        public void SetImageSource(string url)
+        {
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri(@url, UriKind.Absolute);
+            bitmapImage.EndInit();
+            Slika = bitmapImage;
+        }
+        public void ShowImage()
+        {
+            CheckIndexScope();
+            if (accommodationImagesUrl.Count == 0)
+            {
+                Slika = null;
+               
+                return;
+            }
+
+            ActiveImageIndx = 0;
+            SetImageSource(accommodationImagesUrl[ActiveImageIndx]);
+            CheckIndexScope();
+        }
+
+        public void NextPictureClick()
+        {
+            SetImageSource(accommodationImagesUrl[++ActiveImageIndx]);
+            CheckIndexScope();
+        }
+
+        private void PrevImageButtonClick()
+        {
+            SetImageSource(accommodationImagesUrl[--ActiveImageIndx]);
+            CheckIndexScope();
+        }
+        
+        public void CheckIndexScope()
+        {
+            if (ActiveImageIndx + 1 >= accommodationImagesUrl.Count)
+            {
+                NextEnabled = false;
+            }
+            else
+            {
+                NextEnabled = true;
+            }
+
+            if (ActiveImageIndx <= 0)
+            {
+                PrevEnabled = false;
+            }
+            else
+            {
+                PrevEnabled = true;
+            }
         }
     }
 }

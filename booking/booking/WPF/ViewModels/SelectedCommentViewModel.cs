@@ -23,7 +23,7 @@ namespace WPF.ViewModels
             Comment = rating;
             _guideRatingRepository= new GuideRatingRepository();
         }
-        public ICommand ReportCommand => new RelayCommand(ReportReview);
+        public ICommand ReportCommand => new RelayCommand(ReportReview,CanReport);
         public ICommand ExitWindowCommand => new RelayCommand(ExitWindow);
 
         public void ReportReview()
@@ -34,7 +34,7 @@ namespace WPF.ViewModels
             else
             {
                 if (MessageBox.Show("Are you sure you want to report this review?", "Warning",
-                        MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
+                        MessageBoxButton.YesNo,MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
                     Comment.Rating.IsValid = false;
                     _guideRatingRepository.Update(Comment.Rating);
@@ -42,6 +42,11 @@ namespace WPF.ViewModels
                 }
             }
             
+        }
+
+        public bool CanReport()
+        {
+            return Comment.Rating.IsValid;
         }
         private void ExitWindow()
         {

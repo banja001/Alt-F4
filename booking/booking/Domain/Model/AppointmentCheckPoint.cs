@@ -1,9 +1,14 @@
-﻿using booking.Serializer;
+﻿using booking.Commands;
+using booking.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using booking.Repository;
 
 namespace booking.Model
 {
@@ -53,6 +58,20 @@ namespace booking.Model
             NotChecked= Convert.ToBoolean(values[3]);
             AppointmentId = Convert.ToInt32(values[4]);
             Order = Convert.ToInt32(values[5]);
+        }
+
+        public ICommand CheckPointCommand => new RelayCommand(CheckPointClick,CanClick);
+        private void CheckPointClick()
+        {
+            this.NotChecked = false;
+            this.Active = true;
+            AppointmentCheckPointRepository _appointmentCheckPointRepository = new AppointmentCheckPointRepository();
+            _appointmentCheckPointRepository.SaveOneInFile(this);
+        }
+
+        private bool CanClick()
+        {
+            return this.NotChecked;
         }
     }
 }

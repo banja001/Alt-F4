@@ -19,6 +19,10 @@ namespace application.UseCases
         {
             return _reservedDatesRepository.GetAll();
         }
+        public List<ReservedDates> GetAllCanceled()
+        {
+            return _reservedDatesRepository.GetAllCanceled();
+        }
         public List<ReservedDates> GetAllByAccommodationId(int id)
         {
             return _reservedDatesRepository.GetAllByAccommodationId(id);
@@ -26,6 +30,11 @@ namespace application.UseCases
         public ReservedDates GetById(int id)
         {
             return _reservedDatesRepository.GetById(id);
+        }
+
+        public List<ReservedDates> GetByGuestId(int guestId)
+        {
+            return _reservedDatesRepository.GetByGuestId(guestId);
         }
         public void Update(ReservedDates reservedDate)
         {
@@ -38,6 +47,10 @@ namespace application.UseCases
         public void Add(ReservedDates reservedDate)
         {
             _reservedDatesRepository.Add(reservedDate);
+        }
+        public void AddCanceled(ReservedDates reservedDate)
+        {
+            _reservedDatesRepository.AddCanceled(reservedDate);
         }
         public void Remove(ReservedDates reservedDate)
         {

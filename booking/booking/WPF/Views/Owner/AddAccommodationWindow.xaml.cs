@@ -19,14 +19,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using WPF.ViewModels.Owner;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace booking.View
 {
-    /// <summary>
-    /// Interaction logic for AddAccommodationWindow.xaml
-    /// </summary>
-    public partial class AddAccommodationWindow : Window
+    public partial class AddAccommodationWindow : Page
     {
         public OwnerViewModel ownerWindow;
 
@@ -34,18 +33,23 @@ namespace booking.View
         {
             InitializeComponent();
             DataContext = new AddAccommodationViewModel(win);
-           
-            ownerWindow = win;            
+            ownerWindow = win;
+
+            Loaded += Window_Loaded;
         }
 
-        private void StateComboBox_SelectionChanged(object sender, RoutedEventArgs e)
+
+        public void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            List<string> CityList = new List<string>();
-            CityComboBox.SelectedItem = null;
-            string SelectedState = StateComboBox.SelectedItem.ToString();
-            CityList = ownerWindow.locationService.FillCityList(CityList, SelectedState, ownerWindow.locations);
-            CityComboBox.ItemsSource = CityList;
+            MinDaysToUseTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            NameTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            MaxVisitorsTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            DaysToCancelTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            TypeComboBox.GetBindingExpression(ComboBox.TextProperty).UpdateSource();
+            StateComboBox.GetBindingExpression(ComboBox.TextProperty).UpdateSource();
+            CityComboBox.GetBindingExpression(ComboBox.TextProperty).UpdateSource();    
         }
+
         
     }
 }

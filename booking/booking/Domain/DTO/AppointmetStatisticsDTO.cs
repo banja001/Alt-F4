@@ -68,7 +68,8 @@ namespace Domain.DTO
             this.GuestsAbove50 = numberOfGuests;
         }
 
-        public void CalculateNumberOfGuestsWithVoucher(List<TourAttendance> tourAttendances, List<ReservationTour> reservation, int appId)
+        public void CalculateNumberOfGuestsWithVoucher(List<TourAttendance> tourAttendances,
+            List<ReservationTour> reservation, int appId)
         {
             int numberOfGuests = 0;
             foreach (TourAttendance tourAttendant in tourAttendances)
@@ -78,13 +79,12 @@ namespace Domain.DTO
                     tourAttendant.Guest = reservation.Find(res =>
                         res.Id == tourAttendant.Guest.Id && appId == tourAttendant.StartedCheckPoint.AppointmentId);
                     if (tourAttendant.Guest != null && tourAttendant.Guest.VoucherId > 0)
-                        numberOfGuests+=tourAttendant.Guest.NumberOfGuests;
+                        numberOfGuests += tourAttendant.Guest.NumberOfGuests;
                 }
             }
 
-            this.GuestsWithVoucher = Math.Round(100*(double)numberOfGuests/(double)TotalGuests);
+            this.GuestsWithVoucher = Math.Round(100 * (double)numberOfGuests / (double)TotalGuests);
             this.GuestsWithoutVoucher = 100 - GuestsWithVoucher;
         }
-
     }
 }

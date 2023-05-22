@@ -1,10 +1,15 @@
-﻿using System;
+﻿using booking.View;
+using booking.View.Guest1;
+using Egor92.MvvmNavigation;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using WPF.ViewModels.Guest1;
 
 namespace booking
 {

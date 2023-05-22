@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.View.Guest1"
         mc:Ignorable="d"
-        Title="ImagesOverview" Height="442" Width="633" WindowStartupLocation="CenterOwner">
+        Title="ImagesOverview" Height="442" Width="633" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid Grid.Row="0" Grid.Column="0" Width="600" Height="410">
             <Grid.RowDefinitions>

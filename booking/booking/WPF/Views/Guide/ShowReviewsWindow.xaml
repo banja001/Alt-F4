@@ -5,20 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.WPF.Views.Guide"
         mc:Ignorable="d"
-        Title="ShowReviewsWindow" Height="450" Width="800">
-    <Grid>
+        Title="ShowReviewsWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
+    <Grid Background="LightGray">
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <DataGrid Name="AllCommentsDataGrid" ItemsSource="{Binding AllComments}" SelectedItem="{Binding SelectedComment}" Grid.Row="0" AutoGenerateColumns="False" IsReadOnly="True" Margin="40,40,40,40" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False" Width="720">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Tour name" Binding="{Binding TourName}" CanUserResize="False" Width="75"/>
-                <DataGridTextColumn Header="Guest name" Binding="{Binding GuestName}" CanUserResize="False"  Width="75"/>
-                <DataGridTextColumn Header="Check point" Binding="{Binding CheckPoint}" CanUserResize="False"  Width="75"/>
-                <DataGridTextColumn Header="Average rating" Binding="{Binding AverageRating}"  Width="75"/>
-                <DataGridTextColumn Header="Comment" Binding="{Binding Rating.Comment}" CanUserResize="False"  Width="75"/>
-                <DataGridCheckBoxColumn Header="Valid" Binding="{Binding Rating.IsValid}"  Width="75"/>
+                <DataGridTextColumn Header="Tour name" Binding="{Binding TourName, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False" Width="*"/>
+                <DataGridTextColumn Header="Guest name" Binding="{Binding GuestName, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False"  Width="*"/>
+                <DataGridTextColumn Header="Check point" Binding="{Binding CheckPoint, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False"  Width="*"/>
+                <DataGridTextColumn Header="Average rating" Binding="{Binding AverageRating, UpdateSourceTrigger=PropertyChanged}"  Width="*"/>
+                <DataGridTextColumn Header="Comment" Binding="{Binding Rating.Comment, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False"  Width="2*"/>
+                <DataGridCheckBoxColumn Header="Valid" Binding="{Binding Rating.IsValid, UpdateSourceTrigger=PropertyChanged}"  Width="0.5*"/>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="1">
@@ -26,8 +27,8 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Height="40" Width="150" FontSize="15" Command="{Binding ShowCommand}" >Show full comment</Button>
-            <Button Grid.Column="1" Height="40" Width="150" FontSize="15" Command="{Binding ExitWindowCommand}">Cancel</Button>
+            <Button Background="#ea8dfc" Grid.Column="0" Height="40" Width="150" FontSize="15" Command="{Binding ShowCommand}" >Show full comment</Button>
+            <Button Background="#ea8dfc" Grid.Column="1" Height="40" Width="150" FontSize="15" Command="{Binding ExitWindowCommand}">Cancel</Button>
         </Grid>
         
     </Grid>

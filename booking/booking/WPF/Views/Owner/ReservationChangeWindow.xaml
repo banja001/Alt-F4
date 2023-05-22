@@ -1,26 +1,77 @@
-﻿<Window x:Class="booking.WPF.Views.Owner.ReservationChangeWindow"
+﻿<Page x:Class="booking.WPF.Views.Owner.ReservationChangeWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:booking.WPF.Views.Owner"
-        mc:Ignorable="d"
-        Title="ReservationChange" Height="749" Width="430">
+        xmlns:local="clr-namespace:booking.WPF.Views.Owner" xmlns:cvt="clr-namespace:booking.Converter"
+      mc:Ignorable="d"
+        Title="ReservationChange" Height="641" Width="400">
     <Grid>
-        <DataGrid x:Name="ReservationChangeGrid" ItemsSource="{Binding requestsObservable, UpdateSourceTrigger=PropertyChanged}" 
+        <Grid.Resources>
+            <Style TargetType="DataGridCell">
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#E69138"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+
+                    </Trigger>
+                </Style.Triggers>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="DataGrid">
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
+                <Setter Property="Foreground" Value="LightGray"/>
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="CanUserResizeColumns" Value="False"/>
+                <Setter Property="CanUserResizeRows" Value="False"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="FontSize" Value="8"/>
+            </Style>
+            <Style TargetType="DataGridRow" x:Name="DatagridRowStyle">
+                <Setter  Property="Background" Value="black"/>
+            </Style>
+            <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="DarkRed"/>
+                <Setter Property="Height" Value="25"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            </Style>
+            <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
+            <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="1*"/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Pick a reservation change" Grid.ColumnSpan="2" HorizontalAlignment="Left" FontSize="17" Foreground="#E69138" Padding="10" Margin="15,0,0,0"/>
+
+        <DataGrid x:Name="ReservationChangeGrid" GridLinesVisibility="None" ItemsSource="{Binding requestsObservable, UpdateSourceTrigger=PropertyChanged}" 
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
-                  IsReadOnly="True" AutoGenerateColumns="False" Margin="10,105,10,145" >
+                  IsReadOnly="True" AutoGenerateColumns="False" Grid.ColumnSpan="2" ColumnHeaderStyle="{StaticResource HeaderStyle}" Margin="25,64,25,64" Grid.RowSpan="3">
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
+            </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Accommodation" Width="70" Binding="{Binding AccommodationName}"/>
-                <DataGridTextColumn Header="Old Start Date" Width="70" Binding="{Binding OldStartDate}"/>
-                <DataGridTextColumn Header="Old End Date" Width="70" Binding="{Binding OldEndDate}"/>
-                <DataGridTextColumn Header="New Start Date" Width="70" Binding="{Binding NewStartDate}"/>
-                <DataGridTextColumn Header="New End Date" Width="70" Binding="{Binding NewEndDate}"/>
-                <DataGridTextColumn Header="Taken" Width="70" Binding="{Binding IsTaken}"/>
+                <DataGridTextColumn Header="Accommodation" Width="2.5*" Binding="{Binding AccommodationName}"/>
+                <DataGridTextColumn Header="Old Start" Width="1.5*" Binding="{Binding OldStartDate,Converter={cvt:DateTimeToDateOnlyConverter}}"/>
+                <DataGridTextColumn Header="Old End" Width="1.5*" Binding="{Binding OldEndDate,Converter={cvt:DateTimeToDateOnlyConverter}}"/>
+                <DataGridTextColumn Header="New Start" Width="1.5*" Binding="{Binding NewStartDate,Converter={cvt:DateTimeToDateOnlyConverter}}"/>
+                <DataGridTextColumn Header="New End" Width="1.5*" Binding="{Binding NewEndDate,Converter={cvt:DateTimeToDateOnlyConverter}}"/>
+                <DataGridTextColumn Header="Taken" Width="1*" Binding="{Binding IsTaken}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Allow" Command="{Binding AllowCommand}" HorizontalAlignment="Left" Margin="192,626,0,0" VerticalAlignment="Top" Height="45" Width="99" />
-        <Button Content="Decline" Command="{Binding DeclineCommand}" HorizontalAlignment="Left" Margin="314,628,0,0" VerticalAlignment="Top"  RenderTransformOrigin="-0.04,-1.2" Height="42" Width="87"/>
+        <Button Content="Allow" Command="{Binding AllowCommand}" Grid.Row="2"/>
+        <Button Content="Decline" Command="{Binding DeclineCommand}" Grid.Row="2" Grid.Column="1"/>
 
     </Grid>
-</Window>
+</Page>

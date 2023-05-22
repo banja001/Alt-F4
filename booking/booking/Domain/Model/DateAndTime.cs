@@ -40,6 +40,7 @@ namespace booking.Model
         public DateAndTime() 
         {
             Date = new DateTime();
+            Time = "00:00";
         }
 
         public override string ToString()
@@ -58,8 +59,8 @@ namespace booking.Model
                     if (this[property] != null)
                         return false;
                 }
-
-                return true;
+                    return Date.Date >= DateTime.Now.Date;
+                
             }
         }
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

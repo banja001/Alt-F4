@@ -29,7 +29,7 @@ namespace booking.WPF.Views.Owner
     /// <summary>
     /// Interaction logic for ReservationChange.xaml
     /// </summary>
-    public partial class ReservationChangeWindow : Window
+    public partial class ReservationChangeWindow : Page
     {
        
         public ReservationChangeWindow(OwnerViewModel win)

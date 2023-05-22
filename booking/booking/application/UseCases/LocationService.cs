@@ -68,6 +68,42 @@ namespace application.UseCases
         {
             locationRepository.Add(loc);
         }
+        public bool Contains(Location location)
+        {
+            return locationRepository.GetAll().Find(l => l.State.Equals(location.State) && l.City.Equals(location.City)) == null ? false : true; ;
+        }
+        public int GetId(string state, string city)
+        {
+            return locationRepository.GetAll().FindLastIndex(l => l.State == state && l.City == city);
+        }
+        public List<string> InitializeListOfStates()
+        {
+            List<string> states = new List<string>();
+            foreach (Location loc in locationRepository.GetAll())
+            {
 
+                if (states.Find(m => m == loc.State) == null)
+                {
+                    states.Add(loc.State);
+                }
+
+            }
+            states.Sort();
+            return states;
+        }
+        public List<string> FillListWithCities(string SelectedState)
+        {
+            List<string> cities = new List<string>();
+
+            foreach (Location loc in locationRepository.GetAll())
+            {
+                if (SelectedState == loc.State && !cities.Contains(loc.City))
+                {
+                    cities.Add(loc.City);
+                }
+            }
+            cities.Sort();
+            return cities;
+        }
     }
 }

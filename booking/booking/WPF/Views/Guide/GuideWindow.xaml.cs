@@ -30,15 +30,15 @@ namespace booking.View.Guide
 
         private void AddTour(object sender, RoutedEventArgs e)
         {
-            AddTourWindow addTourWindow = new AddTourWindow();
-            addTourWindow.ShowDialog();
+            //AddTourWindow addTourWindow = new AddTourWindow();
+           // addTourWindow.ShowDialog();
         }
 
         private void LiveTrackingTour(object sender, RoutedEventArgs e)
         {
             
             LiveTrackingWindow liveTrackingWindow=new LiveTrackingWindow(Guide);
-            liveTrackingWindow.ShowDialog();
+            //liveTrackingWindow.ShowDialog();
         }
 
         private void ShowReviews_Click(object sender, RoutedEventArgs e)
@@ -47,7 +47,7 @@ namespace booking.View.Guide
             {
 
                 ShowReviews showReviews = new ShowReviews(Guide);
-                showReviews.ShowDialog();
+                //showReviews.ShowDialog();
             }
             catch (Exception exception)
             {
@@ -59,7 +59,7 @@ namespace booking.View.Guide
         private void ShowUnfinishedTours_Click(object sender, RoutedEventArgs e)
         {
             TourCancellation tourCancellation=new TourCancellation(Guide);
-            tourCancellation.ShowDialog();
+            //tourCancellation.ShowDialog();
         }
     }
 }

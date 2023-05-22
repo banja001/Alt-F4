@@ -18,21 +18,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WPF.ViewModels.Owner;
+using WPF.Views.Owner;
 
 namespace booking.View.Owner
 {
     /// <summary>
     /// Interaction logic for RateGuestWindow.xaml
     /// </summary>
-    public partial class RateGuestWindow : Window
+    public partial class RateGuestWindow : Page
     {
         
-        public RateGuestWindow(OwnerViewModel win)
+        public RateGuestWindow(OwnerViewModel win, Guest1RatingDTO s)
         {
             InitializeComponent();
-            this.DataContext = new RateGuestViewModel(win);
-            
-            
+            this.DataContext = new RateGuestViewModel(win,s);
         }
 
 
