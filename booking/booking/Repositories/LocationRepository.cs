@@ -32,6 +32,7 @@ namespace booking.Repository
 
         public Location GetById(int id)
         {
+            Locations = Serializer.FromCSV(fileName).ToList();
             return Locations.Where(l => l.Id == id).ToList()[0];
         }
 

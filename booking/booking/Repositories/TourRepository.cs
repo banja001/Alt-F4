@@ -45,6 +45,7 @@ namespace booking.Repository
 
         public Tour FindById(int id)
         {
+            tours = serializer.FromCSV(fileName);
             return tours.Find(tour => tour.Id == id);
         }
     }
