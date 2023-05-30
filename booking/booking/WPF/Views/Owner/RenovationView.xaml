@@ -62,12 +62,12 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Label Content="Future renovations:" Foreground="#E69138" FontSize="28" Height="48" Width="248"/>
-        <Label Grid.Row="1" Content="Select renovation you want to cancel!" Height="28" Width="240"/>
+        <Label Content="Future renovations:" Foreground="#E69138" FontSize="20" Height="32" Width="356"/>
+        <Label Grid.Row="1" Content="Select renovation you want to cancel!" Height="28" Width="356"/>
         <DataGrid Grid.Row="2" ItemsSource="{Binding FutureRenovations, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedRenovation, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False" Width="360" Height="176" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   ColumnHeaderStyle="{StaticResource HeaderStyle}" RowHeight="25" GridLinesVisibility="None">
+                   ColumnHeaderStyle="{StaticResource HeaderStyle}" RowHeight="20" GridLinesVisibility="None">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
             </DataGrid.Resources>
@@ -81,10 +81,10 @@
         </DataGrid>
         <Button Grid.Row="3" Content="Cancel renovation" Command="{Binding CancelRenovationCommand}" Margin="125,17,125,11"/>
         <Line X2="1"  Grid.Row="4" Margin="15,0,15,3"/>
-        <Label Grid.Row="5" Content="Finished and ongoing renovations" Height="29" Width="220"/>
+        <Label Grid.Row="5" Content="Finished and ongoing renovations" Height="29" Width="351"/>
         <DataGrid Grid.Row="6" ItemsSource="{Binding PastRenovations, UpdateSourceTrigger=PropertyChanged}"
                   IsReadOnly="True" AutoGenerateColumns="False" Width="360" Height="190" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   ColumnHeaderStyle="{StaticResource HeaderStyle}" RowHeight="25" GridLinesVisibility="None">
+                   ColumnHeaderStyle="{StaticResource HeaderStyle}" RowHeight="20" GridLinesVisibility="None">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
             </DataGrid.Resources>

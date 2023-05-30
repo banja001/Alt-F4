@@ -109,6 +109,7 @@
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.3" />
     <PackageReference Include="MvvmNavigation.Wpf" Version="3.2.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageReference Include="Syncfusion.Pdf.Wpf" Version="21.2.8" />
     <PackageReference Include="Syncfusion.SfInput.WPF" Version="21.1.39" />
     <PackageReference Include="Syncfusion.Shared.WPF" Version="21.1.39" />
   </ItemGroup>

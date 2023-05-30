@@ -102,7 +102,7 @@
         <DataGrid GridLinesVisibility="None" Grid.Row="1" Grid.ColumnSpan="2" x:Name="dgrMain" ItemsSource="{Binding OwnerRatings, UpdateSourceTrigger=PropertyChanged}" 
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False" Width="330" Height="140" HorizontalAlignment="Center" VerticalAlignment="Center"
-                  ColumnHeaderStyle="{StaticResource HeaderStyle}" >
+                  ColumnHeaderStyle="{StaticResource HeaderStyle}" RowHeight="20">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
             </DataGrid.Resources>

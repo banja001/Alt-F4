@@ -20,7 +20,7 @@
                 </Style.Triggers>
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                
+
 
             </Style>
 
@@ -79,7 +79,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Label Content="Accommodation" Grid.ColumnSpan="2" Foreground="#E69138"  FontSize="20" HorizontalAlignment="Left" Height="37" Margin="122,0,0,0" Width="156"/>
+        <Label Content="Accommodation" Grid.ColumnSpan="2" Foreground="#E69138"  FontSize="20" HorizontalAlignment="Left" Height="37" Margin="29,0,0,0" Width="249"/>
         <Label Content="" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="29" Margin="195,0,0,0" Width="10"/>
         <Line X2="1"  Grid.ColumnSpan="2" Grid.Row="2"/>
 

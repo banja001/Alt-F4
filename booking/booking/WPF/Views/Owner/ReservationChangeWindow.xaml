@@ -58,7 +58,7 @@
         <DataGrid x:Name="ReservationChangeGrid" GridLinesVisibility="None" ItemsSource="{Binding requestsObservable, UpdateSourceTrigger=PropertyChanged}" 
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False" Grid.ColumnSpan="2" ColumnHeaderStyle="{StaticResource HeaderStyle}" Margin="25,64,25,64" Grid.RowSpan="3"
-                  RowHeight="25" >
+                  RowHeight="20" >
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
             </DataGrid.Resources>

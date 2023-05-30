@@ -10,7 +10,7 @@
 
     <Grid>
         <Grid.Resources>
-            
+
             <Style TargetType="DataGridCell">
                 <Style.Triggers>
                     <Trigger Property="IsSelected" Value="True">
@@ -44,7 +44,7 @@
                 <Setter Property="Height" Value="28"/>
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
             </Style>
-            
+
             <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
             <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
             <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
@@ -59,8 +59,8 @@
             <ColumnDefinition/>
 
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Content="View stats" Foreground="#E69138" FontSize="20" />
-        <Label Grid.Row="1" Content="Please select accommodation to view stats"/>
+        <Label Content="View stats" Foreground="#E69138" FontSize="20" Width="286" />
+        <Label Grid.Row="1" Content="Please select accommodation to view stats" Width="288"/>
         <Button Grid.Row="3" Command="{Binding GetStatsCommand}" Content="Get Stats"/>
         <DataGrid x:Name="DataGridAccommodations" ItemsSource="{Binding AccommodationList, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
