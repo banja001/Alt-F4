@@ -10,9 +10,13 @@
 
     <Grid>
         <Grid.Resources>
+            
+            
+            
             <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
             <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
             <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
+            <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxOwner}"/>
         </Grid.Resources>
         <Grid.RowDefinitions>
 

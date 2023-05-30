@@ -46,6 +46,7 @@
                         <Setter Property="Background" Value="#E69138"/>
                         <Setter Property="Foreground" Value="Black"/>
                         <Setter Property="BorderBrush" Value="Black"/>
+                        
 
                     </Trigger>
                 </Style.Triggers>
@@ -76,6 +77,7 @@
             <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
             <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
             <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxOwner}"/>
+            
         </Grid.Resources>
         <Grid.RowDefinitions>
 
@@ -113,8 +115,9 @@
         <Line X2="1"  Grid.Row="2" Grid.ColumnSpan="2"/>
         <Label Content="Comment:" Grid.Row="3" FontSize="17" Foreground="#E69138" FontWeight="Bold" VerticalAlignment="Bottom"/>
         <Grid DataContext="{Binding ElementName=dgrMain,Path=SelectedItem}" Grid.Row="4" Grid.ColumnSpan="2" >
-            <TextBlock Foreground="LightGray" HorizontalAlignment="Center"  TextWrapping="Wrap" Text="{Binding Path=Comment}" VerticalAlignment="Center" Height="137" Width="330"/>
-
+            <Border BorderThickness="1" BorderBrush="#447782" Height="137" Width="330">
+                <TextBlock  Background="#FF2E2E2C" Foreground="LightGray" HorizontalAlignment="Center"  TextWrapping="Wrap" Text="{Binding Path=Comment}" VerticalAlignment="Center" Height="137" Width="330"/>
+            </Border>
             <Label Content="" Name="NoImagesLabel" Margin="182,323,182,366"/>
 
         </Grid>

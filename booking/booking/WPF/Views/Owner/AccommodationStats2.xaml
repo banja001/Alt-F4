@@ -10,20 +10,54 @@
 
     <Grid>
         <Grid.Resources>
+            <Style TargetType="DataGridCell">
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#E69138"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+                    </Trigger>
+                </Style.Triggers>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                
+
+            </Style>
+
+            <Style TargetType="DataGrid">
+                <Setter Property="Foreground" Value="LightGray"/>
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="CanUserResizeColumns" Value="False"/>
+                <Setter Property="CanUserResizeRows" Value="False"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
+
+            </Style>
+            <Style TargetType="DataGridRow" x:Name="DatagridRowStyle">
+                <Setter  Property="Background" Value="black"/>
+
+            </Style>
+            <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="DarkRed"/>
+                <Setter Property="Height" Value="28"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            </Style>
+
             <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
             <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
             <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
         </Grid.Resources>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="5*"/>
-            <RowDefinition Height="0.75*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="5*"/>
-            
-            <RowDefinition Height="0.75*"/>
-            <RowDefinition Height="1*"/>
- 
+            <RowDefinition Height="47*"/>
+            <RowDefinition Height="184*"/>
+            <RowDefinition Height="36*"/>
+            <RowDefinition Height="95*"/>
+            <RowDefinition Height="233*"/>
+
+
+            <RowDefinition Height="47*"/>
+
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
@@ -31,8 +65,8 @@
         </Grid.ColumnDefinitions>
         <DataGrid ItemsSource="{Binding DatagridYearList, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
-                  IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"
-                  Width="350" Height="200" >
+                  IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center"
+                  Width="350" Height="182" ColumnHeaderStyle="{StaticResource HeaderStyle}" RowHeight="20" Margin="25,0,0,0" GridLinesVisibility="None" >
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
             </DataGrid.Resources>
@@ -45,13 +79,14 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Label Content="Accommodation" Grid.ColumnSpan="2"/>
-        <Label Content="" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Label Content="Accommodation" Grid.ColumnSpan="2" Foreground="#E69138"  FontSize="20" HorizontalAlignment="Left" Height="37" Margin="122,0,0,0" Width="156"/>
+        <Label Content="" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="29" Margin="195,0,0,0" Width="10"/>
         <Line X2="1"  Grid.ColumnSpan="2" Grid.Row="2"/>
 
         <DataGrid ItemsSource="{Binding DatagridMonthList, UpdateSourceTrigger=PropertyChanged}"
-                  IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"
-                  Width="350" Height="200" >
+                  IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center"
+                  Width="350" Height="338" ColumnHeaderStyle="{StaticResource HeaderStyle}" RowHeight="20" Grid.RowSpan="2" Margin="25,0,0,0" GridLinesVisibility="None"
+                  IsHitTestVisible="False">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
             </DataGrid.Resources>
@@ -65,7 +100,7 @@
         </DataGrid>
 
 
-        <Label Grid.Row="11" Content="Most booked month:"/>
-        <Label Grid.Row="11" Grid.Column="1" Content="{Binding MaxYear}"/>
+        <Label Grid.Row="5" Content="Most booked year:" FontSize="17" Height="33" Width="150"/>
+        <Label Grid.Row="5" Grid.Column="1" Content="{Binding MaxYear}" FontSize="17" Foreground="#E69138"/>
     </Grid>
 </Page>

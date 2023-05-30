@@ -19,12 +19,14 @@ namespace booking.Model
         public DateTime DateOfBecomingSuper { get; set; }
         public int Score { get; set; }
         public int NumOfAccommodationReservations { get; set; }
+
+        public bool Tutorial { get; set; }
         public User() 
         {
         }
 
         public User(string username, string password, string role, bool super=false, 
-            DateTime? dateOfBecomingSuper = null, int score = 0, int numOfAccommodationReservations = 0)
+            DateTime? dateOfBecomingSuper = null, int score = 0, int numOfAccommodationReservations = 0,bool tut=true)
         {
             Username = username;
             Password = password;
@@ -35,12 +37,13 @@ namespace booking.Model
                 dateOfBecomingSuper = new DateTime(0001, 01, 01);
             DateOfBecomingSuper = dateOfBecomingSuper.Value;
             NumOfAccommodationReservations = numOfAccommodationReservations;
+            Tutorial = tut;
         }
 
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), Username, Password, Role ,Super.ToString(),
-                DateOfBecomingSuper.ToString("dd/MM/yyyy"), Score.ToString(), NumOfAccommodationReservations.ToString() };
+                DateOfBecomingSuper.ToString("dd/MM/yyyy"), Score.ToString(), NumOfAccommodationReservations.ToString(),Tutorial.ToString().ToLower() };
             return csvValues;
         }
 
@@ -54,6 +57,7 @@ namespace booking.Model
             DateOfBecomingSuper = DateTime.ParseExact(values[5], "dd/MM/yyyy", CultureInfo.InvariantCulture);
             Score = Convert.ToInt32(values[6]);
             NumOfAccommodationReservations = Convert.ToInt32(values[7]);
+            Tutorial= values[8] == "true" ? true : false;
         }
 
         public string IsSuper()

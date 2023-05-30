@@ -3,62 +3,96 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WPF.Views.Owner"
+      xmlns:local="clr-namespace:WPF.Views.Owner" xmlns:cvt="clr-namespace:booking.Converter"
       mc:Ignorable="d" 
       Height="641" Width="400"
       Title="RenovationView">
 
     <Grid>
         <Grid.Resources>
+            <Style TargetType="DataGridCell">
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#E69138"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+                    </Trigger>
+                </Style.Triggers>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+
+
+            </Style>
+
+            <Style TargetType="DataGrid">
+                <Setter Property="Foreground" Value="LightGray"/>
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="CanUserResizeColumns" Value="False"/>
+                <Setter Property="CanUserResizeRows" Value="False"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
+
+            </Style>
+            <Style TargetType="DataGridRow" x:Name="DatagridRowStyle">
+                <Setter  Property="Background" Value="black"/>
+
+            </Style>
+            <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="DarkRed"/>
+                <Setter Property="Height" Value="28"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            </Style>
+
             <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
             <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
             <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
         </Grid.Resources>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="3*"/>
-            
+            <RowDefinition Height="64*"/>
+            <RowDefinition Height="32*"/>
+            <RowDefinition Height="192*"/>
+            <RowDefinition Height="57*"/>
+            <RowDefinition Height="39*"/>
+            <RowDefinition Height="46*"/>
+            <RowDefinition Height="210*"/>
+
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Label Content="Future renovations:"/>
-        <Label Grid.Row="1" Content="Select renovation you want to cancel!"/>
+        <Label Content="Future renovations:" Foreground="#E69138" FontSize="28" Height="48" Width="248"/>
+        <Label Grid.Row="1" Content="Select renovation you want to cancel!" Height="28" Width="240"/>
         <DataGrid Grid.Row="2" ItemsSource="{Binding FutureRenovations, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedRenovation, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
-                  IsReadOnly="True" AutoGenerateColumns="False" Grid.ColumnSpan="2" Width="360" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   >
+                  IsReadOnly="True" AutoGenerateColumns="False" Width="360" Height="176" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   ColumnHeaderStyle="{StaticResource HeaderStyle}" RowHeight="25" GridLinesVisibility="None">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
             </DataGrid.Resources>
             <DataGrid.Columns>
 
                 <DataGridTextColumn Header="Accommodation" Width="2.5*" Binding="{Binding AccommodationName}"/>
-                <DataGridTextColumn Header="Start Date" Width="3*" Binding="{Binding StartDate}"/>
-                <DataGridTextColumn Header="End Date" Width="2.25*" Binding="{Binding EndDate}"/>
-                
+                <DataGridTextColumn Header="Start Date" Width="3*" Binding="{Binding StartDate,Converter={cvt:DateTimeToDateOnlyConverter}}"/>
+                <DataGridTextColumn Header="End Date" Width="2.25*" Binding="{Binding EndDate,Converter={cvt:DateTimeToDateOnlyConverter}}"/>
+
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="3" Content="Cancel renovation" Command="{Binding CancelRenovationCommand}"/>
-        <Line X2="1"  Grid.Row="4" Grid.ColumnSpan="2"/>
-        <Label Grid.Row="5" Content="Finished and ongoing renovations"/>
+        <Button Grid.Row="3" Content="Cancel renovation" Command="{Binding CancelRenovationCommand}" Margin="125,17,125,11"/>
+        <Line X2="1"  Grid.Row="4" Margin="15,0,15,3"/>
+        <Label Grid.Row="5" Content="Finished and ongoing renovations" Height="29" Width="220"/>
         <DataGrid Grid.Row="6" ItemsSource="{Binding PastRenovations, UpdateSourceTrigger=PropertyChanged}"
-                  IsReadOnly="True" AutoGenerateColumns="False" Grid.ColumnSpan="2" Width="360" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   >
+                  IsReadOnly="True" AutoGenerateColumns="False" Width="360" Height="190" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   ColumnHeaderStyle="{StaticResource HeaderStyle}" RowHeight="25" GridLinesVisibility="None">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
             </DataGrid.Resources>
             <DataGrid.Columns>
 
                 <DataGridTextColumn Header="Accommodation" Width="2.5*" Binding="{Binding AccommodationName}"/>
-                <DataGridTextColumn Header="Start Date" Width="3*" Binding="{Binding StartDate}"/>
-                <DataGridTextColumn Header="End Date" Width="2.25*" Binding="{Binding EndDate}"/>
+                <DataGridTextColumn Header="Start Date" Width="3*" Binding="{Binding StartDate,Converter={cvt:DateTimeToDateOnlyConverter}}"/>
+                <DataGridTextColumn Header="End Date" Width="2.25*" Binding="{Binding EndDate,Converter={cvt:DateTimeToDateOnlyConverter}}"/>
 
             </DataGrid.Columns>
         </DataGrid>

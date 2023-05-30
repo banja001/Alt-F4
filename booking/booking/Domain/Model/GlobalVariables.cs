@@ -7,5 +7,6 @@ namespace Domain.Model
     public static class GlobalVariables
     {
         public static bool a = true;
+        
     }
 }
