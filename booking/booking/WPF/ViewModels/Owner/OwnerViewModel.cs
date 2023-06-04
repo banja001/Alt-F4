@@ -10,6 +10,8 @@ using booking.View.Owner;
 using booking.WPF.ViewModels;
 using booking.WPF.Views.Owner;
 using Domain.Model;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using Repositories;
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Media3D;
 using WPF.Views.Owner;
 
 namespace WPF.ViewModels.Owner
@@ -40,6 +43,8 @@ namespace WPF.ViewModels.Owner
                 }
             }
         }
+        
+
         private string superOwnerLabel;
         public string SuperOwnerLabel
         {
@@ -82,7 +87,9 @@ namespace WPF.ViewModels.Owner
 
         private readonly OwnerNotificationsService _ownerNotificationService;
         public static List<OwnerNotification> Notifications { get; set; }
+        
         public ICommand NotifyUserCommand => new RelayCommand(NotifyUser);
+        public ICommand GeneratePDFCommand => new RelayCommand(GeneratePDF);
 
         public bool load;
         public ICommand RateGuestsCommand => new RelayCommand(RateGuests_Click);
@@ -111,6 +118,7 @@ namespace WPF.ViewModels.Owner
             {
                 NotifyOwner();
             }
+            
         }
 
         public void NotifyOwner()
@@ -223,6 +231,76 @@ namespace WPF.ViewModels.Owner
                 MainWindow.w.Main.Content = win;
             }
 
+        }
+
+        private void GeneratePDF()
+        {
+            
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            PdfDocument document = new PdfDocument();
+
+            PdfPage page = document.AddPage();
+            
+      
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+
+            XFont font = new XFont("Arial", 12);
+            XFont font2 = new XFont("Arial", 14,XFontStyle.Bold);
+
+            XBrush brush = XBrushes.Black;
+
+            XImage image = XImage.FromFile("../../../Resources/Icons/logo.png"); 
+            gfx.DrawImage(image, 100, 10, 100, 100);
+
+
+
+            gfx.DrawString("Accommodation stats", new XFont("Arial", 22,XFontStyle.Bold), XBrushes.Green, new XPoint(190, 70));
+
+            gfx.DrawLine(new XPen(XColor.FromArgb(50,30,200)),new XPoint(150,100),new XPoint(450,100));
+            gfx.DrawString("Accommodation name", font2, XBrushes.Black, new XPoint(160, 120));
+            gfx.DrawString("Average rating", font2, XBrushes.Black, new XPoint(330, 120));
+            gfx.DrawLine(new XPen(XColor.FromArgb(50, 30, 200)), new XPoint(150, 127), new XPoint(450, 127));
+            int xpos1 = 180;
+            int xpos2 = 340;
+            int ypos = 140;
+            int i = 80;
+            double grade;
+            int j;
+            List<ReservedDates> reservations = reservedDatesService.GetAll();
+            foreach(var acc in accommodationService.GetAll())
+            {
+                grade = 0;
+                j = 0;
+                if (acc.OwnerId == OwnerId)
+                {
+                    foreach(var rating in OwnerRatingService.GetAll())
+                    {
+                        
+                            if (reservations.Find(s => s.Id == rating.ReservationId).AccommodationId == acc.Id)
+                            {
+                                grade += rating.KindRating + rating.CleanRating;
+                                j++;
+                            }
+                        
+
+                    }
+                    
+                    grade = j==0 ? 0 : grade / (j*2);
+                    gfx.DrawString(acc.Name, font, brush, new XPoint(xpos1, ypos));
+                    gfx.DrawString(Math.Round(grade,3).ToString(), font, brush, new XPoint(xpos2, ypos));
+                    ypos += 7;
+                    gfx.DrawLine(new XPen(XColor.FromArgb(50, 30, 200)), new XPoint(150, ypos), new XPoint(450, ypos));
+                    ypos += 13;
+                }
+                
+            }
+            ypos -= 13;
+            gfx.DrawLine(new XPen(XColor.FromArgb(50, 30, 200)), new XPoint(150, 100), new XPoint(150, ypos));
+            gfx.DrawLine(new XPen(XColor.FromArgb(50, 30, 200)), new XPoint(450, 100), new XPoint(450, ypos));
+            gfx.DrawLine(new XPen(XColor.FromArgb(50, 30, 200)), new XPoint(320, 100), new XPoint(320, ypos));
+
+
+            document.Save("ownerRatings.pdf");
         }
     }
 }

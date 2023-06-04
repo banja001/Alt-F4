@@ -26,6 +26,7 @@
     <None Remove="Resources\Icons\home.png" />
     <None Remove="Resources\Icons\invalid.png" />
     <None Remove="Resources\Icons\livetrack.png" />
+    <None Remove="Resources\Icons\logo.png" />
     <None Remove="Resources\Icons\nesto.png" />
     <None Remove="Resources\Icons\onhold.png" />
     <None Remove="Resources\Icons\pic.png" />
@@ -75,6 +76,7 @@
     <Resource Include="Resources\Icons\home.png" />
     <Resource Include="Resources\Icons\invalid.png" />
     <Resource Include="Resources\Icons\livetrack.png" />
+    <Resource Include="Resources\Icons\logo.png" />
     <Resource Include="Resources\Icons\onhold.png" />
     <Resource Include="Resources\Icons\plus.png" />
     <Resource Include="Resources\Icons\request.png" />
@@ -109,9 +111,10 @@
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.3" />
     <PackageReference Include="MvvmNavigation.Wpf" Version="3.2.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
-    <PackageReference Include="Syncfusion.Pdf.Wpf" Version="21.2.8" />
+    <PackageReference Include="PDFsharp" Version="1.50.5147" />
     <PackageReference Include="Syncfusion.SfInput.WPF" Version="21.1.39" />
     <PackageReference Include="Syncfusion.Shared.WPF" Version="21.1.39" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,37 +1,36 @@
-﻿<Page x:Class="booking.View.OwnerWindow"
+﻿<Page
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.View" xmlns:booking="clr-namespace:booking"
       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:Owner="clr-namespace:WPF.Views.Owner" x:Class="booking.View.OwnerWindow"
         mc:Ignorable="d"
         Title="OwnerWindow" Height="641" Width="400"
         >
 
     <Grid>
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="Loaded">
-                <i:InvokeCommandAction Command="{Binding NotifyUserCommand}" />
-            </i:EventTrigger>
-        </i:Interaction.Triggers>
         <Grid.Resources>
-            <Style TargetType="DataGridCell">
-                <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="#E69138"/>
-                    <Setter Property="Foreground" Value="Black"/>
-                    <Setter Property="BorderBrush" Value="Black"/>
-                        
-                    </Trigger>
-            </Style.Triggers>
+
+            <Style TargetType="{x:Type DataGridCell}">
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                
+
+
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#E69138"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+
+                    </Trigger>
+                </Style.Triggers>
+
 
             </Style>
-            
-            <Style TargetType="DataGrid">
+
+            <Style TargetType="{x:Type DataGrid}">
                 <Setter Property="Foreground" Value="LightGray"/>
                 <Setter Property="Background" Value="Black"/>
                 <Setter Property="CanUserResizeColumns" Value="False"/>
@@ -41,23 +40,23 @@
                 <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
 
             </Style>
-            <Style TargetType="DataGridRow" x:Name="DatagridRowStyle">
+            <Style TargetType="{x:Type DataGridRow}" x:Name="DatagridRowStyle">
                 <Setter  Property="Background" Value="black"/>
-                
+
             </Style>
-            <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
+            <Style x:Key="HeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
                 <Setter Property="Background" Value="DarkRed"/>
                 <Setter Property="Height" Value="20"/>
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
             </Style>
 
-            
-            
 
-            <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
-            <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
-            <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
-            
+
+
+            <Style TargetType="{x:Type Line}" BasedOn="{StaticResource LineOwner}"/>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonOwner}"/>
+            <Style TargetType="{x:Type Label}" BasedOn="{StaticResource LabelOwner}"/>
+
             <Style TargetType="{x:Type ToggleButton}" x:Key="IPhoneSwitch">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -80,7 +79,7 @@
                                 </Border>
                             </Viewbox>
                             <ControlTemplate.Triggers>
-                                <EventTrigger RoutedEvent="Checked">
+                                <EventTrigger RoutedEvent="ToggleButton.Checked">
                                     <BeginStoryboard>
                                         <Storyboard>
                                             <ColorAnimation Storyboard.TargetName="Border"
@@ -94,7 +93,7 @@
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </EventTrigger>
-                                <EventTrigger RoutedEvent="Unchecked">
+                                <EventTrigger RoutedEvent="ToggleButton.Unchecked">
                                     <BeginStoryboard>
                                         <Storyboard>
                                             <ColorAnimation Storyboard.TargetName="Border"
@@ -115,6 +114,12 @@
             </Style>
         </Grid.Resources>
 
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding NotifyUserCommand}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+
         <Grid.RowDefinitions>
 
             <RowDefinition Height="3.5*"/>
@@ -132,20 +137,23 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
-        <Button Name="RateGuests" Command="{Binding RateGuestsCommand}" Content="Rate" FontSize="17" Width="100" Grid.Row="5" Grid.Column="1"/>
+        <Button x:Name="RateGuests" Command="{Binding RateGuestsCommand}" Content="Rate" FontSize="17" Width="100" Grid.Row="5" Grid.Column="1"/>
 
 
 
         <DataGrid x:Name="DataGridRaatings" GridLinesVisibility="None" ItemsSource="{Binding ListToRate, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="6" Grid.ColumnSpan="2" Width="360" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center"
-                  ColumnHeaderStyle="{StaticResource HeaderStyle}" RowHeight="20">
-            
+                  RowHeight="20">
+
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
             </DataGrid.Resources>
+            <DataGrid.ColumnHeaderStyle>
+                <StaticResource ResourceKey="HeaderStyle"/>
+            </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
-                
+
                 <DataGridTextColumn Header="Guest" Width="2.5*" Binding="{Binding GuestName}"/>
                 <DataGridTextColumn Header="Accommodation" Width="3*" Binding="{Binding AccommodationName}"/>
                 <DataGridTextColumn Header="Start date" Width="2.25*" Binding="{Binding StartDate}"/>
@@ -153,7 +161,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Label Content="Best locations&#10;(most booked)" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2"/>
+        <Label Content="Best locations&#xA;(most booked)" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2"/>
         <Line X2="1"  Grid.Row="1" Grid.ColumnSpan="2"/>
         <Line X2="1"  Grid.Row="4" Grid.ColumnSpan="2"/>
         <Label Content="Worst locations&#xA;(least booked)" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
@@ -187,12 +195,18 @@
                 <RowDefinition Height="2.5*"/>
             </Grid.RowDefinitions>
             <Label Content="Tooltip help" HorizontalContentAlignment="Center" VerticalAlignment="Top"  FontSize="16" Foreground="#E69138"  Margin="0,21,0,0"/>
-            <ToggleButton x:Name="ha" Grid.Row="1" Style="{DynamicResource IPhoneSwitch}" Width="50" Height="20" VerticalAlignment="Top"/>
+            <ToggleButton x:Name="ha" Grid.Row="1" Style="{DynamicResource IPhoneSwitch}" Width="50" Height="20" VerticalAlignment="Top" />
             <Label Content="Download pdf file:" Grid.Row="2" VerticalAlignment="Bottom"  Foreground="#E69138"/>
-            <Button Content="Grade average" Grid.Row="3" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="100"/>
+            <Button Command="{Binding GeneratePDFCommand}" Content="Grade average" Grid.Row="3" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="100"/>
+
+
 
 
         </Grid>
+
+
+
+
 
 
     </Grid>
