@@ -70,9 +70,9 @@
                        Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24" FontWeight="Bold" Margin="10 0"/>
                     <WrapPanel Name="wpRadioButtons" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10 10">
                         <RadioButton Name="rbOverview"  Content="Overview" RenderTransformOrigin="0.722,0.613" 
-                                     Style="{StaticResource ResourceKey=labelsStyle}" IsChecked="True" KeyDown="RadioButton_KeyDown"/>
+                                     Style="{StaticResource ResourceKey=labelsStyle}" IsChecked="True" KeyDown="RadioButton_KeyDown" Click="rbOverview_Click"/>
                         <RadioButton Name="rbAnywhereAnytime" Grid.Column="0" Content="Anywhere, anytime" Margin="10 0" 
-                                     Style="{StaticResource ResourceKey=labelsStyle}" RenderTransformOrigin="0.722,0.613" KeyDown="RadioButton_KeyDown"/>
+                                     Style="{StaticResource ResourceKey=labelsStyle}" RenderTransformOrigin="0.722,0.613" KeyDown="RadioButton_KeyDown" Checked="rbAnywhereAnytime_Checked"/>
                     </WrapPanel>
                     <Frame Grid.Row="2" Grid.Column="0" NavigationUIVisibility="Hidden" Name="fOverviewAnywhere"/>
                 </Grid>

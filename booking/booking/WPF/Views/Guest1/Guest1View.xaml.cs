@@ -94,5 +94,26 @@ namespace booking.View
                     lbHeader.Content = "Anywhere, anytime!";
                 }
         }
+
+        private void rbOverview_Click(object sender, RoutedEventArgs e)
+        {
+            rbOverview.IsChecked = true;
+            rbAnywhereAnytime.IsChecked = false;
+
+            fOverviewAnywhere.DataContext = _overview;
+            fOverviewAnywhere.Content = _overview;
+            lbHeader.Content = "Accommodation overview";
+        }
+
+        private void rbAnywhereAnytime_Checked(object sender, RoutedEventArgs e)
+        {
+            rbOverview.IsChecked = false;
+            rbAnywhereAnytime.IsChecked = true;
+
+
+            fOverviewAnywhere.DataContext = _anytimeAnywhereView;
+            fOverviewAnywhere.Content = _anytimeAnywhereView;
+            lbHeader.Content = "Anywhere, anytime!";
+        }
     }
 }

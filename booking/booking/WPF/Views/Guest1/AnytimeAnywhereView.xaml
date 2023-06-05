@@ -66,15 +66,15 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0" Content="Start date" Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24"></Label>
-                <Calendar Grid.Row="0" Grid.Column="1"></Calendar>
+                <Calendar Grid.Row="0" Grid.Column="1" SelectedDate="{Binding Path=Date.StartDate, UpdateSourceTrigger=PropertyChanged}"></Calendar>
 
                 <Label Grid.Row="0" Grid.Column="2" Content="End date" Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24"></Label>
-                <Calendar Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3"></Calendar>
+                <Calendar Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" SelectedDate="{Binding Path=Date.EndDate}"></Calendar>
 
                 <Label Grid.Row="2" Content="Guests" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0"/>
                 <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" x:Name="tSearchBarNumberOfGuests" Height="22">
                     <xctk:IntegerUpDown.Text>
-                        <Binding Path="SearchedAccommodation.NumOfGuests" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="NumOfGuests" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <val:StringToIntValidationRule ValidationStep="RawProposedValue"/>
                             </Binding.ValidationRules>
@@ -102,7 +102,7 @@
                                Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 <xctk:IntegerUpDown Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" x:Name="tSearchBarNumberOfDays" Height="22">
                     <xctk:IntegerUpDown.Text>
-                        <Binding Path="SearchedAccommodation.NumOfDays" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="NumOfDays" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <val:StringToIntValidationRule ValidationStep="RawProposedValue"/>
                             </Binding.ValidationRules>
