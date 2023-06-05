@@ -10,13 +10,12 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using WPF.Views.Guest1;
 
 namespace WPF.ViewModels.Guest1
 {
     public class AnytimeAnywhereViewModel : BaseViewModel
     {
-        private int userId;
-
         public ReservedDates Date { get; set; }
         public int NumOfGuests { get; set; }
         public int NumOfDays { get; set; }
@@ -26,10 +25,15 @@ namespace WPF.ViewModels.Guest1
         public List<ReservedDates> ReservedDates { get; set; }
         public ObservableCollection<ReservedDates> FreeDates { get; set; }
 
+        public AccommodationLocationDTO SelectedAccommodation { get; set; }
+
+        private int userId;
+
         private readonly AccommodationService _accommodationService;
         private readonly ReservedDatesService _reservedDatesService;
 
         public ICommand SearchAccommodationsCommand => new RelayCommand(SearchAccommodations);
+        public ICommand ReserveAccommodationClickCommand => new RelayCommand(ReserveAccommodationClick);
 
         public AnytimeAnywhereViewModel(int userId)
         {
@@ -46,12 +50,18 @@ namespace WPF.ViewModels.Guest1
 
         private void SearchAccommodations()
         {
+            while(AccommodationDTOs.Count > 0)
+            {
+                AccommodationDTOs.RemoveAt(0);
+            }
+
             foreach(var accommodation in AllAccommodationDTOs)
             {
                 int maxCapacity = _accommodationService.FindById(accommodation.Id).MaxCapacity;
 
                 ReservedDates = _reservedDatesService.GetAllByAccommodationId(accommodation.Id);
 
+                FreeDates.Clear();
                 FilterReservedDatesByMonth();
                 CreateDateIntervals(Date.StartDate, Date.EndDate, accommodation.Id);
                 RemoveReservedDatesFromIntervals();
@@ -118,6 +128,23 @@ namespace WPF.ViewModels.Guest1
             ReservedDates = ReservedDates.OrderBy(d => d.StartDate).ToList();
             ReservedDates = ReservedDates.Where(d => d.StartDate.Month == Date.StartDate.Month || d.StartDate.Month == Date.EndDate.Month
                                             || d.EndDate.Month == Date.EndDate.Month || d.EndDate.Month == Date.StartDate.Month).ToList();
+        }
+
+        public void ReserveAccommodationClick()
+        {
+            if(SelectedAccommodation == null)
+            {
+                MessageBox.Show("You have to select an accommodation before you can procceed");
+                return;
+            }
+
+            FreeDates.Clear();
+            FilterReservedDatesByMonth();
+            CreateDateIntervals(Date.StartDate, Date.EndDate, SelectedAccommodation.Id);
+            RemoveReservedDatesFromIntervals();
+
+            var reserveAccommodation = new ReserveAccommodationAAView(FreeDates, SelectedAccommodation.Id, userId, NumOfGuests);
+            reserveAccommodation.ShowDialog();
         }
     }
 }

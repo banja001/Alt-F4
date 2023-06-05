@@ -23,16 +23,6 @@
             <Setter Property="Foreground" Value="#edf2f0"></Setter>
             <Setter Property="FontSize" Value="14"></Setter>
         </Style>
-        <Style x:Key="tabItemStyle" TargetType="TabItem">
-            <Setter Property="Background" Value="#699687"></Setter>
-            <Setter Property="Foreground" Value="#edf2f0"></Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Foreground" Value="#597a6a"></Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
         <Style x:Key="gridStyle" TargetType="Grid">
             <Setter Property="Background" Value="#699687"></Setter>
         </Style>
@@ -130,7 +120,7 @@
             </Grid>
         </GroupBox>
 
-        <Button Grid.Row="1" Grid.Column="1" x:Name="ReserveAccommodationButton" Command="{Binding ReserveAccommodationsCommand}"
+        <Button Grid.Row="1" Grid.Column="1" x:Name="ReserveAccommodationButton" Command="{Binding ReserveAccommodationClickCommand}"
                         Width="67" Content="Reserve" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10 10"/>
         <Label Grid.Row="1" Grid.Column="0" Content="Accommodations" Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10 0"/>
         <DataGrid Grid.Row="2" Grid.ColumnSpan="2" x:Name="accommodationData"
