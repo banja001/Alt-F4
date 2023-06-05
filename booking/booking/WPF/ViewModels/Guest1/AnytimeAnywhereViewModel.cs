@@ -43,33 +43,66 @@ namespace WPF.ViewModels.Guest1
             AllAccommodationDTOs = _accommodationService.CreateAccomodationDTOs();
             FreeDates = new ObservableCollection<ReservedDates>();
             AccommodationDTOs = new ObservableCollection<AccommodationLocationDTO>();
-
             Date = new ReservedDates();
+
             this.userId = userId;
         }
 
         private void SearchAccommodations()
         {
-            while(AccommodationDTOs.Count > 0)
+            ClearAccommodationDTOs();
+
+            SetDateIfNotSpecified();
+
+            foreach (var accommodation in AllAccommodationDTOs)
+            {
+                AddToAccommodationDTOs(accommodation);
+            }
+        }
+
+        private void SetDateIfNotSpecified()
+        {
+            if (Date.StartDate == new DateTime(0001, 01, 01) && Date.EndDate == new DateTime(0001, 01, 01))
+            {
+                Date.StartDate = DateTime.Now;
+
+                int year = Date.StartDate.Year;
+                int month = Date.StartDate.Month + 1;
+
+                if (month > 12)
+                {
+                    month = 1;
+                    year++;
+                }
+
+                int days = DateTime.DaysInMonth(year, month);
+
+                Date.EndDate = new DateTime(year, month, days);
+            }
+        }
+
+        private void AddToAccommodationDTOs(AccommodationLocationDTO accommodation)
+        {
+            int maxCapacity = _accommodationService.FindById(accommodation.Id).MaxCapacity;
+
+            ReservedDates = _reservedDatesService.GetAllByAccommodationId(accommodation.Id);
+
+            FreeDates.Clear();
+            FilterReservedDatesByMonth();
+            CreateDateIntervals(Date.StartDate, Date.EndDate, accommodation.Id);
+            RemoveReservedDatesFromIntervals();
+
+            if (maxCapacity >= NumOfGuests && NumOfDays >= accommodation.MinDaysToUse && FreeDates.Count > 0)
+            {
+                AccommodationDTOs.Add(accommodation);
+            }
+        }
+
+        private void ClearAccommodationDTOs()
+        {
+            while (AccommodationDTOs.Count > 0)
             {
                 AccommodationDTOs.RemoveAt(0);
-            }
-
-            foreach(var accommodation in AllAccommodationDTOs)
-            {
-                int maxCapacity = _accommodationService.FindById(accommodation.Id).MaxCapacity;
-
-                ReservedDates = _reservedDatesService.GetAllByAccommodationId(accommodation.Id);
-
-                FreeDates.Clear();
-                FilterReservedDatesByMonth();
-                CreateDateIntervals(Date.StartDate, Date.EndDate, accommodation.Id);
-                RemoveReservedDatesFromIntervals();
-
-                if (maxCapacity >= NumOfGuests && NumOfDays >= accommodation.MinDaysToUse && FreeDates.Count > 0)
-                {
-                    AccommodationDTOs.Add(accommodation);
-                }
             }
         }
 
@@ -83,34 +116,17 @@ namespace WPF.ViewModels.Guest1
                 if (date.EndDate < FreeDates[0].StartDate || date.StartDate > FreeDates[FreeDates.Count - 1].EndDate)
                     continue;
 
-                DateTime firstDate = GetStartOfReservedDate(date).AddDays(-NumOfDays + 2);
-                DateTime lastDate = GetEndOfReservedDate(date);
+                DateTime firstDate = date.StartDate;
+                DateTime lastDate = date.EndDate;
 
                 while (firstDate < lastDate)
                 {
-                    if (FreeDates.Where(d => d.StartDate == firstDate).Count() != 0)
-                        FreeDates.Remove(FreeDates.Where(d => d.StartDate == firstDate).ToList()[0]);
+                    if (FreeDates.Where(d => d.StartDate.Date == firstDate.Date).Count() != 0)
+                        FreeDates.Remove(FreeDates.Where(d => d.StartDate.Date == firstDate.Date).ToList()[0]);
 
                     firstDate = firstDate.AddDays(1);
                 }
             }
-        }
-
-        private DateTime GetStartOfReservedDate(ReservedDates date)
-        {
-            List<ReservedDates> lastDates = FreeDates.Where(d => d.StartDate == date.StartDate).ToList();
-
-            return lastDates.Count() == 0
-                ? new DateTime(FreeDates[0].StartDate.Year, FreeDates[0].StartDate.Month, FreeDates[0].StartDate.Day)
-                : lastDates[0].StartDate;
-        }
-        private DateTime GetEndOfReservedDate(ReservedDates date)
-        {
-            List<ReservedDates> firstDates = FreeDates.Where(d => d.EndDate == date.EndDate).ToList();
-
-            return firstDates.Count() == 0
-                ? new DateTime(FreeDates[FreeDates.Count - 1].EndDate.Year, FreeDates[FreeDates.Count - 1].EndDate.Month, FreeDates[FreeDates.Count - 1].EndDate.Day)
-                : firstDates[0].EndDate;
         }
 
         private void CreateDateIntervals(DateTime startDate, DateTime endDate, int accommodationId)
@@ -137,6 +153,10 @@ namespace WPF.ViewModels.Guest1
                 MessageBox.Show("You have to select an accommodation before you can procceed");
                 return;
             }
+
+            int maxCapacity = _accommodationService.FindById(SelectedAccommodation.Id).MaxCapacity;
+
+            ReservedDates = _reservedDatesService.GetAllByAccommodationId(SelectedAccommodation.Id);
 
             FreeDates.Clear();
             FilterReservedDatesByMonth();
