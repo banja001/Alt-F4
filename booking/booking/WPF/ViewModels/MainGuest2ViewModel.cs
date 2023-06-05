@@ -20,19 +20,35 @@ namespace booking.WPF.ViewModels
 {
     public class MainGuest2ViewModel : BaseViewModel
     {
+
+        private App app;
+        private const string SRB = "sr-Latn-RS";
+        private const string ENG = "en-US";
         public ICommand ExitButtonCommand => new RelayCommand(ExitWindow);
         public ICommand LogOutButtonCommand => new RelayCommand(LogOut);
         public ICommand NavigateWindowsCommand => new RelayCommandWithParams(NavigateWindows);
+        public RelayCommand ChangeLanguageCommand => new RelayCommand(ChangeLanguage);
         public BaseViewModel UserControlInstance { get; set; }
         public User User { get; set; }
         public String HeaderMessage { get; set; }
         public MainGuest2ViewModel(User user) 
         {
+            app = (App)Application.Current;
+            app.ChangeLanguage(SRB);
             this.User = user;
             UserControlInstance = new HomeViewModel(User);
             OnPropertyChanged(nameof(UserControlInstance));
             HeaderMessage = " Welcome " + User.Username.ToString() + " ";
             OnPropertyChanged(nameof(HeaderMessage));
+        }
+        private void ChangeLanguage()
+        {
+            if (app.getCultureInfo().Equals(SRB))
+            {
+                app.ChangeLanguage(ENG);
+                return;
+            }
+            app.ChangeLanguage(SRB);
         }
 
         private void NavigateWindows(object parameter)

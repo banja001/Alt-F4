@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:booking.WPF.Views.Guest2"
+             xmlns:ns="clr-namespace:Localization"
              mc:Ignorable="d" 
              xmlns:cvt="clr-namespace:booking.Converter" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -38,10 +39,10 @@
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}" Grid.Row="0" Grid.Column="0" Content="*Location:" />
-                        <Label Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}" Grid.Row="2" Grid.Column="0" Content="*Time estimation:" />
-                        <Label Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}" Grid.Row="4" Grid.Column="0" Content="*Additional information:" />
-                        <Label Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}" Grid.Row="6" Grid.Column="0" Content="*Description:" />
+                        <Label Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}" Grid.Row="0" Grid.Column="0" Content="{ns:Loc location}" />
+                        <Label Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}" Grid.Row="2" Grid.Column="0" Content="{ns:Loc Time_estimation}" />
+                        <Label Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}" Grid.Row="4" Grid.Column="0" Content="{ns:Loc Additional_information}" />
+                        <Label Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}" Grid.Row="6" Grid.Column="0" Content="{ns:Loc Description}" />
 
                         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
                             <TextBox  LostFocus="StateLostFocus" GotFocus="StateGotFocus" x:Name="StateTextBox" Text="{Binding State}" Width="130" Margin="30,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
@@ -59,18 +60,18 @@
                         </StackPanel>
 
                         <TextBox Height="60" VerticalAlignment="Top" LostFocus="DescriptionLostFocus" GotFocus="DescriptionGotFocus" x:Name="DescriptionTextBox" TextWrapping="Wrap" Text="{Binding Description}" Margin="30,0,0,0" Width="275" HorizontalAlignment="Left" Grid.Row="7" Grid.RowSpan="2" Grid.Column="0" />
-                        <Label Margin="10,0,0,0" Grid.Row="0" Grid.Column="1" Content="Former simple requests:" Style="{DynamicResource LightHeaderLabel}"/>
+                        <Label Margin="10,0,0,0" Grid.Row="0" Grid.Column="1" Content="{ns:Loc Former_simple_requests}" Style="{DynamicResource LightHeaderLabel}"/>
                         
                         <StackPanel Orientation="Horizontal" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <Button Command="{Binding CancelSimpleRequestCommand}" Content="Cancel" Margin="93,10,5,0" Width="100" Height="30" Style="{DynamicResource LightClearButton}"/>
-                            <Button Command="{Binding SubmitSimpleRequestCommand}" Content="Request" Margin="5,10,0,0" Width="100" Height="30" Style="{DynamicResource LightButton}"/>
+                            <Button Command="{Binding CancelSimpleRequestCommand}" Content="{ns:Loc Cancel}" Margin="93,10,5,0" Width="100" Height="30" Style="{DynamicResource LightClearButton}"/>
+                            <Button Command="{Binding SubmitSimpleRequestCommand}" Content="{ns:Loc Request}" Margin="5,10,0,0" Width="100" Height="30" Style="{DynamicResource LightButton}"/>
                         </StackPanel>
 
                         <ScrollViewer VerticalAlignment="Top" Margin="5,0,0,0" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Grid.RowSpan="9" Height="500" VerticalScrollBarVisibility="Hidden" Width="400">
                             <ItemsControl ItemsSource="{Binding Requests, Mode=TwoWay}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Border Height="80" HorizontalAlignment="Left" Width="350" Margin="8" BorderBrush="#7588c4" Background="White" BorderThickness="2" CornerRadius="3">
+                                        <Border Height="80" HorizontalAlignment="Left" Width="380" Margin="8" BorderBrush="#7588c4" Background="White" BorderThickness="2" CornerRadius="3">
                                             <Grid>
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="1*"></RowDefinition>
@@ -85,12 +86,12 @@
                                                     <Border Margin="0,5,0,0" Padding="1" Width="36" Height="36" VerticalAlignment="Center" BorderBrush="#7588c4" Background="White" BorderThickness="2" CornerRadius="18">
                                                         <Image Height="25" Width="25" Source="{Binding StatusUri, Converter={cvt:UrlToImageSourceConverter}}" Margin="0,0,0,0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Image>
                                                     </Border>
-                                                    <Button Margin="0,2,0,0" Style="{DynamicResource LightClearButton}" Content="View" Command="{Binding Path=DataContext.PreviewRequestCommand,  RelativeSource= {RelativeSource FindAncestor,
+                                                    <Button Margin="0,2,0,0" Style="{DynamicResource LightClearButton}" Content="{ns:Loc see_more}" Command="{Binding Path=DataContext.PreviewRequestCommand,  RelativeSource= {RelativeSource FindAncestor,
                                                          AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Id}"/>
                                                 </StackPanel>
-                                                
-                                                <Label Style="{DynamicResource VoucherHeader}" Margin="5,0,5,0" Grid.Column="1" Grid.Row="0">Start date:</Label>
-                                                <Label Style="{DynamicResource VoucherHeader}" Margin="5,0,5,0" Grid.Column="1" Grid.Row="1">End date:</Label>
+
+                                                <Label Style="{DynamicResource VoucherHeader}" Margin="5,0,5,0" Grid.Column="1" Content="{ns:Loc obtain_date}" Grid.Row="0"></Label>
+                                                <Label Style="{DynamicResource VoucherHeader}" Margin="5,0,5,0" Grid.Column="1" Content="{ns:Loc expiry_date}" Grid.Row="1"></Label>
                                                 <Label Style="{DynamicResource LightHeaderLabel}" FontWeight="Medium" Grid.Column="3" Grid.Row="0" Margin="5,0,0,0" Content="{Binding StartDate.Date, Mode=OneWay,Converter={cvt:DateTimeToDateOnlyConverter}}" Width="90"/>
                                                 <Label Style="{DynamicResource LightHeaderLabel}" FontWeight="Medium" Grid.Column="3" Grid.Row="1" Margin="5,0,0,0" Content="{Binding EndDate.Date, Mode=OneWay,Converter={cvt:DateTimeToDateOnlyConverter}}" Width="90"/>
                                                 

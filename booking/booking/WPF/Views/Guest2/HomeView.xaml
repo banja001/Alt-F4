@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF.Views.Guest2"
+             xmlns:ns="clr-namespace:Localization"
              mc:Ignorable="d" 
              xmlns:cvt="clr-namespace:booking.Converter" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -26,10 +27,10 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Style="{DynamicResource LightHeaderLabel}" Content="Notifications" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0"/>
+        <Label Style="{DynamicResource LightHeaderLabel}" Content="{ns:Loc Notifications}" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0"/>
         
         <StackPanel Orientation="Vertical" Margin="25,0,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-            <Label Style="{DynamicResource VoucherHeader}" Content="Recently approved tours" FontSize="14"/>
+            <Label Style="{DynamicResource VoucherHeader}" Content="{ns:Loc Recently_approved_tours}" FontSize="14"/>
             <ScrollViewer VerticalScrollBarVisibility="Disabled" VerticalAlignment="Top" HorizontalAlignment="Left" Height="120" HorizontalScrollBarVisibility="Visible" Width="850">
                 <ItemsControl ItemsSource="{Binding ApprovedNotifications, Mode=TwoWay}">
                     <ItemsControl.ItemsPanel>
@@ -67,7 +68,7 @@
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Margin="25,0,0,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-            <Label Style="{DynamicResource VoucherHeader}" Content="Tours you might like" FontSize="14"/>
+            <Label Style="{DynamicResource VoucherHeader}" Content="{ns:Loc Tours_you_might_like}" FontSize="14"/>
             <ScrollViewer VerticalScrollBarVisibility="Disabled" VerticalAlignment="Top" HorizontalAlignment="Left" Height="120" HorizontalScrollBarVisibility="Visible" Width="850">
                 <ItemsControl ItemsSource="{Binding SuggestionNotifications, Mode=TwoWay}">
                     <ItemsControl.ItemsPanel>

@@ -28,11 +28,12 @@ namespace booking.Commands
             _canExecute = canExecute;
         }
 
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
+        public event EventHandler CanExecuteChanged = delegate { };
+        //{
+            /*add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }*/
+
+        //}
 
         public bool CanExecute(object parameter)
         {
@@ -42,6 +43,11 @@ namespace booking.Commands
         public void Execute(object parameter)
         {
             _execute();
+        }
+
+        public void RaiseCanExecuteChanged()
+        {
+            _canExecute();
         }
     }
 }

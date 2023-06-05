@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.Views.Guest2"
+        xmlns:ns="clr-namespace:Localization"
         mc:Ignorable="d"
         Title="More details" Height="350" Width="400" AllowsTransparency="True" Background="Transparent" WindowStyle="None" WindowStartupLocation="CenterScreen">
     <Window.Resources>
@@ -36,7 +37,7 @@
                 <Image Stretch="UniformToFill" Source="{Binding ImageSource}" x:Name="PresentTourImage" />
             </Border>
             <StackPanel Grid.Column="1" Grid.Row="2">
-                <Label Style="{DynamicResource LightHeaderLabel}" x:Name="description" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Description:" FontWeight="Bold"/>
+                <Label Style="{DynamicResource LightHeaderLabel}" x:Name="description" HorizontalAlignment="Center" VerticalAlignment="Top" Content="{ns:Loc Description}" FontWeight="Bold"/>
                 <TextBlock x:Name="DescriptionTextBlock" Foreground="#424d6f" TextAlignment="Center" Text="{Binding Description}"></TextBlock>
             </StackPanel>
         </Grid>

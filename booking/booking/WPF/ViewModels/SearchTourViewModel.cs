@@ -31,7 +31,17 @@ namespace WPF.ViewModels
         private readonly AppointmentCheckPointRepository _appointmentCheckPointRepository;
         public ObservableCollection<TourLocationDTO> TourLocationDTOs { get; set; }
         public ObservableCollection<string> States { get; set; }
-        public TourLocationDTO SelectedTour { get; set; }
+
+        private TourLocationDTO _selectedTour;
+        public TourLocationDTO SelectedTour
+        {
+            get { return _selectedTour; }
+            set
+            {
+                //BookATourCommand.RaiseCanExecuteChanged();
+                _selectedTour = value;
+            }
+        }
         public string SelectedState { get; set; }
         public string SelectedCity { get; set; }
         public User currentUser { get; set; }
@@ -42,7 +52,7 @@ namespace WPF.ViewModels
         public Answer Answer { get; set; }
         public ICommand SearchCommand => new RelayCommand(OnSearchButtonClick);
         public ICommand SeeMoreCommand => new RelayCommand(OnMoreDetailsButtonClick);
-        public ICommand BookATourCommand => new RelayCommand(OnBookTourButtonClick, CanBookTourButtonClick);
+        public RelayCommand BookATourCommand => new RelayCommand(OnBookTourButtonClick);
         public ICommand FillCitiesCommand => new RelayCommandWithParams(OnStateComboBoxSelectionChanged);
         public SearchTourViewModel(User user)
         {

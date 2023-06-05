@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Active_tour" xml:space="preserve">
+    <value>Aktivna tura</value>
+  </data>
+  <data name="Additional_comment" xml:space="preserve">
+    <value>Dodatni komentar:</value>
+  </data>
+  <data name="Additional_information" xml:space="preserve">
+    <value>Dodatne informacije</value>
+  </data>
+  <data name="Add_photo" xml:space="preserve">
+    <value>Dodaj sliku</value>
+  </data>
+  <data name="Add_photo_optional" xml:space="preserve">
+    <value>Dodaj slike(opciono):</value>
+  </data>
+  <data name="approved_mess" xml:space="preserve">
+    <value>tura je odobreno od strane vodiča</value>
+  </data>
+  <data name="Available_space" xml:space="preserve">
+    <value>Slobodnih mesta</value>
+  </data>
+  <data name="Available_vouchers" xml:space="preserve">
+    <value>Dostupni vaučeri</value>
+  </data>
+  <data name="Avg_guest_age" xml:space="preserve">
+    <value>Prosecan br. godina</value>
+  </data>
+  <data name="avg_ppl_mess" xml:space="preserve">
+    <value>je prosečan broj ljudi na zahtevima</value>
+  </data>
+  <data name="Book_a_tour" xml:space="preserve">
+    <value>Bukiraj turu</value>
+  </data>
+  <data name="Book_a_tour_header" xml:space="preserve">
+    <value>Bukiraj turu</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Poništi</value>
+  </data>
+  <data name="Change_lang" xml:space="preserve">
+    <value>Engleski</value>
+  </data>
+  <data name="Choose_year" xml:space="preserve">
+    <value>Izaberi godinu</value>
+  </data>
+  <data name="Completed_tours" xml:space="preserve">
+    <value>Završene ture</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Potvrdi</value>
+  </data>
+  <data name="Current_checkpoint" xml:space="preserve">
+    <value>Trenutna znamenitost:</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Opis</value>
+  </data>
+  <data name="duration" xml:space="preserve">
+    <value>Trajanje(h)</value>
+  </data>
+  <data name="end_date" xml:space="preserve">
+    <value>Datum završetka</value>
+  </data>
+  <data name="end_time" xml:space="preserve">
+    <value>Vreme završetka</value>
+  </data>
+  <data name="expiry_date" xml:space="preserve">
+    <value>Datum isteka</value>
+  </data>
+  <data name="Former_simple_requests" xml:space="preserve">
+    <value>Prethodni zahtevi</value>
+  </data>
+  <data name="guideId" xml:space="preserve">
+    <value>Id vodiča</value>
+  </data>
+  <data name="Header_welcome" xml:space="preserve">
+    <value>Dobrodošli</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Početna</value>
+  </data>
+  <data name="Join_tour" xml:space="preserve">
+    <value>Priključi se </value>
+  </data>
+  <data name="language" xml:space="preserve">
+    <value>Jezik</value>
+  </data>
+  <data name="Language_chart" xml:space="preserve">
+    <value>Prikaz zahteva tura po jezicima</value>
+  </data>
+  <data name="Lang_knowledge" xml:space="preserve">
+    <value>Poznavanje jezika:</value>
+  </data>
+  <data name="location" xml:space="preserve">
+    <value>Lokacija</value>
+  </data>
+  <data name="Location_chart" xml:space="preserve">
+    <value>Prikaz zahteva tura po lokacijama</value>
+  </data>
+  <data name="Log_out" xml:space="preserve">
+    <value>Odjavi se</value>
+  </data>
+  <data name="max_guest_count" xml:space="preserve">
+    <value>Maksimalni br. ljudi</value>
+  </data>
+  <data name="more_details" xml:space="preserve">
+    <value>Dodatni detalji</value>
+  </data>
+  <data name="My_tours" xml:space="preserve">
+    <value>Moje ture</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Ime</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Obaveštenja</value>
+  </data>
+  <data name="Number_of_guests" xml:space="preserve">
+    <value>Broj gostiju</value>
+  </data>
+  <data name="obtain_date" xml:space="preserve">
+    <value>Datum dobijanja</value>
+  </data>
+  <data name="Rate_guide" xml:space="preserve">
+    <value>Oceni vodiča</value>
+  </data>
+  <data name="Recently_approved_tours" xml:space="preserve">
+    <value>Skoro odobrene ture</value>
+  </data>
+  <data name="rejected_mess" xml:space="preserve">
+    <value>tura je odbijeno</value>
+  </data>
+  <data name="Request" xml:space="preserve">
+    <value>Zatraži</value>
+  </data>
+  <data name="Requests" xml:space="preserve">
+    <value>Zahtevi</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Pretraži</value>
+  </data>
+  <data name="see_more" xml:space="preserve">
+    <value>Pogledaj više</value>
+  </data>
+  <data name="Select_voucher" xml:space="preserve">
+    <value>Izaberi vaučer</value>
+  </data>
+  <data name="Simple_request" xml:space="preserve">
+    <value>Prosta tura</value>
+  </data>
+  <data name="start_date" xml:space="preserve">
+    <value>Datum početka</value>
+  </data>
+  <data name="start_time" xml:space="preserve">
+    <value>Vreme početka</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statistika</value>
+  </data>
+  <data name="Time_estimation" xml:space="preserve">
+    <value>Okvirno vreme</value>
+  </data>
+  <data name="tourId" xml:space="preserve">
+    <value>Id ture</value>
+  </data>
+  <data name="Tours_you_might_like" xml:space="preserve">
+    <value>Sugestije tura</value>
+  </data>
+  <data name="Tour_enjoyment" xml:space="preserve">
+    <value>Zanimljivost ture:</value>
+  </data>
+  <data name="Tour_knowledge" xml:space="preserve">
+    <value>Poznavanje ture:</value>
+  </data>
+  <data name="Vouchers" xml:space="preserve">
+    <value>Vaučeri</value>
+  </data>
+</root>

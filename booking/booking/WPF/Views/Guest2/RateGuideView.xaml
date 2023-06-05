@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.WPF.Views.Guest2"
+        xmlns:ns="clr-namespace:Localization"
         mc:Ignorable="d"
         Title="Rate tour guide" Height="600" Width="600" AllowsTransparency="True" Background="Transparent" WindowStyle="None"
        WindowStartupLocation="CenterScreen">
@@ -59,20 +60,20 @@
                 <RadioButton Name="Enjoyment4" Margin="0,0,40,0"/>
                 <RadioButton Name="Enjoyment5" Margin="0,0,40,0"/>
             </StackPanel>
-            <Label Grid.Row="1" Grid.Column="0" Style="{DynamicResource LightHeaderLabel}" Margin="15,0,0,0" Content="Tour Knowledge:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Label Grid.Row="2" Grid.Column="0" Style="{DynamicResource LightHeaderLabel}" Margin="15,0,0,0" Content="Language Knowledge:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Label Grid.Row="3" Grid.Column="0" Style="{DynamicResource LightHeaderLabel}" Margin="15,0,0,0" Content="Tour enjoyment:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Label Grid.Row="4" Grid.Column="0" Style="{DynamicResource LightHeaderLabel}" Margin="15,20,0,0" Content="Additional comment:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Label Grid.Row="1" Grid.Column="0" Style="{DynamicResource LightHeaderLabel}" Margin="15,0,0,0" Content="{ns:Loc Tour_knowledge}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label Grid.Row="2" Grid.Column="0" Style="{DynamicResource LightHeaderLabel}" Margin="15,0,0,0" Content="{ns:Loc Lang_knowledge}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label Grid.Row="3" Grid.Column="0" Style="{DynamicResource LightHeaderLabel}" Margin="15,0,0,0" Content="{ns:Loc Tour_enjoyment}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label Grid.Row="4" Grid.Column="0" Style="{DynamicResource LightHeaderLabel}" Margin="15,20,0,0" Content="{ns:Loc Additional_comment}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <TextBox Text="{Binding Comment, Mode=TwoWay}" Grid.Row="4" Grid.Column="1" Margin="35,25,60,20"/>
             <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <TextBox Margin="35,20,60,0" Text="{Binding ImageUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <StackPanel Orientation="Horizontal">
-                    <Button Command="{Binding AddPhotoCommand}" Height="30"  Style="{DynamicResource LightClearButton}" Content="Add photo" Width="100" Margin="60,80,10,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <Button Command="{Binding AddPhotoCommand}" Height="30"  Style="{DynamicResource LightClearButton}" Content="{ns:Loc Add_photo}" Width="100" Margin="60,80,10,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                     <Button Command="{Binding SubmitCommand}" Height="30" Width="100" Content="Submit"  Margin="10,80,0,0" Style="{DynamicResource LightButton}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Vertical">
-                <Label Grid.Row="5" Grid.Column="0" Style="{DynamicResource LightHeaderLabel}" Margin="15,15,0,0" Content="Add your photos(optional):" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Label Grid.Row="5" Grid.Column="0" Style="{DynamicResource LightHeaderLabel}" Margin="15,15,0,0" Content="{ns:Loc Add_photo_optional}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <StackPanel Margin="0,3,0,0" Orientation="Horizontal" HorizontalAlignment="Stretch" Height="100">
                     <Button Style="{DynamicResource LightButton}" FontSize="12" Padding="4" x:Name="swipeLeftButton" Height="32" Margin="15, 5, 10, 5" Content="&lt;&lt;" FontWeight="Bold" Command="{Binding SwipeLeftCommand}"/>
                     <Border  Style="{DynamicResource LightBorder}">
