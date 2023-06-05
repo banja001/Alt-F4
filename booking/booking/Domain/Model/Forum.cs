@@ -11,23 +11,23 @@ namespace Domain.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int LocationId { get; set; }
+        public string Location { get; set; }
         public int CreatorId { get; set; }
         public bool Open { get; set; }
 
         public Forum() { }
 
-        public Forum(int id, string name, int locationId, int creatorId, bool open)
+        public Forum(int id, string name, string locationId, int creatorId, bool open)
         {
             Id = id;
             Name = name;
-            LocationId = locationId;
+            Location = Location;
             CreatorId = creatorId;
             Open = open;
         }
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Name, LocationId.ToString(), CreatorId.ToString(), Open.ToString()};
+            string[] csvValues = { Id.ToString(), Name, Location, CreatorId.ToString(), Open.ToString()};
             return csvValues;
         }
 
@@ -35,7 +35,7 @@ namespace Domain.Model
         {
             Id = Convert.ToInt32(values[0]);
             Name = values[1];
-            LocationId = Convert.ToInt32(values[2]);
+            Location = values[2];
             CreatorId = Convert.ToInt32(values[3]);
             Open = values[4] == "true" ? true : false;
         }
