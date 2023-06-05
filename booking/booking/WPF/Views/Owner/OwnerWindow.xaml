@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.View" xmlns:booking="clr-namespace:booking"
       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:Owner="clr-namespace:WPF.Views.Owner" x:Class="booking.View.OwnerWindow"
+        xmlns:Owner="clr-namespace:WPF.Views.Owner" xmlns:owner="clr-namespace:WPF.ViewModels.Owner" d:DataContext="{d:DesignInstance Type=owner:OwnerViewModel}" x:Class="booking.View.OwnerWindow"
         mc:Ignorable="d"
         Title="OwnerWindow" Height="641" Width="400"
         >
@@ -167,9 +167,12 @@
         <Label Content="Worst locations&#xA;(least booked)" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
         <Label Content="Sremski Karlovci"  Grid.Row="3" Foreground="Green" FontSize="17"/>
         <Label Content="Bijeljina"  Grid.Row="3" Foreground="Red" FontSize="17" Grid.Column="1" />
-        <Label Content="Rate Guests"  Grid.Row="5" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="14,0,0,0" FontSize="17"  Foreground="#E69138"/>
+        <Label Name="RateLabel" MouseLeftButtonDown="ClickRateGuests" Content="Rate Guests [?]"  Grid.Row="5" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="14,0,0,0" FontSize="17"  Foreground="#E69138"/>
+        <Popup x:Name="RateGuestsPopup" PlacementTarget="{Binding ElementName=RateLabel}" IsOpen="False">
+            <TextBlock Text="You can only rate guests 5 days &#xA; after their stay so be quick!" Background="LightGray" Padding="5"/>
+        </Popup>
         <Label Content="Please select guest to rate"  Grid.Row="5" Margin="0,31,0,0" VerticalAlignment="Top" />
-
+        
 
         <Grid>
             <Grid.RowDefinitions>
@@ -179,12 +182,15 @@
                 <RowDefinition Height="2.5*"/>
                 <RowDefinition Height="2.5*"/>
             </Grid.RowDefinitions>
-            <Label Content="Owner info:"   Grid.Row="0"   Foreground="#E69138" FontSize="20" VerticalAlignment="Bottom"/>
+            <Label Content="Owner info:" FontSize="16"  Grid.Row="0"   Foreground="#E69138"  VerticalAlignment="Bottom"/>
             <Label Content="Name:" Grid.Row="1" HorizontalAlignment="Left" Margin="44,0,0,0"/>
             <Label Content="{Binding UserName}" Grid.Row="1" HorizontalAlignment="Left" FontWeight="Bold" Margin="103,0,0,0" Width="72"/>
             <Label Content="Owner rating:" Grid.Row="2" HorizontalAlignment="Left" Margin="44,0,0,0"/>
             <Label Content="{Binding AverageLabel}" FontWeight="Bold" Grid.Row="2" HorizontalAlignment="Left" Margin="139,0,0,0"/>
-            <Label Content="Type of owner:" Grid.Row="3"  Foreground="#E69138" VerticalAlignment="Bottom"/>
+            <Label Name="TypeOfOwner" Content="Type of owner: [?]" MouseLeftButtonDown="ClickTypeOfOwner" Grid.Row="3" FontSize="16" Foreground="#E69138" VerticalAlignment="Bottom"/>
+            <Popup x:Name="OwnerTypePopup" PlacementTarget="{Binding ElementName=TypeOfOwner}" IsOpen="False">
+                <TextBlock Text="In order to become &#x0a;a superowner you need &#x0a; atleast 3 ratings and average &#x0a; rating of 9.5 or above!" Background="LightGray" Padding="5"/>
+            </Popup>
             <Label Content="{Binding SuperOwnerLabel}" Grid.Row="4" FontWeight="Bold" VerticalAlignment="Top"/>
         </Grid>
         <Grid Grid.Column="1">
@@ -195,14 +201,21 @@
                 <RowDefinition Height="2.5*"/>
             </Grid.RowDefinitions>
             <Label Content="Tooltip help" HorizontalContentAlignment="Center" VerticalAlignment="Top"  FontSize="16" Foreground="#E69138"  Margin="0,21,0,0"/>
-            <ToggleButton x:Name="ha" Grid.Row="1" Style="{DynamicResource IPhoneSwitch}" Width="50" Height="20" VerticalAlignment="Top" />
-            <Label Content="Download pdf file:" Grid.Row="2" VerticalAlignment="Bottom"  Foreground="#E69138"/>
+            <ToggleButton x:Name="ha" Grid.Row="1" Style="{DynamicResource IPhoneSwitch}" IsChecked="{Binding Tooltips}" Width="50" Height="20" VerticalAlignment="Top" />
+            <Label Grid.Row="1" Content="         [?] next to labels &#x0a;indicates that tooltip exists! " Height="50" Margin="11,20,0,0" Grid.RowSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            <Label Content="Download pdf file: [?]" Name="DownloadPDFLabel" MouseLeftButtonDown="ClickDownloadPDF" FontSize="16" Grid.Row="2" VerticalAlignment="Bottom"  Foreground="#E69138"/>
+            <Popup x:Name="DownloadPDFPopup" PlacementTarget="{Binding ElementName=DownloadPDFLabel}" IsOpen="False">
+                <TextBlock Text="Here you can &#x0a;download average grade&#x0a; statistics for each &#x0a;accommodation you own!" Background="LightGray" Padding="5"/>
+            </Popup>
             <Button Command="{Binding GeneratePDFCommand}" Content="Grade average" Grid.Row="3" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="100"/>
 
 
 
 
+
         </Grid>
+
+
 
 
 

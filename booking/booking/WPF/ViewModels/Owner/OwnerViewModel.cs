@@ -19,15 +19,55 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
 using WPF.Views.Owner;
 
 namespace WPF.ViewModels.Owner
 {
-    
+   
     public class OwnerViewModel:BaseViewModel
-    {
+    { 
+
+        private Visibility visible=Visibility.Collapsed;
+        public Visibility Visible
+        {
+            get
+            {
+                return visible;
+            }
+            set
+            {
+                if (value != visible)
+                {
+                    visible = value;
+                    OnPropertyChanged("Visible");
+                    
+                }
+            }
+        }
+
+
+        private bool tooltips;
+        public bool Tooltips
+        {
+            get
+            {
+                return tooltips;
+            }
+            set
+            {
+                if (value != tooltips)
+                {
+                    tooltips = value;
+                    OnPropertyChanged("Tooltips");
+                    GlobalVariables.tt = GlobalVariables.tt == false ? true : false;
+                    ChangeVisibility();
+                }
+            }
+        }
+
         private string averageLabel;
         public string AverageLabel {
             get
@@ -91,10 +131,14 @@ namespace WPF.ViewModels.Owner
         public ICommand NotifyUserCommand => new RelayCommand(NotifyUser);
         public ICommand GeneratePDFCommand => new RelayCommand(GeneratePDF);
 
+
+
         public bool load;
         public ICommand RateGuestsCommand => new RelayCommand(RateGuests_Click);
         public OwnerViewModel(int id)
         {
+            
+
             OwnerId = id;
        
             CreateInstances();
@@ -120,7 +164,12 @@ namespace WPF.ViewModels.Owner
             }
             
         }
-
+        
+        public void ChangeVisibility()
+        {
+            if (GlobalVariables.tt == true) Visible= Visibility.Visible;
+            else Visible= Visibility.Collapsed;
+        }
         public void NotifyOwner()
         {
             foreach (var notification in Notifications)
