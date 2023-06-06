@@ -57,7 +57,7 @@
         </Grid.RowDefinitions>
         <Label Content="Forum Select"/>
         <Label Grid.Row="1" Content="Please select a forum you want to view"/>
-        <DataGrid x:Name="DataGrid" ItemsSource="{Binding AccommodationList, UpdateSourceTrigger=PropertyChanged}"
+        <DataGrid x:Name="DataGrid" ItemsSource="{Binding ForumList, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False" Width="292" Height="435" HorizontalAlignment="Center" VerticalAlignment="Center"
                   Grid.Row="2" ColumnHeaderStyle="{StaticResource HeaderStyle}" RowHeight="20" GridLinesVisibility="None">
@@ -65,9 +65,9 @@
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Accommodation" Width="*" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Forum location" Width="*" Binding="{Binding Location}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="3" Content="Select"/>
+        <Button Command="{Binding ForumViewCommand}" Grid.Row="3" Content="Select"/>
     </Grid>
 </Page>

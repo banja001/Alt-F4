@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF.ViewModels.Owner;
 
 namespace WPF.Views.Owner
 {
@@ -21,6 +22,7 @@ namespace WPF.Views.Owner
         public ForumSelect()
         {
             InitializeComponent();
+            DataContext=new ForumSelectViewModel();
         }
     }
 }

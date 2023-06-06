@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Model;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -10,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF.ViewModels.Owner;
 
 namespace WPF.Views.Owner
 {
@@ -18,9 +20,10 @@ namespace WPF.Views.Owner
     /// </summary>
     public partial class ForumView : Page
     {
-        public ForumView()
+        public ForumView(Forum select)
         {
             InitializeComponent();
+            DataContext = new ForumViewViewModel(select);
         }
     }
 }

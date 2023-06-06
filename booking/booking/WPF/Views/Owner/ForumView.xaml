@@ -68,12 +68,12 @@
         <Line X2="1" Grid.Row="2"/>
         <Label Content="Comments:" Grid.Row="3"/>
         <Label Content="Select an item if you want to report it!" Grid.Row="4"/>
-        <ListBox Grid.Row="5"/>
+        <ListBox Grid.Row="5" ItemsSource="{Binding comments}"/>
         <Button Content="Report a comment" Grid.Row="6"/>
         <Line X2="1" Grid.Row="7"/>
         <Label Content="Leave a comment:" Grid.Row="8"/>
         <Label Content="(Max characters 200)" Grid.Row="9"/>
-        <TextBox Grid.Row="10"/>
+        <TextBox Text="{Binding Comment}" Grid.Row="10"/>
         <Button Content="Post" Grid.Row="11"/>
     </Grid>
 </Page>

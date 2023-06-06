@@ -102,6 +102,7 @@ namespace WPF.Views.Owner
         }
         public void ViewForumsClick(object sender, RoutedEventArgs e)
         {
+            Main.Content = new ForumSelect();
             dropdownMenu.IsOpen = false;
         }
 
