@@ -3,6 +3,7 @@ using Domain.Model;
 using Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Repositories
@@ -28,6 +29,20 @@ namespace Repositories
         public void Load()
         {
             forums = serializer.FromCSV(fileName);
+        }
+
+        public void Add(Forum forum)
+        {
+            forums.Add(forum);
+            Save();
+        }
+        public void Save()
+        {
+            serializer.ToCSV(fileName, forums);
+        }
+        public int MakeId()
+        {
+            return forums.Count == 0 ? 1 : forums.Max(f => f.Id) + 1;
         }
     }
 }

@@ -2,11 +2,12 @@
 using booking.Serializer;
 using Domain.Model;
 using Domain.RepositoryInterfaces;
+using Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Repositories
+namespace booking.application.UseCases
 {
     public class ForumCommentService
     {
@@ -14,7 +15,7 @@ namespace Repositories
 
         public ForumCommentService()
         {
-            _forumCommentRepository = Injector.CreateInstance<IForumCommentRepository>();
+            _forumCommentRepository = Injector.Injector.CreateInstance<ForumCommentRepository>();
         }
 
         public List<ForumComment> GetAll()
@@ -26,6 +27,18 @@ namespace Repositories
         public void Load()
         {
             _forumCommentRepository.Load();
+        }
+        public void Add(ForumComment forum)
+        {
+            _forumCommentRepository.Add(forum);
+        }
+        public void Save()
+        {
+            _forumCommentRepository.Save();
+        }
+        public int MakeId()
+        {
+            return _forumCommentRepository.MakeId();
         }
     }
 }

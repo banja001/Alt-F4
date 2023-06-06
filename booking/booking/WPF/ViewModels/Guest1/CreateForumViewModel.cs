@@ -1,7 +1,9 @@
 ﻿using application.UseCases;
+using booking.application.UseCases;
 using booking.Commands;
 using booking.Model;
 using booking.WPF.ViewModels;
+using Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,6 +39,8 @@ namespace WPF.ViewModels.Guest1
         }
 
         private readonly LocationService _locationService;
+        private readonly ForumService _forumService;
+        private readonly ForumCommentService _forumCommentService;
 
         public ICommand CloseWindowCommand => new RelayCommand(CloseWindow);
         public ICommand CreateForumCommand => new RelayCommand(CreateForum);
@@ -44,6 +48,8 @@ namespace WPF.ViewModels.Guest1
         public CreateForumViewModel()
         {
             _locationService = new LocationService();
+            _forumService = new ForumService();
+            _forumCommentService = new ForumCommentService();
 
             States = new ObservableCollection<string>();
             Cities = new ObservableCollection<string>();

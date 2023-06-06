@@ -29,5 +29,17 @@ namespace Repositories
         {
             forumComments = serializer.FromCSV(fileName);
         }
+        public void Add(ForumComment forum)
+        {
+            forumComments.Add(forum);
+        }
+        public void Save()
+        {
+            serializer.ToCSV(fileName, forumComments);
+        }
+        public int MakeId()
+        {
+            return forumComments.Count == 0 ? 1 : forumComments.Max(f => f.Id) + 1;
+        }
     }
 }

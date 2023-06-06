@@ -27,5 +27,19 @@ namespace application.UseCases
         {
             _forumRepository.Load();
         }
+
+        public void Add(Forum forum)
+        {
+            _forumRepository.Add(forum);
+            Save();
+        }
+        public void Save()
+        {
+            _forumRepository.Save();
+        }
+        public int MakeId()
+        {
+            return _forumRepository.MakeId();
+        }
     }
 }

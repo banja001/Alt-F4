@@ -399,7 +399,7 @@
                                     </Style>
                                 </DataGrid.CellStyle>
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Name" Binding="{Binding }" CanUserResize="False"  Width="2*"/>
+                                    <DataGridTextColumn Header="Location" Binding="{Binding }" CanUserResize="False"  Width="2*"/>
                                     <DataGridTemplateColumn x:Name="dgbAction" Header="Action" Width="*">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -455,7 +455,7 @@
                                     </Style>
                                 </DataGrid.CellStyle>
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Name" Binding="{Binding }" CanUserResize="False"  Width="3*"/>
+                                    <DataGridTextColumn Header="Location" Binding="{Binding }" CanUserResize="False"  Width="3*"/>
                                     <DataGridTemplateColumn x:Name="dgCheckBoxOpen" Header="Open" Width="*">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
