@@ -36,8 +36,10 @@ namespace WPF.ViewModels.Owner
         public ICommand ForumViewCommand => new RelayCommand(ForumViewClick);
         public ObservableCollection<Forum> ForumList { get; set; }
         public ForumService forumService;
-        public ForumSelectViewModel()
+        private int ownerId;
+        public ForumSelectViewModel(int id)
         {
+            ownerId = id;
             forumService = new ForumService();
             ForumList = new ObservableCollection<Forum>(forumService.GetAll());
         }
@@ -50,7 +52,7 @@ namespace WPF.ViewModels.Owner
             }
             else
             {
-                ForumView win = new ForumView(selectedItem);
+                ForumView win = new ForumView(selectedItem,ownerId);
                 MainWindow.w.Main.Content = win;
             }
         }

@@ -19,10 +19,10 @@ namespace WPF.Views.Owner
     /// </summary>
     public partial class ForumSelect : Page
     {
-        public ForumSelect()
+        public ForumSelect(int id)
         {
             InitializeComponent();
-            DataContext=new ForumSelectViewModel();
+            DataContext=new ForumSelectViewModel(id);
         }
     }
 }

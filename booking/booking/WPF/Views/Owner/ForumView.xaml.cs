@@ -1,9 +1,11 @@
 ﻿using Domain.Model;
+using Syncfusion.Windows.Shared;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -20,10 +22,20 @@ namespace WPF.Views.Owner
     /// </summary>
     public partial class ForumView : Page
     {
-        public ForumView(Forum select)
+        public ForumViewViewModel win;
+        public ForumView(Forum select,int id)
         {
             InitializeComponent();
-            DataContext = new ForumViewViewModel(select);
+            win= new ForumViewViewModel(select,id);
+            DataContext = win;
         }
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            
+                win.ClosePopup();
+            
+        }
+        
+
     }
 }
