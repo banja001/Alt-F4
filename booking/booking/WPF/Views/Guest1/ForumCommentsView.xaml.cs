@@ -19,11 +19,11 @@ namespace WPF.Views.Guest1
     /// </summary>
     public partial class ForumCommentsView : Window
     {
-        public ForumCommentsView(Forum selecteForum)
+        public ForumCommentsView(Forum selecteForum, int userId)
         {
             InitializeComponent();
 
-            DataContext = new ForumCommentsViewModel(selecteForum);
+            DataContext = new ForumCommentsViewModel(selecteForum, userId);
         }
     }
 }

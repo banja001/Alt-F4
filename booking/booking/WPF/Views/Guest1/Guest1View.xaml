@@ -435,7 +435,7 @@
                             </Grid.ColumnDefinitions>
                             <DataGrid Grid.Row="0" Grid.Column="0" x:Name="allForumsData"
                               ItemsSource="{Binding AllForums, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                              SelectedItem="{Binding SelectedForum, UpdateSourceTrigger=PropertyChanged}"        
+                              SelectedItem="{Binding SelectedFromAllForums, UpdateSourceTrigger=PropertyChanged}"        
                                IsReadOnly="True"
                                SelectionMode="Single"
                                CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
@@ -485,7 +485,7 @@
                                     <DataGridTemplateColumn x:Name="dgButtonOpen" Header="Comments" Width="*">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button x:Name="bOpen" Command="{Binding Path=DataContext.ViewCommentCommand,       
+                                                <Button x:Name="bOpen" Command="{Binding Path=DataContext.OpenCommentsCommand,       
                                                          RelativeSource= {RelativeSource FindAncestor,
                                                          AncestorType={x:Type DataGrid}}}" Width="80" Content="Open" HorizontalAlignment="Center" Margin="20 10"/>
                                             </DataTemplate>

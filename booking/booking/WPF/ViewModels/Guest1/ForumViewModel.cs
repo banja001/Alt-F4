@@ -20,6 +20,7 @@ namespace WPF.ViewModels.Guest1
         public static ObservableCollection<Forum> MyForums { get; set; }
         public static ObservableCollection<Forum> AllForums { get; set; }
         public Forum SelectedMyForum { get; set; }
+        public Forum SelectedFromAllForums { get; set; }
 
         private int userId;
 
@@ -27,6 +28,7 @@ namespace WPF.ViewModels.Guest1
         public ICommand CreateForumClickCommand => new RelayCommand(CreateForum);
         public ICommand CloseFormCommand => new RelayCommand(CloseForm);
         public ICommand OpenCommentsMyFormCommand => new RelayCommand(OpenCommentsMyForm);
+        public ICommand OpenCommentsCommand => new RelayCommand(OpenComments);
         public ForumViewModel(int userId)
         {
             _forumService = new ForumService();
@@ -63,7 +65,13 @@ namespace WPF.ViewModels.Guest1
         }
         private void OpenCommentsMyForm()
         {
-            var forumCommentWindow = new ForumCommentsView(SelectedMyForum);
+            var forumCommentWindow = new ForumCommentsView(SelectedMyForum, userId);
+            forumCommentWindow.ShowDialog();
+        }
+
+        private void OpenComments()
+        {
+            var forumCommentWindow = new ForumCommentsView(SelectedFromAllForums, userId);
             forumCommentWindow.ShowDialog();
         }
     }

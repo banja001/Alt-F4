@@ -34,7 +34,7 @@
         <Label Grid.Row="0" Grid.ColumnSpan="2" Content="{Binding ForumLocationComments}" 
             Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24" FontWeight="Bold" Margin="10"/>
 
-        <Label Grid.Row="1" Grid.Column="0" Content="Stayed in" 
+        <Label Grid.Row="1" Grid.Column="0" Content="Comments" 
                        Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
         <ListBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Name="lbStayedIn"
                             ItemsSource="{Binding CommentDTOs}" 
@@ -49,11 +49,11 @@
 
         <Label Grid.Row="2" Grid.Column="0" Content="Your comment" 
             Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 10 0 0"/>
-        <TextBox Grid.Row="2" Grid.Column="3" Name="txtbComment" Text="{Binding RatingComment, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Margin="0 10 10 0"/>
+        <TextBox Grid.Row="2" Grid.Column="3" Name="txtbComment" Text="{Binding NewComment, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Margin="0 10 10 0"/>
         
         <WrapPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10">
             <Button Height="20" Width="67" Content="Cancel" Margin="10 0" Command="{Binding CloseWindowCommand}"/>
-            <Button Name="ReserveAccommodationButton" Height="20" Width="67" Content="Reserve" Margin="10 0" Command="{Binding ReserveAccommodationClickCommand}" IsEnabled="{Binding ReserveButtonEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Name="ReserveAccommodationButton" Height="20" Width="67" Content="Post" Margin="10 0" Command="{Binding PostCommentClickCommand}" IsEnabled="{Binding PostButtonEnabled, UpdateSourceTrigger=PropertyChanged}"/>
         </WrapPanel>
     </Grid>
 </Window>
