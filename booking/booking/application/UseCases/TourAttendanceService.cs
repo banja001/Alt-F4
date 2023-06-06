@@ -26,5 +26,10 @@ namespace application.UseCases
                                                              tourAttendance.StartedCheckPoint.Id,
                                                              tourAttendance.Appeared));
         }
+
+        public List<TourAttendance> GetAll()
+        {
+            return _tourAttendanceRepository.GetAll();
+        }
     }
 }

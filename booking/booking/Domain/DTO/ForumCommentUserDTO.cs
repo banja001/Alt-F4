@@ -10,19 +10,24 @@ namespace Domain.DTO
         public string UserRole { get; set; }
         public string Comment { get; set; }
         public int ForumId { get; set; }
+        public bool Visited { get; set; }
 
         public ForumCommentUserDTO() { }
-        public ForumCommentUserDTO(string username, string userRole, string comment, int forumId)
+        public ForumCommentUserDTO(string username, string userRole, string comment, int forumId, bool visited)
         {
             Username = username;
             UserRole = userRole;
             Comment = comment;
             ForumId = forumId;
+            Visited = visited;
         }
 
         public override string ToString()
         {
-            return Username + "(" + UserRole + ")" + " - " + Comment;
+            if(Visited)
+                return Username + "[" + UserRole + "]_visited" + " - " + Comment;
+            else
+                return Username + "[" + UserRole + "]" + " - " + Comment;
         }
     }
 }

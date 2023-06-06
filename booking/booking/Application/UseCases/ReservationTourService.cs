@@ -40,5 +40,10 @@ namespace application.UseCases
                 _reservationTourRepository.Delete(reservationToursToDelete[i]);
             }
         }
+
+        public List<ReservationTour> GetByUserId(int id)
+        {
+            return _reservationTourRepository.GetByUserId(id);
+        }
     }
 }
