@@ -399,13 +399,22 @@
                                     </Style>
                                 </DataGrid.CellStyle>
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False"  Width="2*"/>
+                                    <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False"  Width="4*"/>
                                     <DataGridTemplateColumn x:Name="dgbAction" Header="Action" Width="*">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button x:Name="bAction" Command="{Binding Path=DataContext.ViewCommentCommand,       
+                                                <Button x:Name="bAction" Command="{Binding Path=DataContext.CloseFormCommand,       
                                                          RelativeSource= {RelativeSource FindAncestor,
-                                                         AncestorType={x:Type DataGrid}}}" Content="Close forum" Margin="20 10"/>
+                                                         AncestorType={x:Type DataGrid}}}" Width="80" Content="Close forum" Margin="20 10"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn x:Name="dgbComment" Header="Comments" Width="*">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="bComm" Command="{Binding Path=DataContext.OpenCommentsMyFormCommand,       
+                                                         RelativeSource= {RelativeSource FindAncestor,
+                                                         AncestorType={x:Type DataGrid}}}" Width="80" Content="Open" Margin="20 10"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -478,7 +487,7 @@
                                             <DataTemplate>
                                                 <Button x:Name="bOpen" Command="{Binding Path=DataContext.ViewCommentCommand,       
                                                          RelativeSource= {RelativeSource FindAncestor,
-                                                         AncestorType={x:Type DataGrid}}}" Width="67" Content="Open" HorizontalAlignment="Center" Margin="20 10"/>
+                                                         AncestorType={x:Type DataGrid}}}" Width="80" Content="Open" HorizontalAlignment="Center" Margin="20 10"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>

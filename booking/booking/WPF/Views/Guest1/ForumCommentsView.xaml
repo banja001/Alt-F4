@@ -1,0 +1,28 @@
+﻿<Window x:Class="WPF.Views.Guest1.ForumCommentsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF.Views.Guest1"
+        mc:Ignorable="d"
+        Title="ForumCommentsView" Height="450" Width="800">
+    <Window.Resources>
+        <SolidColorBrush x:Key="GreenBrush" Color="#597a6a" />
+
+        <Style x:Key="labelsStyle" TargetType="{x:Type Control}">
+            <Setter Property="Foreground" Value="#edf2f0"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
+        </Style>
+        <Style x:Key="gridStyle" TargetType="Grid">
+            <Setter Property="Background" Value="#699687"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Style="{StaticResource ResourceKey=gridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+    </Grid>
+</Window>
