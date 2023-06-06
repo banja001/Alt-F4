@@ -16,10 +16,10 @@ namespace Domain.Model
 
         public Forum() { }
 
-        public Forum(int id, string locationId, int creatorId, bool open)
+        public Forum(int id, string location, int creatorId, bool open)
         {
             Id = id;
-            Location = Location;
+            Location = location;
             CreatorId = creatorId;
             Open = open;
         }
