@@ -45,6 +45,7 @@ namespace booking.View
         private Guest1ViewViewModel _guest1ViewViewModel;
         private Overview _overview;
         private AnytimeAnywhereView _anytimeAnywhereView;
+        private ForumViewModel _forumViewModel;
 
         public Guest1View(int id,SignInForm sign)
         {
@@ -55,6 +56,7 @@ namespace booking.View
             _guest1ViewViewModel = new Guest1ViewViewModel(id);
             _overview = new Overview(id);
             _anytimeAnywhereView = new AnytimeAnywhereView(id);
+            _forumViewModel = new ForumViewModel(id);
 
 
             fOverviewAnywhere.Content = _overview;
@@ -63,7 +65,7 @@ namespace booking.View
             fOverviewAnywhere.DataContext = _overview;
             tabItemRate.DataContext = _rateAccommodationAndOwner;
             tabItemReservations.DataContext = _reservationViewModel;
-            tabItemForums.DataContext = this;   
+            tabItemForums.DataContext = _forumViewModel;   
         }
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -93,6 +95,27 @@ namespace booking.View
                     fOverviewAnywhere.Content = _anytimeAnywhereView;
                     lbHeader.Content = "Anywhere, anytime!";
                 }
+        }
+
+        private void rbOverview_Click(object sender, RoutedEventArgs e)
+        {
+            rbOverview.IsChecked = true;
+            rbAnywhereAnytime.IsChecked = false;
+
+            fOverviewAnywhere.DataContext = _overview;
+            fOverviewAnywhere.Content = _overview;
+            lbHeader.Content = "Accommodation overview";
+        }
+
+        private void rbAnywhereAnytime_Checked(object sender, RoutedEventArgs e)
+        {
+            rbOverview.IsChecked = false;
+            rbAnywhereAnytime.IsChecked = true;
+
+
+            fOverviewAnywhere.DataContext = _anytimeAnywhereView;
+            fOverviewAnywhere.Content = _anytimeAnywhereView;
+            lbHeader.Content = "Anywhere, anytime!";
         }
     }
 }

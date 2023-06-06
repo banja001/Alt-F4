@@ -8,22 +8,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF.ViewModels.Guest1;
 
-namespace WPF.Views
+namespace WPF.Views.Guest1
 {
     /// <summary>
-    /// Interaction logic for AnytimeAnywhereView.xaml
+    /// Interaction logic for CreateForumView.xaml
     /// </summary>
-    public partial class AnytimeAnywhereView : Page
+    public partial class CreateForumView : Window
     {
-        public AnytimeAnywhereView(int userId)
+        public CreateForumView(int userId)
         {
             InitializeComponent();
 
-            DataContext = new AnytimeAnywhereViewModel(userId);
+            DataContext = new CreateForumViewModel(userId);
         }
     }
 }

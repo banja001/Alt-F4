@@ -23,16 +23,6 @@
             <Setter Property="Foreground" Value="#edf2f0"></Setter>
             <Setter Property="FontSize" Value="14"></Setter>
         </Style>
-        <Style x:Key="tabItemStyle" TargetType="TabItem">
-            <Setter Property="Background" Value="#699687"></Setter>
-            <Setter Property="Foreground" Value="#edf2f0"></Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Foreground" Value="#597a6a"></Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
         <Style x:Key="gridStyle" TargetType="Grid">
             <Setter Property="Background" Value="#699687"></Setter>
         </Style>
@@ -66,15 +56,15 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0" Content="Start date" Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24"></Label>
-                <Calendar Grid.Row="0" Grid.Column="1"></Calendar>
+                <Calendar Grid.Row="0" Grid.Column="1" SelectedDate="{Binding Path=Date.StartDate, UpdateSourceTrigger=PropertyChanged}"></Calendar>
 
                 <Label Grid.Row="0" Grid.Column="2" Content="End date" Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24"></Label>
-                <Calendar Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3"></Calendar>
+                <Calendar Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" SelectedDate="{Binding Path=Date.EndDate}"></Calendar>
 
                 <Label Grid.Row="2" Content="Guests" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0"/>
                 <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" x:Name="tSearchBarNumberOfGuests" Height="22">
                     <xctk:IntegerUpDown.Text>
-                        <Binding Path="SearchedAccommodation.NumOfGuests" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="NumOfGuests" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <val:StringToIntValidationRule ValidationStep="RawProposedValue"/>
                             </Binding.ValidationRules>
@@ -102,7 +92,7 @@
                                Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 <xctk:IntegerUpDown Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" x:Name="tSearchBarNumberOfDays" Height="22">
                     <xctk:IntegerUpDown.Text>
-                        <Binding Path="SearchedAccommodation.NumOfDays" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="NumOfDays" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <val:StringToIntValidationRule ValidationStep="RawProposedValue"/>
                             </Binding.ValidationRules>
@@ -130,7 +120,7 @@
             </Grid>
         </GroupBox>
 
-        <Button Grid.Row="1" Grid.Column="1" x:Name="ReserveAccommodationButton" Command="{Binding ReserveAccommodationsCommand}"
+        <Button Grid.Row="1" Grid.Column="1" x:Name="ReserveAccommodationButton" Command="{Binding ReserveAccommodationClickCommand}"
                         Width="67" Content="Reserve" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10 10"/>
         <Label Grid.Row="1" Grid.Column="0" Content="Accommodations" Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10 0"/>
         <DataGrid Grid.Row="2" Grid.ColumnSpan="2" x:Name="accommodationData"
