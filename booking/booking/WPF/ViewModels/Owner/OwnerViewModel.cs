@@ -13,6 +13,7 @@ using Domain.Model;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using Repositories;
+using Syncfusion.Windows.Shared;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,7 +29,43 @@ namespace WPF.ViewModels.Owner
 {
    
     public class OwnerViewModel:BaseViewModel
-    { 
+    {
+        private string worstAcc= "No accommodation";
+        public string WorstAcc
+        {
+            get
+            {
+                return worstAcc;
+            }
+            set
+            {
+                if (value != worstAcc)
+                {
+                    worstAcc = value;
+                    OnPropertyChanged("WorstAcc");
+                }
+            }
+        }
+
+
+        private string bestAcc="No accommodation";
+        public string BestAcc
+        {
+            get
+            {
+                return bestAcc;
+            }
+            set
+            {
+                if (value != bestAcc)
+                {
+                    bestAcc = value;
+                    OnPropertyChanged("BestAcc");
+                }
+            }
+        }
+
+
 
         private Visibility visible=Visibility.Collapsed;
         public Visibility Visible
@@ -162,6 +199,60 @@ namespace WPF.ViewModels.Owner
             {
                 NotifyOwner();
             }
+
+
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            Accommodation maxAcc=new Accommodation();
+            Accommodation minAcc=new Accommodation();
+            List<Accommodation> accommodations = accommodationService.GetAll();
+            
+            int busy=0;
+            
+            int max = -1;
+            int min = 100000000;
+            DateTime yearStart = new DateTime(DateTime.Now.Year, 1, 1);
+            DateTime yearEnd = new DateTime(DateTime.Now.Year, 12, 31);
+            foreach (var accommodation in accommodations)
+            {
+                busy = 0;
+                if (accommodation.OwnerId == OwnerId)
+                {
+                    foreach(var reservation in reservedDatesService.GetAll())
+                    {
+                        if (reservation.AccommodationId == accommodation.Id && reservation.StartDate<yearEnd &&  reservation.EndDate>yearStart)
+                        {
+                            DateTime endDate=reservation.EndDate.Year > DateTime.Now.Year ? new DateTime(DateTime.Now.Year, 12, 31) :reservation.EndDate;
+                            DateTime startDate = reservation.StartDate.Year < DateTime.Now.Year ? new DateTime(DateTime.Now.Year, 1, 1) : reservation.StartDate;
+
+                            TimeSpan timeDifference = endDate - startDate;
+                            busy += (int)timeDifference.TotalDays;
+
+                        }
+
+                    }
+                    if (busy > max)
+                    {
+                        max = busy;
+                        maxAcc = accommodation;
+                        
+                    }
+                    if (busy < min)
+                    {
+                        min= busy;
+                        minAcc = accommodation;
+                    }
+
+                }
+                
+            }
+            if (max != -1)
+            {
+
+
+                BestAcc = maxAcc.Name;
+                WorstAcc = minAcc.Name;
+            }
+            
             
         }
         
