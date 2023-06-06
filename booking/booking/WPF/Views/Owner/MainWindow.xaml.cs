@@ -38,7 +38,13 @@ namespace WPF.Views.Owner
             OwnerId = id;
             OwnerWindow = new OwnerWindow(id);
             OwnerModel=OwnerWindow.OwnerModel;
+
+
+
             Main.Content = OwnerWindow;
+
+            
+
             w = this;
         }
         private void BackClick(object sender, RoutedEventArgs e)
