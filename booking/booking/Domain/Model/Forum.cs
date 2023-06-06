@@ -34,7 +34,7 @@ namespace Domain.Model
             Id = Convert.ToInt32(values[0]);
             Location = values[1];
             CreatorId = Convert.ToInt32(values[2]);
-            Open = values[3] == "true" ? true : false;
+            Open = values[3] == "True" ? true : false;
         }
     }
 }

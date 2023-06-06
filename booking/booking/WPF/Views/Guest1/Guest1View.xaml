@@ -370,8 +370,8 @@
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <DataGrid Grid.Row="0" Grid.Column="0" x:Name="forumData"
-                              ItemsSource="{Binding ReservationRequestsDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                              SelectedItem="{Binding SelectedReservationRequestDTO, UpdateSourceTrigger=PropertyChanged}"        
+                              ItemsSource="{Binding MyForums, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding SelectedMyForum, UpdateSourceTrigger=PropertyChanged}"        
                                IsReadOnly="True"
                                SelectionMode="Single"
                                CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
@@ -399,13 +399,13 @@
                                     </Style>
                                 </DataGrid.CellStyle>
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Location" Binding="{Binding }" CanUserResize="False"  Width="2*"/>
+                                    <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False"  Width="2*"/>
                                     <DataGridTemplateColumn x:Name="dgbAction" Header="Action" Width="*">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button x:Name="bAction" Command="{Binding Path=DataContext.ViewCommentCommand,       
                                                          RelativeSource= {RelativeSource FindAncestor,
-                                                         AncestorType={x:Type DataGrid}}}" Content="View" Margin="20 10"/>
+                                                         AncestorType={x:Type DataGrid}}}" Content="Close forum" Margin="20 10"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -419,20 +419,19 @@
                           Style="{StaticResource ResourceKey=groupBoxStyle}">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="8*"></RowDefinition>
-                                <RowDefinition Height="2*"></RowDefinition>
+                                <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <DataGrid Grid.Row="0" Grid.Column="0" x:Name="allForumsData"
-                              ItemsSource="{Binding ReservationRequestsDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                              SelectedItem="{Binding SelectedReservationRequestDTO, UpdateSourceTrigger=PropertyChanged}"        
+                              ItemsSource="{Binding AllForums, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding SelectedForum, UpdateSourceTrigger=PropertyChanged}"        
                                IsReadOnly="True"
                                SelectionMode="Single"
                                CanUserResizeColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" 
                                ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" AutoGenerateColumns="False" 
-                               FontSize="14" Margin="10 20 10 0">
+                               FontSize="14" Margin="10 20 10 20">
                                 <DataGrid.RowStyle>
                                     <Style TargetType="DataGridRow">
                                         <Setter Property="Background" Value="#80a698"></Setter>
@@ -455,13 +454,13 @@
                                     </Style>
                                 </DataGrid.CellStyle>
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Location" Binding="{Binding }" CanUserResize="False"  Width="3*"/>
+                                    <DataGridTextColumn Header="Location" Binding="{Binding Location}" CanUserResize="False"  Width="3*"/>
                                     <DataGridTemplateColumn x:Name="dgCheckBoxOpen" Header="Open" Width="*">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <CheckBox x:Name="cbOpen" Command="{Binding Path=DataContext.ViewCommentCommand,       
                                                          RelativeSource= {RelativeSource FindAncestor,
-                                                         AncestorType={x:Type DataGrid}}}" Content="View" Margin="20 10"/>
+                                                         AncestorType={x:Type DataGrid}}}" IsEnabled="False" HorizontalAlignment="Center" Margin="20 10"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -470,13 +469,21 @@
                                             <DataTemplate>
                                                 <CheckBox x:Name="chVeryUseful" Command="{Binding Path=DataContext.ViewCommentCommand,       
                                                          RelativeSource= {RelativeSource FindAncestor,
-                                                         AncestorType={x:Type DataGrid}}}" Content="View" Margin="20 10"/>
+                                                         AncestorType={x:Type DataGrid}}}" IsEnabled="False" HorizontalAlignment="Center" Margin="20 10"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn x:Name="dgButtonOpen" Header="Comments" Width="*">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="bOpen" Command="{Binding Path=DataContext.ViewCommentCommand,       
+                                                         RelativeSource= {RelativeSource FindAncestor,
+                                                         AncestorType={x:Type DataGrid}}}" Width="67" Content="Open" HorizontalAlignment="Center" Margin="20 10"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <Button Grid.Row="1" Grid.Column="0" Content="Leave comment" HorizontalAlignment="Right" VerticalAlignment="Center" Width="120" Height="26" Margin="10 0"/>
                         </Grid>
                     </GroupBox>
                 </Grid>

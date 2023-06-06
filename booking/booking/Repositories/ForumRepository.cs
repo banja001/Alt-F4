@@ -3,6 +3,7 @@ using Domain.Model;
 using Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 
@@ -26,6 +27,12 @@ namespace Repositories
             return forums;
         }
 
+        public List<Forum> GetByCreatorId(int id)
+        {
+            Load();
+            return forums.Where(f => f.CreatorId == id).ToList();
+        }
+
         public void Load()
         {
             forums = serializer.FromCSV(fileName);
@@ -43,6 +50,15 @@ namespace Repositories
         public int MakeId()
         {
             return forums.Count == 0 ? 1 : forums.Max(f => f.Id) + 1;
+        }
+        public void Update(Forum forum)
+        {
+            Load();
+            int existingIndx = forums.FindIndex(f => f.Location == forum.Location);
+
+            forums[existingIndx].Open = forum.Open;
+            forums[existingIndx].CreatorId = forum.CreatorId;
+            Save();
         }
     }
 }
