@@ -159,6 +159,7 @@ namespace WPF.ViewModels.Owner
         public OwnerRatingService OwnerRatingService;
         public List<OwnerRating> OwnerRatings;
         public RenovationDatesService renovationDatesService;
+        public ForumNotificationService forumNotificationService;
         public ObservableCollection<Guest1RatingDTO> ListToRate { get; set; }
         public Guest1RatingDTO SelectedItem { get; set; }
 
@@ -200,6 +201,15 @@ namespace WPF.ViewModels.Owner
                 NotifyOwner();
             }
 
+            foreach(var notif in forumNotificationService.GetAll())
+            {
+                if (notif.OwnerId == OwnerId)
+                {
+                    MessageBox.Show("A forum at location "+notif.Location+ " is now open!");
+                }
+
+            }
+            forumNotificationService.DeleteAllByOwnerId(OwnerId);
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////
             Accommodation maxAcc=new Accommodation();
@@ -333,6 +343,8 @@ namespace WPF.ViewModels.Owner
             OwnerRatings = OwnerRatingService.GetAll();
 
             renovationDatesService = new RenovationDatesService();
+
+            forumNotificationService = new ForumNotificationService();
         }
 
         private void NotifyUser()

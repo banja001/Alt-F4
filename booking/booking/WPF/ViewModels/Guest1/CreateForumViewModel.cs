@@ -43,7 +43,9 @@ namespace WPF.ViewModels.Guest1
         private readonly LocationService _locationService;
         private readonly ForumService _forumService;
         private readonly ForumCommentService _forumCommentService;
-
+        private readonly ForumNotificationService _forumNotificationService;
+        private readonly UserService _userService;
+        private readonly AccommodationService _accommodationService;
         public ICommand CloseWindowCommand => new RelayCommand(CloseWindow);
         public ICommand CreateForumCommand => new RelayCommand(CreateForum);
         public ICommand StateSelectionChangedCommand => new RelayCommand(StateSelectionChanged);
@@ -58,6 +60,10 @@ namespace WPF.ViewModels.Guest1
 
             FillStateComboBox();
             this.userId = userId;
+
+            _forumNotificationService = new ForumNotificationService();
+            _userService = new UserService();
+            _accommodationService = new AccommodationService();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -104,8 +110,36 @@ namespace WPF.ViewModels.Guest1
 
         private void CreateForum()
         {
+            
             int forumId = _forumService.MakeId();
-            _forumService.Add(new Forum(forumId, SelectedState + "," + SelectedCity, userId, true));
+            string loc = SelectedState + "," + SelectedCity;
+            _forumService.Add(new Forum(forumId,loc , userId, true));
+            ////////////////////////////
+            string name=_userService.GetUserNameById(userId);
+            foreach(var user in _userService.GetAll())
+            {
+                if(user.Role=="Owner")
+                {
+                    foreach (var accommodation in _accommodationService.GetAll())
+                    {
+                        if (accommodation.OwnerId == user.Id)
+                        {
+                            if(_locationService.GetAll().Find(s=> s.State ==SelectedState && s.City==SelectedCity).Id==accommodation.LocationId)
+                            {
+                                _forumNotificationService.Add(new ForumNotification(_forumNotificationService.MakeId(),loc,name,user.Id));
+                                break;
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+
+
+            
+            ////////////////////////////
             _forumCommentService.Add(new ForumComment(_forumCommentService.MakeId(), Comment, forumId, userId));
             MessageBox.Show("You have successfully opened a new forum and left the first comment!");
             CloseWindow();
