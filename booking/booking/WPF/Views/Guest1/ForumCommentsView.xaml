@@ -4,8 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.Views.Guest1"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="ForumCommentsView" Height="450" Width="800">
+        Title="ForumCommentsView" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <SolidColorBrush x:Key="GreenBrush" Color="#597a6a" />
 
@@ -19,10 +21,39 @@
     </Window.Resources>
     <Grid Style="{StaticResource ResourceKey=gridStyle}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="7*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.5*"></ColumnDefinition>
+            <ColumnDefinition Width="8*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.ColumnSpan="2" Content="{Binding ForumLocationComments}" 
+            Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24" FontWeight="Bold" Margin="10"/>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Stayed in" 
+                       Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
+        <ListBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Name="lbStayedIn"
+                            ItemsSource="{Binding CommentDTOs}" 
+                             SelectionMode="Single"
+                             Margin="0 5 10 10 ">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding SelectedStayedInChangedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ListBox>
+
+        <Label Grid.Row="2" Grid.Column="0" Content="Your comment" 
+            Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 10 0 0"/>
+        <TextBox Grid.Row="2" Grid.Column="3" Name="txtbComment" Text="{Binding RatingComment, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Margin="0 10 10 0"/>
+        
+        <WrapPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10">
+            <Button Height="20" Width="67" Content="Cancel" Margin="10 0" Command="{Binding CloseWindowCommand}"/>
+            <Button Name="ReserveAccommodationButton" Height="20" Width="67" Content="Reserve" Margin="10 0" Command="{Binding ReserveAccommodationClickCommand}" IsEnabled="{Binding ReserveButtonEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+        </WrapPanel>
     </Grid>
 </Window>

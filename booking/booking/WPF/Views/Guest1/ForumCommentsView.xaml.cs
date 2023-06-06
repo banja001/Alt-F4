@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Model;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -9,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF.ViewModels.Guest1;
 
 namespace WPF.Views.Guest1
 {
@@ -17,9 +19,11 @@ namespace WPF.Views.Guest1
     /// </summary>
     public partial class ForumCommentsView : Window
     {
-        public ForumCommentsView()
+        public ForumCommentsView(Forum selecteForum)
         {
             InitializeComponent();
+
+            DataContext = new ForumCommentsViewModel(selecteForum);
         }
     }
 }

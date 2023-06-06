@@ -63,7 +63,8 @@ namespace WPF.ViewModels.Guest1
         }
         private void OpenCommentsMyForm()
         {
-
+            var forumCommentWindow = new ForumCommentsView(SelectedMyForum);
+            forumCommentWindow.ShowDialog();
         }
     }
 }
