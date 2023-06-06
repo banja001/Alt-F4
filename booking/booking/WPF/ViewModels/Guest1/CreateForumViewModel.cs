@@ -38,6 +38,8 @@ namespace WPF.ViewModels.Guest1
             }
         }
 
+        private int userId;
+
         private readonly LocationService _locationService;
         private readonly ForumService _forumService;
         private readonly ForumCommentService _forumCommentService;
@@ -45,7 +47,7 @@ namespace WPF.ViewModels.Guest1
         public ICommand CloseWindowCommand => new RelayCommand(CloseWindow);
         public ICommand CreateForumCommand => new RelayCommand(CreateForum);
         public ICommand StateSelectionChangedCommand => new RelayCommand(StateSelectionChanged);
-        public CreateForumViewModel()
+        public CreateForumViewModel(int userId)
         {
             _locationService = new LocationService();
             _forumService = new ForumService();
@@ -55,6 +57,7 @@ namespace WPF.ViewModels.Guest1
             Cities = new ObservableCollection<string>();
 
             FillStateComboBox();
+            this.userId = userId;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -101,7 +104,11 @@ namespace WPF.ViewModels.Guest1
 
         private void CreateForum()
         {
-            MessageBox.Show(SelectedState + ", " + SelectedCity + "\n" + Comment);
+            int forumId = _forumService.MakeId();
+            _forumService.Add(new Forum(forumId, SelectedState + "," + SelectedCity, userId, true));
+            _forumCommentService.Add(new ForumComment(_forumCommentService.MakeId(), Comment, forumId, userId));
+            MessageBox.Show("You have successfully opened a new forum and left the first comment!");
+            CloseWindow();
         }
     }
 }

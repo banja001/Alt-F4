@@ -1,5 +1,4 @@
 ﻿using booking.Injector;
-using booking.Serializer;
 using Domain.Model;
 using Domain.RepositoryInterfaces;
 using Repositories;
@@ -7,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace booking.application.UseCases
+namespace application.UseCases
 {
     public class ForumCommentService
     {
@@ -15,7 +14,7 @@ namespace booking.application.UseCases
 
         public ForumCommentService()
         {
-            _forumCommentRepository = Injector.Injector.CreateInstance<ForumCommentRepository>();
+            _forumCommentRepository = Injector.CreateInstance<IForumCommentRepository>();
         }
 
         public List<ForumComment> GetAll()

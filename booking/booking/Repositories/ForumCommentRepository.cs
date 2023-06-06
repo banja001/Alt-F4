@@ -3,6 +3,7 @@ using Domain.Model;
 using Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Repositories
@@ -32,6 +33,7 @@ namespace Repositories
         public void Add(ForumComment forum)
         {
             forumComments.Add(forum);
+            Save();
         }
         public void Save()
         {

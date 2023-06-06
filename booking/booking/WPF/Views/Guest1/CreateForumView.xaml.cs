@@ -18,11 +18,11 @@ namespace WPF.Views.Guest1
     /// </summary>
     public partial class CreateForumView : Window
     {
-        public CreateForumView()
+        public CreateForumView(int userId)
         {
             InitializeComponent();
 
-            DataContext = new CreateForumViewModel();
+            DataContext = new CreateForumViewModel(userId);
         }
     }
 }

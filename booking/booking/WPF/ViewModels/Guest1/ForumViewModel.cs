@@ -20,7 +20,7 @@ namespace WPF.ViewModels.Guest1
 
         private void CreateForum()
         {
-            var createForumWindow = new CreateForumView();
+            var createForumWindow = new CreateForumView(userId);
             createForumWindow.ShowDialog();
         }
     }
