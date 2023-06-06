@@ -110,7 +110,7 @@ namespace WPF.ViewModels.Guest1
 
             if (existingForum == null)
             {
-                Forum newForum = new Forum(_forumService.MakeId(), SelectedState + "," + SelectedCity, userId, true);
+                Forum newForum = new Forum(_forumService.MakeId(), SelectedState + "," + SelectedCity, userId, true, false);
 
                 _forumService.Add(newForum);
                 _forumCommentService.Add(new ForumComment(_forumCommentService.MakeId(), Comment, newForum.Id, userId));

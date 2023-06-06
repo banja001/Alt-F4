@@ -58,6 +58,7 @@ namespace Repositories
 
             forums[existingIndx].Open = forum.Open;
             forums[existingIndx].CreatorId = forum.CreatorId;
+            forums[existingIndx].VeryUseful = forum.VeryUseful;
             Save();
         }
     }

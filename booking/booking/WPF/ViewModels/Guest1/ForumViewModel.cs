@@ -1,11 +1,13 @@
 ﻿using application.UseCases;
 using booking.Commands;
+using booking.Model;
 using Domain.Model;
 using Microsoft.Expression.Interactivity.Layout;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,6 +27,8 @@ namespace WPF.ViewModels.Guest1
         private int userId;
 
         private readonly ForumService _forumService;
+        private readonly ForumCommentService _forumCommentService;
+        private readonly UserService _userService;
         public ICommand CreateForumClickCommand => new RelayCommand(CreateForum);
         public ICommand CloseFormCommand => new RelayCommand(CloseForm);
         public ICommand OpenCommentsMyFormCommand => new RelayCommand(OpenCommentsMyForm);
@@ -32,11 +36,45 @@ namespace WPF.ViewModels.Guest1
         public ForumViewModel(int userId)
         {
             _forumService = new ForumService();
+            _forumCommentService = new ForumCommentService();
+            _userService = new UserService();
 
             MyForums = new ObservableCollection<Forum>(_forumService.GetByCreatorId(userId));
             AllForums = new ObservableCollection<Forum>(_forumService.GetAll());
 
+            SetVeryUsefulCheckBoxes();
+
             this.userId = userId;
+        }
+
+        private void SetVeryUsefulCheckBoxes()
+        {
+            foreach(Forum forum in AllForums)
+            {
+                if (forum.VeryUseful)
+                {
+                    int numOfGuestsComments = 0;
+                    int numOfOwnersComments = 0;
+
+                    List<ForumComment> comments = _forumCommentService.GetByForumId(forum.Id);
+
+                    foreach (var comment in comments)
+                    {
+                        User user = _userService.GetById(comment.UserId);
+
+                        if (user.Role.Contains("Guest"))
+                            numOfGuestsComments++;
+                        else
+                            numOfOwnersComments++;
+                    }
+
+                    if (numOfGuestsComments >= 20 && numOfOwnersComments >= 10)
+                    {
+                        forum.VeryUseful = true;
+                        _forumService.Update(forum);
+                    }
+                }
+            }
         }
 
         private void CreateForum()

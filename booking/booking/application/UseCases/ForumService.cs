@@ -49,6 +49,7 @@ namespace application.UseCases
         public void Update(Forum forum)
         {
             _forumRepository.Update(forum);
+            Save();
         }
     }
 }
