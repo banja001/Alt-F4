@@ -23,6 +23,7 @@ namespace WPF.ViewModels.Guest1
         public static ObservableCollection<Forum> AllForums { get; set; }
         public Forum SelectedMyForum { get; set; }
         public Forum SelectedFromAllForums { get; set; }
+        public bool CloseForumEnabled { get; set; }
 
         private int userId;
 

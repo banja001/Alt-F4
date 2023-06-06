@@ -39,6 +39,22 @@ namespace WPF.ViewModels.Guest1
             }
         }
 
+        public bool TxtbEnabled { get; set; }
+
+        private bool postButtonEnabled;
+        public bool PostButtonEnabled 
+        {
+            get { return postButtonEnabled; }
+            set
+            {
+                if(postButtonEnabled != value)
+                {
+                    postButtonEnabled = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private Forum selectedForum;
 
         private int userId;
@@ -54,6 +70,7 @@ namespace WPF.ViewModels.Guest1
 
         public ICommand CloseWindowCommand => new RelayCommand(CloseWindow);
         public ICommand PostCommentClickCommand => new RelayCommand(PostComment);
+        public ICommand TextForCommentChangedCommand => new RelayCommand(TextForCommentChanged);
         public ForumCommentsViewModel(Forum selectedForum, int userId)
         {
             _forumCommentService = new ForumCommentService();
@@ -70,9 +87,17 @@ namespace WPF.ViewModels.Guest1
 
             this.userId = userId;
 
+            SetEnable();
+
             LoadComments();
 
             ForumLocationComments = selectedForum.Location + " - Comments";
+        }
+
+        private void SetEnable()
+        {
+            TxtbEnabled = selectedForum.Open;
+            PostButtonEnabled = false;
         }
 
         private void LoadComments()
@@ -154,6 +179,10 @@ namespace WPF.ViewModels.Guest1
             CommentDTOs.Add(new ForumCommentUserDTO(user.Username, user.Role, NewComment, selectedForum.Id, true));
 
             NewComment = ""; 
+        }
+        private void TextForCommentChanged()
+        {
+            PostButtonEnabled = NewComment.Equals("") ? false : true;
         }
     }
 }

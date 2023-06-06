@@ -11,7 +11,7 @@ namespace Domain.DTO
         public string Comment { get; set; }
         public int ForumId { get; set; }
         public bool Visited { get; set; }
-
+        public string Output { get; set; }
         public ForumCommentUserDTO() { }
         public ForumCommentUserDTO(string username, string userRole, string comment, int forumId, bool visited)
         {
@@ -20,14 +20,16 @@ namespace Domain.DTO
             Comment = comment;
             ForumId = forumId;
             Visited = visited;
+
+            if (Visited)
+                Output = Username + "[" + UserRole + "]_visited" + " - " + Comment;
+            else
+                Output = Username + "[" + UserRole + "]" + " - " + Comment;
         }
 
         public override string ToString()
         {
-            if(Visited)
-                return Username + "[" + UserRole + "]_visited" + " - " + Comment;
-            else
-                return Username + "[" + UserRole + "]" + " - " + Comment;
+            return Output;
         }
     }
 }

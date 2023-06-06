@@ -36,21 +36,34 @@
 
         <Label Grid.Row="1" Grid.Column="0" Content="Comments" 
                        Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
+
         <ListBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Name="lbStayedIn"
-                            ItemsSource="{Binding CommentDTOs}" 
-                             SelectionMode="Single"
-                             Margin="0 5 10 10 ">
+                        ItemsSource="{Binding CommentDTOs}" 
+                        SelectionMode="Single" Margin="0 5 10 10 "
+                        HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical" Width="620" Canvas.Top="1" Canvas.Left="1">
+                        <TextBlock Text="{Binding Output}" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding SelectedStayedInChangedCommand}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </ListBox>
-
         <Label Grid.Row="2" Grid.Column="0" Content="Your comment" 
             Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 10 0 0"/>
-        <TextBox Grid.Row="2" Grid.Column="3" Name="txtbComment" Text="{Binding NewComment, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Margin="0 10 10 0"/>
-        
+        <TextBox Grid.Row="2" Grid.Column="3" Name="txtbComment" IsEnabled="{Binding TxtbEnabled}" Text="{Binding NewComment, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Margin="0 10 10 0">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding TextForCommentChangedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+
         <WrapPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10">
             <Button Height="20" Width="67" Content="Cancel" Margin="10 0" Command="{Binding CloseWindowCommand}"/>
             <Button Name="ReserveAccommodationButton" Height="20" Width="67" Content="Post" Margin="10 0" Command="{Binding PostCommentClickCommand}" IsEnabled="{Binding PostButtonEnabled, UpdateSourceTrigger=PropertyChanged}"/>
