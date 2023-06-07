@@ -18,6 +18,15 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using Syncfusion.UI.Xaml;
+using System.Windows.Controls;
+using System.Reflection.Metadata;
+using System.IO;
+using System.IO.Pipes;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using Document = iTextSharp.text.Document;
+using System.Windows.Markup;
 
 namespace WPF.ViewModels.Guest1
 {
@@ -39,6 +48,7 @@ namespace WPF.ViewModels.Guest1
         public ICommand PostponeReservationCommand => new RelayCommand(PostponeReservation);
         public ICommand CancelReservationCommand => new RelayCommand(CancelReservation);
         public ICommand ViewCommentCommand => new RelayCommand(ViewComment);
+        public ICommand GenerateReportCommand => new RelayCommand(GenerateReport);
 
         private User user;
         private int userId;
@@ -153,6 +163,41 @@ namespace WPF.ViewModels.Guest1
             if (reservationRequest.Comment == "")
                 MessageBox.Show("Owner didn't leave a comment", "Owner's comment");
             else MessageBox.Show(reservationRequest.Comment, "Owner's comment");
+        }
+
+        private void GenerateReport()
+        {
+            Document document = new Document();
+
+            using (FileStream fileSteram = new FileStream("../../../Resources/Reports/guest1Report.pdf", FileMode.Create))
+            {
+                PdfWriter writer = PdfWriter.GetInstance(document, fileSteram);
+                document.Open();
+
+                string title = "DATA ON ...";
+                Paragraph paragraph = new Paragraph(title);
+                paragraph.Alignment = Element.ALIGN_CENTER;
+
+                Font boldFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 20);
+                Chunk boldChunk = new Chunk(title, boldFont);
+
+                document.Add(paragraph);
+
+                PdfPTable table = new PdfPTable(4);
+
+                foreach (var item in ReservationRequestsDTOs)
+                {
+                    table.AddCell(item.AccommodationName);
+                    table.AddCell(item.Location);
+                    table.AddCell(item.Request);
+                    table.AddCell(item.Status);
+                }
+                document.Add(table);
+
+                document.Close();
+            }
+
+            MessageBox.Show("Report successfully generated");
         }
     }
 }

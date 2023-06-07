@@ -340,7 +340,7 @@
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <Button Grid.Row="1" Grid.Column="0" Content="Report" HorizontalAlignment="Right" VerticalAlignment="Center" Width="63" Height="26" Margin="10 0"/>
+                            <Button Grid.Row="1" Grid.Column="0" Content="Report" Command="{Binding GenerateReportCommand}" HorizontalAlignment="Right" VerticalAlignment="Center" Width="63" Height="26" Margin="10 0"/>
                         </Grid>
                     </GroupBox>
                 </Grid>
