@@ -192,7 +192,8 @@ namespace WPF.ViewModels.Owner
         public void DisplayPopup()
         {
             Open = false;
-            int idlist = Convert.ToInt32(selectList[0]) - 48 - 1;
+            string br = selectList.Split(".")[0];
+            int idlist = Convert.ToInt32(br)  - 1;
             PopupText = "Reports:" + forumComments[idlist].Reports +" "+fullComments[idlist];
             Open = true;
         }
@@ -250,6 +251,7 @@ namespace WPF.ViewModels.Owner
                     builder = i.ToString() + ". (" + user.Role + ")" + name + ": " + comm.Comment;
                 comments.Add(builder);
                 fullComments.Add(comm.Comment);
+                forumComments.Add(comm);
                 i++;
                 MessageBox.Show("Comment posted!");
             }
