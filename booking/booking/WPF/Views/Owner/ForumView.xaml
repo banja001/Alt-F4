@@ -10,8 +10,12 @@
       Title="ForumView"
       >
 
-    <Grid x:Name="MyGrid" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-
+    <Grid x:Name="MyGrid">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseLeftButtonDown">
+                <i:InvokeCommandAction Command="{Binding Grid_MouseLeftButtonDownCommand}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
         <Grid.Resources>
             <Style TargetType="ListBox">
                 <Setter Property="Background" Value="Black"/>
@@ -85,7 +89,7 @@
             </i:Interaction.Triggers>
         </Label>
         <Popup  PlacementTarget="{Binding ElementName=ReportComment}" IsOpen="{Binding ReportTooltip}">
-            <TextBlock Text="Guests and owners that have accommodation&#x0a; on this location can leave a comment.&#x0a; If you think a comment isnt correct&#x0a; you can report it!" Background="LightGray" Padding="5"/>
+            <TextBlock FontSize="15" Text="Guests and owners that have accommodation&#x0a; on this location can leave a comment.&#x0a; If you think a comment isnt correct&#x0a; you can report it!" Background="LightGray" Padding="5"/>
         </Popup>
         <Label Content="Select an item if you want to report it!" Grid.Row="4" HorizontalAlignment="Left" Margin="36,0,0,0"/>
         <ListBox x:Name="myListBox" Grid.Row="5" ItemsSource="{Binding comments}" SelectedItem="{Binding SelectList}" Margin="40,0,40,0" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>

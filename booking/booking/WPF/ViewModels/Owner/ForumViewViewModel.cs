@@ -14,6 +14,9 @@ namespace WPF.ViewModels.Owner
 {
     public class ForumViewViewModel : BaseViewModel
     {
+        
+        public ICommand Grid_MouseLeftButtonDownCommand => new RelayCommand(ClosePopup);
+        
         public ICommand ReportCommentTooltipCommand => new RelayCommand(ReportCommentTooltip);
 
         private bool reportTooltip = false;

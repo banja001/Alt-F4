@@ -7,11 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="749" Width="410" MinWidth="410" MinHeight="749" WindowStartupLocation="CenterScreen">
     <Grid Background="Black">
-
-
-
-
-
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="9*"/>
@@ -113,8 +108,7 @@
             <Button BorderBrush="DarkRed" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="30" Margin="10,0,0,0" Background="DarkRed" Click="ForwardClick">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="../../../Resources/Icons/forward_icon.png" Height="21" Width="21"/>
-
+                        <Image  Source="../../../Resources/Icons/forward_icon.png" Height="21" Width="21"/>
                     </StackPanel>
                 </Button.Content>
             </Button>

@@ -29,10 +29,7 @@ namespace WPF.Views.Owner
             win= new ForumViewViewModel(select,id);
             DataContext = win;
         }
-        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {          
-                win.ClosePopup();  
-        }
+        
 
        
     }

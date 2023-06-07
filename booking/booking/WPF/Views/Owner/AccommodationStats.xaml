@@ -71,7 +71,7 @@
             </i:Interaction.Triggers>
         </Label>
         <Popup  PlacementTarget="{Binding ElementName=ViewStatsLabel}" IsOpen="{Binding ViewStatsTooltip}">
-            <TextBlock Text="By selecting accommodation and &#x0a;clicking 'Get Stats' you get statistics &#x0a;for each year and month!" Background="LightGray" Padding="5"/>
+            <TextBlock Text="By selecting accommodation and &#x0a;clicking 'Get Stats' you get statistics &#x0a;for each year and month!" Background="LightGray" Padding="5" FontSize="15"/>
         </Popup>
         <Label Grid.Row="1" Content="Please select accommodation to view stats" Width="288" Margin="0,16,0,0" VerticalAlignment="Top"/>
         <Button Grid.Row="3" Command="{Binding GetStatsCommand}" Content="Get Stats" Margin="222,13,58,53"/>

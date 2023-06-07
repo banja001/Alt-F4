@@ -62,7 +62,7 @@
             </i:Interaction.Triggers>
         </Label>
         <Popup  PlacementTarget="{Binding ElementName=ReservationCh}" IsOpen="{Binding ReservationChange}">
-            <TextBlock Text="Here are displayed all guests and reservations that want to &#x0a;change their old date! By allowing a reservation you delete&#x0a; all existing reservation that overlap this date! By declining this &#x0a;request is removed!" Background="LightGray" Padding="5"/>
+            <TextBlock FontSize="15" Text="Here are displayed all guests&#x0a;and reservations that want to &#x0a;change their old date! By allowing &#x0a;a reservation you delete&#x0a; all existing reservation that overlap this date! &#x0a;By declining this &#x0a;request is removed!" Background="LightGray" Padding="5"/>
         </Popup>
 
         <DataGrid x:Name="ReservationChangeGrid" GridLinesVisibility="None" ItemsSource="{Binding requestsObservable, UpdateSourceTrigger=PropertyChanged}" 

@@ -71,7 +71,7 @@
             </i:Interaction.Triggers>
         </Label>
         <Popup  PlacementTarget="{Binding ElementName=FutRen}" IsOpen="{Binding CancelTooltip}">
-            <TextBlock Text="If you decide to cancel incoming renovation you &#x0a;can do so by clicking 'Cancel renovation' button!" Background="LightGray" Padding="5"/>
+            <TextBlock FontSize="15" Text="If you decide to cancel incoming renovation you &#x0a;can do so by clicking 'Cancel renovation' button!" Background="LightGray" Padding="5"/>
         </Popup>
 
         <Label Grid.Row="1" Content="Select renovation you want to cancel!" Height="28" Width="356"/>

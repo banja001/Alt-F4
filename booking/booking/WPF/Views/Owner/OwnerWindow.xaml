@@ -175,7 +175,7 @@
             </i:Interaction.Triggers>
         </Label>
         <Popup x:Name="RateGuestsPopup" PlacementTarget="{Binding ElementName=RateLabel}" IsOpen="{Binding RateGuestsTooltip}">
-            <TextBlock Text="You can only rate guests 5 days &#xA; after their stay so be quick!" Background="LightGray" Padding="5"/>
+            <TextBlock Text="You can only rate guests 5 days &#xA; after their stay so be quick!" Background="LightGray" Padding="5" FontSize="15"/>
         </Popup>
         <Label Content="Please select guest to rate"  Grid.Row="5" Margin="0,31,0,0" VerticalAlignment="Top" />
         
@@ -201,7 +201,7 @@
                 </i:Interaction.Triggers>
             </Label>
             <Popup x:Name="OwnerTypePopup" PlacementTarget="{Binding ElementName=TypeOfOwner}" IsOpen="{Binding OwnerTypeTooltip}">
-                <TextBlock Text="In order to become &#x0a;a superowner you need &#x0a; atleast 3 ratings and average &#x0a; rating of 9.5 or above!" Background="LightGray" Padding="5"/>
+                <TextBlock Text="In order to become &#x0a;a superowner you need &#x0a; atleast 3 ratings and average &#x0a; rating of 9.5 or above!" Background="LightGray" Padding="5" FontSize="15"/>
             </Popup>
             <Label Content="{Binding SuperOwnerLabel}" Grid.Row="4" FontWeight="Bold" VerticalAlignment="Top"/>
         </Grid>
@@ -224,8 +224,8 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Label>
-            <Popup x:Name="DownloadPDFPopup" PlacementTarget="{Binding ElementName=DownloadPDFLabel}" IsOpen="{Binding DownloadPDFTooltip}">
-                <TextBlock Text="Here you can &#x0a;download average grade&#x0a; statistics for each &#x0a;accommodation you own!" Background="LightGray" Padding="5"/>
+            <Popup x:Name="DownloadPDFPopup" PlacementTarget="{Binding ElementName=DownloadPDFLabel}" HorizontalOffset="-20" IsOpen="{Binding DownloadPDFTooltip}">
+                <TextBlock Text="Here you can &#x0a;download average grade&#x0a; statistics for each &#x0a;accommodation you own!" Background="LightGray" Padding="5" FontSize="15"/>
             </Popup>
             <Button Command="{Binding GeneratePDFCommand}" Content="Grade average" Grid.Row="3" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="100"/>
 

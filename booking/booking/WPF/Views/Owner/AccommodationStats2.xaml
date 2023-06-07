@@ -109,7 +109,7 @@
             </i:Interaction.Triggers>
         </Label>
         <Popup  PlacementTarget="{Binding ElementName=MostBooked}" Placement="Top" IsOpen="{Binding MostBookedTooltip}">
-            <TextBlock Text="This is calculated not based on number&#x0a; of reservations but based on number of days&#x0a; it was booked that year!" Background="LightGray" Padding="5"/>
+            <TextBlock FontSize="15" Text="This is calculated not based on number&#x0a; of reservations but based on number of days&#x0a; it was booked that year!" Background="LightGray" Padding="5"/>
         </Popup>
         <Label Grid.Row="5" Grid.Column="1" Content="{Binding MaxYear}" FontSize="17" Foreground="#E69138"/>
         <Label Content="Monthly stats:" Grid.ColumnSpan="2" Foreground="#E69138"  FontSize="17" HorizontalAlignment="Left" Height="37" Margin="24,31,0,0" Width="249" Grid.RowSpan="2" Grid.Row="2" VerticalAlignment="Top"/>

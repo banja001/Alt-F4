@@ -107,7 +107,7 @@
             </i:Interaction.Triggers>
         </Label>
         <Popup PlacementTarget="{Binding ElementName=RatingTable}" IsOpen="{Binding RatingTable}">
-            <TextBlock Text="By selecting an item in the table you can see &#x0a;pictures and comments for that rating.&#x0a; Only guests that you also rated are &#x0a;displayed in this table!" Background="LightGray" Padding="5"/>
+            <TextBlock FontSize="15" Text="By selecting an item in the table you can see &#x0a;pictures and comments for that rating.&#x0a; Only guests that you also rated are &#x0a;displayed in this table!" Background="LightGray" Padding="5"/>
         </Popup>
         <DataGrid GridLinesVisibility="None" Grid.Row="1" Grid.ColumnSpan="2" x:Name="dgrMain" ItemsSource="{Binding OwnerRatings, UpdateSourceTrigger=PropertyChanged}" 
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"

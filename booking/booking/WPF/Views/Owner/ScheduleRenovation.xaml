@@ -125,6 +125,6 @@
                 <DataGridTextColumn Header="End date" Width="*"  Binding="{Binding EndDate,Converter={cvt:DateTimeToDateOnlyConverter}}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="12" Grid.Column="1" Content="Renovate" Command="{Binding ScheduleRenovationCommand}" Margin="58,10,22,10"/>
+        <Button Grid.Row="12" Grid.Column="1" Content="Renovate" Command="{Binding ScheduleRenovationCommand}" Margin="52,10,28,10"/>
     </Grid>
 </Page>
