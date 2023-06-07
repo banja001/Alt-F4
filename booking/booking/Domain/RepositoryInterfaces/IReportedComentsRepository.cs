@@ -5,13 +5,14 @@ using System.Text;
 
 namespace Domain.RepositoryInterfaces
 {
-    public interface IForumCommentRepository
+    public interface IReportedComentsRepository
     {
         public void Load();
-        public List<ForumComment> GetAll();
-        public void Add(ForumComment forum);
+        public List<ReportedComents> GetAll();
+        public void Add(ReportedComents comment);
         public void Save();
         public int MakeId();
-        public void Update(int id);
+        
+
     }
 }

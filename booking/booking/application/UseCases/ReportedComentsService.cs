@@ -1,23 +1,22 @@
 ﻿using booking.Injector;
 using Domain.Model;
 using Domain.RepositoryInterfaces;
-using Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace application.UseCases
 {
-    public class ForumCommentService
+    public class ReportedComentsService
     {
-        private readonly IForumCommentRepository _forumCommentRepository;
+        private readonly IReportedComentsRepository _forumCommentRepository;
 
-        public ForumCommentService()
+        public ReportedComentsService()
         {
-            _forumCommentRepository = Injector.CreateInstance<IForumCommentRepository>();
+            _forumCommentRepository = Injector.CreateInstance<IReportedComentsRepository>();
         }
 
-        public List<ForumComment> GetAll()
+        public List<ReportedComents> GetAll()
         {
             Load();
             return _forumCommentRepository.GetAll();
@@ -27,9 +26,9 @@ namespace application.UseCases
         {
             _forumCommentRepository.Load();
         }
-        public void Add(ForumComment forum)
+        public void Add(ReportedComents comment)
         {
-            _forumCommentRepository.Add(forum);
+            _forumCommentRepository.Add(comment);
         }
         public void Save()
         {
@@ -38,11 +37,6 @@ namespace application.UseCases
         public int MakeId()
         {
             return _forumCommentRepository.MakeId();
-        }
-
-        public void Update(int id)
-        {
-            _forumCommentRepository.Update(id);
         }
     }
 }

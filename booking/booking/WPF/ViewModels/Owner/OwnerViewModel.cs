@@ -393,7 +393,7 @@ namespace WPF.ViewModels.Owner
 
             PdfPage page = document.AddPage();
             
-      
+            
             XGraphics gfx = XGraphics.FromPdfPage(page);
 
             XFont font = new XFont("Arial", 12);

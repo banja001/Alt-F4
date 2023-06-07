@@ -71,11 +71,11 @@
         <Line X2="1" Grid.Row="2"/>
         <Label Content="Comments:" Grid.Row="3"/>
         <Label Content="Select an item if you want to report it!" Grid.Row="4"/>
-        <ListBox x:Name="myListBox" Grid.Row="5" ItemsSource="{Binding comments}" SelectedItem="{Binding SelectList}" />
+        <ListBox x:Name="myListBox" Grid.Row="5" ItemsSource="{Binding comments}" SelectedItem="{Binding SelectList}" Margin="101,0,97,0" />
         <Popup x:Name="MyPopup" PlacementTarget="{Binding ElementName=myListBox}" Placement="Mouse" StaysOpen="False" IsOpen="{Binding Open}" >
             <TextBlock Text="{Binding PopupText}" Background="LightGray" Padding="10" Width="200" TextWrapping="Wrap"/>
         </Popup>
-        <Button Content="Report a comment" Grid.Row="6"/>
+        <Button Content="Report a comment" Grid.Row="6" Command="{Binding ReportCommentCommand}"/>
         <Line X2="1" Grid.Row="7"/>
         <Label Content="Leave a comment:" Grid.Row="8"/>
         <Label Content="(Max characters 200)" Grid.Row="9"/>

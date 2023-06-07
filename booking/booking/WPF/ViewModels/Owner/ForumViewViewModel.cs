@@ -78,6 +78,7 @@ namespace WPF.ViewModels.Owner
 
             }
         }
+        public List<ForumComment> forumComments;
         
         public Forum forum { get; set; }
         private ForumCommentService commentService;
@@ -85,9 +86,10 @@ namespace WPF.ViewModels.Owner
         private AccommodationService accommodationService;
         private LocationService locationService;
         private ForumCommentService forumCommentService;
+        private ReportedComentsService reportedComentsService;
         public ObservableCollection<string> comments { get; set; }
         private int i;
-
+        public ICommand ReportCommentCommand => new RelayCommand(ReportComment);
         public ICommand PostCommentCommand => new RelayCommand(PostComment);
         
         public void ClosePopup()
@@ -104,10 +106,12 @@ namespace WPF.ViewModels.Owner
             accommodationService=new AccommodationService();
             locationService=new LocationService();
             forumCommentService = new ForumCommentService();
+            reportedComentsService=new ReportedComentsService();
 
             List<User> users = userService.GetAll();
 
             fullComments = new List<string>();
+            forumComments=new List<ForumComment>();
 
             comments = new ObservableCollection<string>();
             i = 1;
@@ -124,6 +128,7 @@ namespace WPF.ViewModels.Owner
                           builder= i.ToString() + ". (" + user.Role + ")" + name + ": " + comm.Comment ;
                     comments.Add(builder);
                     fullComments.Add(comm.Comment);
+                    forumComments.Add(comm);
                     i++;
                 }
             }
@@ -136,7 +141,27 @@ namespace WPF.ViewModels.Owner
             PopupText = fullComments[idlist];
             Open = true;
         }
+        public void ReportComment()
+        {
+            if (SelectList == null)
+            {
+                MessageBox.Show("Please select a comment you want to report");
+                return;
+            }
 
+            int num=Convert.ToInt32(SelectList.Split(".")[0])-1;
+            int idcom=forumComments[num].Id;
+            if(reportedComentsService.GetAll().Find(s=> s.UserId==ownerId && s.ForumId==forum.Id && s.CommentId == idcom) == null)
+            {
+                commentService.Update(idcom);
+
+                reportedComentsService.Add(new ReportedComents(reportedComentsService.MakeId(), forum.Id,idcom,ownerId));
+
+                MessageBox.Show("Comment was reported");
+                return;
+            }
+            MessageBox.Show("Comment already reported by you");
+        }
         public void PostComment()
         {
             bool canLeaveComment = false;

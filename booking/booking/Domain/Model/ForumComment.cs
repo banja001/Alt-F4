@@ -14,6 +14,7 @@ namespace Domain.Model
         public int ForumId { get; set; }
         public int UserId { get; set; }
 
+        public int Reports { get; set; }
         public ForumComment() { }
         public ForumComment(int id, string comment, int forumId, int userId)
         {
@@ -21,10 +22,11 @@ namespace Domain.Model
             Comment = comment;
             ForumId = forumId;
             UserId = userId;
+            Reports = 0;
         }
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Comment, ForumId.ToString(), UserId.ToString() };
+            string[] csvValues = { Id.ToString(), Comment, ForumId.ToString(), UserId.ToString(),Reports.ToString() };
             return csvValues;
         }
 
@@ -34,6 +36,7 @@ namespace Domain.Model
             Comment = values[1];
             ForumId = Convert.ToInt32(values[2]);
             UserId = Convert.ToInt32(values[3]);
+            Reports = Convert.ToInt32(values[4]);
         }
     }
 }
