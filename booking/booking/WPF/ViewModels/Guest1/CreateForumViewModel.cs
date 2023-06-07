@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
@@ -107,10 +108,7 @@ namespace WPF.ViewModels.Guest1
         {
             this.CloseCurrentWindow();
         }
-
-        private void CreateForum()
-        {
-            
+        private void notifyowner(){
             int forumId = _forumService.MakeId();
             string loc = SelectedState + "," + SelectedCity;
             _forumService.Add(new Forum(forumId,loc , userId, true));
@@ -135,14 +133,49 @@ namespace WPF.ViewModels.Guest1
                 }
             }
 
+        }
+
 
 
 
             
-            ////////////////////////////
-            _forumCommentService.Add(new ForumComment(_forumCommentService.MakeId(), Comment, forumId, userId));
-            MessageBox.Show("You have successfully opened a new forum and left the first comment!");
-            CloseWindow();
+
+            
+
+        private void CreateForum()
+        {
+            Forum existingForum = ForumViewModel.AllForums.Where(f => f.Location == SelectedState + "," + SelectedCity).ToList().Count == 0 ? 
+                null : ForumViewModel.AllForums.Where(f => f.Location == SelectedState + "," + SelectedCity).ToList()[0];
+
+            if (existingForum == null)
+            {
+                Forum newForum = new Forum(_forumService.MakeId(), SelectedState + "," + SelectedCity, userId, true, false);
+                notifyowner()
+                _forumService.Add(newForum);
+                _forumCommentService.Add(new ForumComment(_forumCommentService.MakeId(), Comment, newForum.Id, userId));
+                ForumViewModel.MyForums.Add(newForum);
+                ForumViewModel.AllForums.Add(newForum);
+
+                MessageBox.Show("You have successfully opened a new forum and left the first comment!");
+                CloseWindow();
+            }
+            else
+            {
+                if(existingForum.Open)
+                    MessageBox.Show("There's already an open forum for that location");
+                else
+                {
+                    existingForum.Open = true;
+                    existingForum.CreatorId = userId;
+
+                    _forumService.Update(existingForum);
+                    _forumCommentService.Add(new ForumComment(_forumCommentService.MakeId(), Comment, existingForum.Id, userId));
+                    ForumViewModel.MyForums.Add(existingForum);
+
+                    MessageBox.Show("Forum u want to create alredy exists, but it's close. You have just opened it again");
+                    CloseWindow();
+                }
+            }
         }
     }
 }

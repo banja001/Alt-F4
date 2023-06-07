@@ -9,6 +9,7 @@ namespace Domain.RepositoryInterfaces
     {
         public void Load();
         public List<ForumComment> GetAll();
+        public List<ForumComment> GetByForumId(int id);
         public void Add(ForumComment forum);
         public void Save();
         public int MakeId();

@@ -19,8 +19,11 @@ namespace application.UseCases
 
         public List<ForumComment> GetAll()
         {
-            Load();
             return _forumCommentRepository.GetAll();
+        }
+        public List<ForumComment> GetByForumId(int id)
+        {
+            return _forumCommentRepository.GetByForumId(id);
         }
 
         public void Load()

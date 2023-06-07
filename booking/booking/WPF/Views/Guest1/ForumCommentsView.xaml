@@ -1,0 +1,72 @@
+﻿<Window x:Class="WPF.Views.Guest1.ForumCommentsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF.Views.Guest1"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="ForumCommentsView" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <SolidColorBrush x:Key="GreenBrush" Color="#597a6a" />
+
+        <Style x:Key="labelsStyle" TargetType="{x:Type Control}">
+            <Setter Property="Foreground" Value="#edf2f0"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
+        </Style>
+        <Style x:Key="gridStyle" TargetType="Grid">
+            <Setter Property="Background" Value="#699687"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Style="{StaticResource ResourceKey=gridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="7*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.5*"></ColumnDefinition>
+            <ColumnDefinition Width="8*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.ColumnSpan="2" Content="{Binding ForumLocationComments}" 
+            Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24" FontWeight="Bold" Margin="10"/>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Comments" 
+                       Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
+
+        <ListBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Name="lbStayedIn"
+                        ItemsSource="{Binding CommentDTOs}" 
+                        SelectionMode="Single" Margin="0 5 10 10 "
+                        HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical" Width="620" Canvas.Top="1" Canvas.Left="1">
+                        <TextBlock Text="{Binding Output}" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding SelectedStayedInChangedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ListBox>
+        <Label Grid.Row="2" Grid.Column="0" Content="Your comment" 
+            Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 10 0 0"/>
+        <TextBox Grid.Row="2" Grid.Column="3" Name="txtbComment" IsEnabled="{Binding TxtbEnabled}" Text="{Binding NewComment, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Margin="0 10 10 0">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding TextForCommentChangedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+
+        <WrapPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10">
+            <Button Height="20" Width="67" Content="Cancel" Margin="10 0" Command="{Binding CloseWindowCommand}"/>
+            <Button Name="ReserveAccommodationButton" Height="20" Width="67" Content="Post" Margin="10 0" Command="{Binding PostCommentClickCommand}" IsEnabled="{Binding PostButtonEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+        </WrapPanel>
+    </Grid>
+</Window>

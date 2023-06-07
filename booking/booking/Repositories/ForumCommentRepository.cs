@@ -25,7 +25,11 @@ namespace Repositories
             Load();
             return forumComments;
         }
-
+        public List<ForumComment> GetByForumId(int id)
+        {
+            Load();
+            return forumComments.Where(f => f.ForumId == id).ToList();
+        }
         public void Load()
         {
             forumComments = serializer.FromCSV(fileName);

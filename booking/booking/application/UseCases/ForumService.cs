@@ -23,6 +23,11 @@ namespace application.UseCases
             return _forumRepository.GetAll();
         }
 
+        public List<Forum> GetByCreatorId(int id)
+        {
+            return _forumRepository.GetByCreatorId(id);
+        }
+
         public void Load()
         {
             _forumRepository.Load();
@@ -40,6 +45,11 @@ namespace application.UseCases
         public int MakeId()
         {
             return _forumRepository.MakeId();
+        }
+        public void Update(Forum forum)
+        {
+            _forumRepository.Update(forum);
+            Save();
         }
     }
 }
