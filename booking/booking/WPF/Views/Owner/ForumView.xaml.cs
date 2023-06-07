@@ -30,10 +30,8 @@ namespace WPF.Views.Owner
             DataContext = win;
         }
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            
-                win.ClosePopup();
-            
+        {          
+                win.ClosePopup();  
         }
 
        

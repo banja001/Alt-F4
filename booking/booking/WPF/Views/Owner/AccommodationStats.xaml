@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WPF.Views.Owner"
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
       mc:Ignorable="d" 
       Height="641" Width="400"
       Title="AccommodationStats">
@@ -20,8 +21,8 @@
                     </Trigger>
                 </Style.Triggers>
                 <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="TextBlock.TextAlignment" Value="Left" />
-                <Setter Property="TextBlock.Margin" Value="3 0" />
+                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                
 
 
             </Style>
@@ -44,8 +45,8 @@
                 <Setter Property="Background" Value="DarkRed"/>
                 <Setter Property="Height" Value="28"/>
                 <Setter Property="FontSize" Value="17"/>
-                <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                <Setter Property="Padding" Value="7 0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                
             </Style>
 
             <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
@@ -62,7 +63,16 @@
             <ColumnDefinition/>
 
         </Grid.ColumnDefinitions>
-        <Label Content="View stats" Foreground="#E69138" FontSize="20" Width="286" Margin="0,18,0,0" VerticalAlignment="Top" Grid.RowSpan="2" />
+        <Label Name="ViewStatsLabel" Content="View stats [?]" Foreground="#E69138" FontSize="20" Width="286" Margin="0,18,0,0" VerticalAlignment="Top" Grid.RowSpan="2" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding ViewStatsTooltipCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Label>
+        <Popup  PlacementTarget="{Binding ElementName=ViewStatsLabel}" IsOpen="{Binding ViewStatsTooltip}">
+            <TextBlock Text="By selecting accommodation and &#x0a;clicking 'Get Stats' you get statistics &#x0a;for each year and month!" Background="LightGray" Padding="5"/>
+        </Popup>
         <Label Grid.Row="1" Content="Please select accommodation to view stats" Width="288" Margin="0,16,0,0" VerticalAlignment="Top"/>
         <Button Grid.Row="3" Command="{Binding GetStatsCommand}" Content="Get Stats" Margin="222,13,58,53"/>
         <DataGrid x:Name="DataGridAccommodations" ItemsSource="{Binding AccommodationList, UpdateSourceTrigger=PropertyChanged}"

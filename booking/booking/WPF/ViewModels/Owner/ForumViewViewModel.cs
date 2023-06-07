@@ -14,7 +14,42 @@ namespace WPF.ViewModels.Owner
 {
     public class ForumViewViewModel : BaseViewModel
     {
-        
+        public ICommand ReportCommentTooltipCommand => new RelayCommand(ReportCommentTooltip);
+
+        private bool reportTooltip = false;
+        public bool ReportTooltip
+        {
+            get
+            {
+                return reportTooltip;
+            }
+            set
+            {
+                if (value != reportTooltip)
+                {
+                    reportTooltip = value;
+                    OnPropertyChanged("ReportTooltip");
+                }
+            }
+        }
+
+        private void ReportCommentTooltip()
+        {
+            if (GlobalVariables.tt == true)
+            {
+                if (reportTooltip)
+                {
+                    ReportTooltip = false;
+
+                }
+                else
+                {
+                    ReportTooltip = true;
+
+                }
+            }
+        }
+
         private string infoLabel;
         public string InfoLabel
         {

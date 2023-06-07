@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.View.Owner"
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="RatingView" Height="641" Width="400">
     <Page.Resources>
@@ -98,7 +99,16 @@
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Rating table:" FontSize="17" Foreground="#E69138"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="34,0,0,142" Grid.RowSpan="2"/>
+        <Label Name="RatingTable" Content="Rating table: [?]" FontSize="17" Foreground="#E69138"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="34,0,0,142" Grid.RowSpan="2">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding RatingTableTooltipCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Label>
+        <Popup PlacementTarget="{Binding ElementName=RatingTable}" IsOpen="{Binding RatingTable}">
+            <TextBlock Text="By selecting an item in the table you can see &#x0a;pictures and comments for that rating.&#x0a; Only guests that you also rated are &#x0a;displayed in this table!" Background="LightGray" Padding="5"/>
+        </Popup>
         <DataGrid GridLinesVisibility="None" Grid.Row="1" Grid.ColumnSpan="2" x:Name="dgrMain" ItemsSource="{Binding OwnerRatings, UpdateSourceTrigger=PropertyChanged}" 
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False" Width="330" Height="140" HorizontalAlignment="Center" VerticalAlignment="Center"

@@ -2,6 +2,7 @@
 using booking.Model;
 using booking.View.Owner;
 using booking.WPF.ViewModels;
+using Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,8 +16,46 @@ namespace WPF.ViewModels.Owner
 {
     
 
-    public class AccommodationStatsViewModel : BaseViewModel, INotifyPropertyChanged
+    public class AccommodationStatsViewModel : BaseViewModel
     {
+        
+        public ICommand ViewStatsTooltipCommand => new RelayCommand(ViewStatsClick);
+
+        private bool viewStatsTooltip = false;
+        public bool ViewStatsTooltip
+        {
+            get
+            {
+                return viewStatsTooltip;
+            }
+            set
+            {
+                if (value != viewStatsTooltip)
+                {
+                    viewStatsTooltip = value;
+                    OnPropertyChanged("ViewStatsTooltip");
+                }
+            }
+        }
+
+        private void ViewStatsClick()
+        {
+            if (GlobalVariables.tt == true)
+            {
+                if (viewStatsTooltip)
+                {
+                    ViewStatsTooltip = false;
+
+                }
+                else
+                {
+                    ViewStatsTooltip = true;
+
+                }
+            }
+        }
+
+
         public OwnerViewModel ownerViewModel { get; set; }
         public ObservableCollection<Accommodation> AccommodationList { get; set; }
         public Accommodation SelectedItem { get; set; }

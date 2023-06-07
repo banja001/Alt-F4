@@ -23,58 +23,10 @@ namespace booking.View
         }
         
        
-        private bool ownerTypeTooltip = false;
-        private void ClickTypeOfOwner(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (GlobalVariables.tt == true)
-            {
-                if (ownerTypeTooltip)
-                {
-                    OwnerTypePopup.IsOpen = false;
-                    ownerTypeTooltip = false;
-                }
-                else
-                {
-                    OwnerTypePopup.IsOpen = true;
-                    ownerTypeTooltip = true;
-                }
-            }
-        }
-        private bool rateGuestsTooltip = false;
-        private void ClickRateGuests(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (GlobalVariables.tt == true)
-            {
-                if (rateGuestsTooltip)
-                {
-                    RateGuestsPopup.IsOpen = false;
-                    rateGuestsTooltip = false;
-                }
-                else
-                {
-                    RateGuestsPopup.IsOpen = true;
-                    rateGuestsTooltip = true;
-                }
-            }
-        }
         
-        private bool downloadPDFTooltip = false;
-        private void ClickDownloadPDF(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (GlobalVariables.tt == true)
-            {
-                if (downloadPDFTooltip)
-                {
-                    DownloadPDFPopup.IsOpen = false;
-                    downloadPDFTooltip = false;
-                }
-                else
-                {
-                    DownloadPDFPopup.IsOpen = true;
-                    downloadPDFTooltip = true;
-                }
-            }
-        }
+        
+        
+        
 
 
     }

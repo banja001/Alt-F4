@@ -169,7 +169,114 @@ namespace WPF.ViewModels.Owner
         public ICommand NotifyUserCommand => new RelayCommand(NotifyUser);
         public ICommand GeneratePDFCommand => new RelayCommand(GeneratePDF);
 
+        
+        public ICommand TypeOfOwnerCommand => new RelayCommand(ClickTypeOfOwner);
 
+        
+        private bool ownerTypeTooltip=false;
+        public bool OwnerTypeTooltip
+        {
+            get
+            {
+                return ownerTypeTooltip;
+            }
+            set
+            {
+                if (value != ownerTypeTooltip)
+                {
+                    ownerTypeTooltip = value;
+                    OnPropertyChanged("OwnerTypeTooltip");
+                }
+            }
+        }
+        private void ClickTypeOfOwner()
+        {
+            if (GlobalVariables.tt == true)
+            {
+                if (ownerTypeTooltip)
+                {
+                    OwnerTypeTooltip=false;
+                    
+                }
+                else
+                {
+                    OwnerTypeTooltip = true;
+                    
+                }
+            }
+        }
+        public ICommand DownloadPDFTooltipCommand => new RelayCommand(ClickDownloadPDF);
+        
+
+        private bool downloadPDFTooltip = false;
+        public bool DownloadPDFTooltip
+        {
+            get
+            {
+                return downloadPDFTooltip;
+            }
+            set
+            {
+                if (value != downloadPDFTooltip)
+                {
+                    downloadPDFTooltip = value;
+                    OnPropertyChanged("DownloadPDFTooltip");
+                }
+            }
+        }
+
+        private void ClickDownloadPDF()
+        {
+            if (GlobalVariables.tt == true)
+            {
+                if (downloadPDFTooltip)
+                {
+                    DownloadPDFTooltip = false;
+                    
+                }
+                else
+                {
+                    DownloadPDFTooltip = true;
+                    
+                }
+            }
+        }
+
+        public ICommand RateGuestsTooltipCommand => new RelayCommand(ClickRateGuests);
+
+        private bool rateGuestsTooltip = false;
+
+        public bool RateGuestsTooltip
+        {
+            get
+            {
+                return rateGuestsTooltip;
+            }
+            set
+            {
+                if (value != rateGuestsTooltip)
+                {
+                    rateGuestsTooltip = value;
+                    OnPropertyChanged("RateGuestsTooltip");
+                }
+            }
+        }
+        private void ClickRateGuests()
+        {
+            if (GlobalVariables.tt == true)
+            {
+                if (rateGuestsTooltip)
+                {
+                    
+                    RateGuestsTooltip = false;
+                }
+                else
+                {
+                    
+                    RateGuestsTooltip = true;
+                }
+            }
+        }
 
         public bool load;
         public ICommand RateGuestsCommand => new RelayCommand(RateGuests_Click);
@@ -453,6 +560,7 @@ namespace WPF.ViewModels.Owner
 
 
             document.Save("ownerRatings.pdf");
+            System.Diagnostics.Process.Start("explorer", "ownerRatings.pdf");
         }
     }
 }

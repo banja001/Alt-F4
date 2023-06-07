@@ -20,6 +20,43 @@ namespace WPF.ViewModels.Owner
 {
     public class ReservationChangeViewModel:BaseViewModel
     {
+        public ICommand ReservationChangeTooltipCommand => new RelayCommand(ReservationChangeTooltip);
+
+        private bool reservationChange = false;
+        public bool ReservationChange
+        {
+            get
+            {
+                return reservationChange;
+            }
+            set
+            {
+                if (value != reservationChange)
+                {
+                    reservationChange = value;
+                    OnPropertyChanged("ReservationChange");
+                }
+            }
+        }
+
+        private void ReservationChangeTooltip()
+        {
+            if (GlobalVariables.tt == true)
+            {
+                if (reservationChange)
+                {
+                    ReservationChange = false;
+
+                }
+                else
+                {
+                    ReservationChange = true;
+
+                }
+            }
+        }
+
+
         public List<ReservationRequests> reservationRequests;
         
         public OwnerViewModel ownerViewModel;

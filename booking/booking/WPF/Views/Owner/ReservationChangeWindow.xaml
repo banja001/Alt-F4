@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.WPF.Views.Owner" xmlns:cvt="clr-namespace:booking.Converter"
+       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
       mc:Ignorable="d"
         Title="ReservationChange" Height="641" Width="400">
     <Grid>
@@ -53,7 +54,16 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Pick a reservation change" Grid.ColumnSpan="2" HorizontalAlignment="Left" FontSize="17" Foreground="#E69138" Padding="10" Margin="15,0,0,0"/>
+        <Label Name="ReservationCh"  Content="Pick a reservation change [?]" Grid.ColumnSpan="2" HorizontalAlignment="Left" FontSize="17" Foreground="#E69138" Padding="10" Margin="15,0,0,0">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding ReservationChangeTooltipCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Label>
+        <Popup  PlacementTarget="{Binding ElementName=ReservationCh}" IsOpen="{Binding ReservationChange}">
+            <TextBlock Text="Here are displayed all guests and reservations that want to &#x0a;change their old date! By allowing a reservation you delete&#x0a; all existing reservation that overlap this date! By declining this &#x0a;request is removed!" Background="LightGray" Padding="5"/>
+        </Popup>
 
         <DataGrid x:Name="ReservationChangeGrid" GridLinesVisibility="None" ItemsSource="{Binding requestsObservable, UpdateSourceTrigger=PropertyChanged}" 
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"

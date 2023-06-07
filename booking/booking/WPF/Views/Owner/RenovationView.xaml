@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WPF.Views.Owner" xmlns:cvt="clr-namespace:booking.Converter"
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
       mc:Ignorable="d" 
       Height="641" Width="400"
       Title="RenovationView">
@@ -62,7 +63,17 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Label Content="Future renovations:" Foreground="#E69138" FontSize="17" Height="32" Width="356" Margin="0,22,0,0" VerticalAlignment="Top"/>
+        <Label Name="FutRen" Content="Future renovations: [?]" Foreground="#E69138" FontSize="17" Height="32" Width="356" Margin="0,22,0,0" VerticalAlignment="Top">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding CancelRenovationTooltipCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Label>
+        <Popup  PlacementTarget="{Binding ElementName=FutRen}" IsOpen="{Binding CancelTooltip}">
+            <TextBlock Text="If you decide to cancel incoming renovation you &#x0a;can do so by clicking 'Cancel renovation' button!" Background="LightGray" Padding="5"/>
+        </Popup>
+
         <Label Grid.Row="1" Content="Select renovation you want to cancel!" Height="28" Width="356"/>
         <DataGrid Grid.Row="2" ItemsSource="{Binding FutureRenovations, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedRenovation, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"

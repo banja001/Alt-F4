@@ -128,12 +128,25 @@ namespace WPF.ViewModels.Owner
                 MessageBox.Show("Please fill all of info!");
                 return;
             }
-            
+            DateTime startDate;
+            DateTime endDate;
+            DateTime tempDate;
+            bool check;
+            try
+            {
             IntervalList.Clear();
-            DateTime startDate = DateTime.Parse(FromDate);
-            DateTime endDate = DateTime.Parse(ToDate);
-            DateTime tempDate = startDate.AddDays(Duration);
-            bool check = false;
+                startDate = DateTime.Parse(FromDate);
+                endDate = DateTime.Parse(ToDate);
+                tempDate = startDate.AddDays(Duration);
+                check = false;
+            
+
+            }
+            catch
+            {
+                MessageBox.Show("Please fill all of info!");
+                return;
+            }
             if (endDate <= startDate || startDate<=DateTime.Now)
             {
                 MessageBox.Show("Please select valid dates!");

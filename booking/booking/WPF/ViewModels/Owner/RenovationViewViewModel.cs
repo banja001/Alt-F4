@@ -1,17 +1,54 @@
 ﻿using booking.Commands;
 using booking.Model;
+using booking.WPF.ViewModels;
 using Domain.DTO;
 using Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
 
 namespace WPF.ViewModels.Owner
 {
-    public class RenovationViewViewModel
+    public class RenovationViewViewModel : BaseViewModel
     {
+        public ICommand CancelRenovationTooltipCommand => new RelayCommand(CancelRenovationTooltip);
+
+        private bool cancelTooltip = false;
+        public bool CancelTooltip
+        {
+            get
+            {
+                return cancelTooltip;
+            }
+            set
+            {
+                if (value != cancelTooltip)
+                {
+                    cancelTooltip = value;
+                    OnPropertyChanged("CancelTooltip");
+                }
+            }
+        }
+
+        private void CancelRenovationTooltip()
+        {
+            if (GlobalVariables.tt == true)
+            {
+                if (cancelTooltip)
+                {
+                    CancelTooltip = false;
+
+                }
+                else
+                {
+                    CancelTooltip = true;
+
+                }
+            }
+        }
         public RenovationAccommodationDTO SelectedRenovation { get; set; }
         public ObservableCollection<RenovationAccommodationDTO> FutureRenovations{get;set;}
         public ObservableCollection<RenovationAccommodationDTO> PastRenovations { get; set; }

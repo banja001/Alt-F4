@@ -11,11 +11,50 @@ using booking.View.Owner;
 using booking.Commands;
 using System.Windows.Input;
 using System.Windows.Media;
+using Domain.Model;
 
 namespace WPF.ViewModels.Owner
 {
     public class RatingViewViewModel:BaseViewModel
     {
+        public ICommand RatingTableTooltipCommand => new RelayCommand(RatingTableTooltip);
+
+        private bool ratingTable = false;
+        public bool RatingTable
+        {
+            get
+            {
+                return ratingTable;
+            }
+            set
+            {
+                if (value != ratingTable)
+                {
+                    ratingTable = value;
+                    OnPropertyChanged("RatingTable");
+                }
+            }
+        }
+
+        private void RatingTableTooltip()
+        {
+            if (GlobalVariables.tt == true)
+            {
+                if (ratingTable)
+                {
+                    RatingTable = false;
+
+                }
+                else
+                {
+                    RatingTable = true;
+
+                }
+            }
+        }
+
+
+
         private bool nextButtonEnabled;
 
         public bool NextButtonEnabled

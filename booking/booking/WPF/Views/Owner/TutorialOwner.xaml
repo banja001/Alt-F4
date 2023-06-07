@@ -20,7 +20,7 @@
         </Grid.ColumnDefinitions>
 
         <Image x:Name="imageControl" RenderOptions.BitmapScalingMode="HighQuality" Grid.ColumnSpan="2"/>
-
+        
 
         <Button Name="nextButton" Grid.Column="1" Grid.Row="1" Content="Next" Click="NextClick"/>
         <Button Name="endButton" Grid.Column="0" Grid.Row="1" Content="End Tutorial" Click="EndTutorialClick"/>

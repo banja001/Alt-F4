@@ -20,8 +20,8 @@
                     </Trigger>
                 </Style.Triggers>
                 <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="TextBlock.TextAlignment" Value="Left" />
-                <Setter Property="TextBlock.Margin" Value="3 0" />
+                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                
 
             </Style>
 
@@ -43,8 +43,8 @@
             <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
                 <Setter Property="Background" Value="DarkRed"/>
                 <Setter Property="Height" Value="28"/>
-                <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                <Setter Property="Padding" Value="5 0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                
                 <Setter Property="FontSize" Value="17"/>
             </Style>
 
