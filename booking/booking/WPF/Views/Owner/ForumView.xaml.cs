@@ -35,7 +35,7 @@ namespace WPF.Views.Owner
                 win.ClosePopup();
             
         }
-        
 
+       
     }
 }

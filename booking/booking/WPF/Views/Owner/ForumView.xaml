@@ -12,6 +12,12 @@
     <Grid x:Name="MyGrid" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
         
         <Grid.Resources>
+            <Style TargetType="ListBox">
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="Foreground" Value="LightGray"/>
+                
+            </Style>
 
             <Style TargetType="DataGridCell">
                 <Style.Triggers>
@@ -50,6 +56,7 @@
             <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
             <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
             <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
+            
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>
@@ -65,22 +72,24 @@
             <RowDefinition Height="5*"/>
             <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
-        
-        <Label Content="Forum info:"/>
-        <Label Grid.Row="1" Content="Bind"/>
+
+        <Label Content="Forum info:" FontSize="17"   Foreground="#E69138"/>
+        <Label Grid.Row="1" Content="{Binding InfoLabel}"/>
         <Line X2="1" Grid.Row="2"/>
-        <Label Content="Comments:" Grid.Row="3"/>
-        <Label Content="Select an item if you want to report it!" Grid.Row="4"/>
-        <ListBox x:Name="myListBox" Grid.Row="5" ItemsSource="{Binding comments}" SelectedItem="{Binding SelectList}" Margin="101,0,97,0" />
+        <Label Content="Comments:" Grid.Row="3" FontSize="17"   Foreground="#E69138" HorizontalAlignment="Left" Margin="38,0,0,0"/>
+        <Label Content="Select an item if you want to report it!" Grid.Row="4" HorizontalAlignment="Left" Margin="36,0,0,0"/>
+        <ListBox x:Name="myListBox" Grid.Row="5" ItemsSource="{Binding comments}" SelectedItem="{Binding SelectList}" Margin="40,0,40,0" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
         <Popup x:Name="MyPopup" PlacementTarget="{Binding ElementName=myListBox}" Placement="Mouse" StaysOpen="False" IsOpen="{Binding Open}" >
             <TextBlock Text="{Binding PopupText}" Background="LightGray" Padding="10" Width="200" TextWrapping="Wrap"/>
         </Popup>
-        <Button Content="Report a comment" Grid.Row="6" Command="{Binding ReportCommentCommand}"/>
+        <Button Content="Report" Grid.Row="6" Command="{Binding ReportCommentCommand}" Margin="238,6,42,6" />
         <Line X2="1" Grid.Row="7"/>
-        <Label Content="Leave a comment:" Grid.Row="8"/>
-        <Label Content="(Max characters 200)" Grid.Row="9"/>
-        <TextBox Text="{Binding Comment}" Grid.Row="10"/>
-        <Button Content="Post" Grid.Row="11" Command="{Binding PostCommentCommand}"/>
+        <Label Content="Leave a comment:" Grid.Row="8" FontSize="17"   Foreground="#E69138" HorizontalAlignment="Left" Margin="39,0,0,0"/>
+        <Label Content="(Max characters 200)" Grid.Row="9" HorizontalAlignment="Left" Margin="41,0,0,0"/>
+
+        <TextBox MaxLength="200" BorderThickness="1" Grid.Row="10" TextWrapping="Wrap" BorderBrush="#447782"  Background="#FF2E2E2C" Foreground="LightGray" Text="{Binding Comment}"  Height="137" Width="330" />
+        
+        <Button Content="Post" Grid.Row="11" Command="{Binding PostCommentCommand}" Margin="246,6,34,6"/>
             
     </Grid>
         

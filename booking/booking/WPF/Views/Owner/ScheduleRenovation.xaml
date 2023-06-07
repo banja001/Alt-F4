@@ -13,13 +13,13 @@
             <Style TargetType="DatePicker">
                 <Setter Property="Background" Value="Black"/>
                 <Setter Property="Foreground" Value="LightGray"/>
-                
+                <Setter Property="BorderBrush" Value="Black"/>
             </Style>
             <Style TargetType="DatePickerTextBox">
                 <Setter Property="Background" Value="#FF2E2E2C"/>
-                
+                <Setter Property="Background" Value="Black"/>
             </Style>
-            
+
             <Style TargetType="DataGridCell">
                 <Style.Triggers>
                     <Trigger Property="IsSelected" Value="True">
@@ -79,8 +79,8 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.ColumnSpan="2" Content="Find dates" FontSize="20" Foreground="#E69138" Height="36" Width="346"/>
-        <Label Grid.Row="1" Grid.ColumnSpan="2" Content="Select accommodation you want to renovate!" Height="25" Width="354"/>
+        <Label Grid.ColumnSpan="2" Content="Find dates" FontSize="17" Foreground="#E69138" Height="36" Width="346"/>
+        <Label Grid.ColumnSpan="2" Content="Select accommodation you want to renovate!" Height="31" Width="354" HorizontalAlignment="Left" Margin="23,36,0,0" Grid.RowSpan="3" VerticalAlignment="Top"/>
         <DataGrid ItemsSource="{Binding AccommodationList, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False"  Grid.ColumnSpan="2" Width="360" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -93,14 +93,14 @@
                 <DataGridTextColumn Header="Accommodation Name" Width="*"  Binding="{Binding Name}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Label Grid.Row="3" Grid.Column="1" Content="Select date range:" Height="29" Width="120"/>
+        <Label Grid.Row="3" Foreground="#E69138" FontSize="17" Content="Select date range:" Height="35" Width="162"/>
         <Label Grid.Row="4" Content="From:" Height="25" Width="46"/>
         <Label Grid.Row="4" Grid.Column="1" Content="To:" Height="25" Width="28"/>
-        <DatePicker Grid.Row="5" SelectedDate="{Binding FromDate}" SelectedDateFormat="Short" Margin="0,0,0,37" Grid.RowSpan="2"/>
-        <DatePicker Grid.Row="5" Grid.Column="1" SelectedDate="{Binding ToDate}" SelectedDateFormat="Short" Margin="0,0,0,37" Grid.RowSpan="2" />
-        <Label Grid.Row="6" Content="Number of days for reservation:" Height="29" Width="200"/>
-        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Duration}" Height="20" Width="120"/>
-        <Button Command="{Binding SearchFreeDatesCommand}" Content="Search for free dates" Grid.Row="7" Grid.Column="1" Margin="25,10,25,10"/>
+        <DatePicker Grid.Row="5" SelectedDate="{Binding FromDate}" SelectedDateFormat="Short" Margin="10 0" />
+        <DatePicker Grid.Row="5" Grid.Column="1" SelectedDate="{Binding ToDate}" SelectedDateFormat="Short" Margin="10 0"/>
+        <Label Grid.Row="6" Content="Number of days for reservation:"  Height="29" Width="218" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="35,0,0,0" />
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Duration}" Height="20" Width="42" HorizontalAlignment="Left" Margin="75,0,0,0"/>
+        <Button Command="{Binding SearchFreeDatesCommand}" Content="Search for free dates" Grid.Row="7" Grid.Column="1" Margin="52,10,28,10"/>
         <Line X2="1"  Grid.Row="7" Grid.ColumnSpan="2" Margin="15,50,15,0" Grid.RowSpan="2"/>
         <Label Grid.Row="9" Content="Renovate"  Foreground="#E69138" FontSize="17" Height="33" Width="122" HorizontalAlignment="Left" HorizontalContentAlignment="Center"/>
         <Label Grid.Row="10" Content="Select dates you want to book for renovating!" Grid.ColumnSpan="2" Height="29" Width="356"  />
@@ -117,6 +117,6 @@
                 <DataGridTextColumn Header="End date" Width="*"  Binding="{Binding EndDate,Converter={cvt:DateTimeToDateOnlyConverter}}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="12" Grid.Column="1" Content="Renovate" Command="{Binding ScheduleRenovationCommand}" Margin="25,10,25,10"/>
+        <Button Grid.Row="12" Grid.Column="1" Content="Renovate" Command="{Binding ScheduleRenovationCommand}" Margin="58,10,22,10"/>
     </Grid>
 </Page>

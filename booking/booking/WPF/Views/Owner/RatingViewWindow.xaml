@@ -98,7 +98,7 @@
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Rating table:" FontSize="17" Foreground="#E69138" FontWeight="Bold" VerticalAlignment="Bottom"/>
+        <Label Content="Rating table:" FontSize="17" Foreground="#E69138"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="34,0,0,142" Grid.RowSpan="2"/>
         <DataGrid GridLinesVisibility="None" Grid.Row="1" Grid.ColumnSpan="2" x:Name="dgrMain" ItemsSource="{Binding OwnerRatings, UpdateSourceTrigger=PropertyChanged}" 
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False" Width="330" Height="140" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -113,7 +113,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <Line X2="1"  Grid.Row="2" Grid.ColumnSpan="2"/>
-        <Label Content="Comment:" Grid.Row="3" FontSize="17" Foreground="#E69138" FontWeight="Bold" VerticalAlignment="Bottom"/>
+        <Label Content="Comment:" Grid.Row="3" FontSize="17" Foreground="#E69138"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="32,0,0,164" Grid.RowSpan="2"/>
         <Grid DataContext="{Binding ElementName=dgrMain,Path=SelectedItem}" Grid.Row="4" Grid.ColumnSpan="2" >
             <Border BorderThickness="1" BorderBrush="#447782" Height="137" Width="330">
                 <TextBlock  Background="#FF2E2E2C" Foreground="LightGray" HorizontalAlignment="Center"  TextWrapping="Wrap" Text="{Binding Path=Comment}" VerticalAlignment="Center" Height="137" Width="330"/>
@@ -122,11 +122,11 @@
 
         </Grid>
         <Line X2="1" Grid.ColumnSpan="2" Grid.Row="5"/>
-        <Label Content="Images:" FontSize="17" Foreground="#E69138" FontWeight="Bold" Grid.Row="6" VerticalAlignment="Bottom"/>
+        <Label Content="Images:" FontSize="17" Foreground="#E69138"  Grid.Row="6" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="34,0,0,199" Grid.RowSpan="2"/>
         <Grid Grid.Row="7" Grid.ColumnSpan="2" >
-            <Button IsEnabled="{Binding NextButtonEnabled}" Template="{DynamicResource ButtonTemplate1}" x:Name="NextImageButton" Command="{Binding NextCommand}" Content="&gt;&gt;" Height="120" Width="20" HorizontalAlignment="Left" Margin="334,40,0,39" />
-            <Button IsEnabled="{Binding PrevButtonEnabled}" Template="{DynamicResource ButtonTemplate1}" x:Name="PrevImageButton" Command="{Binding PrevCommand}" Content="&lt;&lt;" Height="120" Width="20" HorizontalAlignment="Left" Margin="60,40,0,39" />
-            <Image HorizontalAlignment="Left" Stretch="Fill" Source="{Binding ImageSource}" Height="161" VerticalAlignment="Top" Width="211" Margin="101,16,0,0"/>
+            <Button IsEnabled="{Binding NextButtonEnabled}" Template="{DynamicResource ButtonTemplate1}" x:Name="NextImageButton" Command="{Binding NextCommand}" Content="&gt;&gt;" Height="120" Width="20" HorizontalAlignment="Left" Margin="310,40,0,39" />
+            <Button IsEnabled="{Binding PrevButtonEnabled}" Template="{DynamicResource ButtonTemplate1}" x:Name="PrevImageButton" Command="{Binding PrevCommand}" Content="&lt;&lt;" Height="120" Width="20" HorizontalAlignment="Left" Margin="70,40,0,39" />
+            <Image  Stretch="Fill" Source="{Binding ImageSource}"  Margin="100 30"/>
         </Grid>
     </Grid>
 </Page>

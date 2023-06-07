@@ -14,8 +14,21 @@ namespace WPF.ViewModels.Owner
 {
     public class ForumViewViewModel : BaseViewModel
     {
-
         
+        private string infoLabel;
+        public string InfoLabel
+        {
+            get { return infoLabel; }
+            set
+            {
+                if (value != infoLabel)
+                {
+                    infoLabel = value;
+                    OnPropertyChanged("InfoLabel");
+                }
+
+            }
+        }
 
         private bool open;
         public bool Open
@@ -99,6 +112,10 @@ namespace WPF.ViewModels.Owner
         private int ownerId;
         public ForumViewViewModel(Forum select,int id)
         {
+            if(select.Open==true)
+                InfoLabel = "Name: " + select.Location + "- Status: " + "Open";
+            else
+                InfoLabel = "Name: " + select.Location + "- Status: " + "Closed";
             ownerId = id;
             forum = select;
             commentService=new ForumCommentService();
@@ -166,35 +183,42 @@ namespace WPF.ViewModels.Owner
         public void PostComment()
         {
             Open=false;
-            bool canLeaveComment = false;
-            string[] loc=forum.Location.Split(",");
-            List<Location> locations = locationService.GetAll();
-            
-            
-           
-
-            int locId = locations.Find(s => s.State == loc[0] && s.City == loc[1]).Id;
-            Accommodation acc = accommodationService.GetAll().Find(s => s.LocationId == locId && s.OwnerId == ownerId);
-
-            if (acc == null)
+            if (forum.Open == true)
             {
-                MessageBox.Show("Only owners with accommodation on this locations can leave comments");
-                return;
-            }
-            ForumComment comm = new ForumComment(forumCommentService.MakeId(),Comment,forum.Id,ownerId);
-            forumCommentService.Add(comm);
+                bool canLeaveComment = false;
+                string[] loc = forum.Location.Split(",");
+                List<Location> locations = locationService.GetAll();
 
-            User user = userService.GetAll().Find(s => s.Id == comm.UserId);
-            string name = user.Username;
-            string builder;
-            if (comm.Comment.Length >= 10)
-                builder = i.ToString() + ". (" + user.Role + ")" + name + ": " + comm.Comment.Substring(0, 10) + "...";
+
+
+
+                int locId = locations.Find(s => s.State == loc[0] && s.City == loc[1]).Id;
+                Accommodation acc = accommodationService.GetAll().Find(s => s.LocationId == locId && s.OwnerId == ownerId);
+
+                if (acc == null)
+                {
+                    MessageBox.Show("Only owners with accommodation on this locations can leave comments");
+                    return;
+                }
+                ForumComment comm = new ForumComment(forumCommentService.MakeId(), Comment, forum.Id, ownerId);
+                forumCommentService.Add(comm);
+
+                User user = userService.GetAll().Find(s => s.Id == comm.UserId);
+                string name = user.Username;
+                string builder;
+                if (comm.Comment.Length >= 10)
+                    builder = i.ToString() + ". (" + user.Role + ")" + name + ": " + comm.Comment.Substring(0, 10) + "...";
+                else
+                    builder = i.ToString() + ". (" + user.Role + ")" + name + ": " + comm.Comment;
+                comments.Add(builder);
+                fullComments.Add(comm.Comment);
+                i++;
+                MessageBox.Show("Comment posted!");
+            }
             else
-                builder = i.ToString() + ". (" + user.Role + ")" + name + ": " + comm.Comment;
-            comments.Add(builder);
-            fullComments.Add(comm.Comment);
-            i++;
-            MessageBox.Show("Comment posted!");
+            {
+                MessageBox.Show("Forum closed!");
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using WPF.Views.Owner;
 
@@ -117,11 +118,33 @@ namespace WPF.ViewModels.Owner
 
         private void SearchFreeDates()
         {
+            if (SelectedAccommodation == null)
+            {
+                MessageBox.Show("Please select accommodation!");
+                return;
+            }
+            else if(FromDate==null || ToDate == null)
+            {
+                MessageBox.Show("Please fill all of info!");
+                return;
+            }
+            
             IntervalList.Clear();
             DateTime startDate = DateTime.Parse(FromDate);
             DateTime endDate = DateTime.Parse(ToDate);
             DateTime tempDate = startDate.AddDays(Duration);
             bool check = false;
+            if (endDate <= startDate || startDate<=DateTime.Now)
+            {
+                MessageBox.Show("Please select valid dates!");
+                return;
+            }
+            else if (duration<=0)
+            {
+                MessageBox.Show("Please select valid duration!");
+                return;
+            }
+            
             IterateDateIntervals(ref startDate, endDate, ref tempDate, ref check);
         }
 
