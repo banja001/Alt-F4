@@ -23,6 +23,7 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
+using System.Xml.XPath;
 using WPF.Views.Owner;
 
 namespace WPF.ViewModels.Owner
@@ -512,16 +513,27 @@ namespace WPF.ViewModels.Owner
             gfx.DrawImage(image, 100, 10, 100, 100);
 
 
-
+            User u = userService.GetById(OwnerId);
+            int xcord = 194;
+            int ycord = 87;
             gfx.DrawString("Accommodation stats", new XFont("Arial", 22,XFontStyle.Bold), XBrushes.Green, new XPoint(190, 70));
 
-            gfx.DrawLine(new XPen(XColor.FromArgb(50,30,200)),new XPoint(150,100),new XPoint(450,100));
-            gfx.DrawString("Accommodation name", font2, XBrushes.Black, new XPoint(160, 120));
-            gfx.DrawString("Average rating", font2, XBrushes.Black, new XPoint(330, 120));
-            gfx.DrawLine(new XPen(XColor.FromArgb(50, 30, 200)), new XPoint(150, 127), new XPoint(450, 127));
+            gfx.DrawString("Name: "+u.Username, new XFont("Arial", 10), XBrushes.Gray, new XPoint(xcord, ycord));
+            gfx.DrawString("Role: " + u.Role, new XFont("Arial", 10), XBrushes.Gray, new XPoint(xcord, ycord+10));
+            if(u.Super)
+                gfx.DrawString("SuperOwner: " + "Yes", new XFont("Arial", 10), XBrushes.Gray, new XPoint(xcord, ycord+20));
+            else
+                gfx.DrawString("SuperOwner: " + "No", new XFont("Arial", 10), XBrushes.Gray, new XPoint(xcord, ycord+20));
+            
+            gfx.DrawString("DateTime: " + DateTime.Now.ToString(), new XFont("Arial", 10), XBrushes.Gray, new XPoint(xcord, ycord+30));
+
+            gfx.DrawLine(new XPen(XColor.FromArgb(50,30,200)),new XPoint(150,130),new XPoint(450,130));
+            gfx.DrawString("Accommodation name", font2, XBrushes.Black, new XPoint(160, 150));
+            gfx.DrawString("Average rating", font2, XBrushes.Black, new XPoint(330, 150));
+            gfx.DrawLine(new XPen(XColor.FromArgb(50, 30, 200)), new XPoint(150, 157), new XPoint(450, 157));
             int xpos1 = 180;
             int xpos2 = 340;
-            int ypos = 140;
+            int ypos = 170;
             int i = 80;
             double grade;
             int j;
@@ -554,9 +566,11 @@ namespace WPF.ViewModels.Owner
                 
             }
             ypos -= 13;
-            gfx.DrawLine(new XPen(XColor.FromArgb(50, 30, 200)), new XPoint(150, 100), new XPoint(150, ypos));
-            gfx.DrawLine(new XPen(XColor.FromArgb(50, 30, 200)), new XPoint(450, 100), new XPoint(450, ypos));
-            gfx.DrawLine(new XPen(XColor.FromArgb(50, 30, 200)), new XPoint(320, 100), new XPoint(320, ypos));
+            gfx.DrawLine(new XPen(XColor.FromArgb(50, 30, 200)), new XPoint(150, 130), new XPoint(150, ypos));
+            gfx.DrawLine(new XPen(XColor.FromArgb(50, 30, 200)), new XPoint(450, 130), new XPoint(450, ypos));
+            gfx.DrawLine(new XPen(XColor.FromArgb(50, 30, 200)), new XPoint(320, 130), new XPoint(320, ypos));
+
+            
 
 
             document.Save("ownerRatings.pdf");
