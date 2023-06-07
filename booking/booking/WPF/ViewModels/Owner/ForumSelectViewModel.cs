@@ -1,5 +1,6 @@
 ﻿using application.UseCases;
 using booking.Commands;
+using booking.Model;
 using booking.WPF.ViewModels;
 using Domain.DTO;
 using Domain.Model;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -36,12 +38,45 @@ namespace WPF.ViewModels.Owner
         public ICommand ForumViewCommand => new RelayCommand(ForumViewClick);
         public ObservableCollection<Forum> ForumList { get; set; }
         public ForumService forumService;
+        private ForumCommentService forumCommentService;
+        private UserService userService;
         private int ownerId;
         public ForumSelectViewModel(int id)
         {
             ownerId = id;
             forumService = new ForumService();
-            ForumList = new ObservableCollection<Forum>(forumService.GetAll());
+            forumCommentService = new ForumCommentService();
+            userService = new UserService();
+            int owner = 0;
+            int guest=0;
+            List<Forum> forums = forumService.GetAll();
+            List<User> lista = userService.GetAll();
+            int i = 0;
+            foreach(var forum in forumService.GetAll().ToList())
+            {
+                owner = 0;
+                guest = 0;
+                foreach(var comment in forumCommentService.GetAll())
+                {
+                    if (comment.ForumId == forum.Id)
+                    {
+                        User u = lista.Find(s => s.Id == comment.UserId);
+                        if (u.Role == "Owner") owner++;
+                        else if (u.Role == "Guest1") guest++;
+                    }
+                }
+                if(owner>=3 && guest >= 3)
+                {
+                    forums[i].Location += "*";
+                }
+                i++;
+            }
+
+
+            ForumList = new ObservableCollection<Forum>(forums);
+            
+
+
         }
 
         public void ForumViewClick()

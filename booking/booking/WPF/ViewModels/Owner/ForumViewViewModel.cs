@@ -138,11 +138,12 @@ namespace WPF.ViewModels.Owner
         {
             Open = false;
             int idlist = Convert.ToInt32(selectList[0]) - 48 - 1;
-            PopupText = fullComments[idlist];
+            PopupText = "Reports:" + forumComments[idlist].Reports +" "+fullComments[idlist];
             Open = true;
         }
         public void ReportComment()
         {
+            Open = false;
             if (SelectList == null)
             {
                 MessageBox.Show("Please select a comment you want to report");
@@ -156,7 +157,7 @@ namespace WPF.ViewModels.Owner
                 commentService.Update(idcom);
 
                 reportedComentsService.Add(new ReportedComents(reportedComentsService.MakeId(), forum.Id,idcom,ownerId));
-
+                forumComments[num].Reports+=1;
                 MessageBox.Show("Comment was reported");
                 return;
             }
@@ -164,6 +165,7 @@ namespace WPF.ViewModels.Owner
         }
         public void PostComment()
         {
+            Open=false;
             bool canLeaveComment = false;
             string[] loc=forum.Location.Split(",");
             List<Location> locations = locationService.GetAll();
