@@ -28,9 +28,11 @@ namespace booking.Model
 
         public bool RatedByGuest { get; set; }
 
+        public DateTime DateOfReserving { get; set; }
+
         public ReservedDates() { }
 
-        public ReservedDates(DateTime startDate, DateTime endDate, int accommodationId, int userId = -1, bool ratedByOwner = false, int id = 0, int numOfGuests = 0, bool ratedByGuest = false)
+        public ReservedDates(DateTime startDate, DateTime endDate, int accommodationId, int userId = -1, bool ratedByOwner = false, int id = 0, int numOfGuests = 0, bool ratedByGuest = false, DateTime? dateOfReserving = null)
         { 
             Id = id;
             StartDate = startDate;
@@ -41,6 +43,7 @@ namespace booking.Model
             NumOfGuests = numOfGuests;
             UserId = userId;
             RatedByGuest = ratedByGuest;
+            DateOfReserving = (dateOfReserving == null) ? new DateTime(0001, 01, 01): dateOfReserving.Value;
         }
 
         public ReservedDates(ReservedDates reservedDate)
@@ -109,7 +112,7 @@ namespace booking.Model
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), StartDate.ToString("dd/MM/yyyy"), EndDate.ToString("dd/MM/yyyy"), AccommodationId.ToString(), NumOfGuests.ToString(), UserId.ToString(),
-            RatedByOwner.ToString().ToLower(), RatedByGuest.ToString().ToLower() };
+            RatedByOwner.ToString().ToLower(), RatedByGuest.ToString().ToLower(), DateOfReserving.ToString("dd/MM/yyyy") };
 
             return csvValues;
         }
@@ -124,6 +127,7 @@ namespace booking.Model
             UserId = Convert.ToInt32(values[5]);
             RatedByOwner = values[6] == "true" ? true : false;
             RatedByGuest = values[7] == "true" ? true : false;
+            DateOfReserving = DateTime.ParseExact(values[8], "dd/MM/yyyy", CultureInfo.InvariantCulture);
         }
     }
 }

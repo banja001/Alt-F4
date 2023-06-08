@@ -56,7 +56,7 @@ namespace booking.application.usecases
                 Accommodation accommodation = _accommodationRepository.GetById(date.AccommodationId);
                 Location location = _locationRepository.GetById(accommodation.LocationId);
 
-                reservationAccommodationDTOs.Add(new ReservationAccommodationDTO(accommodation, location, date));
+                reservationAccommodationDTOs.Add(new ReservationAccommodationDTO(accommodation, location, date, date.DateOfReserving));
             }
 
             return reservationAccommodationDTOs;
