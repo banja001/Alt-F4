@@ -202,7 +202,8 @@ namespace WPF.ViewModels.Owner
                 else
                 {
                     OwnerTypeTooltip = true;
-                    
+                    RateGuestsTooltip = false;
+                    DownloadPDFTooltip = false;
                 }
             }
         }
@@ -238,7 +239,8 @@ namespace WPF.ViewModels.Owner
                 else
                 {
                     DownloadPDFTooltip = true;
-                    
+                    OwnerTypeTooltip = false;
+                    RateGuestsTooltip = false;
                 }
             }
         }
@@ -273,8 +275,9 @@ namespace WPF.ViewModels.Owner
                 }
                 else
                 {
-                    
                     RateGuestsTooltip = true;
+                    OwnerTypeTooltip = false;
+                    DownloadPDFTooltip = false;
                 }
             }
         }
