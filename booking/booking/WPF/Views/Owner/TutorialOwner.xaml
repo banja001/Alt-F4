@@ -19,7 +19,7 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
-        <Image x:Name="imageControl" RenderOptions.BitmapScalingMode="HighQuality" Grid.ColumnSpan="2"/>
+        <Image x:Name="imageControl" RenderOptions.BitmapScalingMode="HighQuality" Grid.ColumnSpan="2" SnapsToDevicePixels="True" />
         
 
         <Button Name="nextButton" Grid.Column="1" Grid.Row="1" Content="Next" Click="NextClick"/>

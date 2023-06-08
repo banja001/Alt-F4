@@ -35,7 +35,8 @@ namespace WPF.Views.Owner
                  "../../../Resources/Icons/IconsOwner/SecondImage.png",
                  "../../../Resources/Icons/IconsOwner/ThirdImage.png",
                  "../../../Resources/Icons/IconsOwner/FourthImage.png",
-                 "../../../Resources/Icons/IconsOwner/FifthImage.png"
+                 "../../../Resources/Icons/IconsOwner/FifthImage.png",
+                 "../../../Resources/Icons/IconsOwner/StartImage - Copy.png"
             };
 
         }
@@ -58,12 +59,12 @@ namespace WPF.Views.Owner
 
         private void NextClick(object sender, RoutedEventArgs e)
         {
-            if (i != 5)
+            if (i != 6)
             {
                 SetImageSource(lista[i]);
                 i++;
             }
-            if(i==5)
+            if(i==6)
             {
                 nextButton.Content = "End tutorial";
                 nextButton.Click += EndTutorialClick;
