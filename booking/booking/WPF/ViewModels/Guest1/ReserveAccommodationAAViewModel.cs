@@ -52,6 +52,7 @@ namespace WPF.ViewModels.Guest1
             SelectedDate.Id = _reservedDatesService.MakeId();
             SelectedDate.NumOfGuests = numOfGuests;
             SelectedDate.UserId = userId;
+            SelectedDate.DateOfReserving = DateTime.Now;
         }
 
         private void CloseWindow()

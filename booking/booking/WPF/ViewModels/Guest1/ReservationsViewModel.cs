@@ -27,6 +27,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Document = iTextSharp.text.Document;
 using System.Windows.Markup;
+using WPF.Views.Guest1;
 
 namespace WPF.ViewModels.Guest1
 {
@@ -115,6 +116,8 @@ namespace WPF.ViewModels.Guest1
                 ReservationRequests request = new ReservationRequests(_reservationRequestsService.MakeId(), reservedDate, "Cancel");
                 _reservationRequestsService.Add(request);
                 */
+
+                reservedDate.DateOfReserving = DateTime.Now;
                 _reservationRequestsService.RemoveAllByReservationId(reservedDate.Id);
                 _reservedDatesService.AddCanceled(reservedDate); 
                 
@@ -167,37 +170,8 @@ namespace WPF.ViewModels.Guest1
 
         private void GenerateReport()
         {
-            Document document = new Document();
-
-            using (FileStream fileSteram = new FileStream("../../../Resources/Reports/guest1Report.pdf", FileMode.Create))
-            {
-                PdfWriter writer = PdfWriter.GetInstance(document, fileSteram);
-                document.Open();
-
-                string title = "DATA ON ...";
-                Paragraph paragraph = new Paragraph(title);
-                paragraph.Alignment = Element.ALIGN_CENTER;
-
-                Font boldFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 20);
-                Chunk boldChunk = new Chunk(title, boldFont);
-
-                document.Add(paragraph);
-
-                PdfPTable table = new PdfPTable(4);
-
-                foreach (var item in ReservationRequestsDTOs)
-                {
-                    table.AddCell(item.AccommodationName);
-                    table.AddCell(item.Location);
-                    table.AddCell(item.Request);
-                    table.AddCell(item.Status);
-                }
-                document.Add(table);
-
-                document.Close();
-            }
-
-            MessageBox.Show("Report successfully generated");
+            var generateReportWindow = new Guest1ReportView(user);
+            generateReportWindow.Show();
         }
     }
 }

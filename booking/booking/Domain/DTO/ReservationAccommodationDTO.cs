@@ -15,16 +15,18 @@ namespace booking.Domain.DTO
         public string Location { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public DateTime DateOfReserving { get; set; }
 
         public ReservationAccommodationDTO() { }
 
-        public ReservationAccommodationDTO(Accommodation accommodation, Location location, ReservedDates reservation)
+        public ReservationAccommodationDTO(Accommodation accommodation, Location location, ReservedDates reservation, DateTime dateOfReserving)
         {
             ReservationId = reservation.Id;
             AccommodationName = accommodation.Name;
             Location = location.State + "," + location.City;
             StartDate = reservation.StartDate;
             EndDate = reservation.EndDate;
+            DateOfReserving = dateOfReserving;
         }
 
         public ReservationAccommodationDTO(int reservationId, string accommodationName, string location, DateTime startDate, DateTime endDate)
@@ -43,6 +45,7 @@ namespace booking.Domain.DTO
             this.Location = reservationAccommodationDTO.Location;
             this.StartDate = reservationAccommodationDTO.StartDate;
             this.EndDate = reservationAccommodationDTO.EndDate;
+            this.DateOfReserving = reservationAccommodationDTO.DateOfReserving;
         }
 
         public override string ToString()

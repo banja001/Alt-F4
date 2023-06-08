@@ -157,6 +157,7 @@ namespace WPF.ViewModels.Guest1
             SelectedDates.Id = _reservedDatesService.MakeId();
             SelectedDates.NumOfGuests = GuestsNumber;
             SelectedDates.UserId = userId;
+            SelectedDates.DateOfReserving = DateTime.Now;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
