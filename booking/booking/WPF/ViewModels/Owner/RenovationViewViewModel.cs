@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 
 namespace WPF.ViewModels.Owner
@@ -90,6 +91,7 @@ namespace WPF.ViewModels.Owner
             ownerViewModel.renovationDatesService.Remove(ren);
             FutureRenovations.Remove(SelectedRenovation);
             SelectedRenovation = null;
+            MessageBox.Show("renovation canceled successfully!");
         }
 
 

@@ -110,6 +110,7 @@ namespace WPF.ViewModels.Owner
 
         private void AllowClick()
         {
+
             if (SelectedItem == null) return;
             ReservedDates reservation = ownerViewModel.reservedDates.Find(s => s.Id == SelectedItem.ReservationId);
             Accommodation accommodation = ownerViewModel.accommodations.Find(s => s.Id == reservation.AccommodationId);
@@ -125,6 +126,7 @@ namespace WPF.ViewModels.Owner
 
             UpdateObservable();
             AddGuest1Notification(reservationRequst);
+            MessageBox.Show("Reservation change is successful!");
         }
 
         private void DeleteUnwantedReservationsAndRequests(List<ReservedDates> reservedDatesForDeletion)
