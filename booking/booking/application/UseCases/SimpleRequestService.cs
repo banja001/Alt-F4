@@ -236,7 +236,7 @@ namespace application.UseCases
             List<SimpleAndComplexTourRequestsDTO> simpleRequests=new List<SimpleAndComplexTourRequestsDTO>();
             foreach(SimpleRequest simpleRequest in _simpleRequestRepository.GetAll())
             {
-                if (simpleRequest.Status == SimpleRequestStatus.ON_HOLD)
+                if (simpleRequest.Status == SimpleRequestStatus.ON_HOLD && simpleRequest.DateRange.StartDate>DateTime.Now.AddDays(2))
                 {
                     SimpleAndComplexTourRequestsDTO SaCTRDTO = new SimpleAndComplexTourRequestsDTO(simpleRequest);
                     SaCTRDTO.Location = _locationService.GetAll().Find(l => l.Id == SaCTRDTO.Location.Id);
@@ -301,6 +301,65 @@ namespace application.UseCases
                 months.Add(MonthNumberToString(s));
             }
             return months;
+        }
+        public Dictionary<string, int> GetYearsForChart(List<SimpleRequest> AllRequests)
+        {
+            List<string> allYears = GetAllYears();
+            Dictionary<string, int> yearRequestCountPairs = new Dictionary<string, int>();
+            foreach (var year in allYears)
+            {
+                int requestCount = AllRequests.Count(s => s.DateRange.StartDate.Date.Year.ToString() == year);
+                yearRequestCountPairs.Add(year, requestCount);
+            }
+            return yearRequestCountPairs;
+        }
+
+        public Dictionary<string, int> GetMonthsForChart(List<SimpleRequest> AllRequests, string selectedYear)
+        {
+            List<string> allMonths = GetAllMonthsForYear(selectedYear);
+            Dictionary<string, int> monthsRequestCountPairs = new Dictionary<string, int>();
+            foreach (var month in allMonths)
+            {
+                int requestCount = AllRequests.Count(s => MonthNumberToString(s.DateRange.StartDate.Date.Month.ToString())== month);
+                monthsRequestCountPairs.Add(month, requestCount);
+            }
+            return monthsRequestCountPairs;
+        }
+
+        public Dictionary<string, int> GetStatesForChart(List<SimpleRequest> AllRequests)
+        {
+            List<string> allStates = _locationService.InitializeListOfStates();
+            Dictionary<string, int> statesRequestCountPairs = new Dictionary<string, int>();
+            foreach (var state in allStates)
+            {
+                int requestCount = AllRequests.Count(s => s.Location.State == state);
+                statesRequestCountPairs.Add(state, requestCount);
+            }
+            return statesRequestCountPairs;
+        }
+
+        public Dictionary<string, int> GetCitiesForChart(List<SimpleRequest> AllRequests,string selectedState)
+        {
+            List<string> allCities = _locationService.FillListWithCities(selectedState);
+            Dictionary<string, int> citesRequestCountPairs = new Dictionary<string, int>();
+            foreach (var city in allCities)
+            {
+                int requestCount = AllRequests.Count(s => s.Location.City == city);
+                citesRequestCountPairs.Add(city, requestCount);
+            }
+            return citesRequestCountPairs;
+        }
+
+        public Dictionary<string, int> GetLanguagesForChart(List<SimpleRequest> AllRequests)
+        {
+            var languages= AllRequests.Select(s => s.Language).Distinct();
+            Dictionary<string, int> lanuagesRequestCountPairs = new Dictionary<string, int>();
+            foreach (var language in languages)
+            {
+                int requestCount = AllRequests.Count(s => s.Language == language);
+                lanuagesRequestCountPairs.Add(language, requestCount);
+            }
+            return lanuagesRequestCountPairs;
         }
 
         public List<SimpleAndComplexTourRequestsDTO> FilterState(List<SimpleAndComplexTourRequestsDTO> AllRequests, string SelectedState)

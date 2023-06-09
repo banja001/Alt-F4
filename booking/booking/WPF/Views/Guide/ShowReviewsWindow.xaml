@@ -7,12 +7,12 @@
         mc:Ignorable="d"
         Title="ShowReviewsWindow" Height="450" Width="800"
         WindowStartupLocation="CenterScreen">
-    <Grid Background="LightGray">
+    <Grid Background="#FEFFDE">
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid Name="AllCommentsDataGrid" ItemsSource="{Binding AllComments}" SelectedItem="{Binding SelectedComment}" Grid.Row="0" AutoGenerateColumns="False" IsReadOnly="True" Margin="40,40,40,40" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False" Width="720">
+        <DataGrid  Style="{StaticResource CustomDataGridStyle}" Name="AllCommentsDataGrid" ItemsSource="{Binding AllComments}" SelectedItem="{Binding SelectedComment}" Grid.Row="0" AutoGenerateColumns="False" IsReadOnly="True" Margin="10,40" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Tour name" Binding="{Binding TourName, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False" Width="*"/>
                 <DataGridTextColumn Header="Guest name" Binding="{Binding GuestName, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False"  Width="*"/>
@@ -27,8 +27,8 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Background="#ea8dfc" Grid.Column="0" Height="40" Width="150" FontSize="15" Command="{Binding ShowCommand}" >Show full comment</Button>
-            <Button Background="#ea8dfc" Grid.Column="1" Height="40" Width="150" FontSize="15" Command="{Binding ExitWindowCommand}">Cancel</Button>
+            <Button  Background="#AA96DA" Grid.Column="0" Height="40" Width="150" FontSize="15" Command="{Binding ShowCommand}" >Show full comment</Button>
+            <Button  Background="#AA96DA" Grid.Column="1" Height="40" Width="150" FontSize="15" Command="{Binding ExitWindowCommand}">Cancel</Button>
         </Grid>
         
     </Grid>

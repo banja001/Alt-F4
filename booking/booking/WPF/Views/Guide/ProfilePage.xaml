@@ -5,22 +5,26 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WPF.Views.Guide"
       mc:Ignorable="d" 
-      d:DesignHeight="650" d:DesignWidth="790"
+      d:DesignHeight="668" d:DesignWidth="787"
       Title="ProfilePage">
 
-    <Grid Background="#73fab4">
+    <Grid Background="#FEFFDE">
         <Grid.RowDefinitions>
-            <RowDefinition Height="3.5*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <Image Grid.Row="0" Source="/Resources/Icons/avatar.png" Width="350" VerticalAlignment="Top" Margin="20"></Image>
+        <Image Grid.Row="0" Source="/Resources/Icons/avatarZeleni.png" Width="350" VerticalAlignment="Top" Margin="20"></Image>
         <TextBlock Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Top"  FontSize="40">User name: 
             <Run Text="{Binding Guide.Username}" FontWeight="Bold"/>
             <LineBreak/>
             Super-guide:  <Run Text="{Binding Super}" FontWeight="Bold"/>
         </TextBlock>
-        <Button Background="#ea8dfc" Grid.Row="2" Width="150" Height="40" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="25" Margin="10"> Quit job</Button>
-        <Button Background="#ea8dfc" Grid.Row="2" Width="200" Height="50" HorizontalAlignment="Center" FontSize="35" Command="{Binding SignOutCommand}"> Sign out</Button>
+
+        <Button Background="#AA96DA" Grid.Row="2" Width="200" Height="50"  HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="35" Margin="40" Command="{Binding SignOutCommand}">Sign out</Button>
+
+        <Border Grid.Row="2" BorderThickness="10" VerticalAlignment="Bottom" HorizontalAlignment="Center" CornerRadius="10" BorderBrush="Red" Width="350" Height="120" Padding="5,5,5,5" Margin="20">
+            <Button Background="#AA96DA" Grid.Row="2" Width="200" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="35">Quit job</Button>
+        </Border>
     </Grid>
 </Page>

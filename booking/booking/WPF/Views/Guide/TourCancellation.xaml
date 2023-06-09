@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:booking.View.Guide"
         mc:Ignorable="d"
-        Title="TourCancellation" Height="650" Width="790">
-    <Grid Background="LightGray">
+        Title="TourCancellation">
+    <Grid Background="#FEFFDE">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.7*"/>
             <RowDefinition Height="4*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" FontSize="40" HorizontalAlignment="Center">Upcoming tours:</Label>
-        <DataGrid Grid.Row="1" Name="UpcomingTours" ItemsSource="{Binding UpcomingTours, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedTour}" AutoGenerateColumns="False" IsReadOnly="True" Margin="10" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False"  HorizontalAlignment="Center" Width="770">
+        <DataGrid Style="{StaticResource CustomDataGridStyle}" Grid.Row="1" Name="UpcomingTours" ItemsSource="{Binding UpcomingTours, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedTour}" AutoGenerateColumns="False" IsReadOnly="True" Margin="10" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False"  HorizontalAlignment="Center">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" CanUserResize="False"  Width="*"/>
                 <DataGridTextColumn Header="State" Binding="{Binding Location.State}" CanUserResize="False"  Width="*"/>
@@ -23,7 +23,7 @@
                 <DataGridTextColumn Header="Number of guests" Binding="{Binding MaxGuests}"  Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Background="#ea8dfc" Grid.Row="2" HorizontalAlignment="Center" Margin="30" Height="35" Width="150" FontSize="20" Command="{Binding AbandonTourCommand}">Abandon tour</Button>
-        <Button Background="#ea8dfc" Grid.Row="2" HorizontalAlignment="Right" Width="80" Height="30" FontSize="20" Margin="10">Demo</Button>
+        <Button Background="#AA96DA" Grid.Row="2" HorizontalAlignment="Center" Margin="30" Height="35" Width="150" FontSize="20" Command="{Binding AbandonTourCommand}">Abandon tour</Button>
+        <Button  Background="#AA96DA" Grid.Row="2" HorizontalAlignment="Right" Width="80" Height="30" FontSize="20" Margin="10">Demo</Button>
     </Grid>
 </Page>

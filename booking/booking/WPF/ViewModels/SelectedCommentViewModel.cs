@@ -9,19 +9,106 @@ using booking.Domain.Model;
 using booking.Model;
 using booking.Repositories;
 using booking.WPF.ViewModels;
+using System.ComponentModel;
 
 namespace WPF.ViewModels
 {
-    public class SelectedCommentViewModel: BaseViewModel
+    public class SelectedCommentViewModel: BaseViewModel,INotifyPropertyChanged
     {
         public User Guide { get; set; }
         private readonly GuideRatingRepository _guideRatingRepository;
         public TourRatingDTO Comment { get; set; }
+        private bool firstStar;
+
+        public bool FirstStar
+        {
+            get { return firstStar; }
+            set
+            {
+                if (firstStar != value)
+                {
+                    firstStar = value;
+                    OnPropertyChanged(nameof(FirstStar));
+                }
+            }
+        }
+
+        private bool secondStar;
+
+        public bool SecondStar
+        {
+            get { return secondStar; }
+            set
+            {
+                if (secondStar != value)
+                {
+                    secondStar = value;
+                    OnPropertyChanged(nameof(SecondStar));
+                }
+            }
+        }
+
+        private bool thirdStar;
+
+        public bool ThirdStar
+        {
+            get { return thirdStar; }
+            set
+            {
+                if (thirdStar != value)
+                {
+                    thirdStar = value;
+                    OnPropertyChanged(nameof(ThirdStar));
+                }
+            }
+        }
+
+        private bool fourthStar;
+
+        public bool FourthStar
+        {
+            get { return fourthStar; }
+            set
+            {
+                if (fourthStar != value)
+                {
+                    fourthStar = value;
+                    OnPropertyChanged(nameof(FourthStar));
+                }
+            }
+        }
+
+        private bool fifthStar;
+
+        public bool FifthStar
+        {
+            get { return fifthStar; }
+            set
+            {
+                if (fifthStar != value)
+                {
+                    fifthStar = value;
+                    OnPropertyChanged(nameof(FifthStar));
+                }
+            }
+        }
+
         public SelectedCommentViewModel(User guide, TourRatingDTO rating)
         {
             Guide = guide;
             Comment = rating;
             _guideRatingRepository= new GuideRatingRepository();
+            FifthStar = true;
+            ThirdStar = true;
+            FourthStar = true;
+            FirstStar = true;
+            SecondStar = true;
+            RatingStars();
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         public ICommand ReportCommand => new RelayCommand(ReportReview,CanReport);
         public ICommand ExitWindowCommand => new RelayCommand(ExitWindow);
@@ -51,6 +138,19 @@ namespace WPF.ViewModels
         private void ExitWindow()
         {
             this.CloseCurrentWindow();
+        }
+        private void RatingStars()
+        {
+            if(Comment.AverageRating<5)
+                FifthStar = false;
+            if (Comment.AverageRating < 4)
+                FourthStar = false;
+            if (Comment.AverageRating < 3)
+                ThirdStar = false;
+            if (Comment.AverageRating < 2)
+                SecondStar = false;
+            if (Comment.AverageRating < 1)
+                FirstStar = false;
         }
     }
 }

@@ -7,18 +7,18 @@
         mc:Ignorable="d"
         Title="GuideMainWindow" Height="768" Width="1024"
         WindowStartupLocation="CenterScreen"
-        Icon="/Resources/Icons/livetrack.png">
-    
+        Icon="/Resources/Icons/livetrack.png" ResizeMode="NoResize">
+        
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.1*"/>
+            <ColumnDefinition Width="1.2*"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Grid.ColumnSpan="2"  Background="#73fab4"></Border>
+        <Border Grid.Row="0" Grid.ColumnSpan="2"  Background="#C4FAD6"></Border>
         <TextBlock Grid.Column="0" Grid.Row="0" FontSize="34" VerticalAlignment="Center" FontWeight="Bold">Hi, 
             <Run Text="{Binding Guide.Username}" FontWeight="Bold"/>!
         </TextBlock>
@@ -39,42 +39,42 @@
                 
             </Grid.RowDefinitions>
 
-            <Button Grid.Row="0" HorizontalContentAlignment="Left" Background="LightGray" Command="{Binding AddTourCommand}">
+            <Button Grid.Row="0" HorizontalContentAlignment="Left" Background="{Binding AddTourButton}" Command="{Binding AddTourCommand}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/Icons/plus.png" Width="25" Height="25" Margin="5"/>
-                    <TextBlock Grid.Row="1" FontSize="24" VerticalAlignment="Center">Add tour</TextBlock>
+                    <TextBlock Grid.Row="1" FontSize="24" FontWeight="Bold" VerticalAlignment="Center">Add tour</TextBlock>
                 </StackPanel>
             </Button>
 
-            <Button Grid.Row="1" HorizontalContentAlignment="Left" Background="#73fab4" Command="{Binding LiveTrackCommand}">
+            <Button Grid.Row="1" HorizontalContentAlignment="Left" Background="{Binding LiveTrackButton}" Command="{Binding LiveTrackCommand}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/Icons/livetrack.png" Width="25" Height="25" Margin="5"/>
-                    <TextBlock Grid.Row="1" FontSize="24" VerticalAlignment="Center">Live-track</TextBlock>
+                    <TextBlock Grid.Row="1" FontSize="24" FontWeight="Bold"  VerticalAlignment="Center">Live-track</TextBlock>
                 </StackPanel>
             </Button>
 
-            <Button Grid.Row="2" Background="LightGray" Command="{Binding UpcomingToursCommand}" HorizontalContentAlignment="Left">
+            <Button Grid.Row="2"  Background="{Binding UpcomingButton}" Command="{Binding UpcomingToursCommand}" HorizontalContentAlignment="Left">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/Icons/upcoming.png" Width="25" Height="25" Margin="5"/>
-                    <TextBlock Grid.Row="2" FontSize="24" VerticalAlignment="Center">Upcoming tours</TextBlock>
+                    <TextBlock Grid.Row="2" FontSize="24" FontWeight="Bold"  VerticalAlignment="Center">Upcoming tours</TextBlock>
                 </StackPanel>
             </Button>
-            <Button Grid.Row="3" Background="#73fab4" Command="{Binding FinishedToursCommand}" HorizontalContentAlignment="Left">
+            <Button Grid.Row="3" Background="{Binding FinishedButton}" Command="{Binding FinishedToursCommand}" HorizontalContentAlignment="Left">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/Icons/finished.png" Width="25" Height="25" Margin="5"/>
-                    <TextBlock Grid.Row="3" FontSize="24" VerticalAlignment="Center">Finished tours</TextBlock>
+                    <TextBlock Grid.Row="3" FontSize="24" FontWeight="Bold"  VerticalAlignment="Center">Finished tours</TextBlock>
                 </StackPanel>
             </Button>
-            <Button Grid.Row="4" Background="LightGray" Command="{Binding TourRequestsCommand}" HorizontalContentAlignment="Left">
+            <Button Grid.Row="4"  Background="{Binding RequestButton}" Command="{Binding TourRequestsCommand}" HorizontalContentAlignment="Left">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/Icons/request.png" Width="25" Height="25" Margin="5"/>
-                    <TextBlock Grid.Row="4" FontSize="24" VerticalAlignment="Center">Tour requests</TextBlock>
+                    <TextBlock Grid.Row="4" FontSize="24" FontWeight="Bold"  VerticalAlignment="Center">Tour requests</TextBlock>
                 </StackPanel>
             </Button>
-            <Button Grid.Row="5" Background="#73fab4" Command="{Binding TourRequestsStatisticsCommand}" HorizontalContentAlignment="Left">
+            <Button Grid.Row="5"  Background="{Binding StatisticsButton}" Command="{Binding TourRequestsStatisticsCommand}" HorizontalContentAlignment="Left">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/Icons/statistics.png" Width="25" Height="25" Margin="5"/>
-                    <TextBlock Grid.Row="5" FontSize="24" VerticalAlignment="Center"> Tour requests<LineBreak/>statistics</TextBlock>
+                    <TextBlock Grid.Row="5" FontSize="24" FontWeight="Bold"  VerticalAlignment="Center"> Tour requests<LineBreak/>statistics</TextBlock>
                 </StackPanel>
             </Button>
         </Grid>

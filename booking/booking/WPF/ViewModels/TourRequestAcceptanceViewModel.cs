@@ -126,11 +126,15 @@ namespace WPF.ViewModels
       
         private void RejectSimpleTourRequest()
         {
-            SimpleRequest simpleRequest = _simpleRequestsService.GetById(SelectedTourRequest.SimpleRequestId);
-            simpleRequest.Status = SimpleRequestStatus.INVALID;
-            _simpleRequestsService.Update(simpleRequest);
+           
             if(MessageBox.Show("Are you sure you want to reject this tour?", "Warning", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning)==MessageBoxResult.Yes)
+            {
+                SimpleRequest simpleRequest = _simpleRequestsService.GetById(SelectedTourRequest.SimpleRequestId);
+                simpleRequest.Status = SimpleRequestStatus.INVALID;
+                _simpleRequestsService.Update(simpleRequest);
                 MessageBox.Show("Tour rejected!", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+                
             LoadRequests();
             OnPropertyChanged(nameof(AllRequests));
             

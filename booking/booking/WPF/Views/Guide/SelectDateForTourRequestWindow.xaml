@@ -7,13 +7,13 @@
         mc:Ignorable="d"
         Title="SelectDateForTourRequestWindow" Height="350" Width="250"
         WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Grid Background="#FEFFDE">
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <DatePicker Grid.Row="0" SelectedDate="{Binding SelectedDate, UpdateSourceTrigger=PropertyChanged}" DisplayDateEnd="{Binding DisplayDateEnd}" DisplayDateStart="{Binding DisplayDateStart, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" FontSize="20" HorizontalAlignment="Center" Width="180" Margin="0,30,0,0" IsDropDownOpen="True" FirstDayOfWeek="Monday"/>
-        <Button Grid.Row="1" Width="180" Height="40" Content="Create Tour" FontSize="25" Command="{Binding CreateTourCommand}"/>
+        <Button  Background="#AA96DA" Grid.Row="1" Width="180" Height="40" Content="Create Tour" FontSize="25" Command="{Binding CreateTourCommand}"/>
 
     </Grid>
 </Window>

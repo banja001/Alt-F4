@@ -19,6 +19,7 @@
     <None Remove="Resources\Icons\approved.png" />
     <None Remove="Resources\Icons\avatar.png" />
     <None Remove="Resources\Icons\avatarico.png" />
+    <None Remove="Resources\Icons\avatarZeleni.png" />
     <None Remove="Resources\Icons\finished.png" />
     <None Remove="Resources\Icons\home.png" />
     <None Remove="Resources\Icons\invalid.png" />
@@ -61,6 +62,7 @@
     <Resource Include="Resources\Icons\approved.png" />
     <Resource Include="Resources\Icons\avatar.png" />
     <Resource Include="Resources\Icons\avatarico.png" />
+    <Resource Include="Resources\Icons\avatarZeleni.png" />
     <Resource Include="Resources\Icons\finished.png" />
     <Resource Include="Resources\Icons\home.png" />
     <Resource Include="Resources\Icons\invalid.png" />

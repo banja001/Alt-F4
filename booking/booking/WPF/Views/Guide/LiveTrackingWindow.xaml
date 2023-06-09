@@ -3,10 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:booking.View.Guide"
+        xmlns:cvt="clr-namespace:booking.Converter"
         mc:Ignorable="d"
-        Title="LiveTrackingWindow"  Height="650" Width="790">
-    <Grid Background="#73fab4">
+        Title="LiveTrackingWindow" d:DesignHeight="668" d:DesignWidth="787">
+
+    <Grid Background="#FEFFDE">
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="3*"/>
@@ -22,7 +25,7 @@
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="40">Tours:</Label>
-            <DataGrid Name="ToursDG" ItemsSource="{Binding Tours}" Width="773"  SelectedItem="{Binding SelectedTour}" Grid.Row="1" Grid.ColumnSpan="2" AutoGenerateColumns="False" IsReadOnly="True" Margin="10"  CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
+            <DataGrid Style="{StaticResource CustomDataGridStyle}"  Name="ToursDG" ItemsSource="{Binding Tours}"  SelectedItem="{Binding SelectedTour}" Grid.Row="1" Grid.ColumnSpan="2" AutoGenerateColumns="False" IsReadOnly="True" Margin="10"  CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" CanUserResize="False" Width="*"/>
                     <DataGridTextColumn Header="Location" Binding="{Binding Location.CityState}" CanUserResize="False"  Width="*"/>
@@ -40,16 +43,32 @@
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="40">Check points:</Label>
+
             <ListBox Name="CheckPointsLB" ItemsSource="{Binding AppointmentCheckPoints}" Grid.Row="1" Grid.Column="0" Margin="10">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Padding" Value="5" />
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox Name="CheckPointCHB" IsChecked="{Binding Active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding NotChecked,UpdateSourceTrigger=PropertyChanged}" Command="{Binding CheckPointCommand }" />
-                            <TextBlock Text="{Binding Name}"/>
-                        </StackPanel>
+                        <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3" Margin="2">
+                            <StackPanel Orientation="Horizontal" Background="#C4FAD6">
+                                <CheckBox Name="CheckPointCHB" IsChecked="{Binding Active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding NotChecked, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Text="{Binding Name}" Margin="5,0,0,0"/>
+                            </StackPanel>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown" >
+                                    <i:InvokeCommandAction  Command="{Binding CheckPointCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>
@@ -57,7 +76,7 @@
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="40">Guests:</Label>
-            <DataGrid Name="GuestsDG" ItemsSource="{Binding GuestsOnTour}" Width="371.5" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="10"  CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
+            <DataGrid Style="{StaticResource CustomDataGridStyle}"  Name="GuestsDG" ItemsSource="{Binding GuestsOnTour}"  Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="10"  CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Guest.User.Username}" CanUserResize="False" Width="*"/>
                     <DataGridTextColumn Header="Number Of Guests" Binding="{Binding Guest.NumberOfGuests}" CanUserResize="False"  Width="*"/>
@@ -66,8 +85,8 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <Button Background="#ea8dfc" Content="Start tour" Name="StartTourB" HorizontalAlignment="Right"  VerticalAlignment="Center" Width="150" Height="35" Grid.Row="2" Margin="30,0" FontSize="20" Command="{Binding StartCommand}"/>
-        <Button Background="#ea8dfc" Content="End tour" Name="CancelTourB" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Height="35" Grid.Row="2" Grid.Column="1" Margin="30,0" FontSize="20" Command="{Binding CancelCommand}"/>
-        <Button Background="#ea8dfc" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Width="80" Height="30" FontSize="20" Margin="10">Demo</Button>
+        <Button Background="#AA96DA" Content="Start tour" Name="StartTourB" HorizontalAlignment="Right"  VerticalAlignment="Center" Width="150" Height="35" Grid.Row="2" Margin="30,0" FontSize="20" Command="{Binding StartCommand}"/>
+        <Button Background="#AA96DA" Content="End tour" Name="CancelTourB" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Height="35" Grid.Row="2" Grid.Column="1" Margin="30,0" FontSize="20" Command="{Binding CancelCommand}"/>
+        <Button Background="#AA96DA" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Width="80" Height="30" FontSize="20" Margin="10">Demo</Button>
     </Grid>
 </Page>
