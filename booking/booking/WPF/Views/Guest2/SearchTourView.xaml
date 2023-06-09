@@ -10,14 +10,6 @@
              xmlns:ns="clr-namespace:Localization"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Utilities/Themes/Guest2Themes.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
-    
     <Grid Margin="0, 0, 0, 0" Style="{DynamicResource LightBackground}">
         <Grid Margin="0,0,0,0">
             <Grid.RowDefinitions>

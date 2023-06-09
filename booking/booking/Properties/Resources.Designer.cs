@@ -187,6 +187,15 @@ namespace booking.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Promena teme.
+        /// </summary>
+        internal static string Change_theme {
+            get {
+                return ResourceManager.GetString("Change_theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Izaberi godinu.
         /// </summary>
         internal static string Choose_year {
@@ -273,6 +282,24 @@ namespace booking.Properties {
         internal static string Former_simple_requests {
             get {
                 return ResourceManager.GetString("Former_simple_requests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Od:.
+        /// </summary>
+        internal static string From_message {
+            get {
+                return ResourceManager.GetString("From_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generiši.
+        /// </summary>
+        internal static string Generate {
+            get {
+                return ResourceManager.GetString("Generate", resourceCulture);
             }
         }
         
@@ -457,6 +484,15 @@ namespace booking.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generiši izveštaj o posećenim turama.
+        /// </summary>
+        internal static string Report_message {
+            get {
+                return ResourceManager.GetString("Report_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zatraži.
         /// </summary>
         internal static string Request {
@@ -543,6 +579,15 @@ namespace booking.Properties {
         internal static string Time_estimation {
             get {
                 return ResourceManager.GetString("Time_estimation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do:.
+        /// </summary>
+        internal static string To_message {
+            get {
+                return ResourceManager.GetString("To_message", resourceCulture);
             }
         }
         

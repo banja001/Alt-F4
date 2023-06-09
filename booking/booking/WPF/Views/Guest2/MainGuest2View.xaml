@@ -12,9 +12,6 @@
        WindowStartupLocation="CenterScreen" Icon="/Resources/Icons/taskbarIcon.png">
     <Window.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Utilities/Themes/Guest2Themes.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
             <DataTemplate DataType="{x:Type viewmodels:MyToursViewModel}">
                 <views:MyToursView/>
             </DataTemplate>
@@ -29,8 +26,8 @@
             </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
-    <Border CornerRadius="10" BorderBrush="#E6E9F4" BorderThickness="4">
-        <Grid Background="#E6E9F4">
+    <Border CornerRadius="10" Style="{DynamicResource LightMainBorder}" BorderThickness="4">
+        <Grid Style="{DynamicResource LightBackground}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="5*"/>
@@ -39,18 +36,19 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="25*"/>
             </Grid.RowDefinitions>
-            <StackPanel Margin="10,10,10,10"  Orientation="Vertical" Grid.Column="0" Grid.RowSpan="2" Background="#7588c4">
+            <StackPanel Margin="10,10,10,10"  Orientation="Vertical" Grid.Column="0" Grid.RowSpan="2" Style="{DynamicResource LightNavigationPanel}">
                 <Button Command="{Binding NavigateWindowsCommand}" CommandParameter="Home" Margin="0,25,0,0" Style="{DynamicResource StackPanelButtonStyle}" Content="{ns:Loc Home}" local:ButtonProperties.ImageSource="/Resources/Icons/home.png"></Button>
                 <Button Command="{Binding NavigateWindowsCommand}" CommandParameter="MyTours" Style="{DynamicResource StackPanelButtonStyle}" Content="{ns:Loc My_tours}" local:ButtonProperties.ImageSource="/Resources/Icons/whiteTraveler.png"></Button>
                 <Button Command="{Binding NavigateWindowsCommand}" CommandParameter="MyRequests" Style="{DynamicResource StackPanelButtonStyle}" Content="{ns:Loc Requests}" local:ButtonProperties.ImageSource="/Resources/Icons/whiteRequest.png"></Button>
                 <Button Command="{Binding NavigateWindowsCommand}" CommandParameter="Statistics" Style="{DynamicResource StackPanelButtonStyle}" Content="{ns:Loc Statistics}" local:ButtonProperties.ImageSource="/Resources/Icons/whiteStatistics.png"></Button>
-                <Button Command="{Binding ChangeLanguageCommand}" Style="{DynamicResource StackPanelButtonStyle}" Content="{ns:Loc Change_lang}" local:ButtonProperties.ImageSource="/Resources/Icons/whiteLanguage.png"/>
 
-                <Button Margin="0,150,0,5" Command="{Binding LogOutButtonCommand}" Style="{DynamicResource StackPanelButtonStyle}" Content="{ns:Loc Log_out}" local:ButtonProperties.ImageSource="/Resources/Icons/whiteLogout.png"></Button>
+                <Button Margin="0,120,0,0" Command="{Binding ChangeLanguageCommand}" Style="{DynamicResource StackPanelButtonStyle}" Content="{ns:Loc Change_lang}" local:ButtonProperties.ImageSource="/Resources/Icons/whiteLanguage.png"/>
+                <Button  Command="{Binding ChangeThemeCommand}" Style="{DynamicResource StackPanelButtonStyle}" Content="{ns:Loc Change_theme}" local:ButtonProperties.ImageSource="/Resources/Icons/whitePalette.png"></Button>
+                <Button Margin="0,0,0,5" Command="{Binding LogOutButtonCommand}" Style="{DynamicResource StackPanelButtonStyle}" Content="{ns:Loc Log_out}" local:ButtonProperties.ImageSource="/Resources/Icons/whiteLogout.png"></Button>
             </StackPanel>
             <GroupBox Style="{DynamicResource LightGroupBox}" Margin="0,0,10,7" Header="{ns:Loc Header_welcome}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
                 <StackPanel Margin="10,10,10,10" Orientation="Vertical" >
-                    <ContentControl Content="{Binding UserControlInstance}" Height="605" Margin="15,0,15,0"></ContentControl>
+                    <ContentControl Content="{Binding UserControlInstance}" Height="605" Margin="0,0,0,0"></ContentControl>
                 </StackPanel>
             </GroupBox>
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Stretch">

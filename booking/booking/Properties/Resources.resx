@@ -159,6 +159,9 @@
   <data name="Change_lang" xml:space="preserve">
     <value>Engleski</value>
   </data>
+  <data name="Change_theme" xml:space="preserve">
+    <value>Promena teme</value>
+  </data>
   <data name="Choose_year" xml:space="preserve">
     <value>Izaberi godinu</value>
   </data>
@@ -188,6 +191,12 @@
   </data>
   <data name="Former_simple_requests" xml:space="preserve">
     <value>Prethodni zahtevi</value>
+  </data>
+  <data name="From_message" xml:space="preserve">
+    <value>Od:</value>
+  </data>
+  <data name="Generate" xml:space="preserve">
+    <value>Generiši</value>
   </data>
   <data name="guideId" xml:space="preserve">
     <value>Id vodiča</value>
@@ -249,6 +258,9 @@
   <data name="rejected_mess" xml:space="preserve">
     <value>tura je odbijeno</value>
   </data>
+  <data name="Report_message" xml:space="preserve">
+    <value>Generiši izveštaj o posećenim turama</value>
+  </data>
   <data name="Request" xml:space="preserve">
     <value>Zatraži</value>
   </data>
@@ -290,6 +302,9 @@
   </data>
   <data name="Tour_knowledge" xml:space="preserve">
     <value>Poznavanje ture:</value>
+  </data>
+  <data name="To_message" xml:space="preserve">
+    <value>Do:</value>
   </data>
   <data name="Vouchers" xml:space="preserve">
     <value>Vaučeri</value>

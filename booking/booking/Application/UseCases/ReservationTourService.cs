@@ -14,10 +14,12 @@ namespace application.UseCases
     {
         private readonly IReservationTourRepository _reservationTourRepository;
         private readonly IVoucherRepository _voucherRepository;
+        private readonly IAppointmentRepository _appointmentRepository;
         public ReservationTourService()
         {
             _reservationTourRepository = Injector.CreateInstance<IReservationTourRepository>();
-            _voucherRepository = Injector.CreateInstance<IVoucherRepository>(); ;
+            _voucherRepository = Injector.CreateInstance<IVoucherRepository>();
+            _appointmentRepository = Injector.CreateInstance<AppointmentRepository>();
         }
 
         public void GiveVouchers(Tour tour,User guide)
@@ -39,6 +41,10 @@ namespace application.UseCases
             {
                 _reservationTourRepository.Delete(reservationToursToDelete[i]);
             }
+        }
+        public List<ReservationTour> GetAllByGuest2(User guest2)
+        {
+            return _reservationTourRepository.GetAll().FindAll(r => r.User.Id == guest2.Id); 
         }
     }
 }

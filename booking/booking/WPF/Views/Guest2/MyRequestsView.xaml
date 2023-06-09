@@ -8,17 +8,10 @@
              mc:Ignorable="d" 
              xmlns:cvt="clr-namespace:booking.Converter" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Utilities/Themes/Guest2Themes.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid Style="{DynamicResource LightBackground}">
         <TabControl BorderThickness="0" Background="#E6E9F4" Margin="0,0,0,0">
             <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="Simple requests" MinWidth="100">
-                <Grid>
+                <Grid Style="{DynamicResource LightBackground}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"/>
                     </Grid.RowDefinitions>
@@ -71,7 +64,7 @@
                             <ItemsControl ItemsSource="{Binding Requests, Mode=TwoWay}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Border Height="80" HorizontalAlignment="Left" Width="380" Margin="8" BorderBrush="#7588c4" Background="White" BorderThickness="2" CornerRadius="3">
+                                        <Border Height="80" HorizontalAlignment="Left" Width="380" Margin="8" Background="{DynamicResource ItemsControlBackground}" Style="{DynamicResource LightBorder}" BorderThickness="2" CornerRadius="3">
                                             <Grid>
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="1*"></RowDefinition>
@@ -90,8 +83,8 @@
                                                          AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Id}"/>
                                                 </StackPanel>
 
-                                                <Label Style="{DynamicResource VoucherHeader}" Margin="5,0,5,0" Grid.Column="1" Content="{ns:Loc obtain_date}" Grid.Row="0"></Label>
-                                                <Label Style="{DynamicResource VoucherHeader}" Margin="5,0,5,0" Grid.Column="1" Content="{ns:Loc expiry_date}" Grid.Row="1"></Label>
+                                                <Label Style="{DynamicResource ItemsControlHeader}" Margin="5,0,5,0" Grid.Column="1" Content="{ns:Loc obtain_date}" Grid.Row="0"></Label>
+                                                <Label Style="{DynamicResource ItemsControlHeader}" Margin="5,0,5,0" Grid.Column="1" Content="{ns:Loc expiry_date}" Grid.Row="1"></Label>
                                                 <Label Style="{DynamicResource LightHeaderLabel}" FontWeight="Medium" Grid.Column="3" Grid.Row="0" Margin="5,0,0,0" Content="{Binding StartDate.Date, Mode=OneWay,Converter={cvt:DateTimeToDateOnlyConverter}}" Width="90"/>
                                                 <Label Style="{DynamicResource LightHeaderLabel}" FontWeight="Medium" Grid.Column="3" Grid.Row="1" Margin="5,0,0,0" Content="{Binding EndDate.Date, Mode=OneWay,Converter={cvt:DateTimeToDateOnlyConverter}}" Width="90"/>
                                                 

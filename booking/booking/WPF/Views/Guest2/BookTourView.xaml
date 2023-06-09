@@ -6,17 +6,10 @@
         xmlns:local="clr-namespace:WPF.Views.Guest2"
         xmlns:ns="clr-namespace:Localization"
         mc:Ignorable="d"
-        Title="Book a tour" Height="600" Width="450"
+        Title="Book a tour" Height="630" Width="450"
         AllowsTransparency="True" Background="Transparent" WindowStyle="None"
         WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Utilities/Themes/Guest2Themes.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-    <Border CornerRadius="10" BorderBrush="#E6E9F4" BorderThickness="4">
+    <Border CornerRadius="10" Style="{DynamicResource LightMainBorder}" BorderThickness="4">
         <Grid Style="{DynamicResource LightBackground}" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>

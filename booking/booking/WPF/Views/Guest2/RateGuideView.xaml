@@ -8,14 +8,7 @@
         mc:Ignorable="d"
         Title="Rate tour guide" Height="600" Width="600" AllowsTransparency="True" Background="Transparent" WindowStyle="None"
        WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Utilities/Themes/Guest2Themes.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-    <Border CornerRadius="10" BorderBrush="#E6E9F4" BorderThickness="4">
+    <Border CornerRadius="10" Style="{DynamicResource LightMainBorder}" BorderThickness="4">
         <Grid Style="{DynamicResource LightBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.5*"/>
@@ -37,7 +30,7 @@
                     <Label Style="{DynamicResource LightHeaderLabel}" Content="4" Margin="0,0,36,0"/>
                     <Label Style="{DynamicResource LightHeaderLabel}" Content="5" Margin="0,0,40,0"/>
                 </StackPanel>
-                <Button Command="{Binding ExitWindowCommand}" Content="X" Background="#E6E9F4" BorderBrush="#E6E9F4" Grid.Row="0" Grid.Column="0" Padding="8,8,8,8" Foreground="#424d6f" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                <Button Command="{Binding ExitWindowCommand}" Content="X" Background="Transparent" BorderBrush="Transparent" Grid.Row="0" Grid.Column="0" Padding="8,8,8,8" Foreground="#424d6f" HorizontalAlignment="Right" VerticalAlignment="Top"/>
             </StackPanel>
             <StackPanel x:Name="TourKnowledgePanel" Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <RadioButton Name="Knowledge1" Margin="10,0,40,0"/>
@@ -75,7 +68,7 @@
             <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Vertical">
                 <Label Grid.Row="5" Grid.Column="0" Style="{DynamicResource LightHeaderLabel}" Margin="15,15,0,0" Content="{ns:Loc Add_photo_optional}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <StackPanel Margin="0,3,0,0" Orientation="Horizontal" HorizontalAlignment="Stretch" Height="100">
-                    <Button Style="{DynamicResource LightButton}" FontSize="12" Padding="4" x:Name="swipeLeftButton" Height="32" Margin="15, 5, 10, 5" Content="&lt;&lt;" FontWeight="Bold" Command="{Binding SwipeLeftCommand}"/>
+                    <Button Style="{DynamicResource LightButton}" FontSize="12" Padding="4" x:Name="swipeLeftButton" Height="32" Margin="5, 5, 10, 5" Content="&lt;&lt;" FontWeight="Bold" Command="{Binding SwipeLeftCommand}"/>
                     <Border  Style="{DynamicResource LightBorder}">
                         <Image Stretch="UniformToFill" Source="{Binding ImageSource}" Height="100" Width="130" x:Name="PresentTourImage"/>
                     </Border>

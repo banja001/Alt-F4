@@ -7,14 +7,7 @@
         xmlns:ns="clr-namespace:Localization"
         mc:Ignorable="d"
         Title="More details" Height="350" Width="400" AllowsTransparency="True" Background="Transparent" WindowStyle="None" WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Utilities/Themes/Guest2Themes.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-    <Border CornerRadius="10" BorderBrush="#E6E9F4" BorderThickness="4">
+    <Border CornerRadius="10" Style="{DynamicResource LightMainBorder}" BorderThickness="4">
         <Grid Margin="0, 0, 0, 0" Style="{DynamicResource LightBackground}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>

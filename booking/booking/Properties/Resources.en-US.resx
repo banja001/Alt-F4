@@ -156,6 +156,9 @@
   <data name="Change_lang" xml:space="preserve">
     <value>Serbian</value>
   </data>
+  <data name="Change_theme" xml:space="preserve">
+    <value>Change theme</value>
+  </data>
   <data name="Choose_year" xml:space="preserve">
     <value>Choose year</value>
   </data>
@@ -185,6 +188,12 @@
   </data>
   <data name="Former_simple_requests" xml:space="preserve">
     <value>Former simple requests</value>
+  </data>
+  <data name="From_message" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="Generate" xml:space="preserve">
+    <value>Generate</value>
   </data>
   <data name="guideId" xml:space="preserve">
     <value>GuideId</value>
@@ -246,6 +255,9 @@
   <data name="rejected_mess" xml:space="preserve">
     <value>Of total tour requests were rejected.</value>
   </data>
+  <data name="Report_message" xml:space="preserve">
+    <value>Generate visited tours report</value>
+  </data>
   <data name="Request" xml:space="preserve">
     <value>Request</value>
   </data>
@@ -287,6 +299,9 @@
   </data>
   <data name="Tour_knowledge" xml:space="preserve">
     <value>Tour knowledge:</value>
+  </data>
+  <data name="To_message" xml:space="preserve">
+    <value>To</value>
   </data>
   <data name="Vouchers" xml:space="preserve">
     <value>Vouchers</value>

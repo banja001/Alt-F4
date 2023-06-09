@@ -42,6 +42,7 @@
     <None Remove="Resources\Icons\view_renovations.png" />
     <None Remove="Resources\Icons\whiteLanguage.png" />
     <None Remove="Resources\Icons\whiteLogout.png" />
+    <None Remove="Resources\Icons\whitePalette.png" />
     <None Remove="Resources\Icons\whiteRequest.png" />
     <None Remove="Resources\Icons\whiteStatistics.png" />
     <None Remove="Resources\Icons\whiteTraveler.png" />
@@ -84,6 +85,7 @@
     <Resource Include="Resources\Icons\view_renovations.png" />
     <Resource Include="Resources\Icons\whiteLanguage.png" />
     <Resource Include="Resources\Icons\whiteLogout.png" />
+    <Resource Include="Resources\Icons\whitePalette.png" />
     <Resource Include="Resources\Icons\whiteRequest.png" />
     <Resource Include="Resources\Icons\whiteStatistics.png" />
     <Resource Include="Resources\Icons\whiteTraveler.png" />
@@ -93,6 +95,7 @@
     <PackageReference Include="Expression.Interaction" Version="3.0.40218" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
     <PackageReference Include="FluentScheduler" Version="5.5.1" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
     <PackageReference Include="LiveCharts" Version="0.9.7" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.3" />

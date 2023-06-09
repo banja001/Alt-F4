@@ -5,79 +5,85 @@
              StartupUri="WPF/Views/SignInForm.xaml"
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls">
     <Application.Resources>
-        <Style TargetType="Line" x:Key="LineOwner">
-            <Setter Property="Stretch" Value="Fill"/>
-            <Setter Property="Stroke" Value="#E69138"/>
-            <Setter Property="Width" Value="370"/>
-            <Setter Property="StrokeThickness" Value="2"/>
-            <Setter Property="StrokeStartLineCap" Value="Triangle"/>
-            <Setter Property="StrokeEndLineCap" Value="Triangle"/>
-        </Style>
-        <Style TargetType="Button" x:Key="ButtonOwner">
-            <Setter Property="BorderBrush" Value="#447782"/>
-            <Setter Property="BorderThickness" Value="1.5"/>
-            <Setter Property="Background" Value="#447782"/>
-            <Setter Property="Width" Value="150"/>
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="BorderBrush" Value="black"/>
-            <Setter Property="Foreground" Value="Black"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Utilities/Themes/Guest2Themes.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
             
-        </Style>
-        <Style TargetType="Label" x:Key="LabelOwner">
-            <Setter Property="Foreground" Value="LightGray"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-        <Style TargetType="TextBox" x:Key="TextBoxOwner">
-            <Setter Property="BorderBrush" Value="#447782"/>
-            <Setter Property="BorderThickness" Value="1.5"/>
-            <Setter Property="Width" Value="120"/>
-            <Setter Property="Height" Value="20"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Validation.ErrorTemplate">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"/>
-                            <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="ComboBox" x:Key="ComboBoxOwner">
-            <Setter Property="BorderBrush" Value="#447782"/>
-            <Setter Property="BorderThickness" Value="1.5"/>
-            <Setter Property="Width" Value="120"/>
-            <Setter Property="Height" Value="20"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Validation.ErrorTemplate">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"/>
-                            <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+            <Style TargetType="Line" x:Key="LineOwner">
+                <Setter Property="Stretch" Value="Fill"/>
+                <Setter Property="Stroke" Value="#E69138"/>
+                <Setter Property="Width" Value="370"/>
+                <Setter Property="StrokeThickness" Value="2"/>
+                <Setter Property="StrokeStartLineCap" Value="Triangle"/>
+                <Setter Property="StrokeEndLineCap" Value="Triangle"/>
+            </Style>
+            <Style TargetType="Button" x:Key="ButtonOwner">
+                <Setter Property="BorderBrush" Value="#447782"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="Background" Value="#447782"/>
+                <Setter Property="Width" Value="150"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="BorderBrush" Value="black"/>
+                <Setter Property="Foreground" Value="Black"/>
+
+            </Style>
+            <Style TargetType="Label" x:Key="LabelOwner">
+                <Setter Property="Foreground" Value="LightGray"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+            <Style TargetType="TextBox" x:Key="TextBoxOwner">
+                <Setter Property="BorderBrush" Value="#447782"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="Width" Value="120"/>
+                <Setter Property="Height" Value="20"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Validation.ErrorTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"/>
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="ComboBox" x:Key="ComboBoxOwner">
+                <Setter Property="BorderBrush" Value="#447782"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="Width" Value="120"/>
+                <Setter Property="Height" Value="20"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Validation.ErrorTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"/>
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

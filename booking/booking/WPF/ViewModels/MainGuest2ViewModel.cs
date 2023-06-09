@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Utilities;
 using WPF.ViewModels;
 
 namespace booking.WPF.ViewModels
@@ -28,6 +29,7 @@ namespace booking.WPF.ViewModels
         public ICommand LogOutButtonCommand => new RelayCommand(LogOut);
         public ICommand NavigateWindowsCommand => new RelayCommandWithParams(NavigateWindows);
         public RelayCommand ChangeLanguageCommand => new RelayCommand(ChangeLanguage);
+        public RelayCommand ChangeThemeCommand => new RelayCommand(ChangeTheme);
         public BaseViewModel UserControlInstance { get; set; }
         public User User { get; set; }
         public String HeaderMessage { get; set; }
@@ -40,6 +42,13 @@ namespace booking.WPF.ViewModels
             OnPropertyChanged(nameof(UserControlInstance));
             HeaderMessage = " Welcome " + User.Username.ToString() + " ";
             OnPropertyChanged(nameof(HeaderMessage));
+        }
+        private void ChangeTheme()
+        {
+            if(ThemesController.CurrentTheme == ThemesController.ThemeTypes.Light)
+                ThemesController.SetTheme(ThemesController.ThemeTypes.Dark);
+            else
+                ThemesController.SetTheme(ThemesController.ThemeTypes.Light);
         }
         private void ChangeLanguage()
         {

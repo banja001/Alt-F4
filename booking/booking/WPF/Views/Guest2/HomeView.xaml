@@ -5,33 +5,53 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF.Views.Guest2"
              xmlns:ns="clr-namespace:Localization"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              xmlns:cvt="clr-namespace:booking.Converter" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Utilities/Themes/Guest2Themes.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid Style="{DynamicResource LightBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.3*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="2.0*"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1.2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
+        <StackPanel HorizontalAlignment="Stretch" Margin="25,0,0,0" Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+            <Label Style="{DynamicResource VoucherHeader}" Content="{ns:Loc Report_message}" FontSize="14"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <Label MinWidth="70" Margin="20,0,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc From_message}" FontSize="14"/>
+                <DatePicker Text="{Binding ReportFromDate}" FontSize="12" Margin="5,0,15,0" HorizontalAlignment="Right" Width="150" Height="25">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedDateChanged">
+                            <i:InvokeCommandAction Command="{Binding CheckGenerabilityCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </DatePicker>
+                <Button IsEnabled="{Binding ValidGeneration}" Command="{Binding GenerateReportCommand}" Content="{ns:Loc Generate}" Margin="50,0,0,0" Width="150" Height="35" Style="{DynamicResource LightButton}">
+                </Button>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Stretch" Margin="0,10,0,0" Orientation="Horizontal">
+                <Label MinWidth="70" Margin="20,0,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc To_message}" FontSize="14"/>
+                <DatePicker Text="{Binding ReportToDate}" FontSize="12" Margin="5,0,15,0" Width="150" Height="25">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedDateChanged">
+                            <i:InvokeCommandAction Command="{Binding CheckGenerabilityCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </DatePicker>
+            </StackPanel>
+        </StackPanel>
+
         <Label Style="{DynamicResource LightHeaderLabel}" Content="{ns:Loc Notifications}" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0"/>
         
         <StackPanel Orientation="Vertical" Margin="25,0,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <Label Style="{DynamicResource VoucherHeader}" Content="{ns:Loc Recently_approved_tours}" FontSize="14"/>
-            <ScrollViewer VerticalScrollBarVisibility="Disabled" VerticalAlignment="Top" HorizontalAlignment="Left" Height="120" HorizontalScrollBarVisibility="Visible" Width="850">
+            <ScrollViewer VerticalScrollBarVisibility="Disabled" VerticalAlignment="Top" HorizontalAlignment="Left" Height="120" HorizontalScrollBarVisibility="Auto" Width="750">
                 <ItemsControl ItemsSource="{Binding ApprovedNotifications, Mode=TwoWay}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -40,7 +60,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Width="Auto" Height="60" Margin="15,5,15,5" Background="White" Style="{DynamicResource LightBorder}" BorderThickness="2" CornerRadius="3">
+                            <Border Width="Auto" Height="70" Margin="15,0,15,5" Background="{DynamicResource ItemsControlBackground}" Style="{DynamicResource LightBorder}" BorderThickness="3" CornerRadius="4">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="1*"></RowDefinition>
@@ -54,8 +74,8 @@
 
                                     <Label  Style="{DynamicResource LightHeaderLabel}" FontSize="14" Margin="10,0,5,0" MinWidth="100" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding Tour.Name, Mode=OneWay}"></Label>
 
-                                    <Label FontSize="12" Style="{DynamicResource VoucherHeader}" Grid.Column="1" Grid.Row="0" Margin="0,0,0,0">Language:</Label>
-                                    <Label FontSize="12" Style="{DynamicResource VoucherHeader}" Grid.Column="1" Grid.Row="1" Margin="0,0,0,0">Location:</Label>
+                                    <Label FontSize="12" Style="{DynamicResource ItemsControlHeader}" Grid.Column="1" Grid.Row="0" Margin="0,0,0,0">Language:</Label>
+                                    <Label FontSize="12" Style="{DynamicResource ItemsControlHeader}" Grid.Column="1" Grid.Row="1" Margin="0,0,0,0">Location:</Label>
 
                                     <Label FontSize="12" Style="{DynamicResource LightHeaderLabel}" Grid.Column="2" Grid.Row="0" Content="{Binding Tour.Language, Mode=TwoWay}"/>
                                     <Label FontSize="12" Style="{DynamicResource LightHeaderLabel}" Grid.Column="2" Grid.Row="1" Content="{Binding Tour.Location, Converter={cvt:LocationConverter}}"/>
@@ -69,7 +89,7 @@
 
         <StackPanel Orientation="Vertical" Margin="25,0,0,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
             <Label Style="{DynamicResource VoucherHeader}" Content="{ns:Loc Tours_you_might_like}" FontSize="14"/>
-            <ScrollViewer VerticalScrollBarVisibility="Disabled" VerticalAlignment="Top" HorizontalAlignment="Left" Height="120" HorizontalScrollBarVisibility="Visible" Width="850">
+            <ScrollViewer VerticalScrollBarVisibility="Disabled" VerticalAlignment="Top" HorizontalAlignment="Left" Height="120" HorizontalScrollBarVisibility="Auto" Width="750">
                 <ItemsControl ItemsSource="{Binding SuggestionNotifications, Mode=TwoWay}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -78,7 +98,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Width="Auto" Height="60" Margin="15,5,15,5" Background="White" Style="{DynamicResource LightBorder}" BorderThickness="2" CornerRadius="3">
+                            <Border Width="Auto" Height="70" Margin="15,0,15,5" Background="{DynamicResource ItemsControlBackground}" Style="{DynamicResource LightBorder}" BorderThickness="3" CornerRadius="4">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="1*"></RowDefinition>
@@ -92,8 +112,8 @@
 
                                     <Label  Style="{DynamicResource LightHeaderLabel}" FontSize="14" Margin="10,0,5,0" MinWidth="100" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding Tour.Name, Mode=OneWay}"></Label>
 
-                                    <Label FontSize="12" Style="{DynamicResource VoucherHeader}" Grid.Column="1" Grid.Row="0" Margin="0,0,0,0">Language:</Label>
-                                    <Label FontSize="12" Style="{DynamicResource VoucherHeader}" Grid.Column="1" Grid.Row="1" Margin="0,0,0,0">Location:</Label>
+                                    <Label FontSize="12" Style="{DynamicResource ItemsControlHeader}" Grid.Column="1" Grid.Row="0" Margin="0,0,0,0">Language:</Label>
+                                    <Label FontSize="12" Style="{DynamicResource ItemsControlHeader}" Grid.Column="1" Grid.Row="1" Margin="0,0,0,0">Location:</Label>
 
                                     <Label FontSize="12" Style="{DynamicResource LightHeaderLabel}" Grid.Column="2" Grid.Row="0" Content="{Binding Tour.Language, Mode=TwoWay}"/>
                                     <Label FontSize="12" Style="{DynamicResource LightHeaderLabel}" Grid.Column="2" Grid.Row="1" Content="{Binding Tour.Location, Converter={cvt:LocationConverter}}"/>
