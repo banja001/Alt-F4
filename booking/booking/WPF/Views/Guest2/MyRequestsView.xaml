@@ -97,6 +97,8 @@
                     </Grid>
                 </Grid>
             </TabItem>
+            <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="Complex requests" MinWidth="100">
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>
