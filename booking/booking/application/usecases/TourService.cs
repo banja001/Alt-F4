@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using booking.Model;
 using Domain.RepositoryInterfaces;
+using application.UseCases;
 
 namespace booking.application.UseCases
 {
@@ -14,9 +15,11 @@ namespace booking.application.UseCases
     {
         private readonly ITourRepository _tourRepository;
         private readonly LocationRepository _locationRepository;
+        private readonly ReservationTourService _reservationTourService;
         public TourService()
         {
             _tourRepository = Injector.Injector.CreateInstance<ITourRepository>();
+            _reservationTourService = new ReservationTourService();
             _locationRepository = new LocationRepository();
         }
 
@@ -28,6 +31,18 @@ namespace booking.application.UseCases
         public void DeleteTour(Tour tour)
         {
             _tourRepository.Delete(tour);
+        }
+        public List<Tour> GetVisitedToursByInterval(DateTime fromDate,  DateTime toDate, User guest2)
+        {
+            List<Tour> visitedTours = _reservationTourService.GetVisitedToursByGuest2(guest2);
+            List<Tour> retTours = new List<Tour>();
+            foreach (var tour in visitedTours) 
+            {
+                var startDate = tour.StartTime.Date.Date;
+                if (startDate >= fromDate.Date && startDate.AddHours(tour.Duration).Date <= toDate.Date)
+                    retTours.Add(tour);
+            }
+            return retTours;
         }
 
         public ObservableCollection<Tour> FindUpcomingTours()

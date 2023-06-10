@@ -4,18 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.Views.Guest2"
+        xmlns:ns="clr-namespace:Localization"
         mc:Ignorable="d"
-        Title="Book a tour" Height="600" Width="450"
+        Title="Book a tour" Height="630" Width="450"
         AllowsTransparency="True" Background="Transparent" WindowStyle="None"
         WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Utilities/Themes/Guest2Themes.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-    <Border CornerRadius="10" BorderBrush="#E6E9F4" BorderThickness="4">
+    <Border CornerRadius="10" Style="{DynamicResource LightMainBorder}" BorderThickness="4">
         <Grid Style="{DynamicResource LightBackground}" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
@@ -25,7 +19,7 @@
                 <RowDefinition Height ="10*"/>
                 <RowDefinition Height ="1*"/>
             </Grid.RowDefinitions>
-            <GroupBox Style="{DynamicResource LightGroupBox}" Grid.Row="0" Header="Book a tour" Grid.Column="0" Grid.ColumnSpan="2" Margin="20, 20">
+            <GroupBox Style="{DynamicResource LightGroupBox}" Grid.Row="0" Header="{ns:Loc Book_a_tour_header}" Grid.Column="0" Grid.ColumnSpan="2" Margin="20, 20">
                 <Grid Margin="0,0,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.1*"/>
@@ -43,30 +37,30 @@
                         <RowDefinition Height ="1*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                    <Label Content="Name:" Grid.Column="0" Grid.Row="0" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20 ,0"/>
+                    <Label Content="{ns:Loc name}" Grid.Column="0" Grid.Row="0" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20 ,0"/>
                     <TextBox IsEnabled="False" Text="{Binding Path=TourForBooking.Name, Mode=OneWay}" Grid.Column="1" Grid.Row="0" IsReadOnly="True" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
-                    <Label Content="Description:" Grid.Column="0" Grid.Row="6" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20 ,0"/>
+                    <Label Content="{ns:Loc Description}" Grid.Column="0" Grid.Row="6" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20 ,0"/>
                     <TextBlock Foreground="Gray" Text="{Binding TourForBooking.Description, Mode=OneWay}" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="6" IsEnabled="False" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
-                    <Label Content="Start Time:" Grid.Column="0" Grid.Row="2" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20 ,0"/>
+                    <Label Content="{ns:Loc start_time}" Grid.Column="0" Grid.Row="2" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20 ,0"/>
                     <TextBox IsEnabled="False" Text="{Binding TourForBooking.StartTime, Mode=OneWay}" Grid.Column="1" Grid.Row="2" IsReadOnly="True" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
-                    <Label Content="Duration(h):" Grid.Column="0" Grid.Row="3" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20 ,0"/>
+                    <Label Content="{ns:Loc duration}" Grid.Column="0" Grid.Row="3" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20 ,0"/>
                     <TextBox IsEnabled="False" Text="{Binding TourForBooking.Duration, Mode=OneWay}" Grid.Column="1" Grid.Row="3" IsReadOnly="True" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
-                    <Label Content="Location:" Grid.Column="0" Grid.Row="4" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20 ,0"/>
+                    <Label Content="{ns:Loc location}" Grid.Column="0" Grid.Row="4" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20 ,0"/>
                     <TextBox IsEnabled="False" Text="{Binding TourForBooking.Location, Mode=OneWay}" Grid.Column="1" Grid.Row="4" IsReadOnly="True" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
-                    <Label Content="Language:" Grid.Column="0" Grid.Row="5" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20 ,0"/>
+                    <Label Content="{ns:Loc language}" Grid.Column="0" Grid.Row="5" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20 ,0"/>
                     <TextBox IsEnabled="False" Text="{Binding TourForBooking.Language, Mode=OneWay}" Grid.Column="1" Grid.Row="5" IsReadOnly="True" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
-                    <Label Content="Available space:" Grid.Column="0" Grid.Row="1" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20 ,0"/>
+                    <Label Content="{ns:Loc Available_space}" Grid.Column="0" Grid.Row="1" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20 ,0"/>
                     <TextBox IsEnabled="False" Text="{Binding AvailableSpace, Mode=TwoWay}" Grid.Column="1" Grid.Row="1" IsReadOnly="False" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
-                    <Label Content="Number of guests:" Grid.Column="0" Grid.Row="7" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20, 0"/>
+                    <Label Content="{ns:Loc Number_of_guests}" Grid.Column="0" Grid.Row="7" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20, 0"/>
                     <TextBox x:Name="GuestNumberInput" Text="{Binding NumberOfGuests, Mode=TwoWay}" Grid.Column="1" Grid.Row="7" IsReadOnly="False" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
-                    <Label Content="Average guest age:" Grid.Column="0" Grid.Row="8" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20, 0"/>
+                    <Label Content="{ns:Loc Avg_guest_age}" Grid.Column="0" Grid.Row="8" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20, 0"/>
                     <TextBox x:Name="AverageGuestAgeInput" Text="{Binding AverageGuestAge, Mode=TwoWay}" Grid.Column="1" Grid.Row="8" IsReadOnly="False" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
-                    <Label Content="Select voucher:" Grid.Column="0" Grid.Row="9" Style="{DynamicResource LightHeaderLabel}" Margin="30, 0, 20, 0"/>
+                    <Label Content="{ns:Loc Select_voucher}" Grid.Column="0" Grid.Row="9" Style="{DynamicResource LightHeaderLabel}" Margin="30, 0, 20, 0"/>
                     <ComboBox Grid.Row="9" ItemsSource="{Binding VouchersComboBoxSource, Mode=TwoWay}" Margin="30, 5, 20 ,20" Grid.Column="1" x:Name="VouchersComboBox" SelectedItem="{Binding SelectedVoucher}" FontSize="12"/>
                 </Grid>
             </GroupBox>
-            <Button Command="{Binding ConfirmBookingCommand}" Style="{DynamicResource LightButton}" x:Name="ConfirmBookingButton" Grid.Row="1" Grid.Column="0" Content="Confirm" Margin="60, 0, 40, 20"/>
-            <Button Command="{Binding CloseWindowCommand}" Grid.Row="1" Grid.Column="1" Style="{DynamicResource LightClearButton}" x:Name="CancelBookingButton" Content="Cancel" Margin="40, 0, 60, 20"/>
+            <Button Command="{Binding ConfirmBookingCommand}" Style="{DynamicResource LightButton}" x:Name="ConfirmBookingButton" Grid.Row="1" Grid.Column="0" Content="{ns:Loc Confirm}" Margin="60, 0, 40, 20"/>
+            <Button Command="{Binding CloseWindowCommand}" Grid.Row="1" Grid.Column="1" Style="{DynamicResource LightClearButton}" x:Name="CancelBookingButton" Content="{ns:Loc Cancel}" Margin="40, 0, 60, 20"/>
 
         </Grid>
     </Border>

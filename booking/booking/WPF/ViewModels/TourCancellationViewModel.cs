@@ -18,6 +18,7 @@ namespace WPF.ViewModels
 {
     public class TourCancellationViewModel:BaseViewModel,INotifyPropertyChanged
     {
+        public RelayCommand AbandonTourCommand => new RelayCommand(AbandonTour, CanAbandon);
         public ObservableCollection<Tour> UpcomingTours { get; set; }
         private Tour selectedTour;
         public Tour SelectedTour
@@ -58,7 +59,7 @@ namespace WPF.ViewModels
             //SelectedTour = new Tour();
             Guide = guide;
         }
-        public ICommand AbandonTourCommand => new RelayCommand(AbandonTour,CanAbandon);
+        
         public ICommand ExitCommand => new RelayCommand(ExitWindow);
 
         public ICommand TooltipToursCommand => new RelayCommand(ToolTipTourShow);

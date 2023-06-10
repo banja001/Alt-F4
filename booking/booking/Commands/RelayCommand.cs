@@ -33,7 +33,6 @@ namespace booking.Commands
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
-
         public bool CanExecute(object parameter)
         {
             return _canExecute == null ? true : _canExecute();
@@ -42,6 +41,11 @@ namespace booking.Commands
         public void Execute(object parameter)
         {
             _execute();
+        }
+
+        public void RaiseCanExecuteChanged()
+        {
+            _canExecute();
         }
     }
 }

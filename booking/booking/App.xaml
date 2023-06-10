@@ -121,7 +121,6 @@
                 <Setter Property="RowHeaderStyle" Value="{StaticResource DataGridRowHeaderStyle}" />
                 <Setter Property="CellStyle" Value="{StaticResource DataGridCellBorderStyle}" />
             </Style>
-            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
