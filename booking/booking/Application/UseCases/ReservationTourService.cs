@@ -43,6 +43,10 @@ namespace application.UseCases
                 _reservationTourRepository.Delete(reservationToursToDelete[i]);
             }
         }
+        public List<ReservationTour> GetByUserId(int id)
+        {
+            return _reservationTourRepository.GetByUserId(id);
+        }
         public List<ReservationTour> GetAllByGuest2(User guest2)
         {
             return _reservationTourRepository.GetAll().FindAll(r => r.User.Id == guest2.Id); 
