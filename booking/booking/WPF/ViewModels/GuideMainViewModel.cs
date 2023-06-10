@@ -77,6 +77,17 @@ namespace WPF.ViewModels
             }
         }
 
+        private Brush profileButton;
+        public Brush ProfileButton
+        {
+            get { return profileButton; }
+            set
+            {
+                profileButton = value;
+                OnPropertyChanged(nameof(ProfileButton));
+            }
+        }
+
         public Brush ClickedButton{ get; set; }
         public Brush DefaultButton { get; set; }
         public User Guide { get; set; }
@@ -109,6 +120,7 @@ namespace WPF.ViewModels
             FinishedButton = DefaultButton;
             RequestButton = DefaultButton;
             StatisticsButton = DefaultButton;
+            ProfileButton = ClickedButton;
         }
 
         private void AddTourWindowOpen()
@@ -120,6 +132,7 @@ namespace WPF.ViewModels
             FinishedButton = DefaultButton;
             RequestButton = DefaultButton;
             StatisticsButton = DefaultButton;
+            ProfileButton = DefaultButton;
         }
         private void LiveTrackingWindowOpen()
         {
@@ -130,6 +143,7 @@ namespace WPF.ViewModels
             FinishedButton = DefaultButton;
             RequestButton = DefaultButton;
             StatisticsButton = DefaultButton;
+            ProfileButton = DefaultButton;
         }
         private void FinishedToursWindowOpen()
         {
@@ -140,6 +154,7 @@ namespace WPF.ViewModels
             FinishedButton = ClickedButton ;
             RequestButton = DefaultButton;
             StatisticsButton = DefaultButton;
+            ProfileButton = DefaultButton;
         }
         private void TourCancellationOpen()
         {
@@ -150,6 +165,7 @@ namespace WPF.ViewModels
             FinishedButton = DefaultButton;
             RequestButton = DefaultButton;
             StatisticsButton = DefaultButton;
+            ProfileButton = DefaultButton;
         }
         private void ProfilePageOpen()
         {
@@ -160,6 +176,7 @@ namespace WPF.ViewModels
             FinishedButton = DefaultButton;
             RequestButton = DefaultButton;
             StatisticsButton = DefaultButton;
+            ProfileButton = ClickedButton;
         }
 
         private void TourRequestsOpen()
@@ -171,6 +188,7 @@ namespace WPF.ViewModels
             FinishedButton = DefaultButton;
             RequestButton = ClickedButton;
             StatisticsButton = DefaultButton;
+            ProfileButton = DefaultButton;
         }
 
         private void TourRequestsStatisticsOpen()
@@ -182,6 +200,7 @@ namespace WPF.ViewModels
             FinishedButton = DefaultButton;
             RequestButton = DefaultButton;
             StatisticsButton = ClickedButton;
+            ProfileButton = DefaultButton;
         }
     }
 }

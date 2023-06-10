@@ -46,71 +46,71 @@
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Height="50" HorizontalAlignment="Left" >
             <Label FontSize="20">Tour name:</Label>
-            <Label FontSize="20" Content="{Binding Comment.TourName}" ></Label>
+            <Label FontSize="20" Content="{Binding Comment.TourName}"  FontWeight="Bold" ></Label>
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" Height="50" HorizontalAlignment="Left" >
             <Label FontSize="20">Check point where he/she joined:</Label>
-            <Label FontSize="20" Content="{Binding Comment.CheckPoint}" ></Label>
+            <Label FontSize="20" Content="{Binding Comment.CheckPoint}"  FontWeight="Bold" ></Label>
         </StackPanel>
         <StackPanel Grid.Row="3" Orientation="Horizontal" Height="50" HorizontalAlignment="Left" >
             <Label FontSize="20">Rating:</Label>
 
-            <Button Width="48" Height="48" Visibility="{Binding FirstStar, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Button Width="48" Height="48">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
                             <Path Data="M 24,0 L 29.28125,13.09375 L 41.625,15.28125 L 32.5625,23.78125 L 34.1875,36.21875 L 24,30.78125 L 13.8125,36.21875 L 15.4375,23.78125 L 6.375,15.28125 L 18.71875,13.09375 Z"
-                      Fill="Gold" Stroke="Black" StrokeThickness="2"/>
+                      Fill="{Binding FirstStarColor}" Stroke="Black" StrokeThickness="2"/>
                         </Grid>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-            <Button Width="48" Height="48" Visibility="{Binding SecondStar, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Button Width="48" Height="48">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
                             <Path Data="M 24,0 L 29.28125,13.09375 L 41.625,15.28125 L 32.5625,23.78125 L 34.1875,36.21875 L 24,30.78125 L 13.8125,36.21875 L 15.4375,23.78125 L 6.375,15.28125 L 18.71875,13.09375 Z"
-                      Fill="Gold" Stroke="Black" StrokeThickness="2"/>
+                      Fill="{Binding SecondStarColor}" Stroke="Black" StrokeThickness="2"/>
                         </Grid>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-            <Button Width="48" Height="48" Visibility="{Binding ThirdStar, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Button Width="48" Height="48">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
                             <Path Data="M 24,0 L 29.28125,13.09375 L 41.625,15.28125 L 32.5625,23.78125 L 34.1875,36.21875 L 24,30.78125 L 13.8125,36.21875 L 15.4375,23.78125 L 6.375,15.28125 L 18.71875,13.09375 Z"
-                      Fill="Gold" Stroke="Black" StrokeThickness="2"/>
+                      Fill="{Binding ThirdStarColor}" Stroke="Black" StrokeThickness="2"/>
                         </Grid>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-            <Button Width="48" Height="48" Visibility="{Binding FourthStar, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Button Width="48" Height="48">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
                             <Path Data="M 24,0 L 29.28125,13.09375 L 41.625,15.28125 L 32.5625,23.78125 L 34.1875,36.21875 L 24,30.78125 L 13.8125,36.21875 L 15.4375,23.78125 L 6.375,15.28125 L 18.71875,13.09375 Z"
-                      Fill="Gold" Stroke="Black" StrokeThickness="2"/>
+                      Fill="{Binding FourthStarColor}" Stroke="Black" StrokeThickness="2"/>
                         </Grid>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-            <Button Width="48" Height="48" Visibility="{Binding FifthStar, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Button Width="48" Height="48">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
                             <Path Data="M 24,0 L 29.28125,13.09375 L 41.625,15.28125 L 32.5625,23.78125 L 34.1875,36.21875 L 24,30.78125 L 13.8125,36.21875 L 15.4375,23.78125 L 6.375,15.28125 L 18.71875,13.09375 Z"
-                      Fill="Gold" Stroke="Black" StrokeThickness="2"/>
+                      Fill="{Binding FifthStarColor}" Stroke="Black" StrokeThickness="2"/>
                         </Grid>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
 
         </StackPanel>
-        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,10,0">
             <Label FontSize="20">Full comment:</Label>
-            <Border  BorderThickness="2" BorderBrush="Black" Width="350" Padding="5,5,5,5">
-                <TextBlock TextWrapping="Wrap" FontSize="20" Text="{Binding Comment.Rating.Comment}" Padding="5,5,5,5" />
+            <Border  BorderThickness="2" BorderBrush="Black" Width="330" Padding="5,5,5,5">
+                <TextBlock TextWrapping="Wrap" FontSize="20" Text="{Binding Comment.Rating.Comment}"  Margin="0,0,10,0" FontWeight="Bold" Padding="5,5,5,5" />
             </Border>
         </StackPanel>
         <Grid Grid.Row="5">

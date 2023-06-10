@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:booking.View.Guide"
-        xmlns:cvt="clr-namespace:booking.Converter"
+        xmlns:conv="clr-namespace:booking.Converter"
         mc:Ignorable="d"
         Title="LiveTrackingWindow" d:DesignHeight="668" d:DesignWidth="787">
-
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Page.Resources>
     <Grid Background="#FEFFDE">
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
@@ -24,8 +26,19 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="40">Tours:</Label>
-            <DataGrid Style="{StaticResource CustomDataGridStyle}"  Name="ToursDG" ItemsSource="{Binding Tours}"  SelectedItem="{Binding SelectedTour}" Grid.Row="1" Grid.ColumnSpan="2" AutoGenerateColumns="False" IsReadOnly="True" Margin="10"  CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                <Label  FontSize="40">Tours:</Label>
+                <Button VerticalAlignment="Top" Height="20" Width="20" Margin="5" Command="{Binding TooltipTourCommand}">
+                    <Button.Background>
+                        <SolidColorBrush Color="#AA96DA"></SolidColorBrush>
+                    </Button.Background>
+                    <Button.Content>
+                        <Image Source="/Resources/Icons/tooltip.png"/>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+
+            <DataGrid Style="{StaticResource CustomDataGridStyle}"  x:Name="ToursDG" ItemsSource="{Binding Tours}"  SelectedItem="{Binding SelectedTour}" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="10,10,10,10"  CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" CanUserResize="False" Width="*"/>
                     <DataGridTextColumn Header="Location" Binding="{Binding Location.CityState}" CanUserResize="False"  Width="*"/>
@@ -35,14 +48,39 @@
                     <DataGridTextColumn Header="Language" Binding="{Binding Language}"  Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
+
+            <Grid Grid.RowSpan="2" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="150,15" Width="200" Height="150" Visibility="{Binding ToursTooltip, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Canvas Grid.Column="0" Margin="0,10,0,0">
+                    <Path Fill="#F6E3C9" Stroke="Black" StrokeThickness="2"
+              Data="M0,10 L10,0 10,20 Z" HorizontalAlignment="Center" Canvas.Top="5.2" VerticalAlignment="Center" Canvas.Left="8.75"/>
+                </Canvas>
+
+                <Border Grid.Column="1" Width="200" Height="100" CornerRadius="10" Background="#FEFFDE" BorderBrush="Black" BorderThickness="2"/>
+
+                <TextBlock Width="180" Height="80" Grid.Column="1" TextWrapping="Wrap" Text="This table representing all tours that you have today. By selecting a tour and clicking the button &quot;Start tour&quot;, you can start the tour." HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Margin="10"/>
+            </Grid>
+
         </Grid>
-        
+
+
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="40">Check points:</Label>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label  Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="40">Check points:</Label>
+                <Button VerticalAlignment="Top" Height="20" Width="20" Margin="5" Command="{Binding TooltipCHPCommand}">
+                    <Button.Background>
+                        <SolidColorBrush Color="#AA96DA"></SolidColorBrush>
+                    </Button.Background>
+                    <Button.Content>
+                        <Image Source="/Resources/Icons/tooltip.png"/>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+
+
 
             <ListBox Name="CheckPointsLB" ItemsSource="{Binding AppointmentCheckPoints}" Grid.Row="1" Grid.Column="0" Margin="10">
                 <ListBox.ItemContainerStyle>
@@ -70,12 +108,24 @@
             </ListBox>
 
         </Grid>
+
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="40">Guests:</Label>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="40">Guests:</Label>
+                <Button VerticalAlignment="Top" Height="20" Width="20" Margin="5" Command="{Binding TooltipGuestsCommand}">
+                    <Button.Background>
+                        <SolidColorBrush Color="#AA96DA"></SolidColorBrush>
+                    </Button.Background>
+                    <Button.Content>
+                        <Image Source="/Resources/Icons/tooltip.png"/>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+
             <DataGrid Style="{StaticResource CustomDataGridStyle}"  Name="GuestsDG" ItemsSource="{Binding GuestsOnTour}"  Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="10"  CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Guest.User.Username}" CanUserResize="False" Width="*"/>
@@ -85,6 +135,33 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
+
+        <Grid Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left"  Width="200" Height="150" Visibility="{Binding CheckPointsTooltip, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="306,16,0,0" Grid.Row="1">
+
+            <Canvas  Margin="0,10,0,0" Grid.ColumnSpan="3">
+                <Path Fill="#F6E3C9" Stroke="Black" StrokeThickness="2"
+              Data="M0,10 L10,0 10,20 Z" HorizontalAlignment="Center" Canvas.Top="5.2" VerticalAlignment="Center" Canvas.Left="8.75"/>
+            </Canvas>
+
+            <Border  Width="200" Height="100" CornerRadius="10" Background="#FEFFDE" BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="3" Margin="0,25,0,25"/>
+
+            <TextBlock  TextWrapping="Wrap" Width="180" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Left" Text="This listbox shows you all check points in started tour. By clicking on check point you confirmed that tour has been on that check point." FontWeight="Bold" FontSize="10"/>
+        </Grid>
+
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Left"  Width="140" Height="150" Visibility="{Binding GuestsTooltip, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="244,16,0,0" Grid.Row="1" Grid.Column="1">
+
+            <Canvas  Margin="0,10,0,0" Grid.ColumnSpan="3">
+                <Path Fill="#F6E3C9" Stroke="Black" StrokeThickness="2"
+              Data="M0,10 L10,0 10,20 Z" HorizontalAlignment="Center" Canvas.Top="5.2" VerticalAlignment="Center" Canvas.Left="8.75"/>
+            </Canvas>
+
+            <Border  Width="140" Height="100" CornerRadius="10" Background="#FEFFDE" BorderBrush="Black" BorderThickness="2" Margin="-3,25,3,25"/>
+
+            <TextBlock  TextWrapping="Wrap" Width="120" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Left" Text="This table shows you all guests that have been registered on started tour." FontWeight="Bold" FontSize="10"/>
+            
+
+        </Grid>
+
         <Button Background="#AA96DA" Content="Start tour" Name="StartTourB" HorizontalAlignment="Right"  VerticalAlignment="Center" Width="150" Height="35" Grid.Row="2" Margin="30,0" FontSize="20" Command="{Binding StartCommand}"/>
         <Button Background="#AA96DA" Content="End tour" Name="CancelTourB" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Height="35" Grid.Row="2" Grid.Column="1" Margin="30,0" FontSize="20" Command="{Binding CancelCommand}"/>
         <Button Background="#AA96DA" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Width="80" Height="30" FontSize="20" Margin="10">Demo</Button>

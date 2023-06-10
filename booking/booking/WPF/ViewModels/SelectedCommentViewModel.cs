@@ -10,6 +10,7 @@ using booking.Model;
 using booking.Repositories;
 using booking.WPF.ViewModels;
 using System.ComponentModel;
+using System.Windows.Media;
 
 namespace WPF.ViewModels
 {
@@ -18,91 +19,94 @@ namespace WPF.ViewModels
         public User Guide { get; set; }
         private readonly GuideRatingRepository _guideRatingRepository;
         public TourRatingDTO Comment { get; set; }
-        private bool firstStar;
+        private Brush firstStarColor;
 
-        public bool FirstStar
+        public Brush FirstStarColor
         {
-            get { return firstStar; }
+            get { return firstStarColor; }
             set
             {
-                if (firstStar != value)
+                if (firstStarColor != value)
                 {
-                    firstStar = value;
-                    OnPropertyChanged(nameof(FirstStar));
+                    firstStarColor = value;
+                    OnPropertyChanged(nameof(FirstStarColor));
                 }
             }
         }
 
-        private bool secondStar;
+        private Brush secondStarColor;
 
-        public bool SecondStar
+        public Brush SecondStarColor
         {
-            get { return secondStar; }
+            get { return secondStarColor; }
             set
             {
-                if (secondStar != value)
+                if (secondStarColor != value)
                 {
-                    secondStar = value;
-                    OnPropertyChanged(nameof(SecondStar));
+                    secondStarColor = value;
+                    OnPropertyChanged(nameof(SecondStarColor));
                 }
             }
         }
 
-        private bool thirdStar;
+        private Brush thirdStarColor;
 
-        public bool ThirdStar
+        public Brush ThirdStarColor
         {
-            get { return thirdStar; }
+            get { return thirdStarColor; }
             set
             {
-                if (thirdStar != value)
+                if (thirdStarColor != value)
                 {
-                    thirdStar = value;
-                    OnPropertyChanged(nameof(ThirdStar));
+                    thirdStarColor = value;
+                    OnPropertyChanged(nameof(ThirdStarColor));
                 }
             }
         }
 
-        private bool fourthStar;
+        private Brush fourthStarColor;
 
-        public bool FourthStar
+        public Brush FourthStarColor
         {
-            get { return fourthStar; }
+            get { return fourthStarColor; }
             set
             {
-                if (fourthStar != value)
+                if (fourthStarColor != value)
                 {
-                    fourthStar = value;
-                    OnPropertyChanged(nameof(FourthStar));
+                    fourthStarColor = value;
+                    OnPropertyChanged(nameof(FourthStarColor));
                 }
             }
         }
 
-        private bool fifthStar;
+        private Brush fifthStarColor;
 
-        public bool FifthStar
+        public Brush FifthStarColor
         {
-            get { return fifthStar; }
+            get { return fifthStarColor; }
             set
             {
-                if (fifthStar != value)
+                if (fifthStarColor != value)
                 {
-                    fifthStar = value;
-                    OnPropertyChanged(nameof(FifthStar));
+                    fifthStarColor = value;
+                    OnPropertyChanged(nameof(FifthStarColor));
                 }
             }
         }
-
+        public Brush FilledStar { get; set; }
+        public Brush EmptyStar { get; set; }
         public SelectedCommentViewModel(User guide, TourRatingDTO rating)
         {
             Guide = guide;
             Comment = rating;
             _guideRatingRepository= new GuideRatingRepository();
-            FifthStar = true;
-            ThirdStar = true;
-            FourthStar = true;
-            FirstStar = true;
-            SecondStar = true;
+            FilledStar = new SolidColorBrush(Colors.Gold);
+            EmptyStar = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FEFFDE"));
+            FifthStarColor = FilledStar;
+            ThirdStarColor = FilledStar;
+            FourthStarColor = FilledStar;
+            FirstStarColor = FilledStar;
+            SecondStarColor = FilledStar;
             RatingStars();
         }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -142,15 +146,15 @@ namespace WPF.ViewModels
         private void RatingStars()
         {
             if(Comment.AverageRating<5)
-                FifthStar = false;
+                FifthStarColor = EmptyStar;
             if (Comment.AverageRating < 4)
-                FourthStar = false;
+                FourthStarColor = EmptyStar;
             if (Comment.AverageRating < 3)
-                ThirdStar = false;
+                ThirdStarColor = EmptyStar;
             if (Comment.AverageRating < 2)
-                SecondStar = false;
+                SecondStarColor = EmptyStar;
             if (Comment.AverageRating < 1)
-                FirstStar = false;
+                FirstStarColor = EmptyStar;
         }
     }
 }

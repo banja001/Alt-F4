@@ -30,6 +30,7 @@
     <None Remove="Resources\Icons\request.png" />
     <None Remove="Resources\Icons\statistics.png" />
     <None Remove="Resources\Icons\taskbarIcon.png" />
+    <None Remove="Resources\Icons\tooltip.png" />
     <None Remove="Resources\Icons\unknown.png" />
     <None Remove="Resources\Icons\upcoming.png" />
     <None Remove="Resources\Icons\add_accommodation.png" />
@@ -72,6 +73,7 @@
     <Resource Include="Resources\Icons\request.png" />
     <Resource Include="Resources\Icons\statistics.png" />
     <Resource Include="Resources\Icons\taskbarIcon.png" />
+    <Resource Include="Resources\Icons\tooltip.png" />
     <Resource Include="Resources\Icons\unknown.png" />
     <Resource Include="Resources\Icons\upcoming.png" />
     <Resource Include="Resources\Icons\add_accommodation.png" />

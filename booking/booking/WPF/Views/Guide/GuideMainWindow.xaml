@@ -25,8 +25,14 @@
         <Frame Grid.Row="1" Grid.Column="1" x:Name="Content" NavigationUIVisibility="Hidden"/>
         <Button Grid.Row="0" Grid.Column="1" Width="50" Height="50" HorizontalAlignment="Right" Command="{Binding ProfilePageCommand}">
             <Button.Background>
-                <ImageBrush ImageSource="/Resources/Icons/avatarico.png"></ImageBrush>
+                <Binding Path="ProfileButton" /> 
             </Button.Background>
+            <Button.Content>
+                <Image Source="/Resources/Icons/avatarico.png"/>
+            </Button.Content>
+            <Button.BorderThickness>
+                <Thickness>0</Thickness>
+            </Button.BorderThickness>
         </Button>
         <Grid Grid.Column="0" Grid.Row="1">
             <Grid.RowDefinitions>

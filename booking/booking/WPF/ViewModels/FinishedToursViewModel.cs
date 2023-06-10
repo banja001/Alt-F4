@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Effects;
 using booking.application.UseCases;
 using booking.Commands;
 using booking.Domain.DTO;
@@ -16,7 +18,7 @@ using WPF.Views.Guide;
 
 namespace booking.WPF.ViewModels
 {
-    public class FinishedToursViewModel : BaseViewModel
+    public class FinishedToursViewModel : BaseViewModel,INotifyPropertyChanged
     {
         public ObservableCollection<int> Years { get; set; }
         public int SelectedYear { get; set; }
@@ -43,7 +45,6 @@ namespace booking.WPF.ViewModels
             Years = _appointmentService.FindAllYears(guide.Id);
             FinishedTours = _appointmentService.CreateListOfFinishedTours(guide.Id);
             MostVisitedTour =new ObservableCollection<AppointmentGuestsDTO>();
-            //SelectedTour =new AppointmentGuestsDTO();
             SelectedYear = Years[0];
             Guide = guide;
         }
@@ -51,15 +52,67 @@ namespace booking.WPF.ViewModels
         public ICommand ShowReviewsCommand => new RelayCommand(ShowReviews, CanShow);
         public ICommand ShowStatisticsCommand => new RelayCommand(ShowStatistics, CanShow);
         public ICommand FindCommand => new RelayCommand(FindMostVisitedTour);
-        
+        public ICommand TooltipFindCommand => new RelayCommand(FindtoolTip);
+        public ICommand TooltipAllToursCommand => new RelayCommand(AllTourstoolTip);
+
+        private bool allToursToolTip;
+
+        public bool AllToursTooltip
+        {
+            get { return allToursToolTip; }
+            set
+            {
+                if (allToursToolTip != value)
+                {
+                    allToursToolTip = value;
+                    OnPropertyChanged(nameof(AllToursTooltip));
+                }
+            }
+        }
+
+        private bool findTooltip;
+
+        public bool FindTooltip
+        {
+            get { return findTooltip; }
+            set
+            {
+                if (findTooltip != value)
+                {
+                    findTooltip = value;
+                    OnPropertyChanged(nameof(FindTooltip));
+                }
+            }
+        }
+        public void FindtoolTip()
+        {
+            FindTooltip = !FindTooltip;
+        }
+
+        public void AllTourstoolTip()
+        {
+            AllToursTooltip = !AllToursTooltip;
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public void ShowReviews()
         {
             try
             {
                 if (SelectedTour != null && !string.IsNullOrEmpty( SelectedTour.Name))
                 {
+                    Window window = System.Windows.Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+                    if (window != null)
+                    {
+                        window.Effect = new BlurEffect();
+                    }
                     ShowReviewsWindow showReviews = new ShowReviewsWindow(Guide, SelectedTour);
                     showReviews.ShowDialog();
+                    window.Effect = null;
                 }
                 else
                     MessageBox.Show("Select tour!","Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -82,8 +135,14 @@ namespace booking.WPF.ViewModels
             {
                 if (SelectedTour != null && !string.IsNullOrEmpty(SelectedTour.Name))
                 {
+                    Window window = System.Windows.Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+                    if (window != null)
+                    {
+                        window.Effect = new BlurEffect();
+                    }
                     ShowStatisticsWindow showStatistics = new ShowStatisticsWindow(SelectedTour);
                     showStatistics.ShowDialog();
+                    window.Effect = null;
                 }
                 else
                     MessageBox.Show("Select tour!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);

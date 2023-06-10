@@ -7,21 +7,54 @@
         mc:Ignorable="d"
         Title="ShowReviewsWindow" Height="450" Width="800"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
     <Grid Background="#FEFFDE">
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid  Style="{StaticResource CustomDataGridStyle}" Name="AllCommentsDataGrid" ItemsSource="{Binding AllComments}" SelectedItem="{Binding SelectedComment}" Grid.Row="0" AutoGenerateColumns="False" IsReadOnly="True" Margin="10,40" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Tour name" Binding="{Binding TourName, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False" Width="*"/>
-                <DataGridTextColumn Header="Guest name" Binding="{Binding GuestName, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False"  Width="*"/>
-                <DataGridTextColumn Header="Check point" Binding="{Binding CheckPoint, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False"  Width="*"/>
-                <DataGridTextColumn Header="Average rating" Binding="{Binding AverageRating, UpdateSourceTrigger=PropertyChanged}"  Width="*"/>
-                <DataGridTextColumn Header="Comment" Binding="{Binding Rating.Comment, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False"  Width="2*"/>
-                <DataGridCheckBoxColumn Header="Valid" Binding="{Binding Rating.IsValid, UpdateSourceTrigger=PropertyChanged}"  Width="0.5*"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="30" FontWeight="Bold"><Run Text="{Binding TourName}"/> reviews</TextBlock>
+
+                <Button VerticalAlignment="Top" HorizontalAlignment="Right" Height="20" Width="20" Margin="10,5" Command="{Binding TooltipReviewsCommand}">
+                    <Button.Background>
+                        <SolidColorBrush Color="#AA96DA"></SolidColorBrush>
+                    </Button.Background>
+                    <Button.Content>
+                        <Image Source="/Resources/Icons/tooltip.png"/>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+
+            <DataGrid  Style="{StaticResource CustomDataGridStyle}" Name="AllCommentsDataGrid" ItemsSource="{Binding AllComments}" SelectedItem="{Binding SelectedComment}" Grid.Row="0" AutoGenerateColumns="False" IsReadOnly="True" Margin="10" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Tour name" Binding="{Binding TourName, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False" Width="*"/>
+                    <DataGridTextColumn Header="Guest name" Binding="{Binding GuestName, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False"  Width="*"/>
+                    <DataGridTextColumn Header="Check point" Binding="{Binding CheckPoint, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False"  Width="*"/>
+                    <DataGridTextColumn Header="Average rating" Binding="{Binding AverageRating, UpdateSourceTrigger=PropertyChanged}"  Width="*"/>
+                    <DataGridTextColumn Header="Comment" Binding="{Binding Rating.Comment, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False"  Width="2*"/>
+                    <DataGridCheckBoxColumn Header="Valid" Binding="{Binding Rating.IsValid, UpdateSourceTrigger=PropertyChanged}"  Width="0.5*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+        <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="40" Width="650" Height="150" Visibility="{Binding Empty, Converter={StaticResource BooleanToVisibilityConverter}}">
+            There are no reviews for this tour!
+        </TextBlock>
+        <Grid Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="180" Height="150" Visibility="{Binding ReviewsTooltip, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="{Binding MyMargin}">
+
+            <Canvas Grid.Column="0" Margin="0,10,0,0" Grid.ColumnSpan="2">
+                <Path Fill="#F6E3C9" Stroke="Black" StrokeThickness="2"
+              Data="M0,10 L10,0 10,20 Z" HorizontalAlignment="Center" Canvas.Top="5.2" VerticalAlignment="Center" Canvas.Left="8.75"/>
+            </Canvas>
+
+            <Border Width="180" Height="100" CornerRadius="10" Background="#FEFFDE" BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="2" Margin="0,25,0,25"/>
+
+            <TextBlock Width="160" Height="80" TextWrapping="Wrap" Text="In table below are all reviews for selected tour. You can see more details by selecting a review and clicking button &quot;Show full comment&quot;." HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Margin="10,0,0,0" Grid.ColumnSpan="2"/>
+        </Grid>
+        
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
@@ -30,7 +63,7 @@
             <Button  Background="#AA96DA" Grid.Column="0" Height="40" Width="150" FontSize="15" Command="{Binding ShowCommand}" >Show full comment</Button>
             <Button  Background="#AA96DA" Grid.Column="1" Height="40" Width="150" FontSize="15" Command="{Binding ExitWindowCommand}">Cancel</Button>
         </Grid>
-        
+
     </Grid>
 
 </Window>

@@ -6,6 +6,7 @@ using booking.WPF.ViewModels;
 using Domain.DTO;
 using Domain.Model;
 using Syncfusion.Windows.Controls;
+using Syncfusion.Windows.Shared;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +16,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Effects;
 using System.Windows.Navigation;
 using WPF.Views.Guide;
 
@@ -55,6 +57,26 @@ namespace WPF.ViewModels
         }
         public ObservableCollection<string> Cities { get; set; }
         private LocationService _locationService { get; set; }
+        public ICommand TooltipSearchCommand => new RelayCommand(SearchToolTipF);
+
+        private bool searchTooltip;
+
+        public bool SearchTooltip
+        {
+            get { return searchTooltip; }
+            set
+            {
+                if (searchTooltip != value)
+                {
+                    searchTooltip = value;
+                    OnPropertyChanged(nameof(SearchTooltip));
+                }
+            }
+        }
+        private void SearchToolTipF()
+        {
+            SearchTooltip = !SearchTooltip;
+        }
         public ICommand FillCityCBCommand => new RelayCommand(FillCities);
         public ICommand SearchCommand => new RelayCommand(Search);
         public ICommand CutRangeCommand => new RelayCommand(CutRange);
@@ -141,9 +163,14 @@ namespace WPF.ViewModels
         }
         private void AcceptSimpleTourRequest()
         {
-            SelectDateForTourRequestWindow window=new SelectDateForTourRequestWindow(SelectedTourRequest);
-            window.ShowDialog();
-
+            Window window = System.Windows.Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            if (window != null)
+            {
+                window.Effect = new BlurEffect();
+            }
+            SelectDateForTourRequestWindow selwindow=new SelectDateForTourRequestWindow(SelectedTourRequest);
+            selwindow.ShowDialog();
+            window.Effect = null;
             bool accept = SelectDateForTourRequestViewModel.Accept;
             DateTime SelectedDate = SelectDateForTourRequestViewModel.selectedDate;
             if (accept)

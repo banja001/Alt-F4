@@ -19,6 +19,7 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using WPF.Views.Guide;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 
 namespace WPF.ViewModels
 {
@@ -143,6 +144,52 @@ namespace WPF.ViewModels
                 OnPropertyChanged(nameof(NumberOfTourRequests));
             }
         }
+
+        private bool locationTooltip;
+
+        public bool LocationTooltip
+        {
+            get { return locationTooltip; }
+            set
+            {
+                if (locationTooltip != value)
+                {
+                    locationTooltip = value;
+                    OnPropertyChanged(nameof(LocationTooltip));
+                }
+            }
+        }
+
+        private bool timeTooltip;
+
+        public bool TimeTooltip
+        {
+            get { return timeTooltip; }
+            set
+            {
+                if (timeTooltip != value)
+                {
+                    timeTooltip = value;
+                    OnPropertyChanged(nameof(TimeTooltip));
+                }
+            }
+        }
+
+        private bool languageTooltip;
+
+        public bool LanguageTooltip
+        {
+            get { return languageTooltip; }
+            set
+            {
+                if (languageTooltip != value)
+                {
+                    languageTooltip = value;
+                    OnPropertyChanged(nameof(LanguageTooltip));
+                }
+            }
+        }
+
         private AxesCollection axis;
         public AxesCollection Axis 
         {
@@ -180,6 +227,13 @@ namespace WPF.ViewModels
         public ICommand FillCityCBCommand => new RelayCommand(FillCities);
         public ICommand FillMonthsCBCommand => new RelayCommand(FillMonths);
         public ICommand CreateCommand => new RelayCommand(CreateTourWithHelpOfStatistics);
+        public ICommand TooltipLocationCommand => new RelayCommand(LocationToolTip);
+        public ICommand TooltipTimeCommand => new RelayCommand(TimeToolTip);
+
+        public ICommand TooltipLanguageCommand => new RelayCommand(LanguageToolTip);
+
+ 
+
         public User Guide { get; set; }
         private NavigationService navigationService;
         public TourRequestsStatisticsViewModel(User guide, NavigationService navigationService) 
@@ -204,6 +258,18 @@ namespace WPF.ViewModels
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        private void LocationToolTip()
+        {
+            LocationTooltip = !LocationTooltip;
+        }
+        private void TimeToolTip()
+        {
+            TimeTooltip = !TimeTooltip;
+        }
+        private void LanguageToolTip()
+        {
+            LanguageTooltip = !LanguageTooltip;
         }
         private void LoadRequests()
         {
@@ -256,14 +322,20 @@ namespace WPF.ViewModels
         }
         private void CreateTourWithHelpOfStatistics()
         {
-            ParametarOfStatisticsForTourCreationWindow window = new ParametarOfStatisticsForTourCreationWindow();
-            window.ShowDialog();
+            Window window = System.Windows.Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            if (window != null)
+            {
+                window.Effect = new BlurEffect();
+            }
+            ParametarOfStatisticsForTourCreationWindow pwindow = new ParametarOfStatisticsForTourCreationWindow();
+            pwindow.ShowDialog();
 
             if (ParametarOfStatisticsForTourCreationVIewModel.Accept)
             {
                 string [] parameters= ParametarOfStatisticsForTourCreationVIewModel.Parameter.Split("|");
                 navigationService.Navigate(new AddTourWindow(parameters, Guide));
             }
+            window.Effect = null;
         }
 
         private void CreateStatisticForGraphYears()

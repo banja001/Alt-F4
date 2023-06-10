@@ -10,10 +10,11 @@ using System.Windows;
 using System.Windows.Input;
 using booking.Commands;
 using booking.WPF.ViewModels;
+using System.ComponentModel;
 
 namespace WPF.ViewModels
 {
-    internal class LiveTrackingTourViewModel: BaseViewModel
+    internal class LiveTrackingTourViewModel: BaseViewModel,INotifyPropertyChanged
     {
         public ObservableCollection<Tour> Tours { get; set; }
         private TourRepository _tourRepository { get; set; }
@@ -38,9 +39,74 @@ namespace WPF.ViewModels
         public ICommand StartCommand => new RelayCommand(StartTour, CanStart);
         public ICommand CancelCommand=> new RelayCommand(CancelTour, CanCancel);
         public ICommand ExitCommand => new RelayCommand(Exit);
+        public ICommand TooltipTourCommand => new RelayCommand(ToolTipTourShow);
+        public ICommand TooltipCHPCommand => new RelayCommand(ToolTipCHPShow);
+        public ICommand TooltipGuestsCommand => new RelayCommand(ToolTipGuestsShow);
         public bool CheckBox { get; set; }
-        
 
+        private bool toursTooltip;
+
+        public bool ToursTooltip
+        {
+            get { return toursTooltip; }
+            set
+            {
+                if (toursTooltip != value)
+                {
+                    toursTooltip = value;
+                    OnPropertyChanged(nameof(ToursTooltip));
+                }
+            }
+        }
+
+        private bool checkPointsTooltip;
+
+        public bool CheckPointsTooltip
+        {
+            get { return checkPointsTooltip; }
+            set
+            {
+                if (checkPointsTooltip != value)
+                {
+                    checkPointsTooltip = value;
+                    OnPropertyChanged(nameof(CheckPointsTooltip));
+                }
+            }
+        }
+        private bool guestsTooltip;
+
+        public bool GuestsTooltip
+        {
+            get { return guestsTooltip; }
+            set
+            {
+                if (guestsTooltip != value)
+                {
+                    guestsTooltip = value;
+                    OnPropertyChanged(nameof(GuestsTooltip));
+                }
+            }
+        }
+
+        public void ToolTipGuestsShow()
+        {
+            GuestsTooltip = !GuestsTooltip;
+        }
+        public void ToolTipTourShow()
+        {
+            ToursTooltip = !ToursTooltip;
+        }
+        public void ToolTipCHPShow()
+        {
+            CheckPointsTooltip = !CheckPointsTooltip;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public LiveTrackingTourViewModel(User guide)
         {
             InitializeRepositories();
