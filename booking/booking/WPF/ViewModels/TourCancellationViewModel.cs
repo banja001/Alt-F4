@@ -19,7 +19,19 @@ namespace WPF.ViewModels
     public class TourCancellationViewModel:BaseViewModel,INotifyPropertyChanged
     {
         public ObservableCollection<Tour> UpcomingTours { get; set; }
-        public Tour SelectedTour { get; set; }
+        private Tour selectedTour;
+        public Tour SelectedTour
+        {
+            get { return selectedTour; }
+            set
+            {
+                if (selectedTour != value)
+                {
+                    selectedTour = value;
+                    OnPropertyChanged(nameof(SelectedTour));
+                }
+            }
+        }
         private readonly TourService _tourService;
         private readonly ReservationTourService _reservationService;
         public User Guide { get; set; }
