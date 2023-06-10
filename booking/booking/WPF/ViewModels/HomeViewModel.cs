@@ -15,6 +15,7 @@ using System.Windows.Media;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Linq;
+using booking.application.UseCases;
 
 namespace booking.WPF.ViewModels
 {
@@ -26,6 +27,7 @@ namespace booking.WPF.ViewModels
         public ObservableCollection<SimpleRequestTourDTO> SuggestionNotifications { get; set; }
         public ObservableCollection<SimpleRequestTourDTO> ApprovedNotifications { get; set; }
         private SimpleRequestService _simpleRequestService;
+        private TourService _tourService;
         private User _user;
         public RelayCommand GenerateReportCommand => new RelayCommand(OnGenerateReport);
         public RelayCommand CheckGenerabilityCommand => new RelayCommand(CanGenerateReport);
@@ -34,6 +36,7 @@ namespace booking.WPF.ViewModels
             ReportFromDate = DateTime.Now;
             ReportToDate = DateTime.Now;
             this._user = user;
+            _tourService = new TourService();   
             _simpleRequestService = new SimpleRequestService();
             SuggestionNotifications = new ObservableCollection<SimpleRequestTourDTO>(_simpleRequestService.CreateSuggestionNotificationsByGuest2(user));
             ApprovedNotifications = new ObservableCollection<SimpleRequestTourDTO>(_simpleRequestService.CreateApprovedNotificationsByGuest2(user));
@@ -64,37 +67,26 @@ namespace booking.WPF.ViewModels
                 title.Alignment = Element.ALIGN_CENTER;
                 document.Add(title);
 
-                // Add some content to the document
-                iTextSharp.text.Paragraph content = new iTextSharp.text.Paragraph($"Guest {_user.Username}, in period of {ReportFromDate.Date} - {ReportToDate.Date}, has visited next tours:", contentFont);
+                iTextSharp.text.Paragraph content = new iTextSharp.text.Paragraph($"Guest {_user.Username}, in period of {ReportFromDate.Date.ToShortDateString()} - {ReportToDate.Date.ToShortDateString()}, has visited next tours:", contentFont);
                 content.SpacingBefore = 20f;
                 content.SpacingAfter = 20f;
                 document.Add(content);
 
-                // Create a table
-                PdfPTable table = new PdfPTable(3);
-                table.WidthPercentage = 100;
+                iTextSharp.text.List unorderedList = new iTextSharp.text.List(iTextSharp.text.List.UNORDERED);
+                unorderedList.SetListSymbol("\u2022");
 
-                // Add table headers
-                table.AddCell("Name");
-                table.AddCell("Age");
-                table.AddCell("Country");
+                foreach (var tour in _tourService.GetVisitedToursByInterval(ReportFromDate, ReportToDate, _user))
+                {
+                    unorderedList.Add(new iTextSharp.text.ListItem($"{tour.Name} - {tour.StartTime.Date.ToShortDateString()}"));
+                }
 
-                // Add table rows
-                table.AddCell("John Doe");
-                table.AddCell("30");
-                table.AddCell("USA");
-                table.AddCell("Jane Smith");
-                table.AddCell("25");
-                table.AddCell("Canada");
-
-                document.Add(table);
+                document.Add(unorderedList);
 
                 document.Close();
                 MessageBox.Show("PDF generated successfully!");
             }
             catch (Exception ex)
             {
-                // Handle any exceptions that occur during PDF generation
                 MessageBox.Show("Error generating PDF: " + ex.Message);
             }
         }

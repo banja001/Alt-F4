@@ -25,7 +25,7 @@
             <Label Style="{DynamicResource VoucherHeader}" Content="{ns:Loc Report_message}" FontSize="14"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                 <Label MinWidth="70" Margin="20,0,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc From_message}" FontSize="14"/>
-                <DatePicker Text="{Binding ReportFromDate}" FontSize="12" Margin="5,0,15,0" HorizontalAlignment="Right" Width="150" Height="25">
+                <DatePicker SelectedDate="{Binding ReportFromDate}" FontSize="12" Margin="5,0,15,0" HorizontalAlignment="Right" Width="150" Height="25">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedDateChanged">
                             <i:InvokeCommandAction Command="{Binding CheckGenerabilityCommand}"/>
@@ -37,7 +37,7 @@
             </StackPanel>
             <StackPanel HorizontalAlignment="Stretch" Margin="0,10,0,0" Orientation="Horizontal">
                 <Label MinWidth="70" Margin="20,0,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc To_message}" FontSize="14"/>
-                <DatePicker Text="{Binding ReportToDate}" FontSize="12" Margin="5,0,15,0" Width="150" Height="25">
+                <DatePicker SelectedDate="{Binding ReportToDate}" FontSize="12" Margin="5,0,15,0" Width="150" Height="25">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedDateChanged">
                             <i:InvokeCommandAction Command="{Binding CheckGenerabilityCommand}"/>
