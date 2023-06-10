@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Effects;
 using WPF.ViewModels;
 
 namespace booking.WPF.ViewModels
@@ -61,8 +62,14 @@ namespace booking.WPF.ViewModels
             }
             else 
             {
+                Window window = System.Windows.Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+                if (window != null)
+                {
+                    window.Effect = new BlurEffect();
+                }
                 var rateGuideWindow = new RateGuideView(SelectedTour, User);
                 rateGuideWindow.ShowDialog();
+                window.Effect = null;
                 OnPropertyChanged(nameof(CompletedTours));
             }
             

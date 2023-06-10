@@ -17,6 +17,7 @@ using System.Windows.Input;
 using booking.Commands;
 using static System.Net.Mime.MediaTypeNames;
 using WPF.Views.Guest2;
+using System.Windows.Media.Effects;
 
 namespace WPF.ViewModels
 {
@@ -105,17 +106,28 @@ namespace WPF.ViewModels
         }
         private void OnMoreDetailsButtonClick()
         {
+            Window window = System.Windows.Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            if (window != null)
+            {
+                window.Effect = new BlurEffect();
+            }
             var moreDetailsWindow = new MoreDetailsView(SelectedTour);
             moreDetailsWindow.ShowDialog();
+            window.Effect = null;
         }
 
         private void OnBookTourButtonClick()
         {
             if (SelectedTour != null)
             {
+                Window window = System.Windows.Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+                if (window != null)
+                {
+                    window.Effect = new BlurEffect();
+                }
                 var bookTourWindow = new BookTourView(SelectedTour, currentUser, this);
                 bookTourWindow.ShowDialog();
-
+                window.Effect = null;
                 RemoveInvalidTours();
                 OnPropertyChanged(nameof(TourLocationDTOs));
             }
