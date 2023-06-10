@@ -98,6 +98,29 @@
                 </Grid>
             </TabItem>
             <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="Complex requests" MinWidth="100">
+                <Grid Style="{DynamicResource LightBackground}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Height="520">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.8*"/>
+                            <RowDefinition Height="0.8*"/>
+                            <RowDefinition Height="0.8*"/>
+                            <RowDefinition Height="0.8*"/>
+                            <RowDefinition Height="0.8*"/>
+                            <RowDefinition Height="0.8*"/>
+                            <RowDefinition Height="0.8*"/>
+                            <RowDefinition Height="0.8*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="3*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

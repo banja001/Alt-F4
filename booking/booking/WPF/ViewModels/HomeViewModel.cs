@@ -16,6 +16,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Linq;
 using booking.application.UseCases;
+using System.Windows.Input;
 
 namespace booking.WPF.ViewModels
 {

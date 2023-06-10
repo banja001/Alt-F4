@@ -48,10 +48,10 @@
         </StackPanel>
 
         <Label Style="{DynamicResource LightHeaderLabel}" Content="{ns:Loc Notifications}" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0"/>
-        
+
         <StackPanel Orientation="Vertical" Margin="25,0,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <Label Style="{DynamicResource VoucherHeader}" Content="{ns:Loc Recently_approved_tours}" FontSize="14"/>
-            <ScrollViewer VerticalScrollBarVisibility="Disabled" VerticalAlignment="Top" HorizontalAlignment="Left" Height="120" HorizontalScrollBarVisibility="Auto" Width="750">
+            <ScrollViewer Margin="10,0,0,0" VerticalScrollBarVisibility="Disabled" VerticalAlignment="Top" HorizontalAlignment="Left" Height="120" HorizontalScrollBarVisibility="Auto" Width="920">
                 <ItemsControl ItemsSource="{Binding ApprovedNotifications, Mode=TwoWay}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -89,7 +89,7 @@
 
         <StackPanel Orientation="Vertical" Margin="25,0,0,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
             <Label Style="{DynamicResource VoucherHeader}" Content="{ns:Loc Tours_you_might_like}" FontSize="14"/>
-            <ScrollViewer VerticalScrollBarVisibility="Disabled" VerticalAlignment="Top" HorizontalAlignment="Left" Height="120" HorizontalScrollBarVisibility="Auto" Width="750">
+            <ScrollViewer Margin="10,0,0,0" VerticalScrollBarVisibility="Disabled" VerticalAlignment="Top" HorizontalAlignment="Left" Height="120" HorizontalScrollBarVisibility="Auto" Width="920">
                 <ItemsControl ItemsSource="{Binding SuggestionNotifications, Mode=TwoWay}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
