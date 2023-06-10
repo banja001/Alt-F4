@@ -46,7 +46,6 @@ namespace booking.WPF.ViewModels
             _voucherService = new VoucherService();
             _appointmentCheckpointService = new AppointmentCheckpointService();
             _voucherService.GenerateNewVouchersByGuest2(user);
-            SelectedTour = new Appointment();
             CompletedTours = new ObservableCollection<Appointment>(_appointmentService.GetCompletedAppointmentByGuest2(User));
             Vouchers = new ObservableCollection<Voucher>(_voucherService.GetUsableVouchersByGuest2(user));
             var activeTour = _appointmentService.GetActiveAppointmentByGuest2(user).ToList();
@@ -56,7 +55,7 @@ namespace booking.WPF.ViewModels
 
         private void RateGuide()
         {
-            if(SelectedTour.Start.Time == null) 
+            if(SelectedTour == null) 
             {
                 MessageBox.Show("You need to select a tour!", "Alert", MessageBoxButton.OK);
             }

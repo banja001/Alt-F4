@@ -12,16 +12,46 @@ using booking.Model;
 using booking.Repository;
 using booking.WPF.ViewModels;
 using Microsoft.Web.WebView2.Core.Raw;
+using System.ComponentModel;
 
 namespace WPF.ViewModels
 {
-    public class TourCancellationViewModel:BaseViewModel
+    public class TourCancellationViewModel:BaseViewModel,INotifyPropertyChanged
     {
+        public RelayCommand AbandonTourCommand => new RelayCommand(AbandonTour, CanAbandon);
         public ObservableCollection<Tour> UpcomingTours { get; set; }
-        public Tour SelectedTour { get; set; }
+        private Tour selectedTour;
+        public Tour SelectedTour
+        {
+            get { return selectedTour; }
+            set
+            {
+                if (selectedTour != value)
+                {
+                    selectedTour = value;
+                    OnPropertyChanged(nameof(SelectedTour));
+                    //AbandonTourCommand.RaiseCanExecuteChanged();
+                }
+            }
+        }
         private readonly TourService _tourService;
         private readonly ReservationTourService _reservationService;
         public User Guide { get; set; }
+
+        private bool toursTooltip;
+
+        public bool ToursTooltip
+        {
+            get { return toursTooltip; }
+            set
+            {
+                if (toursTooltip != value)
+                {
+                    toursTooltip = value;
+                    OnPropertyChanged(nameof(ToursTooltip));
+                }
+            }
+        }
         public TourCancellationViewModel(User guide)
         {
             _tourService = new TourService();
@@ -30,8 +60,21 @@ namespace WPF.ViewModels
             //SelectedTour = new Tour();
             Guide = guide;
         }
-        public ICommand AbandonTourCommand => new RelayCommand(AbandonTour,CanAbandon);
+        
         public ICommand ExitCommand => new RelayCommand(ExitWindow);
+
+        public ICommand TooltipToursCommand => new RelayCommand(ToolTipTourShow);
+        public void ToolTipTourShow()
+        {
+            ToursTooltip = !ToursTooltip;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public bool CanAbandon()
         {
             return SelectedTour != null;

@@ -70,6 +70,10 @@ namespace booking.Repository
             }
             return null;
         }
+        public List<ReservationTour> GetByUserId(int id)
+        {
+            return reservations.Where(r => r.User.Id == id).ToList();
+        }
         public void Load()
         {
             reservations = serializer.FromCSV(fileName);

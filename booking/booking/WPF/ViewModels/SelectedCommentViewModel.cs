@@ -9,19 +9,110 @@ using booking.Domain.Model;
 using booking.Model;
 using booking.Repositories;
 using booking.WPF.ViewModels;
+using System.ComponentModel;
+using System.Windows.Media;
 
 namespace WPF.ViewModels
 {
-    public class SelectedCommentViewModel: BaseViewModel
+    public class SelectedCommentViewModel: BaseViewModel,INotifyPropertyChanged
     {
         public User Guide { get; set; }
         private readonly GuideRatingRepository _guideRatingRepository;
         public TourRatingDTO Comment { get; set; }
+        private Brush firstStarColor;
+
+        public Brush FirstStarColor
+        {
+            get { return firstStarColor; }
+            set
+            {
+                if (firstStarColor != value)
+                {
+                    firstStarColor = value;
+                    OnPropertyChanged(nameof(FirstStarColor));
+                }
+            }
+        }
+
+        private Brush secondStarColor;
+
+        public Brush SecondStarColor
+        {
+            get { return secondStarColor; }
+            set
+            {
+                if (secondStarColor != value)
+                {
+                    secondStarColor = value;
+                    OnPropertyChanged(nameof(SecondStarColor));
+                }
+            }
+        }
+
+        private Brush thirdStarColor;
+
+        public Brush ThirdStarColor
+        {
+            get { return thirdStarColor; }
+            set
+            {
+                if (thirdStarColor != value)
+                {
+                    thirdStarColor = value;
+                    OnPropertyChanged(nameof(ThirdStarColor));
+                }
+            }
+        }
+
+        private Brush fourthStarColor;
+
+        public Brush FourthStarColor
+        {
+            get { return fourthStarColor; }
+            set
+            {
+                if (fourthStarColor != value)
+                {
+                    fourthStarColor = value;
+                    OnPropertyChanged(nameof(FourthStarColor));
+                }
+            }
+        }
+
+        private Brush fifthStarColor;
+
+        public Brush FifthStarColor
+        {
+            get { return fifthStarColor; }
+            set
+            {
+                if (fifthStarColor != value)
+                {
+                    fifthStarColor = value;
+                    OnPropertyChanged(nameof(FifthStarColor));
+                }
+            }
+        }
+        public Brush FilledStar { get; set; }
+        public Brush EmptyStar { get; set; }
         public SelectedCommentViewModel(User guide, TourRatingDTO rating)
         {
             Guide = guide;
             Comment = rating;
             _guideRatingRepository= new GuideRatingRepository();
+            FilledStar = new SolidColorBrush(Colors.Gold);
+            EmptyStar = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FEFFDE"));
+            FifthStarColor = FilledStar;
+            ThirdStarColor = FilledStar;
+            FourthStarColor = FilledStar;
+            FirstStarColor = FilledStar;
+            SecondStarColor = FilledStar;
+            RatingStars();
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         public ICommand ReportCommand => new RelayCommand(ReportReview,CanReport);
         public ICommand ExitWindowCommand => new RelayCommand(ExitWindow);
@@ -51,6 +142,19 @@ namespace WPF.ViewModels
         private void ExitWindow()
         {
             this.CloseCurrentWindow();
+        }
+        private void RatingStars()
+        {
+            if(Comment.AverageRating<5)
+                FifthStarColor = EmptyStar;
+            if (Comment.AverageRating < 4)
+                FourthStarColor = EmptyStar;
+            if (Comment.AverageRating < 3)
+                ThirdStarColor = EmptyStar;
+            if (Comment.AverageRating < 2)
+                SecondStarColor = EmptyStar;
+            if (Comment.AverageRating < 1)
+                FirstStarColor = EmptyStar;
         }
     }
 }

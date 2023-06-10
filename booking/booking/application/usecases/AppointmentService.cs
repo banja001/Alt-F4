@@ -126,6 +126,15 @@ namespace booking.application.UseCases
             return reviews.FindAll(r => r.AppointmentId == appointment.Id);
         }
 
+        public string GetName(int id)
+        {
+            foreach (Appointment app in _appointmentRepository.FindAll())
+            {
+                if (app.Id == id)
+                    return _tourRepository.FindById(app.Tour.Id).Name;
+            }
+            return null;
+        }
 
         public List<TourRatingDTO> MakeTourRatings(ObservableCollection<GuideRating> guideRatings,
             AppointmentGuestsDTO appointment)

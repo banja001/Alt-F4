@@ -63,6 +63,7 @@ namespace booking.WPF.ViewModels
 
         private void InitializeLanguageGraph(User user)
         {
+
             LanguageSeries = new SeriesCollection();
             LangugeAxis = new AxesCollection();
             ColumnSeries languageColumns = new ColumnSeries() { DataLabels = true, Values = new ChartValues<int>(), LabelPoint = point => point.Y.ToString() };
@@ -72,7 +73,7 @@ namespace booking.WPF.ViewModels
             foreach(var pair in languageRequestCountPairs)
             {
                 languageAxis.Labels.Add(pair.Key);
-                languageColumns.Values.Add(pair.Value); 
+                languageColumns.Values.Add((pair.Value)); 
             }
             LanguageSeries.Add(languageColumns);
             LangugeAxis.Add(languageAxis);

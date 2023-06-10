@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ShowStatisticsWindow" Height="600" Width="450"
         WindowStartupLocation="CenterScreen">
-    <Grid Background="LightGray">
+    <Grid Background="#FEFFDE">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -45,6 +45,6 @@
             <Label FontSize="20" Content="{Binding SelectedAppointmentStatistics.GuestsWithoutVoucher}"  FontWeight="Bold" ></Label>
             <Label FontSize="20"  FontWeight="Bold" Padding="0,5,5,5">%</Label>
         </StackPanel>
-        <Button Background="#ea8dfc" Grid.Row="7" Width="150" Height="35" FontSize="20" Command="{Binding ExitWindowCommand}">Cancel</Button>
+        <Button Background="#AA96DA" Grid.Row="7" Width="150" Height="35" FontSize="20" Command="{Binding ExitWindowCommand}">Cancel</Button>
     </Grid>
 </Window>

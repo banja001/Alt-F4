@@ -5,22 +5,49 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WPF.Views.Guide"
       mc:Ignorable="d" 
-      d:DesignHeight="650" d:DesignWidth="790"
+      d:DesignHeight="668" d:DesignWidth="787"
       Title="ProfilePage">
-
-    <Grid Background="#73fab4">
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Page.Resources>
+    <Grid Background="#FEFFDE">
         <Grid.RowDefinitions>
-            <RowDefinition Height="3.5*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <Image Grid.Row="0" Source="/Resources/Icons/avatar.png" Width="350" VerticalAlignment="Top" Margin="20"></Image>
+        <Image Grid.Row="0" Source="/Resources/Icons/avatarZeleni.png" Width="350" VerticalAlignment="Top" Margin="20"></Image>
         <TextBlock Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Top"  FontSize="40">User name: 
             <Run Text="{Binding Guide.Username}" FontWeight="Bold"/>
             <LineBreak/>
             Super-guide:  <Run Text="{Binding Super}" FontWeight="Bold"/>
         </TextBlock>
-        <Button Background="#ea8dfc" Grid.Row="2" Width="150" Height="40" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="25" Margin="10"> Quit job</Button>
-        <Button Background="#ea8dfc" Grid.Row="2" Width="200" Height="50" HorizontalAlignment="Center" FontSize="35" Command="{Binding SignOutCommand}"> Sign out</Button>
+
+        <Button Background="#AA96DA" Grid.Row="2" Width="200" Height="50"  HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="35" Margin="40" Command="{Binding SignOutCommand}">Sign out</Button>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="218,0,0,0"  >
+            <Border  BorderThickness="10" VerticalAlignment="Bottom" CornerRadius="10" BorderBrush="Red" Width="350" Height="120" Padding="5,5,5,5" Margin="0,20">
+                <Button Background="#AA96DA" Grid.Row="2" Width="200" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="35">Quit job</Button>
+            </Border>
+            <Button VerticalAlignment="Top" Height="30" Width="30" Margin="5" Command="{Binding TooltipQuitCommand}">
+                <Button.Background>
+                    <SolidColorBrush Color="#AA96DA"></SolidColorBrush>
+                </Button.Background>
+                <Button.Content>
+                    <Image Source="/Resources/Icons/tooltip.png"/>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        <Grid Grid.Row="2"  HorizontalAlignment="Left" Margin="579,129,0,-12" Width="180" Height="150" Visibility="{Binding QuitTooltip, Converter={StaticResource BooleanToVisibilityConverter}}">
+           
+            <Canvas Grid.Column="0" Margin="0,10,0,0" Grid.ColumnSpan="2">
+                <Path Fill="#F6E3C9" Stroke="Black" StrokeThickness="2"
+              Data="M0,10 L10,0 10,20 Z" HorizontalAlignment="Center" Canvas.Top="5.2" VerticalAlignment="Center" Canvas.Left="8.75"/>
+            </Canvas>
+
+            <Border Width="180" Height="100" CornerRadius="10" Background="#FEFFDE" BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="2" Margin="0,25,0,25"/>
+
+            <TextBlock Width="160" Height="80" TextWrapping="Wrap" Text="By clicking button &quot;Quit job&quot;you can quit job. You must confirm whem messagebox pop up if you want to quit." HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Margin="10,0,0,0" Grid.ColumnSpan="2"/>
+        </Grid>
     </Grid>
 </Page>

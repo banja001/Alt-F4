@@ -34,7 +34,7 @@ namespace booking.Domain.DTO
 
         public void CalculateAverageRating()
         {
-            this.AverageRating = Math.Round(100*(this.Rating.LanguageKnowledge + this.Rating.TourEnjoyment + this.Rating.TourKnowledge) / 3.0)/100.0;
+            this.AverageRating = Math.Round((this.Rating.LanguageKnowledge + this.Rating.TourEnjoyment + this.Rating.TourKnowledge) / 3.0);
         }
     }
 }

@@ -5,14 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:booking.WPF.Views.Guest2" xmlns:cvt="clr-namespace:booking.Converter" 
              xmlns:views="clr-namespace:WPF.Views.Guest2"
+             xmlns:ns="clr-namespace:Localization"
              xmlns:viewmodels="clr-namespace:WPF.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Utilities/Themes/Guest2Themes.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
             <DataTemplate DataType="{x:Type viewmodels:SearchTourViewModel}">
                 <views:SearchTourView/>
             </DataTemplate>
@@ -47,22 +45,22 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
-                        <Label Style="{DynamicResource LightHeaderLabel}" Content="Active tour" VerticalAlignment="Center" Margin="20,10,0,0"/>
+                        <Label Style="{DynamicResource LightHeaderLabel}" Content="{ns:Loc Active_tour}" VerticalAlignment="Center" Margin="20,10,0,0"/>
                         <StackPanel Orientation="Horizontal">
                             <DataGrid CellStyle="{DynamicResource LightDataGridCell}" RowStyle="{DynamicResource LightDataGridRow}" Style="{DynamicResource LighDataGrid}" ColumnHeaderStyle="{DynamicResource LightHeaderStyle}" Margin="20,5,0,0" Height="40" Width="640" x:Name="ActiveTourTable" ItemsSource="{Binding ActiveTour}" AutoGenerateColumns="False" IsHitTestVisible="False" IsReadOnly="True">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Name"  Width="1*" Binding="{Binding Name}" />
-                                    <DataGridTextColumn Header="Language" Width="1*" Binding="{Binding Language}"/>
-                                    <DataGridTextColumn Header="Max guest count" Width="1.3*" Binding="{Binding MaxGuests}"/>
-                                    <DataGridTextColumn Header="Start time" Width="1*" Binding="{Binding StartTime, Converter={cvt:DateTimeToDateOnlyConverter}}"/>
-                                    <DataGridTextColumn Header="Duration(h)" Width="0.8*" Binding="{Binding Duration}"/>
-                                    <DataGridTextColumn Header="Location" Width="1*" Binding="{Binding Location}"/>
+                                    <DataGridTextColumn Header="{ns:Loc name}"  Width="1*" Binding="{Binding Name}" />
+                                    <DataGridTextColumn Header="{ns:Loc language}" Width="1*" Binding="{Binding Language}"/>
+                                    <DataGridTextColumn Header="{ns:Loc max_guest_count}" Width="1.3*" Binding="{Binding MaxGuests}"/>
+                                    <DataGridTextColumn Header="{ns:Loc start_time}" Width="1*" Binding="{Binding StartTime, Converter={cvt:DateTimeToDateOnlyConverter}}"/>
+                                    <DataGridTextColumn Header="{ns:Loc duration}" Width="0.8*" Binding="{Binding Duration}"/>
+                                    <DataGridTextColumn Header="{ns:Loc location}" Width="1*" Binding="{Binding Location}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <Button Command="{Binding JoinActiveTourCommand}" Style="{DynamicResource LightButton}" Content="Join tour" Grid.Row="1" Grid.Column="1" Width="150" Height="35" Margin="90,5,20,20"  VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
+                            <Button Command="{Binding JoinActiveTourCommand}" Style="{DynamicResource LightButton}" Content="{ns:Loc Join_tour}" Grid.Row="1" Grid.Column="1" Width="150" Height="35" Margin="90,5,20,20"  VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label FontSize="12" Content="Current checkpoint:" Style="{DynamicResource LightHeaderLabel}" VerticalAlignment="Center" Margin="418,5,0,0"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,325,0">
+                            <Label Width="auto" FontSize="12" Content="{ns:Loc Current_checkpoint}" Style="{DynamicResource LightHeaderLabel}" VerticalAlignment="Center" Margin="0,5,5,0"/>
                             <TextBox FontSize="14" Width="120" Height="20" Margin="5,10,5,5" IsEnabled="False" Text="{Binding CurrentCheckpoint.Name}"/>
                         </StackPanel>
                     </StackPanel>
@@ -78,16 +76,16 @@
                         <RowDefinition Height="1.5*"/>
                         <RowDefinition Height="10*"/>
                     </Grid.RowDefinitions>
-                    <Label Style="{DynamicResource LightHeaderLabel}" Content="Completed tours" VerticalAlignment="Center" Margin="20,0,0,0"/>
-                    <Button Command="{Binding RateGuideCommand}" Style="{DynamicResource LightButton}" Content="Rate guide" Grid.Row="1" Grid.Column="1" Width="150" Height="35" Margin="20,5,20,20" VerticalAlignment="Top" HorizontalContentAlignment="Center"></Button>
-                    <DataGrid CellStyle="{DynamicResource LightDataGridCell}" RowStyle="{DynamicResource LightDataGridRow}" Style="{DynamicResource LighDataGrid}" ColumnHeaderStyle="{DynamicResource LightHeaderStyle}" ScrollViewer.VerticalScrollBarVisibility="Disabled" MaxHeight="200" Grid.Column="0" Grid.Row="1" Margin="20,0,20,20" x:Name="CompletedToursTable" SelectedItem="{Binding SelectedTour}" ItemsSource="{Binding CompletedTours, Mode=OneWay, UpdateSourceTrigger=PropertyChanged }" FontSize="12" FontWeight="Normal" BorderBrush="White" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True">
+                    <Label Style="{DynamicResource LightHeaderLabel}" Content="{ns:Loc Completed_tours}" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                    <Button Command="{Binding RateGuideCommand}" Style="{DynamicResource LightButton}" Content="{ns:Loc Rate_guide}" Grid.Row="1" Grid.Column="1" Width="150" Height="35" Margin="20,5,20,20" VerticalAlignment="Top" HorizontalContentAlignment="Center"></Button>
+                    <DataGrid CellStyle="{DynamicResource LightDataGridCell}" RowStyle="{DynamicResource LightDataGridRow}" Style="{DynamicResource LighDataGrid}" ColumnHeaderStyle="{DynamicResource LightHeaderStyle}" ScrollViewer.VerticalScrollBarVisibility="Disabled" MaxHeight="200" Grid.Column="0" Grid.Row="1" Margin="20,0,20,20" x:Name="CompletedToursTable" SelectedItem="{Binding SelectedTour}" ItemsSource="{Binding CompletedTours, Mode=OneWay, UpdateSourceTrigger=PropertyChanged }" FontSize="12" FontWeight="Normal" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Start Date"  Width="1*" Binding="{Binding Start.Date, Converter={cvt:DateTimeToDateOnlyConverter}}" />
-                            <DataGridTextColumn Header="Start Time"  Width="1*" Binding="{Binding Start.Time}"/>
-                            <DataGridTextColumn Header="End Date"  Width="1*" Binding="{Binding End.Date, Converter={cvt:DateTimeToDateOnlyConverter}}" />
-                            <DataGridTextColumn Header="End Time"  Width="1*" Binding="{Binding End.Time}"/>
-                            <DataGridTextColumn Header="GuideId"  Width="1*" Binding="{Binding Guide.Id}" />
-                            <DataGridTextColumn Header="TourId"  Width="1*" Binding="{Binding Tour.Id}" />
+                            <DataGridTextColumn Header="{ns:Loc start_date}"  Width="1*" Binding="{Binding Start.Date, Converter={cvt:DateTimeToDateOnlyConverter}}" />
+                            <DataGridTextColumn Header="{ns:Loc start_time}"  Width="1*" Binding="{Binding Start.Time}"/>
+                            <DataGridTextColumn Header="{ns:Loc end_date}"  Width="1*" Binding="{Binding End.Date, Converter={cvt:DateTimeToDateOnlyConverter}}" />
+                            <DataGridTextColumn Header="{ns:Loc end_time}"  Width="1*" Binding="{Binding End.Time}"/>
+                            <DataGridTextColumn Header="{ns:Loc guideId}"  Width="1*" Binding="{Binding Guide.Id}" />
+                            <DataGridTextColumn Header="{ns:Loc tourId}"  Width="1*" Binding="{Binding Tour.Id}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -97,13 +95,14 @@
             <ContentControl Content="{Binding SearchViewModel}"></ContentControl>
         </TabItem>
         <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="Vouchers" MinWidth="100">
-            <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Label Style="{DynamicResource LightHeaderLabel}" Content="Available vouchers" VerticalAlignment="Center" Margin="15,20,0,10"/>
-                <ScrollViewer Height="490" VerticalScrollBarVisibility="Hidden" Width="400" HorizontalAlignment="Left">
-                    <ItemsControl  Margin="15,0,15,0" ItemsSource="{Binding Vouchers, Mode=TwoWay}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border HorizontalAlignment="Left" Width="300" Margin="8" BorderBrush="#7588c4" Background="White" BorderThickness="2" CornerRadius="3">
+            <Grid Style="{DynamicResource LightBackground}">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <Label Style="{DynamicResource LightHeaderLabel}" Content="{ns:Loc Available_vouchers}" VerticalAlignment="Center" Margin="15,20,0,10"/>
+                    <ScrollViewer Height="490" VerticalScrollBarVisibility="Hidden" Width="400" HorizontalAlignment="Left">
+                        <ItemsControl  Margin="15,0,15,0" ItemsSource="{Binding Vouchers, Mode=TwoWay}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border HorizontalAlignment="Left" Width="300" Margin="8" Background="{DynamicResource ItemsControlBackground}" Style="{DynamicResource LightBorder}" BorderThickness="2" CornerRadius="3">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="1*"></RowDefinition>
@@ -117,17 +116,18 @@
                                             <Border Padding="1" Grid.Column="0" Grid.RowSpan="2" Width="36" Height="36" VerticalAlignment="Center" BorderBrush="#7588c4" Background="White" BorderThickness="2" CornerRadius="18">
                                                 <Label Style="{DynamicResource LightHeaderLabel}" Margin="5,0,0,0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Content="{Binding Id, Mode=TwoWay}"></Label>
                                             </Border>
-                                            <Label Style="{DynamicResource VoucherHeader}" Margin="0,0,5,0" Grid.Column="1" Grid.Row="0">Obtain date:</Label>
-                                            <Label Style="{DynamicResource VoucherHeader}" Margin="0,0,5,0" Grid.Column="1" Grid.Row="1">Expiry date:</Label>
+                                            <Label Style="{DynamicResource ItemsControlHeader }" Margin="0,0,5,0" Grid.Column="1" Content="{ns:Loc obtain_date}" Grid.Row="0"></Label>
+                                            <Label Style="{DynamicResource ItemsControlHeader }" Margin="0,0,5,0" Grid.Column="1" Content="{ns:Loc expiry_date}" Grid.Row="1"></Label>
                                             <Label Style="{DynamicResource LightHeaderLabel}" FontWeight="Medium" Grid.Column="3" Grid.Row="0" Margin="5,0,0,0" Content="{Binding ObtainDate.Date, Mode=TwoWay,Converter={cvt:DateTimeToDateOnlyConverter}}" Width="90"/>
                                             <Label Style="{DynamicResource LightHeaderLabel}" FontWeight="Medium" Grid.Column="3" Grid.Row="1" Margin="5,0,0,0" Content="{Binding ExpirationDate.Date, Mode=TwoWay,Converter={cvt:DateTimeToDateOnlyConverter}}" Width="90"/>
                                         </Grid>
                                     </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
-            </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </StackPanel>
+            </Grid>
         </TabItem>
     </TabControl>
 </UserControl>

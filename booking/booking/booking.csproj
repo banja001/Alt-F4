@@ -19,6 +19,7 @@
     <None Remove="Resources\Icons\approved.png" />
     <None Remove="Resources\Icons\avatar.png" />
     <None Remove="Resources\Icons\avatarico.png" />
+    <None Remove="Resources\Icons\avatarZeleni.png" />
     <None Remove="Resources\Icons\finished.png" />
     <None Remove="Resources\Icons\home.png" />
     <None Remove="Resources\Icons\invalid.png" />
@@ -29,6 +30,7 @@
     <None Remove="Resources\Icons\request.png" />
     <None Remove="Resources\Icons\statistics.png" />
     <None Remove="Resources\Icons\taskbarIcon.png" />
+    <None Remove="Resources\Icons\tooltip.png" />
     <None Remove="Resources\Icons\unknown.png" />
     <None Remove="Resources\Icons\upcoming.png" />
     <None Remove="Resources\Icons\add_accommodation.png" />
@@ -40,7 +42,9 @@
     <None Remove="Resources\Icons\schedule_renovation.png" />
     <None Remove="Resources\Icons\view_ratings.png" />
     <None Remove="Resources\Icons\view_renovations.png" />
+    <None Remove="Resources\Icons\whiteLanguage.png" />
     <None Remove="Resources\Icons\whiteLogout.png" />
+    <None Remove="Resources\Icons\whitePalette.png" />
     <None Remove="Resources\Icons\whiteRequest.png" />
     <None Remove="Resources\Icons\whiteStatistics.png" />
     <None Remove="Resources\Icons\whiteTraveler.png" />
@@ -61,6 +65,7 @@
     <Resource Include="Resources\Icons\approved.png" />
     <Resource Include="Resources\Icons\avatar.png" />
     <Resource Include="Resources\Icons\avatarico.png" />
+    <Resource Include="Resources\Icons\avatarZeleni.png" />
     <Resource Include="Resources\Icons\finished.png" />
     <Resource Include="Resources\Icons\home.png" />
     <Resource Include="Resources\Icons\invalid.png" />
@@ -70,6 +75,7 @@
     <Resource Include="Resources\Icons\request.png" />
     <Resource Include="Resources\Icons\statistics.png" />
     <Resource Include="Resources\Icons\taskbarIcon.png" />
+    <Resource Include="Resources\Icons\tooltip.png" />
     <Resource Include="Resources\Icons\unknown.png" />
     <Resource Include="Resources\Icons\upcoming.png" />
     <Resource Include="Resources\Icons\add_accommodation.png" />
@@ -81,7 +87,9 @@
     <Resource Include="Resources\Icons\schedule_renovation.png" />
     <Resource Include="Resources\Icons\view_ratings.png" />
     <Resource Include="Resources\Icons\view_renovations.png" />
+    <Resource Include="Resources\Icons\whiteLanguage.png" />
     <Resource Include="Resources\Icons\whiteLogout.png" />
+    <Resource Include="Resources\Icons\whitePalette.png" />
     <Resource Include="Resources\Icons\whiteRequest.png" />
     <Resource Include="Resources\Icons\whiteStatistics.png" />
     <Resource Include="Resources\Icons\whiteTraveler.png" />
@@ -91,6 +99,7 @@
     <PackageReference Include="Expression.Interaction" Version="3.0.40218" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
     <PackageReference Include="FluentScheduler" Version="5.5.1" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
     <PackageReference Include="LiveCharts" Version="0.9.7" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.3" />
@@ -98,12 +107,40 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="Syncfusion.SfInput.WPF" Version="21.1.39" />
     <PackageReference Include="Syncfusion.Shared.WPF" Version="21.1.39" />
+    <PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="Xceed.Wpf.Toolkit.NET5">
       <HintPath>bin\Debug\net6.0-windows\Xceed.Wpf.Toolkit.NET5.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

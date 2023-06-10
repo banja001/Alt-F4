@@ -15,6 +15,7 @@ namespace Domain.RepositoryInterfaces
 
         public int GetNumberOfGuestsForTourId(int tourId);
         public ReservationTour GetById(int id);
+        public List<ReservationTour> GetByUserId(int id);
 
         public void Delete(ReservationTour reservation);
     }

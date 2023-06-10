@@ -9,15 +9,35 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using booking.Repository;
+using System.ComponentModel;
+using LiveCharts.Wpf;
 
 namespace booking.Model
 {
-    public class AppointmentCheckPoint:ISerializable
+    public class AppointmentCheckPoint:ISerializable,INotifyPropertyChanged
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public bool Active { get; set; }
-        public bool NotChecked { get; set; }
+        private bool active;
+        private bool notChecked;
+        public bool Active 
+        {
+            get { return active; }
+            set
+            {
+                active = value;
+                OnPropertyChanged(nameof(Active));
+            }
+        }
+        public bool NotChecked
+        {
+            get { return notChecked; }
+            set
+            {
+                notChecked = value;
+                OnPropertyChanged(nameof(NotChecked));
+            }
+        }
         public int AppointmentId { get; set; }
         public int Order { get; set; }
 
@@ -35,6 +55,12 @@ namespace booking.Model
             AppointmentId = appointmentId;
             Order = order;
             NotChecked = !active;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public string[] ToCSV()

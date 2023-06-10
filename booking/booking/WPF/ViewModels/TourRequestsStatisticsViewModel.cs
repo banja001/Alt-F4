@@ -5,6 +5,8 @@ using booking.View.Guide;
 using booking.WPF.ViewModels;
 using Domain.DTO;
 using Domain.Model;
+using LiveCharts.Wpf;
+using LiveCharts;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +18,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using WPF.Views.Guide;
+using System.Windows.Media;
+using System.Windows.Media.Effects;
 
 namespace WPF.ViewModels
 {
@@ -27,7 +31,46 @@ namespace WPF.ViewModels
         private string selectedMonth;
         private string language;
         private string numberOfTourRequests;
+        private bool isLocationSelected;
+        private bool isTimeSelected;
+        private bool isLanguageSelected;
 
+        public bool IsLocationSelected
+        {
+            get { return isLocationSelected; }
+            set
+            {
+                if (isLocationSelected != value)
+                {
+                    isLocationSelected = value;
+                    OnPropertyChanged(nameof(IsLocationSelected));
+                }
+            }
+        }
+        public bool IsTimeSelected
+        {
+            get { return isTimeSelected; }
+            set
+            {
+                if (isTimeSelected != value)
+                {
+                    isTimeSelected = value;
+                    OnPropertyChanged(nameof(IsTimeSelected));
+                }
+            }
+        }
+        public bool IsLanguageSelected
+        {
+            get { return isLanguageSelected; }
+            set
+            {
+                if (isLanguageSelected != value)
+                {
+                    isLanguageSelected = value;
+                    OnPropertyChanged(nameof(IsLanguageSelected));
+                }
+            }
+        }
         public string SelectedYear
         {
             get { return selectedYear; }
@@ -101,6 +144,72 @@ namespace WPF.ViewModels
                 OnPropertyChanged(nameof(NumberOfTourRequests));
             }
         }
+
+        private bool locationTooltip;
+
+        public bool LocationTooltip
+        {
+            get { return locationTooltip; }
+            set
+            {
+                if (locationTooltip != value)
+                {
+                    locationTooltip = value;
+                    OnPropertyChanged(nameof(LocationTooltip));
+                }
+            }
+        }
+
+        private bool timeTooltip;
+
+        public bool TimeTooltip
+        {
+            get { return timeTooltip; }
+            set
+            {
+                if (timeTooltip != value)
+                {
+                    timeTooltip = value;
+                    OnPropertyChanged(nameof(TimeTooltip));
+                }
+            }
+        }
+
+        private bool languageTooltip;
+
+        public bool LanguageTooltip
+        {
+            get { return languageTooltip; }
+            set
+            {
+                if (languageTooltip != value)
+                {
+                    languageTooltip = value;
+                    OnPropertyChanged(nameof(LanguageTooltip));
+                }
+            }
+        }
+
+        private AxesCollection axis;
+        public AxesCollection Axis 
+        {
+            get { return axis; }
+            set
+            {
+                axis = value;
+                OnPropertyChanged(nameof(Axis));
+            }
+        }
+        private SeriesCollection series;
+        public SeriesCollection Series 
+        {
+            get { return series; }
+            set
+            {
+                series = value;
+                OnPropertyChanged(nameof(Series));
+            }
+        }
         public ObservableCollection<string> Cities { get; set; }
         public ObservableCollection<string> States { get; set; }
         public ObservableCollection<string> Years { get; set; }
@@ -110,10 +219,21 @@ namespace WPF.ViewModels
         private LocationService _locationService;
         private SimpleRequestService _simpleRequestService;
 
-        public ICommand SearchCommand => new RelayCommand(Search);
+        //public ICommand SearchCommand => new RelayCommand(Search);
+
+        public ICommand LocationSelectedCommand => new RelayCommand(LocationSelected);
+        public ICommand TimeSelectedCommand => new RelayCommand(TimeSelected);
+        public ICommand LanguageSelectedCommand => new RelayCommand(LanguageSelected);
         public ICommand FillCityCBCommand => new RelayCommand(FillCities);
         public ICommand FillMonthsCBCommand => new RelayCommand(FillMonths);
         public ICommand CreateCommand => new RelayCommand(CreateTourWithHelpOfStatistics);
+        public ICommand TooltipLocationCommand => new RelayCommand(LocationToolTip);
+        public ICommand TooltipTimeCommand => new RelayCommand(TimeToolTip);
+
+        public ICommand TooltipLanguageCommand => new RelayCommand(LanguageToolTip);
+
+ 
+
         public User Guide { get; set; }
         private NavigationService navigationService;
         public TourRequestsStatisticsViewModel(User guide, NavigationService navigationService) 
@@ -127,13 +247,29 @@ namespace WPF.ViewModels
             AllRequests=new ObservableCollection<SimpleRequest>();
             Guide = guide;
             this.navigationService=navigationService;
+            isLocationSelected = true;
+            IsTimeSelected = false;
+            IsLanguageSelected = false;
             LoadRequests();
+            CreateStatisticForGraphState();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        private void LocationToolTip()
+        {
+            LocationTooltip = !LocationTooltip;
+        }
+        private void TimeToolTip()
+        {
+            TimeTooltip = !TimeTooltip;
+        }
+        private void LanguageToolTip()
+        {
+            LanguageTooltip = !LanguageTooltip;
         }
         private void LoadRequests()
         {
@@ -150,6 +286,7 @@ namespace WPF.ViewModels
             {
                 Cities.Add(state);
             }
+            CreateStatisticForGraphCity(SelectedState);
         }
 
         private void FillMonths() 
@@ -159,17 +296,142 @@ namespace WPF.ViewModels
             {
                 Months.Add(year);
             }
+            CreateStatisticForGraphMonths(SelectedYear);
+        }
+        private void LocationSelected()
+        {
+
+            SelectedYear = "";
+            IsLocationSelected = true;
+            CreateStatisticForGraphState();
+            
+        }
+        private void TimeSelected()
+        {
+            SelectedState = "";
+            IsTimeSelected = true;
+            CreateStatisticForGraphYears();   
+        }
+        private void LanguageSelected()
+        {
+            SelectedYear = "";
+            SelectedState = "";
+            IsLanguageSelected = true;
+            CreateStatisticForGraphLanguage();
+            
         }
         private void CreateTourWithHelpOfStatistics()
         {
-            ParametarOfStatisticsForTourCreationWindow window = new ParametarOfStatisticsForTourCreationWindow();
-            window.ShowDialog();
+            Window window = System.Windows.Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            if (window != null)
+            {
+                window.Effect = new BlurEffect();
+            }
+            ParametarOfStatisticsForTourCreationWindow pwindow = new ParametarOfStatisticsForTourCreationWindow();
+            pwindow.ShowDialog();
 
             if (ParametarOfStatisticsForTourCreationVIewModel.Accept)
             {
                 string [] parameters= ParametarOfStatisticsForTourCreationVIewModel.Parameter.Split("|");
                 navigationService.Navigate(new AddTourWindow(parameters, Guide));
             }
+            window.Effect = null;
+        }
+
+        private void CreateStatisticForGraphYears()
+        {
+            Series = new SeriesCollection();
+            Axis = new AxesCollection();
+            ColumnSeries YearsColumns = new ColumnSeries() { DataLabels = true, Values = new ChartValues<int>(), LabelPoint = point => point.Y.ToString(), Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#AA96DA")) };
+            Axis yearsAxis = new Axis() { Separator = new LiveCharts.Wpf.Separator() { Step = 1, IsEnabled = false } };
+            yearsAxis.Labels = new List<string>();
+            yearsAxis.Foreground = new SolidColorBrush(Colors.Black);
+            yearsAxis.FontSize = 15;
+            var yearRequestCountPairs = _simpleRequestService.GetYearsForChart(AllRequests.ToList());
+            foreach (var pair in yearRequestCountPairs)
+            {
+                yearsAxis.Labels.Add(pair.Key);
+                YearsColumns.Values.Add(pair.Value);
+            }
+            Series.Add(YearsColumns);
+            Axis.Add(yearsAxis);
+            
+
+
+        }
+        private void CreateStatisticForGraphMonths(string selectedYear)
+        {
+            Series = new SeriesCollection();
+            Axis = new AxesCollection();
+            ColumnSeries monthsColumns = new ColumnSeries() { DataLabels = true, Values = new ChartValues<int>(), LabelPoint = point => point.Y.ToString(), Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#AA96DA")) };
+            Axis monthsAxis = new Axis() { Separator = new LiveCharts.Wpf.Separator() { Step = 1, IsEnabled = false } };
+            monthsAxis.Labels = new List<string>();
+            monthsAxis.Foreground = new SolidColorBrush(Colors.Black);
+            monthsAxis.FontSize = 15;
+            var yearRequestCountPairs = _simpleRequestService.GetMonthsForChart(AllRequests.ToList(), selectedYear);
+            foreach (var pair in yearRequestCountPairs)
+            {
+                monthsAxis.Labels.Add(pair.Key);
+                monthsColumns.Values.Add(pair.Value);
+            }
+            Series.Add(monthsColumns);
+            Axis.Add(monthsAxis);
+        }
+        private void CreateStatisticForGraphState()
+        {
+            Series = new SeriesCollection();
+            Axis = new AxesCollection();
+            ColumnSeries stateColumns = new ColumnSeries() { DataLabels = true, Values = new ChartValues<int>(), LabelPoint = point => point.Y.ToString(), Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#AA96DA")) };
+            Axis stateAxis = new Axis() { Separator = new LiveCharts.Wpf.Separator() { Step = 1, IsEnabled = false } };
+            stateAxis.Labels = new List<string>();
+            stateAxis.Foreground = new SolidColorBrush(Colors.Black);
+            stateAxis.FontSize = 15;
+            var yearRequestCountPairs = _simpleRequestService.GetStatesForChart(AllRequests.ToList());
+            foreach (var pair in yearRequestCountPairs)
+            {
+                stateAxis.Labels.Add(pair.Key);
+                stateColumns.Values.Add(pair.Value);
+            }
+            Series.Add(stateColumns);
+            Axis.Add(stateAxis);
+        }
+
+        private void CreateStatisticForGraphCity(string selectedState)
+        {
+            Series = new SeriesCollection();
+            Axis = new AxesCollection();
+            ColumnSeries cityColumns = new ColumnSeries() { DataLabels = true, Values = new ChartValues<int>(), LabelPoint = point => point.Y.ToString(), Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#AA96DA")) };
+            Axis cityAxis = new Axis() { Separator = new LiveCharts.Wpf.Separator() { Step = 1, IsEnabled = false } };
+            cityAxis.Labels = new List<string>();
+            cityAxis.Foreground = new SolidColorBrush(Colors.Black);
+            cityAxis.FontSize = 15;
+            var yearRequestCountPairs = _simpleRequestService.GetCitiesForChart(AllRequests.ToList(), selectedState);
+            foreach (var pair in yearRequestCountPairs)
+            {
+                cityAxis.Labels.Add(pair.Key);
+                cityColumns.Values.Add(pair.Value);
+            }
+            Series.Add(cityColumns);
+            Axis.Add(cityAxis);
+        }
+
+        private void CreateStatisticForGraphLanguage()
+        {
+            Series = new SeriesCollection();
+            Axis = new AxesCollection();
+            ColumnSeries languageColumns = new ColumnSeries() { DataLabels = true, Values = new ChartValues<int>(), LabelPoint = point => point.Y.ToString(), Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#AA96DA")) };
+            Axis languageAxis = new Axis() { Separator = new LiveCharts.Wpf.Separator() { Step = 1, IsEnabled = false } };
+            languageAxis.Labels = new List<string>();
+            languageAxis.Foreground = new SolidColorBrush(Colors.Black);
+            languageAxis.FontSize = 15;
+            var languageRequestCountPairs = _simpleRequestService.GetLanguagesForChart(AllRequests.ToList());
+            foreach (var pair in languageRequestCountPairs)
+            {
+                languageAxis.Labels.Add(pair.Key);
+                languageColumns.Values.Add(pair.Value);
+            }
+            Series.Add(languageColumns);
+            Axis.Add(languageAxis);
         }
         private void Search()
         {

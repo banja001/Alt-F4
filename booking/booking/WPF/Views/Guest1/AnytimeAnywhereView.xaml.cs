@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF.ViewModels.Guest1;
 
 namespace WPF.Views
 {
@@ -18,11 +19,11 @@ namespace WPF.Views
     /// </summary>
     public partial class AnytimeAnywhereView : Page
     {
-        private int userId;
         public AnytimeAnywhereView(int userId)
         {
             InitializeComponent();
-            this.userId = userId;
+
+            DataContext = new AnytimeAnywhereViewModel(userId);
         }
     }
 }

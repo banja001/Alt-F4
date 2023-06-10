@@ -6,11 +6,11 @@
       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
       xmlns:local="clr-namespace:WPF.Views.Guide"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="TourRequestaAcceptancePage" Height="650" Width="790"
-      >
-
-    <Grid Background="LightGray">
+      Title="TourRequestaAcceptancePage" >
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Page.Resources>
+    <Grid Background="#FEFFDE">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -42,7 +42,7 @@
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding MaxGuests}" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20" Width="180" Margin="70,0"/>
 
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Start date:" VerticalAlignment="Center" FontSize="20" Margin="70,0,230,0"/>
-        <DatePicker  Grid.Row="2" Grid.Column="0" SelectedDate="{Binding SelectedStartDate, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" FontSize="20" HorizontalAlignment="Right" Margin="210,0,5,0" Width="180">
+        <DatePicker  Grid.Row="2" Grid.Column="0" SelectedDate="{Binding SelectedStartDate, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" FontSize="20" HorizontalAlignment="Right" Margin="200,0,5,0" Width="180">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectedDateChanged" >
                     <i:InvokeCommandAction Command="{Binding CutRangeCommand}"/>
@@ -53,9 +53,18 @@
         <TextBlock Grid.Row="2" Grid.Column="1" Text="End date:" VerticalAlignment="Center" FontSize="20" Margin="5"/>
         <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding SelectedEndDate, UpdateSourceTrigger=PropertyChanged}" DisplayDateStart="{Binding DisplayDateStart, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" FontSize="20" HorizontalAlignment="Right" Margin="70,0" Width="180"/>
 
-        <Button Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="180" FontSize="20" Content="Search" Command="{Binding SearchCommand}"/>
+        <Button Background="#AA96DA" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="180" FontSize="20" Content="Search" Command="{Binding SearchCommand}"/>
 
-        <DataGrid Grid.Row="4" Grid.ColumnSpan="2" Margin="5" Name="AllRequests" ItemsSource="{Binding AllRequests, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedTourRequest, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" IsReadOnly="True" Width="760" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
+        <Button VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Height="20" Width="20" Margin="5,0" Command="{Binding TooltipSearchCommand}">
+            <Button.Background>
+                <SolidColorBrush Color="#AA96DA"></SolidColorBrush>
+            </Button.Background>
+            <Button.Content>
+                <Image Source="/Resources/Icons/tooltip.png"/>
+            </Button.Content>
+        </Button>
+
+        <DataGrid Style="{StaticResource CustomDataGridStyle}"  Grid.Row="4" Grid.ColumnSpan="2" Margin="10" Name="AllRequests" ItemsSource="{Binding AllRequests, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedTourRequest, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" IsReadOnly="True" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Description" Binding="{Binding Description}" CanUserResize="False" Width="*"/>
                 <DataGridTextColumn Header="State" Binding="{Binding Location.State}" CanUserResize="False"  Width="*"/>
@@ -68,13 +77,26 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Grid.Row="5" Grid.Column="0" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180" FontSize="20" Content="Create report"/>
+        <Grid Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="180" Height="150" Visibility="{Binding SearchTooltip, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,6,10,0" Grid.RowSpan="2">
+            <Canvas Grid.Column="0" Margin="0,10,0,0">
+                <Path Fill="#F6E3C9" Stroke="Black" StrokeThickness="2"
+              Data="M0,10 L10,0 10,20 Z" HorizontalAlignment="Center" Canvas.Top="-3.3" VerticalAlignment="Center" Canvas.Left="151.75"/>
+            </Canvas>
 
-        <Button Grid.Row="5" Grid.Column="0" Margin="5"  Command="{Binding AcceptCommand}" HorizontalAlignment="Right" VerticalAlignment="Center" Width="180" FontSize="20" Content="Create tour"/>
+            <Border Grid.Column="1" Width="180" Height="120" CornerRadius="10" Background="#FEFFDE" BorderBrush="Black" BorderThickness="2"/>
 
-        <Button Grid.Row="5" Grid.Column="1" Margin="5" Command="{Binding RejectCommand}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180" FontSize="20" Content="Reject tour"/>
+            <TextBlock Width="160" Height="100" Grid.Column="1" TextWrapping="Wrap" Text="You can fill the form with data and press button &quot;Search&quot;.
+                       It will filter tour requests and show that in table below.
+                       By clicking button &quot;Generate report&quot;, you can generate PDF report." HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Margin="10"/>
+        </Grid>
 
-        <Button Grid.Row="5" Grid.Column="1" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center" Width="180" FontSize="20" Content="Demo"/>
+        <Button Background="#AA96DA" Grid.Row="5" Grid.Column="0" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180" FontSize="20" Content="Generate report"/>
+
+        <Button  Background="#AA96DA" Grid.Row="5" Grid.Column="0" Margin="5"  Command="{Binding AcceptCommand}" HorizontalAlignment="Right" VerticalAlignment="Center" Width="180" FontSize="20" Content="Create tour"/>
+
+        <Button Background="#AA96DA" Grid.Row="5" Grid.Column="1" Margin="5" Command="{Binding RejectCommand}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180" FontSize="20" Content="Reject tour"/>
+
+        <Button Background="#AA96DA" Grid.Row="5" Grid.Column="1" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center" Width="180" FontSize="20" Content="Demo"/>
 
     </Grid>
 </Page>
