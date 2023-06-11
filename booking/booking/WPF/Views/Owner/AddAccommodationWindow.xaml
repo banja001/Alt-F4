@@ -263,7 +263,7 @@
         <Label Content="Min days for reservation" Grid.Column="0" Grid.Row="6" />
         <Label Content="Num of days before u can cancel" Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" />
         <Label Content="Images" Grid.Row="11" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="173,23,0,0" Grid.RowSpan="2" VerticalAlignment="Top" />
-        <TextBox  Name="NameTextBox" Grid.Row="2"  TextWrapping="Wrap" >
+        <TextBox   Name="NameTextBox" Grid.Row="2"  TextWrapping="Wrap" >
             <TextBox.Text>
                 <Binding Path="Name" UpdateSourceTrigger="PropertyChanged"  ValidatesOnDataErrors="True" NotifyOnValidationError="True">
                     <Binding.ValidationRules>
@@ -375,7 +375,7 @@
         <Image Stretch="Fill" Source="{Binding Slika,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="124" Grid.Row="15" Grid.ColumnSpan="2" Grid.Column="0" VerticalAlignment="Top" Width="141" Margin="130,6,0,0" />
         <Button Template="{DynamicResource ButtonTemplate1}" IsEnabled="{Binding NextEnabled,UpdateSourceTrigger=PropertyChanged}" Command="{Binding NextPictureCommand}" Content="&gt;&gt;" Background="#447782" HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1" VerticalAlignment="Center" Height="110" Width="20"/>
         <Button Template="{DynamicResource ButtonTemplate1}" IsEnabled="{Binding PrevEnabled,UpdateSourceTrigger=PropertyChanged}" Command="{Binding PrevPictureCommand}" Content="&lt;&lt;" Background="#447782" HorizontalAlignment="Center" Grid.Row="15" Grid.Column="0" VerticalAlignment="Center" Height="110" Width="20"/>
-        <Label Content="{Binding StateLabel}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Grid.Row="5" Width="80" Margin="42,0,0,0" Foreground="DarkGray"/>
-        <Label Content="{Binding CityLabel}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Grid.Row="5" Grid.Column="1" Width="80" Margin="42,0,0,0" Foreground="DarkGray" />
+        <Label IsHitTestVisible="False" Content="{Binding StateLabel}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Grid.Row="5" Width="80" Margin="42,0,0,0" Foreground="DarkGray"/>
+        <Label IsHitTestVisible="False" Content="{Binding CityLabel}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Grid.Row="5" Grid.Column="1" Width="80" Margin="42,0,0,0" Foreground="DarkGray" />
     </Grid>
 </Page>
