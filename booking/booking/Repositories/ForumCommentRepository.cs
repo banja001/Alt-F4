@@ -47,5 +47,11 @@ namespace Repositories
         {
             return forumComments.Count == 0 ? 1 : forumComments.Max(f => f.Id) + 1;
         }
+        public void Update(int id)
+        {
+            Load();
+            forumComments.Find(s => s.Id == id).Reports += 1;
+            Save();
+        }
     }
 }

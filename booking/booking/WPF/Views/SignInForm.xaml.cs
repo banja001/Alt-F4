@@ -32,6 +32,7 @@ namespace booking.View
         private readonly OwnerRatingRepository _ownerRatingsRepository;
         private string _userName;
 
+        public bool tutorial { get; set; }
         public string UserName
         {
             get => _userName;
@@ -95,9 +96,20 @@ namespace booking.View
 
                     if (user.Role == "Owner")
                     {
-                        MainWindow win = new MainWindow(user.Id);
-                        win.Show();
+                        if (user.Tutorial) {
+                            MainWindow win = new MainWindow(user.Id);
+                            win.Show();
+                        }
+                        else
+                        {
+                            TutorialOwner win=new TutorialOwner(user.Id);
+                            win.Show();
+                        }
+                        user.Tutorial = true;
+                        _repository.Update(user);
                         this.Close();
+
+
                     }
                     else if (user.Role == "Guest1")
                     {

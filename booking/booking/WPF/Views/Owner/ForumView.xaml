@@ -1,0 +1,110 @@
+﻿<Page x:Class="WPF.Views.Owner.ForumView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WPF.Views.Owner"
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+      mc:Ignorable="d" 
+      d:DesignHeight="641" d:DesignWidth="400"
+      Title="ForumView"
+      >
+
+    <Grid x:Name="MyGrid">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseLeftButtonDown">
+                <i:InvokeCommandAction Command="{Binding Grid_MouseLeftButtonDownCommand}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid.Resources>
+            <Style TargetType="ListBox">
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="Foreground" Value="LightGray"/>
+
+            </Style>
+
+            <Style TargetType="DataGridCell">
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#E69138"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+                    </Trigger>
+                </Style.Triggers>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+
+
+            </Style>
+
+            <Style TargetType="DataGrid">
+                <Setter Property="Foreground" Value="LightGray"/>
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="CanUserResizeColumns" Value="False"/>
+                <Setter Property="CanUserResizeRows" Value="False"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
+
+            </Style>
+            <Style TargetType="DataGridRow" x:Name="DatagridRowStyle">
+                <Setter  Property="Background" Value="black"/>
+
+            </Style>
+            <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="DarkRed"/>
+                <Setter Property="Height" Value="28"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            </Style>
+
+            <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
+            <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
+            <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
+
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="7.25*"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1.5*"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Forum info:" FontSize="17"   Foreground="#E69138"/>
+        <Label Grid.Row="1" Content="{Binding InfoLabel}"/>
+        <Line X2="1" Grid.Row="2"/>
+        <Label Name="ReportComment" Content="Comments: [?]" Grid.Row="2" FontSize="17"   Foreground="#E69138" HorizontalAlignment="Left" Margin="38,9,0,0" Grid.RowSpan="2" VerticalAlignment="Top">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding ReportCommentTooltipCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Label>
+        <Popup  PlacementTarget="{Binding ElementName=ReportComment}" IsOpen="{Binding ReportTooltip}">
+            <TextBlock FontSize="15" Text="Guests and owners that have accommodation&#x0a; on this location can leave a comment.&#x0a; If you think a comment isnt correct&#x0a; you can report it!" Background="LightGray" Padding="5"/>
+        </Popup>
+        <Label Content="Select an item if you want to report it!" Grid.Row="4" HorizontalAlignment="Left" Margin="36,0,0,0"/>
+        <ListBox x:Name="myListBox" Grid.Row="5" ItemsSource="{Binding comments}" SelectedItem="{Binding SelectList}" Margin="40,0,40,0" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
+        <Popup x:Name="MyPopup" PlacementTarget="{Binding ElementName=myListBox}" Placement="Mouse" StaysOpen="False" IsOpen="{Binding Open}" >
+            <TextBlock Text="{Binding PopupText}" Background="LightGray" Padding="10" Width="200" TextWrapping="Wrap"/>
+        </Popup>
+        <Button Content="Report" Grid.Row="6" Command="{Binding ReportCommentCommand}" Margin="238,6,42,6" />
+        <Line X2="1" Grid.Row="7"/>
+        <Label Content="Leave a comment:" Grid.Row="8" FontSize="17"   Foreground="#E69138" HorizontalAlignment="Left" Margin="39,0,0,0"/>
+        <Label Content="(Max characters 200)" Grid.Row="9" HorizontalAlignment="Left" Margin="41,0,0,0"/>
+
+        <TextBox MaxLength="200" BorderThickness="1" Grid.Row="10" TextWrapping="Wrap" BorderBrush="#447782"  Background="#FF2E2E2C" Foreground="LightGray" Text="{Binding Comment}"  Height="137" Width="330" />
+
+        <Button Content="Post" Grid.Row="11" Command="{Binding PostCommentCommand}" Margin="246,6,34,6"/>
+
+    </Grid>
+
+</Page>

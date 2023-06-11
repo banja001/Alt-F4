@@ -36,7 +36,7 @@
             <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Guest info:" Grid.ColumnSpan="2" Foreground="#E69138" FontWeight="Bold" FontSize="20" VerticalAlignment="Bottom"/>
+        <Label Content="Guest info:" Grid.ColumnSpan="2" Foreground="#E69138"  FontSize="17" VerticalAlignment="Bottom"/>
         <Label Name="NameLabel"  Content="{Binding NameLabel}" Grid.Row="1" Grid.ColumnSpan="2"/>
         <Label Name="AccommodationLabel" Content="{Binding AccommodationLabel}" Grid.Row="2" Grid.ColumnSpan="2"/>
         <Label Name="DateLabel" Content="{Binding DateLabel}" Grid.Row="3" Grid.ColumnSpan="2"/>
@@ -47,7 +47,7 @@
         <Label Content="Comment:" Grid.Row="7" HorizontalAlignment="Left" Margin="15,0,0,0"/>
         <Label Content="Guest was clean:" Grid.Row="5" HorizontalAlignment="Left" Margin="12,0,0,0" Grid.ColumnSpan="2"/>
         <Label Content="Guest followed&#xA;the rules:" Grid.Row="6" HorizontalAlignment="Left" Margin="12,0,0,0"/>
-        <TextBox Name="CommentTextBox" Text="{Binding Comment}" TextWrapping="Wrap" Grid.Row="8" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="347" Height="148" />
+        <TextBox Name="CommentTextBox" Background="#FF2E2E2C" Foreground="LightGray" Text="{Binding Comment}" TextWrapping="Wrap" Grid.Row="8" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="347" Height="148" />
         <Button Content="Confirm" Command="{Binding AddRatingCommand}" Grid.Row="9" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top"  Width="100" Margin="0,21,30,0"  />
         <Grid   Grid.Row="5" Grid.Column="1" >
             <Grid.ColumnDefinitions>

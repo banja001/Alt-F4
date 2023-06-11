@@ -4,12 +4,51 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WPF.Views.Owner"
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
       mc:Ignorable="d" 
       Height="641" Width="400"
       Title="AccommodationStats">
 
     <Grid>
         <Grid.Resources>
+
+            <Style TargetType="DataGridCell">
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#E69138"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+                    </Trigger>
+                </Style.Triggers>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                
+
+
+            </Style>
+
+            <Style TargetType="DataGrid">
+                <Setter Property="Foreground" Value="LightGray"/>
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="CanUserResizeColumns" Value="False"/>
+                <Setter Property="CanUserResizeRows" Value="False"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
+
+            </Style>
+            <Style TargetType="DataGridRow" x:Name="DatagridRowStyle">
+                <Setter  Property="Background" Value="black"/>
+
+            </Style>
+            <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="DarkRed"/>
+                <Setter Property="Height" Value="28"/>
+                <Setter Property="FontSize" Value="17"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                
+            </Style>
+
             <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
             <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
             <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
@@ -24,13 +63,22 @@
             <ColumnDefinition/>
 
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Content="View stats"/>
-        <Label Grid.Row="1" Content="Please select accommodation to view stats"/>
-        <Button Grid.Row="3" Command="{Binding GetStatsCommand}" Content="Get Stats"/>
+        <Label Name="ViewStatsLabel" Content="View stats [?]" Foreground="#E69138" FontSize="20" Width="286" Margin="0,18,0,0" VerticalAlignment="Top" Grid.RowSpan="2" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding ViewStatsTooltipCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Label>
+        <Popup  PlacementTarget="{Binding ElementName=ViewStatsLabel}" IsOpen="{Binding ViewStatsTooltip}">
+            <TextBlock Text="By selecting accommodation and &#x0a;clicking 'Get Stats' you get statistics &#x0a;for each year and month!" Background="LightGray" Padding="5" FontSize="15"/>
+        </Popup>
+        <Label Grid.Row="1" Content="Please select accommodation to view stats" Width="288" Margin="0,16,0,0" VerticalAlignment="Top"/>
+        <Button Grid.Row="3" Command="{Binding GetStatsCommand}" Content="Get Stats" Margin="222,13,58,53"/>
         <DataGrid x:Name="DataGridAccommodations" ItemsSource="{Binding AccommodationList, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
-                  IsReadOnly="True" AutoGenerateColumns="False" Width="360" Height="396" HorizontalAlignment="Center" VerticalAlignment="Center"
-                  Grid.Row="2">
+                  IsReadOnly="True" AutoGenerateColumns="False" Width="292" Height="435" HorizontalAlignment="Center" VerticalAlignment="Center"
+                  Grid.Row="2" ColumnHeaderStyle="{StaticResource HeaderStyle}" RowHeight="20" GridLinesVisibility="None">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
             </DataGrid.Resources>

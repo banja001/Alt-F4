@@ -1,0 +1,28 @@
+﻿<Window x:Class="WPF.Views.Owner.TutorialOwner"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF.Views.Owner"
+        mc:Ignorable="d"
+        Title="TutorialOwner" Height="749" Width="410" WindowStartupLocation="CenterScreen">
+    <Grid Background="Black">
+        <Grid.Resources>
+            <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+
+        <Image x:Name="imageControl" RenderOptions.BitmapScalingMode="HighQuality" Grid.ColumnSpan="2" SnapsToDevicePixels="True" />
+        
+
+        <Button Name="nextButton" Grid.Column="1" Grid.Row="1" Content="Next" Click="NextClick"/>
+        <Button Name="endButton" Grid.Column="0" Grid.Row="1" Content="End Tutorial" Click="EndTutorialClick"/>
+    </Grid>
+</Window>

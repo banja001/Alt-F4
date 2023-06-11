@@ -38,7 +38,13 @@ namespace WPF.Views.Owner
             OwnerId = id;
             OwnerWindow = new OwnerWindow(id);
             OwnerModel=OwnerWindow.OwnerModel;
+
+
+
             Main.Content = OwnerWindow;
+
+            
+
             w = this;
         }
         private void BackClick(object sender, RoutedEventArgs e)
@@ -96,6 +102,7 @@ namespace WPF.Views.Owner
         }
         public void ViewForumsClick(object sender, RoutedEventArgs e)
         {
+            Main.Content = new ForumSelect(OwnerId);
             dropdownMenu.IsOpen = false;
         }
 

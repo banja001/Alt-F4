@@ -44,7 +44,9 @@ namespace WPF.ViewModels.Guest1
         private readonly LocationService _locationService;
         private readonly ForumService _forumService;
         private readonly ForumCommentService _forumCommentService;
-
+        private readonly ForumNotificationService _forumNotificationService;
+        private readonly UserService _userService;
+        private readonly AccommodationService _accommodationService;
         public ICommand CloseWindowCommand => new RelayCommand(CloseWindow);
         public ICommand CreateForumCommand => new RelayCommand(CreateForum);
         public ICommand StateSelectionChangedCommand => new RelayCommand(StateSelectionChanged);
@@ -59,6 +61,10 @@ namespace WPF.ViewModels.Guest1
 
             FillStateComboBox();
             this.userId = userId;
+
+            _forumNotificationService = new ForumNotificationService();
+            _userService = new UserService();
+            _accommodationService = new AccommodationService();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -102,6 +108,39 @@ namespace WPF.ViewModels.Guest1
         {
             this.CloseCurrentWindow();
         }
+        private void notifyowner(){
+            int forumId = _forumService.MakeId();
+            string loc = SelectedState + "," + SelectedCity;
+            _forumService.Add(new Forum(forumId,loc , userId, true));
+            ////////////////////////////
+            string name=_userService.GetUserNameById(userId);
+            foreach(var user in _userService.GetAll())
+            {
+                if(user.Role=="Owner")
+                {
+                    foreach (var accommodation in _accommodationService.GetAll())
+                    {
+                        if (accommodation.OwnerId == user.Id)
+                        {
+                            if(_locationService.GetAll().Find(s=> s.State ==SelectedState && s.City==SelectedCity).Id==accommodation.LocationId)
+                            {
+                                _forumNotificationService.Add(new ForumNotification(_forumNotificationService.MakeId(),loc,name,user.Id));
+                                break;
+                            }
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+
+
+
+            
+
+            
 
         private void CreateForum()
         {
@@ -111,7 +150,7 @@ namespace WPF.ViewModels.Guest1
             if (existingForum == null)
             {
                 Forum newForum = new Forum(_forumService.MakeId(), SelectedState + "," + SelectedCity, userId, true, false);
-
+                notifyowner();
                 _forumService.Add(newForum);
                 _forumCommentService.Add(new ForumComment(_forumCommentService.MakeId(), Comment, newForum.Id, userId));
                 ForumViewModel.MyForums.Add(newForum);

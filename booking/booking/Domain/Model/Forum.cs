@@ -17,7 +17,7 @@ namespace Domain.Model
 
         public Forum() { }
 
-        public Forum(int id, string location, int creatorId, bool open, bool veryUseful)
+        public Forum(int id, string location, int creatorId, bool open, bool veryUseful=false)
         {
             Id = id;
             Location = location;

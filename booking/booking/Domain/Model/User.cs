@@ -21,12 +21,14 @@ namespace booking.Model
         public int NumOfAccommodationReservations { get; set; }
         public bool SuperGuide { get; set; }
         public string SuperGuideLanguage { get; set; }
+
+        public bool Tutorial { get; set; }
         public User() 
         {
         }
 
         public User(string username, string password, string role, bool super=false, 
-            DateTime? dateOfBecomingSuper = null, int score = 0, int numOfAccommodationReservations = 0)
+            DateTime? dateOfBecomingSuper = null, int score = 0, int numOfAccommodationReservations = 0,bool tut=true)
         {
             Username = username;
             Password = password;
@@ -39,12 +41,13 @@ namespace booking.Model
             NumOfAccommodationReservations = numOfAccommodationReservations;
             SuperGuide = false;
             SuperGuideLanguage = "";
+            Tutorial = tut;
         }
 
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), Username, Password, Role ,Super.ToString(),
-                DateOfBecomingSuper.ToString("dd/MM/yyyy"), Score.ToString(), NumOfAccommodationReservations.ToString(),SuperGuide.ToString(),SuperGuideLanguage };
+                DateOfBecomingSuper.ToString("dd/MM/yyyy"), Score.ToString(), NumOfAccommodationReservations.ToString(),SuperGuide.ToString(),SuperGuideLanguage,Tutorial.ToString().ToLower()  };
             return csvValues;
         }
 
@@ -60,6 +63,7 @@ namespace booking.Model
             NumOfAccommodationReservations = Convert.ToInt32(values[7]);
             SuperGuide = Convert.ToBoolean(values[8]);
             SuperGuideLanguage = values[9];
+            Tutorial= values[10] == "true" ? true : false;
         }
 
         public string IsSuper(bool superGuide)

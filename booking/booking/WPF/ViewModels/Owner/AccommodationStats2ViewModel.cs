@@ -1,9 +1,11 @@
 ﻿using application.UseCases;
 using booking.application.usecases;
+using booking.Commands;
 using booking.Domain.Model;
 using booking.Model;
 using booking.WPF.ViewModels;
 using Domain.DTO;
+using Domain.Model;
 using Syncfusion.Windows.Shared;
 using System;
 using System.Collections.Generic;
@@ -11,11 +13,50 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 
 namespace WPF.ViewModels.Owner
 {
-    public class AccommodationStats2ViewModel : BaseViewModel, INotifyPropertyChanged
+    public class AccommodationStats2ViewModel : BaseViewModel
     {
+        
+        public ICommand MostBookedTooltipCommand => new RelayCommand(MostBookedLabelClick);
+
+        private bool mostBookedTooltip = false;
+        public bool MostBookedTooltip
+        {
+            get
+            {
+                return mostBookedTooltip;
+            }
+            set
+            {
+                if (value != mostBookedTooltip)
+                {
+                    mostBookedTooltip = value;
+                    OnPropertyChanged("MostBookedTooltip");
+                }
+            }
+        }
+
+        private void MostBookedLabelClick()
+        {
+            if (GlobalVariables.tt == true)
+            {
+                if (mostBookedTooltip)
+                {
+                    MostBookedTooltip = false;
+
+                }
+                else
+                {
+                    MostBookedTooltip = true;
+
+                }
+            }
+        }
+
+
         public OwnerViewModel ownerViewModel;
         private int accommodationId;
         public List<int> YearList { get; set; }

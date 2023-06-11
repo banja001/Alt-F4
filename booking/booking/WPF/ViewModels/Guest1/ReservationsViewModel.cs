@@ -18,6 +18,16 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using Syncfusion.UI.Xaml;
+using System.Windows.Controls;
+using System.Reflection.Metadata;
+using System.IO;
+using System.IO.Pipes;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using Document = iTextSharp.text.Document;
+using System.Windows.Markup;
+using WPF.Views.Guest1;
 
 namespace WPF.ViewModels.Guest1
 {
@@ -39,6 +49,7 @@ namespace WPF.ViewModels.Guest1
         public ICommand PostponeReservationCommand => new RelayCommand(PostponeReservation);
         public ICommand CancelReservationCommand => new RelayCommand(CancelReservation);
         public ICommand ViewCommentCommand => new RelayCommand(ViewComment);
+        public ICommand GenerateReportCommand => new RelayCommand(GenerateReport);
 
         private User user;
         private int userId;
@@ -105,6 +116,8 @@ namespace WPF.ViewModels.Guest1
                 ReservationRequests request = new ReservationRequests(_reservationRequestsService.MakeId(), reservedDate, "Cancel");
                 _reservationRequestsService.Add(request);
                 */
+
+                reservedDate.DateOfReserving = DateTime.Now;
                 _reservationRequestsService.RemoveAllByReservationId(reservedDate.Id);
                 _reservedDatesService.AddCanceled(reservedDate); 
                 
@@ -153,6 +166,12 @@ namespace WPF.ViewModels.Guest1
             if (reservationRequest.Comment == "")
                 MessageBox.Show("Owner didn't leave a comment", "Owner's comment");
             else MessageBox.Show(reservationRequest.Comment, "Owner's comment");
+        }
+
+        private void GenerateReport()
+        {
+            var generateReportWindow = new Guest1ReportView(user);
+            generateReportWindow.Show();
         }
     }
 }

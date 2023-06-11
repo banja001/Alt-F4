@@ -20,6 +20,43 @@ namespace WPF.ViewModels.Owner
 {
     public class ReservationChangeViewModel:BaseViewModel
     {
+        public ICommand ReservationChangeTooltipCommand => new RelayCommand(ReservationChangeTooltip);
+
+        private bool reservationChange = false;
+        public bool ReservationChange
+        {
+            get
+            {
+                return reservationChange;
+            }
+            set
+            {
+                if (value != reservationChange)
+                {
+                    reservationChange = value;
+                    OnPropertyChanged("ReservationChange");
+                }
+            }
+        }
+
+        private void ReservationChangeTooltip()
+        {
+            if (GlobalVariables.tt == true)
+            {
+                if (reservationChange)
+                {
+                    ReservationChange = false;
+
+                }
+                else
+                {
+                    ReservationChange = true;
+
+                }
+            }
+        }
+
+
         public List<ReservationRequests> reservationRequests;
         
         public OwnerViewModel ownerViewModel;
@@ -73,6 +110,7 @@ namespace WPF.ViewModels.Owner
 
         private void AllowClick()
         {
+
             if (SelectedItem == null) return;
             ReservedDates reservation = ownerViewModel.reservedDates.Find(s => s.Id == SelectedItem.ReservationId);
             Accommodation accommodation = ownerViewModel.accommodations.Find(s => s.Id == reservation.AccommodationId);
@@ -88,6 +126,7 @@ namespace WPF.ViewModels.Owner
 
             UpdateObservable();
             AddGuest1Notification(reservationRequst);
+            MessageBox.Show("Reservation change is successful!");
         }
 
         private void DeleteUnwantedReservationsAndRequests(List<ReservedDates> reservedDatesForDeletion)

@@ -13,5 +13,6 @@ namespace Domain.RepositoryInterfaces
         public void Add(ForumComment forum);
         public void Save();
         public int MakeId();
+        public void Update(int id);
     }
 }

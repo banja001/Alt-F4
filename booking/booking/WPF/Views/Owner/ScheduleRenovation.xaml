@@ -3,32 +3,75 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WPF.Views.Owner"
+      xmlns:local="clr-namespace:WPF.Views.Owner" xmlns:cvt="clr-namespace:booking.Converter" xmlns:validationrules="clr-namespace:ValidationRules"
       mc:Ignorable="d" 
       Height="641" Width="400"
       Title="ScheduleRenovation">
 
     <Grid>
         <Grid.Resources>
+            <Style TargetType="DatePicker">
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="Foreground" Value="LightGray"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+            </Style>
+            <Style TargetType="DatePickerTextBox">
+                <Setter Property="Background" Value="#FF2E2E2C"/>
+                <Setter Property="Background" Value="Black"/>
+            </Style>
+
+            <Style TargetType="DataGridCell">
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#E69138"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+
+                    </Trigger>
+                </Style.Triggers>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="DataGrid">
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
+                <Setter Property="Foreground" Value="LightGray"/>
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="CanUserResizeColumns" Value="False"/>
+                <Setter Property="CanUserResizeRows" Value="False"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="FontSize" Value="11"/>
+            </Style>
+            <Style TargetType="DataGridRow" x:Name="DatagridRowStyle">
+                <Setter  Property="Background" Value="black"/>
+            </Style>
+            <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="DarkRed"/>
+                <Setter Property="Height" Value="25"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            </Style>
+
+
             <Style TargetType="Line" BasedOn="{StaticResource LineOwner}"/>
             <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
             <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
+            <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxOwner}"/>
         </Grid.Resources>
         <Grid.RowDefinitions>
 
-            <RowDefinition Height="0.75*"/>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="2.5*"/>
-            <RowDefinition Height="0.75*"/>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="0.75*"/>
-            <RowDefinition Height="0.75*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="0.75*"/>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="2.5*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="38*"/>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="126*"/>
+            <RowDefinition Height="38*"/>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="38*"/>
+            <RowDefinition Height="38*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="38*"/>
+            <RowDefinition Height="34*"/>
+            <RowDefinition Height="117*"/>
+            <RowDefinition Height="50*"/>
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -36,12 +79,13 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.ColumnSpan="2" Content="Find dates"/>
-        <Label Grid.Row="1" Grid.ColumnSpan="2" Content="Select accommodation you want to renovate!"/>
+        <Label Grid.ColumnSpan="2" Content="Find dates" FontSize="17" Foreground="#E69138" Height="36" Width="346" HorizontalAlignment="Left" Margin="21,0,0,0"/>
+        <Label Grid.ColumnSpan="2" Content="Select accommodation you want to renovate!" Height="31" Width="354" HorizontalAlignment="Left" Margin="21,36,0,0" Grid.RowSpan="3" VerticalAlignment="Top"/>
         <DataGrid ItemsSource="{Binding AccommodationList, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False"  Grid.ColumnSpan="2" Width="360" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center"
-                  Grid.Row="2" >
+                  Grid.Row="2" ColumnHeaderStyle="{StaticResource HeaderStyle}" 
+                  RowHeight="20" GridLinesVisibility="None">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
             </DataGrid.Resources>
@@ -49,29 +93,38 @@
                 <DataGridTextColumn Header="Accommodation Name" Width="*"  Binding="{Binding Name}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Label Grid.Row="3" Grid.Column="2" Content="Select date range:"/>
-        <Label Grid.Row="4" Content="From:"/>
-        <Label Grid.Row="4" Grid.Column="1" Content="To:"/>
-        <DatePicker Grid.Row="5" SelectedDate="{Binding FromDate}" SelectedDateFormat="Short"/>
-        <DatePicker Grid.Row="5" Grid.Column="1" SelectedDate="{Binding ToDate}" SelectedDateFormat="Short" />
-        <Label Grid.Row="6" Content="Number of days for reservation:"/>
-        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Duration}"/>
-        <Button Command="{Binding SearchFreeDatesCommand}" Content="Search for free dates" Grid.Row="7" Grid.Column="1"/>
-        <Line X2="1"  Grid.Row="8" Grid.ColumnSpan="2"/>
-        <Label Grid.Row="9" Content="Renovate"/>
-        <Label Grid.Row="10" Content="Select dates you want to book for renovating!"/>
+        <Label Grid.Row="3" Foreground="#E69138" FontSize="17" Content="Select date range:" Height="35" Width="162"/>
+        <Label Grid.Row="4" Content="From:" Height="25" Width="46"/>
+        <Label Grid.Row="4" Grid.Column="1" Content="To:" Height="25" Width="28"/>
+        <DatePicker Grid.Row="5" SelectedDate="{Binding FromDate}" SelectedDateFormat="Short" Margin="10 0" />
+        <DatePicker Grid.Row="5" Grid.Column="1" SelectedDate="{Binding ToDate}" SelectedDateFormat="Short" Margin="10 0"/>
+        <Label Grid.Row="6" Content="Number of days for reservation:"  Height="29" Width="218" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="35,0,0,0" />
+        <TextBox Grid.Row="6" Grid.Column="1"  Height="20" Width="42" HorizontalAlignment="Left" Margin="75,0,0,0">
+            <TextBox.Text>
+                <Binding Path="Duration" UpdateSourceTrigger="PropertyChanged"  ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <validationrules:NumberValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Button Command="{Binding SearchFreeDatesCommand}" Content="Search for free dates" Grid.Row="7" Grid.Column="1" Margin="52,10,28,10"/>
+        <Line X2="1"  Grid.Row="7" Grid.ColumnSpan="2" Margin="15,50,15,0" Grid.RowSpan="2"/>
+        <Label Grid.Row="9" Content="Renovate"  Foreground="#E69138" FontSize="17" Height="33" Width="122" HorizontalAlignment="Left" HorizontalContentAlignment="Center"/>
+        <Label Grid.Row="10" Content="Select dates you want to book for renovating!" Grid.ColumnSpan="2" Height="29" Width="356"  />
         <DataGrid Grid.Row="11" ItemsSource="{Binding IntervalList}"
                   SelectedItem="{Binding SelectedInterval}" SelectionMode="Single"
                   IsReadOnly="True" AutoGenerateColumns="False"  Grid.ColumnSpan="2" Width="360" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center"
-                  >
+                  ColumnHeaderStyle="{StaticResource HeaderStyle}"
+                  RowHeight="20" GridLinesVisibility="None">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFD8CACA"/>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Start date" Width="*"  Binding="{Binding StartDate}"/>
-                <DataGridTextColumn Header="End date" Width="*"  Binding="{Binding EndDate}"/>
+                <DataGridTextColumn Header="Start date" Width="*"  Binding="{Binding StartDate,Converter={cvt:DateTimeToDateOnlyConverter}}"/>
+                <DataGridTextColumn Header="End date" Width="*"  Binding="{Binding EndDate,Converter={cvt:DateTimeToDateOnlyConverter}}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="12" Grid.Column="1" Content="Renovate" Command="{Binding ScheduleRenovationCommand}"/>
+        <Button Grid.Row="12" Grid.Column="1" Content="Renovate" Command="{Binding ScheduleRenovationCommand}" Margin="52,10,28,10"/>
     </Grid>
 </Page>

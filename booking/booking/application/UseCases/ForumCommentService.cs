@@ -42,5 +42,10 @@ namespace application.UseCases
         {
             return _forumCommentRepository.MakeId();
         }
+
+        public void Update(int id)
+        {
+            _forumCommentRepository.Update(id);
+        }
     }
 }

@@ -10,6 +10,7 @@
         <Grid.Resources>
             <Style TargetType="Label" BasedOn="{StaticResource LabelOwner}"/>
             <Style TargetType="Button" BasedOn="{StaticResource ButtonOwner}"/>
+            <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxOwner}"/>
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>

@@ -246,7 +246,9 @@ namespace WPF.ViewModels.Owner
             Accommodation a = AddAccommodation();
             ownerViewModel.accommodationService.Add(a);
             ownerViewModel.accommodationImageService.AddImages(a, accommodationImagesUrl, ownerViewModel.accommodationImages);
+            MessageBox.Show("Accommodation added successfully!");
             MainWindow.w.Main.Navigate(MainWindow.w.OwnerWindow);
+            
         }
 
         private Accommodation AddAccommodation()
