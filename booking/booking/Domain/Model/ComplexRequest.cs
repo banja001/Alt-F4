@@ -3,6 +3,7 @@ using booking.Serializer;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace Domain.Model
@@ -10,6 +11,7 @@ namespace Domain.Model
     public class ComplexRequest : ISerializable
     {
         public int Id { get; set; }
+        public string Name { get; set; }    
         public User User { get; set; }
         public SimpleRequestStatus Status { get; set; }
         public List<SimpleRequest> SimpleRequests { get; set; } 
@@ -19,7 +21,7 @@ namespace Domain.Model
             this.User = new User();
             SimpleRequests = new List<SimpleRequest>(); 
         }
-        public ComplexRequest(int userId, SimpleRequestStatus status)
+        public ComplexRequest(int userId, SimpleRequestStatus status, string name)
         {
             SimpleRequests = new List<SimpleRequest>();
             User = new User();
@@ -27,12 +29,15 @@ namespace Domain.Model
             Id = -1;
             User.Id = userId;
             Status = status;
+            Name = name;
         }
         public ComplexRequest(int userId, SimpleRequestStatus status, List<SimpleRequest> simpleRequests)
         {
+            User = new User();
             Id = -1;
             User.Id = userId;
-            simpleRequests = new List<SimpleRequest>(simpleRequests);
+            Status = status;
+            SimpleRequests = new List<SimpleRequest>(simpleRequests);
         }
         public string[] ToCSV()
         {
@@ -41,10 +46,12 @@ namespace Domain.Model
             {
                 simpleRequestsIds += simpleRequest.Id.ToString() + ",";
             }
+            simpleRequestsIds = simpleRequestsIds.Remove(simpleRequestsIds.Length - 1);
             string[] csvValues = { 
                                    Id.ToString(),
                                    User.Id.ToString(),
                                    Status.ToString(),
+                                   Name.ToString(), 
                                    simpleRequestsIds
                                  };
             return csvValues;
@@ -68,7 +75,8 @@ namespace Domain.Model
                 default:
                     throw new ArgumentException("Simple request Status in CSV does not exist");
             }
-            string[] simpleRequestsIds = values[3].Split(",");
+            Name = Convert.ToString(values[3]); 
+            string[] simpleRequestsIds = values[4].Split(",");
             foreach(string id in simpleRequestsIds)
             {
                 var simpleRequest = new SimpleRequest();

@@ -198,6 +198,9 @@
   <data name="end_time" xml:space="preserve">
     <value>Vreme završetka</value>
   </data>
+  <data name="Enter_complex_request_name" xml:space="preserve">
+    <value>Unesi ime kompleksnog zahteva</value>
+  </data>
   <data name="expiry_date" xml:space="preserve">
     <value>Datum isteka</value>
   </data>
@@ -305,6 +308,9 @@
   </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statistika</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Prihvati</value>
   </data>
   <data name="Time_estimation" xml:space="preserve">
     <value>Okvirno vreme</value>

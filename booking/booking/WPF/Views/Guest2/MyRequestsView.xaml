@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:booking.WPF.Views.Guest2"
              xmlns:ns="clr-namespace:Localization"
              mc:Ignorable="d" 
-             xmlns:cvt="clr-namespace:booking.Converter" 
+             xmlns:cvt="clr-namespace:booking.Converter" xmlns:cvt1="clr-namespace:Converter"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Style="{DynamicResource LightBackground}">
         <TabControl BorderThickness="0" Background="#E6E9F4" Margin="0,0,0,0">
@@ -224,15 +224,15 @@
                             </ItemsControl>
                         </ScrollViewer>
                         
-                        <Label Margin="15,0,0,0" Grid.Row="7" Grid.Column="1" Style="{DynamicResource LightHeaderLabel}" Content="{ns:Loc Former_complex_requests}"></Label>
+                        <Label Margin="15,7,0,0" Grid.Row="7" Grid.Column="1" Style="{DynamicResource LightHeaderLabel}" Content="{ns:Loc Former_complex_requests}"></Label>
 
                         <StackPanel HorizontalAlignment="Stretch" Grid.Row="6" Grid.Column="1" Orientation="Horizontal" >
                             <Button HorizontalAlignment="Right" Width="100" Height="30" Command="{Binding ClearAddedRequestsCommand}" VerticalAlignment="Top" Margin="180,0,10,0" Style="{DynamicResource LightClearButton}" Content="{ns:Loc Clear}" ></Button>
-                            <Button HorizontalAlignment="Right" Width="100" Height="30" VerticalAlignment="Top" Margin="0,0,15,0" Style="{DynamicResource LightButton}" Content="{ns:Loc Request}" ></Button>
+                            <Button Command="{Binding SubmitComplexRequest}" HorizontalAlignment="Right" Width="100" Height="30" VerticalAlignment="Top" Margin="0,0,15,0" Style="{DynamicResource LightButton}" Content="{ns:Loc Request}" ></Button>
                         </StackPanel>
                         
                         
-                        <ScrollViewer VerticalAlignment="Top" Margin="5,0,0,0" HorizontalAlignment="Left" Grid.Row="8" Grid.Column="1" Grid.RowSpan="2" Height="135" VerticalScrollBarVisibility="Hidden" Width="400">
+                        <ScrollViewer VerticalAlignment="Top" Margin="5,0,0,0" HorizontalAlignment="Left" Grid.Row="8" Grid.Column="1" Grid.RowSpan="2" Height="190" VerticalScrollBarVisibility="Hidden" Width="400">
                             <ItemsControl ItemsSource="{Binding ComplexRequests}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
@@ -240,13 +240,17 @@
                                             <Grid>
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="1*"></RowDefinition>
-                                                    <RowDefinition Height="1*"></RowDefinition>
                                                 </Grid.RowDefinitions>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="1.2*"/>
                                                     <ColumnDefinition Width="1.5*"/>
                                                     <ColumnDefinition Width="1.5*"/>
+                                                    <ColumnDefinition Width="1.8*"/>
                                                 </Grid.ColumnDefinitions>
+                                                <Label VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" Style="{DynamicResource ItemsControlHeader}" Content="{Binding Name}"/>
+                                                <Border Grid.Row="0" Grid.Column="1" Margin="0,5,0,0" Padding="1" Width="36" Height="36" VerticalAlignment="Center" BorderBrush="#7588c4" Background="White" BorderThickness="2" CornerRadius="18">
+                                                    <Image Height="25" Width="25" Source="{Binding Status, Converter={cvt1:SimpleRequestStatusToImageSourceConverter}}" Margin="0,0,0,0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Image>
+                                                </Border>
+                                                <Button Command="{Binding Path=DataContext.ShowComplexRequestCommand,  RelativeSource= {RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Id}" Width="100" Height="40" Grid.Row="0" Grid.Column="2" Style="{DynamicResource LightClearButton}" Content="{ns:Loc see_more}"/>
                                             </Grid>
                                         </Border>
                                     </DataTemplate>

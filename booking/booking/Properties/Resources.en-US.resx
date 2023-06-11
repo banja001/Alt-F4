@@ -195,6 +195,9 @@
   <data name="end_time" xml:space="preserve">
     <value>End time</value>
   </data>
+  <data name="Enter_complex_request_name" xml:space="preserve">
+    <value>Enter complex request name</value>
+  </data>
   <data name="expiry_date" xml:space="preserve">
     <value>Expiriy date</value>
   </data>
@@ -302,6 +305,9 @@
   </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statistics</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
   </data>
   <data name="Time_estimation" xml:space="preserve">
     <value>Time estimation</value>

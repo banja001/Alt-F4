@@ -304,6 +304,15 @@ namespace booking.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unesi ime kompleksnog zahteva.
+        /// </summary>
+        internal static string Enter_complex_request_name {
+            get {
+                return ResourceManager.GetString("Enter_complex_request_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Datum isteka.
         /// </summary>
         internal static string expiry_date {
@@ -624,6 +633,15 @@ namespace booking.Properties {
         internal static string Statistics {
             get {
                 return ResourceManager.GetString("Statistics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prihvati.
+        /// </summary>
+        internal static string Submit {
+            get {
+                return ResourceManager.GetString("Submit", resourceCulture);
             }
         }
         

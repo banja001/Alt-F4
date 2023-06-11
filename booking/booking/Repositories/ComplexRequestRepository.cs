@@ -56,12 +56,13 @@ namespace Repositories
         public int MakeId()
         {
             Load();
-            return _complexRequests.Count == 0 ? 0 : _complexRequests.Max(n => n.Id) + 1;
+            return _complexRequests.Count == 0 ? 1 : _complexRequests.Max(n => n.Id) + 1;
         }
 
         public void Add(ComplexRequest complexRequest)
         {
             Load();
+            complexRequest.Id = MakeId();   
             _complexRequests.Add(complexRequest);
             Save();
         }
