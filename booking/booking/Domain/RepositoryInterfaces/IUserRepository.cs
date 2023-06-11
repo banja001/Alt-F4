@@ -14,5 +14,7 @@ namespace Domain.RepositoryInterfaces
         void UpdateById(int id, bool b);
         int GetScoreById(int id);
         void Update(User user);
+        public void QuitJob(int id);
+        public void UpdateSuperGuide(int id, bool super, string language);
     }
 }

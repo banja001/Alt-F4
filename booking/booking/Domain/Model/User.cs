@@ -23,6 +23,7 @@ namespace booking.Model
         public string SuperGuideLanguage { get; set; }
 
         public bool Tutorial { get; set; }
+        public bool IsQuit { get; set; }
         public User() 
         {
         }
@@ -42,12 +43,13 @@ namespace booking.Model
             SuperGuide = false;
             SuperGuideLanguage = "";
             Tutorial = tut;
+            IsQuit = false;
         }
 
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), Username, Password, Role ,Super.ToString(),
-                DateOfBecomingSuper.ToString("dd/MM/yyyy"), Score.ToString(), NumOfAccommodationReservations.ToString(),SuperGuide.ToString(),SuperGuideLanguage,Tutorial.ToString().ToLower()  };
+                DateOfBecomingSuper.ToString("dd/MM/yyyy"), Score.ToString(), NumOfAccommodationReservations.ToString(),SuperGuide.ToString(),SuperGuideLanguage,Tutorial.ToString().ToLower(),IsQuit.ToString()  };
             return csvValues;
         }
 
@@ -64,6 +66,7 @@ namespace booking.Model
             SuperGuide = Convert.ToBoolean(values[8]);
             SuperGuideLanguage = values[9];
             Tutorial= values[10] == "true" ? true : false;
+            IsQuit = Convert.ToBoolean(values[11]);
         }
 
         public string IsSuper(bool superGuide)

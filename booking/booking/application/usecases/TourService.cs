@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using booking.Model;
 using Domain.RepositoryInterfaces;
 using application.UseCases;
+using Domain.Model;
+using Repositories;
 
 namespace booking.application.UseCases
 {
@@ -16,11 +18,13 @@ namespace booking.application.UseCases
         private readonly ITourRepository _tourRepository;
         private readonly LocationRepository _locationRepository;
         private readonly ReservationTourService _reservationTourService;
+        private VoucherService _voucherService;
         public TourService()
         {
             _tourRepository = Injector.Injector.CreateInstance<ITourRepository>();
             _reservationTourService = new ReservationTourService();
             _locationRepository = new LocationRepository();
+            _voucherService= new VoucherService();
         }
 
         public List<Tour> FindAll()
@@ -74,6 +78,29 @@ namespace booking.application.UseCases
                     return false;
             }
             return true;
+        }
+        public List<Tour> FindToursByGuide(int guideId)
+        {
+            List<Tour> tours = new List<Tour>();
+            foreach (Tour t in _tourRepository.FindAll())
+            {
+                if(t.Guide.Id==guideId)
+                    tours.Add(t);
+            }
+            return tours;
+        }
+        public void GiveVouchersBecauseGuideQuitted(int guideId)
+        {
+            foreach (var rt in _reservationTourService.GetAll())
+            {
+                if (FindToursByGuide(guideId).Find(t => t.Id == rt.Tour.Id) != null)
+                {
+                    DateAndTime now = new DateAndTime(DateTime.Now, "00:00");
+                    DateAndTime expire = new DateAndTime(DateTime.Now.AddDays(365), "00:00");
+                    Voucher voucher = new Voucher(_voucherService.MakeID(), now, -1, rt.User.Id, expire, false);
+                    _voucherService.Add(voucher);
+                }
+            }
         }
     }
 }

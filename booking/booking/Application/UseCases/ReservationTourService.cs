@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
+using booking.application.UseCases;
 using booking.Injector;
 using booking.Model;
 using booking.Repository;
@@ -16,13 +18,18 @@ namespace application.UseCases
         private readonly IReservationTourRepository _reservationTourRepository;
         private readonly IVoucherRepository _voucherRepository;
         private readonly ITourRepository _tourRepository;
+        
         public ReservationTourService()
         {
             _reservationTourRepository = Injector.CreateInstance<IReservationTourRepository>();
             _voucherRepository = Injector.CreateInstance<IVoucherRepository>();
             _tourRepository = Injector.CreateInstance<ITourRepository>();
+            
         }
-
+        public List<ReservationTour> GetAll()
+        {
+            return _reservationTourRepository.GetAll();
+        }
         public void GiveVouchers(Tour tour,User guide)
         {
             List<ReservationTour> reservationToursToDelete= new List<ReservationTour>();
@@ -61,5 +68,6 @@ namespace application.UseCases
             }
             return tours;
         }
+        
     }
 }

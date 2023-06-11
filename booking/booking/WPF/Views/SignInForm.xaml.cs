@@ -91,7 +91,7 @@ namespace booking.View
 
             if(user != null)
             {
-                if(user.Password == txtPassword.Password)
+                if(user.Password == txtPassword.Password&&!user.IsQuit)
                 {
 
                     if (user.Role == "Owner")
@@ -133,7 +133,10 @@ namespace booking.View
                 }
                 else
                 {
-                    MessageBox.Show("Wrong passwrod!");
+                    if(user.IsQuit)
+                        MessageBox.Show("User quitted job!");
+                    if(!user.IsQuit)
+                        MessageBox.Show("Wrong passwrod!");
                 }
             }
             else
