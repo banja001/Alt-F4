@@ -264,6 +264,9 @@
   <data name="obtain_date" xml:space="preserve">
     <value>Obtain date</value>
   </data>
+  <data name="people_count" xml:space="preserve">
+    <value>People count</value>
+  </data>
   <data name="Rate_guide" xml:space="preserve">
     <value>Rate guide</value>
   </data>

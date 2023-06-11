@@ -83,6 +83,10 @@ namespace booking.WPF.ViewModels
 
                 document.Add(unorderedList);
 
+                iTextSharp.text.Paragraph footer = new iTextSharp.text.Paragraph($"Report generated on: {DateTime.Now}\n by {_user.Username}", contentFont);
+                footer.Alignment = Element.ALIGN_RIGHT;
+                document.Add(footer);
+
                 document.Close();
                 MessageBox.Show("PDF generated successfully!");
             }

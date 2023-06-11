@@ -14,8 +14,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>
             <RowDefinition Height="1.5*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1.8*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -24,12 +23,26 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Margin="15,0,0,0" Style="{DynamicResource VoucherHeader}" Content="{ns:Loc Language_chart}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <Label Grid.Row="0" Grid.Column="2" Margin="15,0,0,0" Style="{DynamicResource VoucherHeader}" Content="{ns:Loc Location_chart}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <lvc:CartesianChart x:Name="LanguageChart" Series="{Binding LanguageSeries}" AxisX="{Binding LangugeAxis}" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="15,25,15,25">
+        <Label Width="270" FontSize="16" Grid.Row="0" Grid.Column="0" Margin="15,10,0,5" Style="{DynamicResource VoucherHeader}" Content="{ns:Loc Language_chart}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Label FontSize="16" Grid.Row="0" Grid.Column="2" Margin="15,10,0,5" Style="{DynamicResource VoucherHeader}" Content="{ns:Loc Location_chart}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <lvc:CartesianChart Height="240" VerticalAlignment="Bottom" x:Name="LanguageChart" Series="{Binding LanguageSeries}" AxisX="{Binding LangugeAxis}" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="15,25,15,25">
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis MinValue="0">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="1"/>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
+            </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
 
-        <lvc:CartesianChart Grid.Row="0" Grid.Column="2" Series="{Binding LocationSeries}" AxisX="{Binding LocationAxis}" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="15,25,15,25">
+        <lvc:CartesianChart Height="240" VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="2" Series="{Binding LocationSeries}" AxisX="{Binding LocationAxis}" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="15,25,15,25">
+        <lvc:CartesianChart.AxisY>
+                <lvc:Axis MinValue="0">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="1"/>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
+            </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
 
         <StackPanel Orientation="Vertical" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="0">

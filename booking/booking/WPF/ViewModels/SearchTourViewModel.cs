@@ -63,10 +63,6 @@ namespace WPF.ViewModels
             _answerRepository = new AnswerRepository();
             _reservationTourRepository = new ReservationTourRepository();
 
-            PeopleCount = "People count";
-            Language = "Language";
-            Duration = "Duration(h)";
-
             TourLocationDTOs = new ObservableCollection<TourLocationDTO>(CreateTourDTOs());
             States = new ObservableCollection<string>();
             currentUser = user;

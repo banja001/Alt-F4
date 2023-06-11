@@ -84,8 +84,6 @@
                             <DataGridTextColumn Header="{ns:Loc start_time}"  Width="1*" Binding="{Binding Start.Time}"/>
                             <DataGridTextColumn Header="{ns:Loc end_date}"  Width="1*" Binding="{Binding End.Date, Converter={cvt:DateTimeToDateOnlyConverter}}" />
                             <DataGridTextColumn Header="{ns:Loc end_time}"  Width="1*" Binding="{Binding End.Time}"/>
-                            <DataGridTextColumn Header="{ns:Loc guideId}"  Width="1*" Binding="{Binding Guide.Id}" />
-                            <DataGridTextColumn Header="{ns:Loc tourId}"  Width="1*" Binding="{Binding Tour.Id}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

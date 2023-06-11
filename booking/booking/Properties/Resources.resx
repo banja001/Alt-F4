@@ -267,6 +267,9 @@
   <data name="obtain_date" xml:space="preserve">
     <value>Datum dobijanja</value>
   </data>
+  <data name="people_count" xml:space="preserve">
+    <value>Broj ljudi</value>
+  </data>
   <data name="Rate_guide" xml:space="preserve">
     <value>Oceni vodiča</value>
   </data>

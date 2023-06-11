@@ -511,6 +511,15 @@ namespace booking.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Broj ljudi.
+        /// </summary>
+        internal static string people_count {
+            get {
+                return ResourceManager.GetString("people_count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Oceni vodiča.
         /// </summary>
         internal static string Rate_guide {
