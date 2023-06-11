@@ -28,10 +28,16 @@ namespace booking.WPF.ViewModels
         public string State { get; set; }
         public int NumberOfGuests { get; set; }
         public User User { get; set; }
+        public ObservableCollection<ComplexRequest> ComplexRequests { get; set; }
+        public ObservableCollection<SimpleRequestDTO> AddedSimpleRequests { get; set; }
         public ObservableCollection<SimpleRequestDTO> Requests { get; set; }  
         public ICommand SubmitSimpleRequestCommand => new RelayCommand(OnSubmitSimpleRequest);
         public ICommand CancelSimpleRequestCommand => new RelayCommand(OnCancelSimpleRequest);
         public ICommand PreviewRequestCommand => new RelayCommandWithParams(OnPreviewRequest);
+        public RelayCommand AddSimpleRequestCommand => new RelayCommand(OnAddSimpleRequest);
+        public ICommand PreviewAddedRequestCommand => new RelayCommandWithParams(OnPreviewAddedRequest);
+        public ICommand ClearAddedRequestsCommand => new RelayCommand(OnClearAddedRequests);
+
         private readonly LocationService _locationService;
         private readonly SimpleRequestService _simpleRequestService;
         private int dispatcherIncrementer = 0;
@@ -46,10 +52,30 @@ namespace booking.WPF.ViewModels
             _simpleRequestService = new SimpleRequestService();
             _locationService = new LocationService();
             Requests = new ObservableCollection<SimpleRequestDTO>(_simpleRequestService.CreateDTOsByGuest2(user));
-
+            AddedSimpleRequests = new ObservableCollection<SimpleRequestDTO>();
             _simpleRequestService.InitializeTimer(DispatcherTicker, dispatcherIncrementer);
         }
-
+        private void OnAddSimpleRequest()
+        {
+            SimpleRequest simpleRequest = new SimpleRequest();
+            if (AddSimpleRequest(simpleRequest))
+            {
+                AddedSimpleRequests.Add(new SimpleRequestDTO(Requests.Count + 1,
+                                                  Description,
+                                                  NumberOfGuests,
+                                                  Language,
+                                                  StartDate,
+                                                  EndDate,
+                                                  simpleRequest.GetStatusUri(),
+                                                  new Location(-1, City, State)));
+            }
+            OnPropertyChanged(nameof(AddedSimpleRequests));
+            OnCancelSimpleRequest();
+        }
+        private void OnClearAddedRequests()
+        {
+            AddedSimpleRequests.Clear();
+        }
         private void DispatcherTicker(object sender, EventArgs e)
         {
             dispatcherIncrementer++;
@@ -59,21 +85,33 @@ namespace booking.WPF.ViewModels
         private void OnPreviewRequest(object parameter)
         {
             int idx = (Requests.ToList<SimpleRequestDTO>()).FindIndex(r => r.Id == (int)parameter);
-            Description = Requests[idx].Description;
-            Language = Requests[idx].Language;
-            NumberOfGuests = Requests[idx].NumberOfGuests;
-            StartDate = Requests[idx].StartDate;
-            EndDate = Requests[idx].EndDate;
-            State = Requests[idx].Location.State;
-            City = Requests[idx].Location.City;
+            ShowDetails(idx, Requests.ToList<SimpleRequestDTO>());
+            NotifyPropertiesChanged();
+        }
 
+        private void ShowDetails(int idx, List<SimpleRequestDTO> simpleRequests)
+        {
+            Description = simpleRequests[idx].Description;
+            Language = simpleRequests[idx].Language;
+            NumberOfGuests = simpleRequests[idx].NumberOfGuests;
+            StartDate = simpleRequests[idx].StartDate;
+            EndDate = simpleRequests[idx].EndDate;
+            State = simpleRequests[idx].Location.State;
+            City = simpleRequests[idx].Location.City;
+        }
+
+        private void OnPreviewAddedRequest(object parameter)
+        {
+            int idx = (AddedSimpleRequests.ToList<SimpleRequestDTO>()).FindIndex(r => r.Id == (int)parameter);
+            ShowDetails(idx, AddedSimpleRequests.ToList<SimpleRequestDTO>());
             NotifyPropertiesChanged();
         }
         private void OnSubmitSimpleRequest()
         {
             SimpleRequest simpleRequest = new SimpleRequest();
-            AddSimpleRequest(simpleRequest);
-            Requests.Add(new SimpleRequestDTO(Requests.Count+1,
+            if (AddSimpleRequest(simpleRequest))
+            {
+                Requests.Add(new SimpleRequestDTO(Requests.Count + 1,
                                               Description,
                                               NumberOfGuests,
                                               Language,
@@ -81,10 +119,11 @@ namespace booking.WPF.ViewModels
                                               EndDate,
                                               simpleRequest.GetStatusUri(),
                                               new Location(-1, City, State)));
+            }
             OnPropertyChanged(nameof(Requests));
             OnCancelSimpleRequest();
         }
-        private void AddSimpleRequest(SimpleRequest simpleRequest)
+        private bool AddSimpleRequest(SimpleRequest simpleRequest)
         {
             Location location = new Location(-1, City, State);
 
@@ -101,7 +140,7 @@ namespace booking.WPF.ViewModels
             if (StartDate.ToDateTime().Date <= DateTime.Now.AddDays(2))
             {
                 MessageBox.Show("The start date of request should be at least 48h earlier than actual date of tour", "Alert");
-                return;
+                return false;
             }
 
             simpleRequest.User.Id = User.Id;
@@ -113,7 +152,7 @@ namespace booking.WPF.ViewModels
             simpleRequest.DateRange.EndDate = EndDate;
             simpleRequest.Status = SimpleRequestStatus.ON_HOLD;
             _simpleRequestService.Add(simpleRequest);
-            
+            return true;
         }
         private void OnCancelSimpleRequest()
         {

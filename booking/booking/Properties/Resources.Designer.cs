@@ -70,6 +70,15 @@ namespace booking.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dodaj.
+        /// </summary>
+        internal static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dodaj sliku.
         /// </summary>
         internal static string Add_photo {
@@ -84,6 +93,15 @@ namespace booking.Properties {
         internal static string Add_photo_optional {
             get {
                 return ResourceManager.GetString("Add_photo_optional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dodati prosti zahtevi.
+        /// </summary>
+        internal static string Added_simple_requests {
+            get {
+                return ResourceManager.GetString("Added_simple_requests", resourceCulture);
             }
         }
         
@@ -205,6 +223,24 @@ namespace booking.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Grad.
+        /// </summary>
+        internal static string City {
+            get {
+                return ResourceManager.GetString("City", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Očisti.
+        /// </summary>
+        internal static string Clear {
+            get {
+                return ResourceManager.GetString("Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Završene ture.
         /// </summary>
         internal static string Completed_tours {
@@ -277,6 +313,15 @@ namespace booking.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prethodni kompleksni zahtevi.
+        /// </summary>
+        internal static string Former_complex_requests {
+            get {
+                return ResourceManager.GetString("Former_complex_requests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prethodni zahtevi.
         /// </summary>
         internal static string Former_simple_requests {
@@ -286,7 +331,7 @@ namespace booking.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Od:.
+        ///   Looks up a localized string similar to Od.
         /// </summary>
         internal static string From_message {
             get {
@@ -538,7 +583,7 @@ namespace booking.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prosta tura.
+        ///   Looks up a localized string similar to Prosti zahtev.
         /// </summary>
         internal static string Simple_request {
             get {
@@ -565,6 +610,15 @@ namespace booking.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Država.
+        /// </summary>
+        internal static string State {
+            get {
+                return ResourceManager.GetString("State", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Statistika.
         /// </summary>
         internal static string Statistics {
@@ -583,7 +637,7 @@ namespace booking.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do:.
+        ///   Looks up a localized string similar to Do.
         /// </summary>
         internal static string To_message {
             get {

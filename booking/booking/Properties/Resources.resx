@@ -120,6 +120,12 @@
   <data name="Active_tour" xml:space="preserve">
     <value>Aktivna tura</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>Dodaj</value>
+  </data>
+  <data name="Added_simple_requests" xml:space="preserve">
+    <value>Dodati prosti zahtevi</value>
+  </data>
   <data name="Additional_comment" xml:space="preserve">
     <value>Dodatni komentar:</value>
   </data>
@@ -165,6 +171,12 @@
   <data name="Choose_year" xml:space="preserve">
     <value>Izaberi godinu</value>
   </data>
+  <data name="City" xml:space="preserve">
+    <value>Grad</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Očisti</value>
+  </data>
   <data name="Completed_tours" xml:space="preserve">
     <value>Završene ture</value>
   </data>
@@ -189,11 +201,14 @@
   <data name="expiry_date" xml:space="preserve">
     <value>Datum isteka</value>
   </data>
+  <data name="Former_complex_requests" xml:space="preserve">
+    <value>Prethodni kompleksni zahtevi</value>
+  </data>
   <data name="Former_simple_requests" xml:space="preserve">
     <value>Prethodni zahtevi</value>
   </data>
   <data name="From_message" xml:space="preserve">
-    <value>Od:</value>
+    <value>Od</value>
   </data>
   <data name="Generate" xml:space="preserve">
     <value>Generiši</value>
@@ -277,13 +292,16 @@
     <value>Izaberi vaučer</value>
   </data>
   <data name="Simple_request" xml:space="preserve">
-    <value>Prosta tura</value>
+    <value>Prosti zahtev</value>
   </data>
   <data name="start_date" xml:space="preserve">
     <value>Datum početka</value>
   </data>
   <data name="start_time" xml:space="preserve">
     <value>Vreme početka</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>Država</value>
   </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statistika</value>
@@ -304,7 +322,7 @@
     <value>Poznavanje ture:</value>
   </data>
   <data name="To_message" xml:space="preserve">
-    <value>Do:</value>
+    <value>Do</value>
   </data>
   <data name="Vouchers" xml:space="preserve">
     <value>Vaučeri</value>

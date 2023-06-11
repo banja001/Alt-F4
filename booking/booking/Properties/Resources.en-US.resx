@@ -120,6 +120,12 @@
   <data name="Active_tour" xml:space="preserve">
     <value>Active tour</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Added_simple_requests" xml:space="preserve">
+    <value>Added simple requests</value>
+  </data>
   <data name="Additional_information" xml:space="preserve">
     <value>Additional information</value>
   </data>
@@ -162,6 +168,12 @@
   <data name="Choose_year" xml:space="preserve">
     <value>Choose year</value>
   </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
   <data name="Completed_tours" xml:space="preserve">
     <value>Completed tours</value>
   </data>
@@ -185,6 +197,9 @@
   </data>
   <data name="expiry_date" xml:space="preserve">
     <value>Expiriy date</value>
+  </data>
+  <data name="Former_complex_requests" xml:space="preserve">
+    <value>Former complex tours</value>
   </data>
   <data name="Former_simple_requests" xml:space="preserve">
     <value>Former simple requests</value>
@@ -281,6 +296,9 @@
   </data>
   <data name="start_time" xml:space="preserve">
     <value>Start time</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>State</value>
   </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statistics</value>
