@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
@@ -22,12 +23,14 @@ namespace application.UseCases
         private readonly LocationService _locationService;
         private readonly SimpleRequestTourService _simpleRequestTourService;
         private readonly TourService _tourService;
+        private readonly UserService _userService;
         public SimpleRequestService()
         {
             _simpleRequestRepository = Injector.CreateInstance<ISimpleRequestRepository>();
             _locationService = new LocationService();
             _simpleRequestTourService = new SimpleRequestTourService();
             _tourService = new TourService();
+            _userService = new UserService();
         }
         public void InitializeTimer(EventHandler dispatcherTicker, int incrementer)
         {
@@ -259,6 +262,82 @@ namespace application.UseCases
             }
             return list;
         }
+        public List<SimpleRequest> GetAllAcceptedWithLocation()
+        {
+            List<SimpleRequest> list = new List<SimpleRequest>();
+            foreach (SimpleRequest sr in _simpleRequestRepository.GetAll())
+            {
+                if(sr.Status==SimpleRequestStatus.APPROVED) 
+                {
+                    sr.Location = _locationService.GetAll().Find(l => l.Id == sr.Location.Id);
+                    list.Add(sr);
+                }
+            }
+            return list;
+        }
+        public List<SimpleRequest> GetAllDeclinedWithLocation()
+        {
+            List<SimpleRequest> list = new List<SimpleRequest>();
+            foreach (SimpleRequest sr in _simpleRequestRepository.GetAll())
+            {
+                if (sr.Status == SimpleRequestStatus.INVALID)
+                {
+                    sr.Location = _locationService.GetAll().Find(l => l.Id == sr.Location.Id);
+                    list.Add(sr);
+                }
+            }
+            return list;
+        }
+
+        public string GuestMostRequestedTours(List<SimpleRequest> allRequests)
+        {
+            var userRequests = allRequests.GroupBy(r => r.User.Id).Select(group => new { UserId = group.Key, RequestsCount = group.Count() });
+            var userWithMostRequests = userRequests.OrderByDescending(user => user.RequestsCount).FirstOrDefault();
+
+            return _userService.GetUserNameById(userWithMostRequests.UserId);
+        }
+
+        public string MostSpokenLanguageOnRequestedTours(List<SimpleRequest> allRequests)
+        {
+            var languages = allRequests.GroupBy(r => r.Language).Select(group => new { LanguageId = group.Key, LanguagesCount = group.Count() });
+            var mostSpokenLanguage = languages.OrderByDescending(l => l.LanguagesCount).FirstOrDefault();
+
+            return mostSpokenLanguage.LanguageId;
+        }
+
+        public string MostReguestedLocationOnRequestedTours(List<SimpleRequest> allRequests)
+        {
+            var locations = allRequests.GroupBy(r => r.Location.Id).Select(group => new { LocationId = group.Key, LocationCount = group.Count() });
+            var mostRequestedLocation = locations.OrderByDescending(l => l.LocationCount).FirstOrDefault();
+            return _locationService.GetById(mostRequestedLocation.LocationId).CityState;
+
+        }
+        public string MostReguestedStateOnRequestedTours(List<SimpleRequest> allRequests)
+        {
+            var locations = allRequests.GroupBy(r => r.Location.State).Select(group => new { LocationId = group.Key, LocationCount = group.Count() });
+            var mostRequestedLocation = locations.OrderByDescending(l => l.LocationCount).FirstOrDefault();
+            return _locationService.GetById(_locationService.GetByState(mostRequestedLocation.LocationId)).State;
+
+        }
+        public string MostReguestedMonthOnRequestedTours(List<SimpleRequest> allRequests)
+        {
+            var months = allRequests.GroupBy(r => r.DateRange.StartDate.Month).Select(group => new { monthId = group.Key, monthCount = group.Count() });
+            var mostRequestedMonth = months.OrderByDescending(l => l.monthCount).FirstOrDefault();
+            return MonthNumberToString(mostRequestedMonth.monthId.ToString());
+
+        }
+        public string MostReguestedYearOnRequestedTours(List<SimpleRequest> allRequests)
+        {
+            var years = allRequests.GroupBy(r => r.DateRange.StartDate.Year).Select(group => new { yearId = group.Key, yearCount = group.Count() });
+            var mostRequestedYear = years.OrderByDescending(l => l.yearCount).FirstOrDefault();
+            return mostRequestedYear.yearId.ToString();
+
+        }
+        public string AverageNumberOfGuestsOnRequestedTours(List<SimpleRequest> allRequests)
+        {
+            return (allRequests.Sum(a => a.NumberOfGuests)/allRequests.Count).ToString();
+
+        }
         public SimpleRequest GetById(int id) 
         { 
             return _simpleRequestRepository.GetById(id);
@@ -445,6 +524,7 @@ namespace application.UseCases
             return listOfLCities.OrderByDescending(l => l.Value).First().Key;
         }
 
+        //public 
 
         public string MonthNumberToString(string monthNumber)
         {

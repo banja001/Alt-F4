@@ -1,16 +1,20 @@
 ﻿using application.UseCases;
+using booking.application.UseCases;
 using booking.Commands;
 using booking.Model;
 using booking.View.Guide;
 using booking.WPF.ViewModels;
 using Domain.DTO;
 using Domain.Model;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
 using Syncfusion.Windows.Controls;
 using Syncfusion.Windows.Shared;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -82,6 +86,7 @@ namespace WPF.ViewModels
         public ICommand CutRangeCommand => new RelayCommand(CutRange);
         public ICommand RejectCommand => new RelayCommand(RejectSimpleTourRequest,CanClick);
         public ICommand AcceptCommand => new RelayCommand(AcceptSimpleTourRequest, CanClick);
+        public ICommand GenerateReportCommand => new RelayCommand(OpenReportWindow);
         private NavigationService navigationService;
         public TourRequestAcceptanceViewModel(User guide, NavigationService navigationService) 
         {
@@ -181,6 +186,18 @@ namespace WPF.ViewModels
         {
             return SelectedTourRequest != null;
         }
+        private void OpenReportWindow()
+        {
+            Window window = System.Windows.Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            if (window != null)
+            {
+                window.Effect = new BlurEffect();
+            }
+            ReportWindow reportWindow= new ReportWindow(Guide);
+            reportWindow.ShowDialog();
+            window.Effect = null;
+        }
+       
 
     }
 }

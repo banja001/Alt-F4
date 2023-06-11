@@ -355,9 +355,6 @@ namespace WPF.ViewModels
             }
             Series.Add(YearsColumns);
             Axis.Add(yearsAxis);
-            
-
-
         }
         private void CreateStatisticForGraphMonths(string selectedYear)
         {

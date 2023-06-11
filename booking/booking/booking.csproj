@@ -27,7 +27,10 @@
     <None Remove="Resources\Icons\nesto.png" />
     <None Remove="Resources\Icons\onhold.png" />
     <None Remove="Resources\Icons\plus.png" />
+    <None Remove="Resources\Icons\proa.png" />
+    <None Remove="Resources\Icons\proa.webp" />
     <None Remove="Resources\Icons\request.png" />
+    <None Remove="Resources\Icons\stamp.png" />
     <None Remove="Resources\Icons\statistics.png" />
     <None Remove="Resources\Icons\taskbarIcon.png" />
     <None Remove="Resources\Icons\tooltip.png" />
@@ -72,7 +75,10 @@
     <Resource Include="Resources\Icons\livetrack.png" />
     <Resource Include="Resources\Icons\onhold.png" />
     <Resource Include="Resources\Icons\plus.png" />
+    <Resource Include="Resources\Icons\proa.png" />
+    <Resource Include="Resources\Icons\proa.webp" />
     <Resource Include="Resources\Icons\request.png" />
+    <Resource Include="Resources\Icons\stamp.png" />
     <Resource Include="Resources\Icons\statistics.png" />
     <Resource Include="Resources\Icons\taskbarIcon.png" />
     <Resource Include="Resources\Icons\tooltip.png" />
@@ -105,8 +111,8 @@
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.3" />
     <PackageReference Include="MvvmNavigation.Wpf" Version="3.2.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
-    <PackageReference Include="Syncfusion.SfInput.WPF" Version="21.1.39" />
-    <PackageReference Include="Syncfusion.Shared.WPF" Version="21.1.39" />
+    <PackageReference Include="Syncfusion.SfInput.WPF" Version="21.2.9" />
+    <PackageReference Include="Syncfusion.Shared.WPF" Version="21.2.9" />
     <PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
   </ItemGroup>
 
