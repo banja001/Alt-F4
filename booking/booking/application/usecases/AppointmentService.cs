@@ -282,6 +282,47 @@ namespace booking.application.UseCases
             }
             return tours;
         }
+        public List<Appointment> FindAllAppointmentsByGuide(int id)
+        {
+            List<Appointment> appointments = new List<Appointment>();
+            foreach(var app in _appointmentRepository.FindAll())
+            {
+                if (app.Guide.Id == id && app.Start.Date.AddYears(2)>DateTime.Now)
+                {
+                    app.Tour = _tourRepository.FindById(app.Tour.Id);
+                    appointments.Add(app);
+                }
+            }
+            return appointments;
+        }
+
+        public string GroupByLanguage(List<Appointment> appointments)
+        {
+            var languages = appointments.GroupBy(a => a.Tour.Language).Select(group => new { LanguageId = group.Key, LanguagesCount = group.Count() });
+            var mostSpokenLanguage = languages.OrderByDescending(l => l.LanguagesCount).FirstOrDefault();
+
+            return mostSpokenLanguage.LanguageId;
+        }
+        public bool IsAbove20(List<Appointment> appointments,string language)
+        {
+            int languageCounter = 0;
+            float overallRating = 0;
+            int ratingCounter = 0;
+            
+            foreach(var appointment in appointments) 
+            {
+                if (appointment.Tour.Language == language)
+                {
+                    if (_guideRatingRepository.GetByAppointmentId(appointment.Id) != null)
+                    {
+                        overallRating += _guideRatingRepository.GetByAppointmentId(appointment.Id).LanguageKnowledge;
+                        ratingCounter++;
+                    }
+                    languageCounter++;
+                }
+            }
+            return languageCounter > 19 && overallRating/ratingCounter>=4;
+        }
     }
     
 }

@@ -29,6 +29,7 @@ namespace WPF.ViewModels
         private readonly AnswerRepository _answerRepository;
         private readonly TourAttendanceRepository _tourAttendanceRepository;
         private readonly AppointmentCheckPointRepository _appointmentCheckPointRepository;
+        private readonly UserRepository _userRepository;
         public ObservableCollection<TourLocationDTO> TourLocationDTOs { get; set; }
         public ObservableCollection<string> States { get; set; }
 
@@ -61,6 +62,7 @@ namespace WPF.ViewModels
             _tourImageRepository = new TourImageRepository();
             _answerRepository = new AnswerRepository();
             _reservationTourRepository = new ReservationTourRepository();
+            _userRepository= new UserRepository();
 
             PeopleCount = "People count";
             Language = "Language";
@@ -99,8 +101,9 @@ namespace WPF.ViewModels
 
                 localTourLocationDTOs.Add(new TourLocationDTO(tour.Id, tour.Name, tour.Description,
                                   location.City + "," + location.State, tour.Language, tour.MaxGuests,
-                                  tour.StartTime.Date, tour.Duration, images));
+                                  tour.StartTime.Date, tour.Duration, images,tour.Guide.Id));
             }
+            
             return localTourLocationDTOs;
         }
         private void OnMoreDetailsButtonClick()
@@ -138,6 +141,36 @@ namespace WPF.ViewModels
                 if (tour.StartTime.Date.Date < DateTime.Now.Date)
                 {
                     TourLocationDTOs.Remove(tour);
+                }
+            }
+            List<TourLocationDTO> TourLocations=new List<TourLocationDTO>(TourLocationDTOs);
+            List<TourLocationDTO> TourLocationsUnder = new List<TourLocationDTO>();
+            List<TourLocationDTO> TourLocationsFirst= new List<TourLocationDTO>();
+
+
+            TourLocationDTOs.Clear();
+            foreach (var tour in TourLocations)
+            {
+                if (_userRepository.GetById(tour.Guide.Id).SuperGuide && _userRepository.GetById(tour.Guide.Id).SuperGuideLanguage == tour.Language)
+                {
+                    tour.Language=tour.Language+"\n(SuperGuide)";
+                    TourLocationsFirst.Add(tour);
+                }
+                else
+                    TourLocationsUnder.Add(tour);
+            }
+            if (TourLocationsFirst.Count > 0)
+            {
+                foreach (var tour in TourLocationsFirst)
+                {
+                    TourLocationDTOs.Add(tour);
+                }
+            }
+            if (TourLocationsUnder.Count > 0)
+            {
+                foreach (var tour in TourLocationsUnder)
+                {
+                    TourLocationDTOs.Add(tour);
                 }
             }
         }

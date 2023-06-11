@@ -71,5 +71,11 @@ namespace booking.Repository
             _users[i] = user;
             _serializer.ToCSV(FilePath, _users);
         }
+        public void UpdateSuperGuide(int id,bool super,string language)
+        {
+            GetById(id).SuperGuide= super;
+            GetById(id).SuperGuideLanguage = language;
+            _serializer.ToCSV(FilePath, _users);
+        }
     }
 }
