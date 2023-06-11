@@ -28,10 +28,5 @@ namespace booking.WPF.Views.Guide
             //LooksOfDataGrid(AllTours);
             //LooksOfDataGrid(MostVisitedTourInThatYear);
         }
-        public void LooksOfDataGrid(DataGrid d)
-        {
-            for (int i = 0; i < d.Columns.Count; i++)
-                d.Columns[i].Width = (d.Width) / d.Columns.Count;
-        }
     }
 }

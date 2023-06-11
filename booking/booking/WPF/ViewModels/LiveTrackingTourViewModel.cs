@@ -11,6 +11,9 @@ using System.Windows.Input;
 using booking.Commands;
 using booking.WPF.ViewModels;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+using WPF.Views.Guide;
 
 namespace WPF.ViewModels
 {
@@ -31,7 +34,17 @@ namespace WPF.ViewModels
         public List<Location> Locations { get; set; }
         public ObservableCollection<AppointmentCheckPoint> AppointmentCheckPoints { get; set; }
         public ObservableCollection<TourAttendance> GuestsOnTour { get; set; }
-        public Tour SelectedTour { get; set; }
+        private Tour selectedTour;
+
+        public Tour SelectedTour
+        {
+            get { return selectedTour; }
+            set
+            {
+                selectedTour = value;
+                OnPropertyChanged(nameof(SelectedTour));
+            }
+        }
         public User Guide { get; set; }
         public Answer Answer { get; set; }
         public List<Appointment> Appointments { get; set; }
@@ -42,6 +55,35 @@ namespace WPF.ViewModels
         public ICommand TooltipTourCommand => new RelayCommand(ToolTipTourShow);
         public ICommand TooltipCHPCommand => new RelayCommand(ToolTipCHPShow);
         public ICommand TooltipGuestsCommand => new RelayCommand(ToolTipGuestsShow);
+
+        public ICommand DemoCommand => new RelayCommand(StartStopDemo);
+
+        private CancellationTokenSource cts = new CancellationTokenSource();
+
+        private bool demoOn;
+        public bool DemoOn
+        {
+            get { return demoOn; }
+            set
+            {
+                demoOn = value;
+                OnPropertyChanged(nameof(DemoOn));
+            }
+        }
+        private string demoName;
+        public string DemoName
+        {
+            get { return demoName; }
+            set
+            {
+                if (demoName != value)
+                {
+                    demoName = value;
+                    OnPropertyChanged(nameof(DemoName));
+                }
+            }
+        }
+
         public bool CheckBox { get; set; }
 
         private bool toursTooltip;
@@ -122,6 +164,7 @@ namespace WPF.ViewModels
             ShowTours();
             ShowAppointment();
             FindAppropriateLocation();
+            DemoName = "Demo";
         }
 
         private void InitializeRepositories()
@@ -317,6 +360,61 @@ namespace WPF.ViewModels
             Appointments.Find(a => a.Id == CurrentAppointment.Id).End.Time = DateTime.Now.ToString("HH:mm");
             _appointmentRepository.Save(Appointments);
             MessageBox.Show("Tour is over!","Tour Over", MessageBoxButton.OK,MessageBoxImage.Information);
+        }
+
+        private void StartStopDemo()
+        {
+            if (DemoOn)
+            {
+                cts.Cancel();
+                DemoOn = !DemoOn;
+                DemoName = "Demo";
+                MessageBox.Show("Demo has been stopped!", "Demo message", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                cts = new CancellationTokenSource();
+                DemoOn = !DemoOn;
+                DemoIsOn(cts.Token);
+                DemoName = "Stop";
+            }
+        }
+        private async Task DemoIsOn(CancellationToken ct)
+        {
+
+            if (DemoOn)
+            {
+
+                ct.ThrowIfCancellationRequested();
+                StartDemoWindow sdw = new StartDemoWindow();
+                sdw.Show();
+
+                await Task.Delay(2000, ct);
+                sdw.Close();
+                SelectedTour = Tours[2];
+                await Task.Delay(1000, ct);
+
+                StartTour();
+
+                for (int i = 0; i < AppointmentCheckPoints.Count; i++)
+                {
+                    await Task.Delay(2000, ct);
+                    AppointmentCheckPoints[i].CheckPointClick();
+                }
+
+                await Task.Delay(1000, ct);
+
+                TourIsOver();
+                await Task.Delay(1000, ct);
+                FinishedDemoWindow fdw = new FinishedDemoWindow();
+                fdw.Show();
+
+                await Task.Delay(2000, ct);
+                fdw.Close();
+                DemoOn = !DemoOn;
+                DemoName = "Demo";
+
+            }
         }
     }
 }

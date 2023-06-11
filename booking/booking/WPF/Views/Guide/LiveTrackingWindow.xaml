@@ -164,6 +164,6 @@
 
         <Button Background="#AA96DA" Content="Start tour" Name="StartTourB" HorizontalAlignment="Right"  VerticalAlignment="Center" Width="150" Height="35" Grid.Row="2" Margin="30,0" FontSize="20" Command="{Binding StartCommand}"/>
         <Button Background="#AA96DA" Content="End tour" Name="CancelTourB" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Height="35" Grid.Row="2" Grid.Column="1" Margin="30,0" FontSize="20" Command="{Binding CancelCommand}"/>
-        <Button Background="#AA96DA" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Width="80" Height="30" FontSize="20" Margin="10">Demo</Button>
+        <Button Background="#AA96DA" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Content="{Binding DemoName}" Command="{Binding DemoCommand}" Width="80" Height="30" FontSize="20" Margin="10"></Button>
     </Grid>
 </Page>

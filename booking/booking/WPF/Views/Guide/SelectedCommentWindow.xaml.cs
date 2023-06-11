@@ -20,10 +20,10 @@ namespace WPF.Views.Guide
     /// </summary>
     public partial class SelectedCommentWindow : Window
     {
-        public SelectedCommentWindow(TourRatingDTO rating, User guide)
+        public SelectedCommentWindow(TourRatingDTO rating, User guide, bool demoOn)
         {
             InitializeComponent();
-            DataContext = new SelectedCommentViewModel(guide,rating);
+            DataContext = new SelectedCommentViewModel(guide,rating,demoOn);
             
         }
     }

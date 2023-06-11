@@ -179,6 +179,7 @@
         </Grid>
 
         <Button Background="#AA96DA" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" FontSize="25" Content="Create tour with help of statistics" Command="{Binding CreateCommand}"/>
+        <Button Background="#AA96DA" Grid.Row="5" HorizontalAlignment="Right" Width="80" Height="30" FontSize="20" Margin="10" Content="{Binding DemoName}" Command="{Binding DemoCommand}"/>
 
     </Grid>
 </Page>

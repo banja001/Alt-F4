@@ -1,5 +1,4 @@
-﻿using booking.Domain.DTO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -10,19 +9,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WPF.ViewModels;
 
 namespace WPF.Views.Guide
 {
     /// <summary>
-    /// Interaction logic for ShowStatisticsWindow.xaml
+    /// Interaction logic for StartDemoWindow.xaml
     /// </summary>
-    public partial class ShowStatisticsWindow : Window
+    public partial class StartDemoWindow : Window
     {
-        public ShowStatisticsWindow(AppointmentGuestsDTO appointmentGuests,bool demoOn)
+        public StartDemoWindow()
         {
             InitializeComponent();
-            DataContext = new ShowStatisticsViewModel(appointmentGuests,demoOn);
         }
     }
 }

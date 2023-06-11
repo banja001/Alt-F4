@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -74,6 +75,8 @@ namespace booking.WPF.ViewModels
             }
         }
 
+        public bool DemoOn { get; private set; }
+
         public void ReviewsToolTip()
         {
             ReviewsTooltip = !ReviewsTooltip;
@@ -85,7 +88,7 @@ namespace booking.WPF.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public ShowReviewsViewModel(User guide, AppointmentGuestsDTO appointment)
+        public ShowReviewsViewModel(User guide, AppointmentGuestsDTO appointment,bool demoOn)
         {
             _appointmentService = new AppointmentService();
             AllCommentsForThatTour=new ObservableCollection<GuideRating>(_appointmentService.FindComments(_appointmentService.FindAppointment(appointment.AppointmentId)));
@@ -100,7 +103,9 @@ namespace booking.WPF.ViewModels
             {
                 Empty = false;
             }
-           
+           DemoOn=demoOn;
+            if (demoOn)
+                DemoIsOn(new CancellationToken());
         }
 
         private int CalculateWidth()
@@ -137,7 +142,7 @@ namespace booking.WPF.ViewModels
                     {
                         window.Effect = new BlurEffect();
                     }
-                    SelectedCommentWindow showComment = new SelectedCommentWindow(SelectedComment, Guide);
+                    SelectedCommentWindow showComment = new SelectedCommentWindow(SelectedComment, Guide,DemoOn);
                     showComment.ShowDialog();
                     if (!SelectedComment.Rating.IsValid)
                     {
@@ -160,6 +165,17 @@ namespace booking.WPF.ViewModels
         private void ExitWindow()
         {
             this.CloseCurrentWindow();
+        }
+        private async Task DemoIsOn(CancellationToken ct)
+        {
+
+            ct.ThrowIfCancellationRequested();
+            SelectedComment = AllComments[0];
+
+            await Task.Delay(2000, ct);
+            Show();
+            await Task.Delay(2000, ct);
+            ExitWindow();
         }
     }
 }

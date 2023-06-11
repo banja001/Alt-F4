@@ -22,16 +22,12 @@ namespace booking.WPF.Views.Guide
     /// </summary>
     public partial class ShowReviewsWindow : Window
     {
-        public ShowReviewsWindow(User guide,AppointmentGuestsDTO appointment)
+        public ShowReviewsWindow(User guide,AppointmentGuestsDTO appointment,bool demoOn)
         {
             InitializeComponent();
-            DataContext = new ShowReviewsViewModel(guide,appointment );
+            DataContext = new ShowReviewsViewModel(guide,appointment,demoOn );
             //LooksOfDataGrid(AllCommentsDataGrid);
         }
-        public void LooksOfDataGrid(DataGrid d)
-        {
-            for (int i = 0; i < d.Columns.Count; i++)
-                d.Columns[i].Width = (d.Width) / d.Columns.Count;
-        }
+        
     }
 }

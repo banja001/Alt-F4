@@ -20,10 +20,10 @@ namespace WPF.Views.Guide
     public partial class SelectDateForTourRequestWindow : Window
     {
 
-        public SelectDateForTourRequestWindow(SimpleAndComplexTourRequestsDTO selectedTour)
+        public SelectDateForTourRequestWindow(SimpleAndComplexTourRequestsDTO selectedTour,bool isDemoOn)
         {
             InitializeComponent();
-            DataContext = new SelectDateForTourRequestViewModel(selectedTour);
+            DataContext = new SelectDateForTourRequestViewModel(selectedTour,isDemoOn);
         }
     }
 }

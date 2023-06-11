@@ -23,6 +23,10 @@ using System.Windows.Input;
 using System.Windows.Media.Effects;
 using System.Windows.Navigation;
 using WPF.Views.Guide;
+using System.Threading;
+using System.Threading.Tasks;
+using Syncfusion.Windows.Tools;
+using Org.BouncyCastle.Utilities;
 
 namespace WPF.ViewModels
 {
@@ -31,13 +35,109 @@ namespace WPF.ViewModels
         public User Guide { get; set; }   
         public ObservableCollection<SimpleAndComplexTourRequestsDTO> AllRequests { get; set; }
         private SimpleRequestService _simpleRequestsService { get; set; }
-        public SimpleAndComplexTourRequestsDTO SelectedTourRequest { get; set; }
+        private SimpleAndComplexTourRequestsDTO selectedTourRequest;
+
+        public SimpleAndComplexTourRequestsDTO SelectedTourRequest
+        {
+            get { return selectedTourRequest; }
+            set
+            {
+                selectedTourRequest = value;
+                OnPropertyChanged(nameof(SelectedTourRequest));
+            }
+        }
         public ObservableCollection<string> States { get; set; }
-        public string SelectedCity { get; set; }
-        public string Language { get; set; }
-        public string MaxGuests { get; set; }
-        public string SelectedState { get; set; }
-        public DateTime SelectedStartDate { get; set; }
+        private string selectedCity;
+        private string language;
+        private string maxGuests;
+        private string selectedState;
+
+        public string SelectedCity
+        {
+            get { return selectedCity; }
+            set
+            {
+                selectedCity = value;
+                OnPropertyChanged(nameof(SelectedCity));
+            }
+        }
+
+        public string Language
+        {
+            get { return language; }
+            set
+            {
+                language = value;
+                OnPropertyChanged(nameof(Language));
+            }
+        }
+
+        public string MaxGuests
+        {
+            get { return maxGuests; }
+            set
+            {
+                try
+                {
+
+                    int maxGuestsTemp = Convert.ToInt32( value);
+                    maxGuests = maxGuestsTemp.ToString();
+                    OnPropertyChanged(nameof(MaxGuests));
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+            }
+        }
+
+        public string SelectedState
+        {
+            get { return selectedState; }
+            set
+            {
+                selectedState = value;
+                OnPropertyChanged(nameof(SelectedState));
+            }
+        }
+
+
+        private CancellationTokenSource cts = new CancellationTokenSource();
+
+        private bool demoOn;
+        public bool DemoOn
+        {
+            get { return demoOn; }
+            set
+            {
+                demoOn = value;
+                OnPropertyChanged(nameof(DemoOn));
+            }
+        }
+        private string demoName;
+        public string DemoName
+        {
+            get { return demoName; }
+            set
+            {
+                if (demoName != value)
+                {
+                    demoName = value;
+                    OnPropertyChanged(nameof(DemoName));
+                }
+            }
+        }
+        private DateTime selectedStartDate;
+
+        public DateTime SelectedStartDate
+        {
+            get { return selectedStartDate; }
+            set
+            {
+                selectedStartDate = value;
+                OnPropertyChanged(nameof(SelectedStartDate));
+            }
+        }
         private DateTime selectedEndDate;
         public DateTime SelectedEndDate 
         {
@@ -83,10 +183,21 @@ namespace WPF.ViewModels
         }
         public ICommand FillCityCBCommand => new RelayCommand(FillCities);
         public ICommand SearchCommand => new RelayCommand(Search);
+        public ICommand CancelSearchCommand => new RelayCommand(CancelSearch);
         public ICommand CutRangeCommand => new RelayCommand(CutRange);
         public ICommand RejectCommand => new RelayCommand(RejectSimpleTourRequest,CanClick);
-        public ICommand AcceptCommand => new RelayCommand(AcceptSimpleTourRequest, CanClick);
+        public ICommand AcceptCommand => new RelayCommand(AcceptSimpleTourRequestForButton, CanClick);
         public ICommand GenerateReportCommand => new RelayCommand(OpenReportWindow);
+        public ICommand DemoCommand => new RelayCommand(StartStopDemo);
+
+        private string preDemoState;
+        private string preDemoCity;
+        private string preDemoLanguage;
+        private string preDemoNumberOfGuests;
+        private DateTime preDemoStartDate;
+        private DateTime preDemoEndDate;
+        private List<SimpleAndComplexTourRequestsDTO> preDemoRequests;
+
         private NavigationService navigationService;
         public TourRequestAcceptanceViewModel(User guide, NavigationService navigationService) 
         {
@@ -101,6 +212,8 @@ namespace WPF.ViewModels
             displayDateStart = DateTime.Now;
             this.navigationService = navigationService;
             LoadRequests();
+            DemoName = "Demo";
+            preDemoRequests = new List<SimpleAndComplexTourRequestsDTO>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -143,6 +256,17 @@ namespace WPF.ViewModels
                 AllRequests = new ObservableCollection<SimpleAndComplexTourRequestsDTO>(_simpleRequestsService.FilterEndDate(AllRequests.ToList(), SelectedEndDate));
             OnPropertyChanged(nameof(AllRequests));
         }
+        private void CancelSearch()
+        {
+            LoadRequests();
+            SelectedState = "";
+            SelectedCity = "";
+            SelectedStartDate = DateTime.Now;
+            Language = "";
+            MaxGuests = "";
+            SelectedEndDate = selectedStartDate ; 
+            OnPropertyChanged(nameof(AllRequests));
+        }
         private void CutRange() 
         {
             DisplayDateStart = SelectedStartDate;
@@ -166,14 +290,18 @@ namespace WPF.ViewModels
             OnPropertyChanged(nameof(AllRequests));
             
         }
-        private void AcceptSimpleTourRequest()
+        private void AcceptSimpleTourRequestForButton()
+        {
+            AcceptSimpleTourRequest(false);
+        }
+        private void AcceptSimpleTourRequest(bool IsDemoOn)
         {
             Window window = System.Windows.Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
             if (window != null)
             {
                 window.Effect = new BlurEffect();
             }
-            SelectDateForTourRequestWindow selwindow=new SelectDateForTourRequestWindow(SelectedTourRequest);
+            SelectDateForTourRequestWindow selwindow=new SelectDateForTourRequestWindow(SelectedTourRequest,IsDemoOn);
             selwindow.ShowDialog();
             window.Effect = null;
             bool accept = SelectDateForTourRequestViewModel.Accept;
@@ -197,7 +325,79 @@ namespace WPF.ViewModels
             reportWindow.ShowDialog();
             window.Effect = null;
         }
-       
+        private void StartStopDemo()
+        {
+            if (DemoOn)
+            {
+                SelectedCity = preDemoCity;
+                SelectedEndDate = preDemoEndDate;
+                Language = preDemoLanguage;
+                MaxGuests = preDemoNumberOfGuests;
+                SelectedStartDate = preDemoStartDate;
+                SelectedState = preDemoState;
+                AllRequests.Clear();
+                foreach (SimpleAndComplexTourRequestsDTO s in preDemoRequests)
+                {
+                    AllRequests.Add(s);
+                }
+                cts.Cancel();
+                DemoOn = !DemoOn;
+                DemoName = "Demo";
+                MessageBox.Show("Demo has been stopped!", "Demo message", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                preDemoCity = SelectedCity;
+                preDemoEndDate = SelectedEndDate;
+                preDemoLanguage = Language;
+                preDemoNumberOfGuests = MaxGuests;
+                preDemoStartDate = SelectedStartDate;
+                preDemoState = SelectedState;
+                preDemoRequests = AllRequests.ToList();
+                cts = new CancellationTokenSource();
+                DemoOn = !DemoOn;
+                DemoIsOn(cts.Token);
+                DemoName = "Stop";
+            }
+        }
+        private async Task DemoIsOn(CancellationToken ct)
+        {
+
+            if (DemoOn)
+            {
+
+                ct.ThrowIfCancellationRequested();
+                StartDemoWindow sdw=new StartDemoWindow();
+                sdw.Show();
+
+                await Task.Delay(2000, ct);
+                sdw.Close();
+                SelectedState = "Nemacka";
+
+                await Task.Delay(2000, ct);
+                SelectedCity = "Berlin";
+                await Task.Delay(2000, ct);
+                SelectedStartDate = DateTime.Now.AddDays(3);
+                await Task.Delay(2000, ct);
+                Language = "Nemacki";
+                await Task.Delay(2000, ct);
+                MaxGuests = "30";
+                await Task.Delay(2000, ct);
+                SelectedEndDate = new DateTime(2023,11,30);
+                await Task.Delay(2000, ct);
+                Search();
+                await Task.Delay(1000, ct);
+                SelectedTourRequest = AllRequests[0];
+                //MessageBox.Show("New window will open!", "Demo message", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                await Task.Delay(1000, ct);
+
+                AcceptSimpleTourRequest(true);
+                DemoOn = !DemoOn;
+                DemoName = "Demo";
+                
+            }
+        }
 
     }
 }

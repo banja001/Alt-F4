@@ -50,6 +50,6 @@
         </Grid>
 
         <Button Background="#AA96DA" Grid.Row="2" HorizontalAlignment="Center" Margin="30" Height="35" Width="150" FontSize="20" Command="{Binding AbandonTourCommand}">Abandon tour</Button>
-        <Button  Background="#AA96DA" Grid.Row="2" HorizontalAlignment="Right" Width="80" Height="30" FontSize="20" Margin="10">Demo</Button>
+        <Button  Background="#AA96DA" Grid.Row="2" Content="{Binding DemoName}" HorizontalAlignment="Right" Width="80" Height="30" FontSize="20" Margin="10" Command="{Binding DemoCommand}"></Button>
     </Grid>
 </Page>

@@ -85,7 +85,7 @@
                 </Button.Content>
             </Button>
         </StackPanel>
-        <DataGrid Style="{StaticResource CustomDataGridStyle}"  Name="AllTours" ItemsSource="{Binding FinishedTours}" SelectedItem="{Binding SelectedTour, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.RowSpan="2" AutoGenerateColumns="False" IsReadOnly="True" Margin="10" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
+        <DataGrid Style="{StaticResource CustomDataGridStyle}"  Name="AllTours" ItemsSource="{Binding FinishedTours, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedTour}" Grid.Row="4" Grid.RowSpan="2" AutoGenerateColumns="False" IsReadOnly="True" Margin="10" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" CanUserResize="False" Width="*"/>
                 <DataGridTextColumn Header="State" Binding="{Binding Location.State}" CanUserResize="False"  Width="*"/>
@@ -113,7 +113,7 @@
             </Grid.ColumnDefinitions>
             <Button Background="#AA96DA" Grid.Column="0" HorizontalAlignment="Right" Margin="30,12" Height="35" Width="150" FontSize="20" Command="{Binding ShowStatisticsCommand}">Show statistics</Button>
             <Button Background="#AA96DA" Grid.Column="1" HorizontalAlignment="Left" Margin="30,12" Height="35" Width="150" FontSize="20" Command="{Binding ShowReviewsCommand}" >Show reviews</Button>
-            <Button Background="#AA96DA" Grid.Column="1" HorizontalAlignment="Right" Width="80" Height="30" FontSize="20" Margin="10">Demo</Button>
+            <Button Background="#AA96DA" Grid.Column="1" Content="{Binding DemoName}"  HorizontalAlignment="Right" Width="80" Height="30" FontSize="20" Margin="10" Command="{Binding DemoCommand}"></Button>
         </Grid>
     </Grid>
 </Page>

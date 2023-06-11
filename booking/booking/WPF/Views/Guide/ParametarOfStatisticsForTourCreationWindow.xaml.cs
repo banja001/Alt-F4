@@ -18,10 +18,10 @@ namespace WPF.Views.Guide
     /// </summary>
     public partial class ParametarOfStatisticsForTourCreationWindow : Window
     {
-        public ParametarOfStatisticsForTourCreationWindow()
+        public ParametarOfStatisticsForTourCreationWindow(bool DemoOn)
         {
             InitializeComponent();
-            DataContext = new ParametarOfStatisticsForTourCreationVIewModel();
+            DataContext = new ParametarOfStatisticsForTourCreationVIewModel(DemoOn);
         }
     }
 }

@@ -20,6 +20,8 @@ using System.Windows.Navigation;
 using WPF.Views.Guide;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace WPF.ViewModels
 {
@@ -35,6 +37,31 @@ namespace WPF.ViewModels
         private bool isTimeSelected;
         private bool isLanguageSelected;
 
+        private CancellationTokenSource cts = new CancellationTokenSource();
+
+        private bool demoOn;
+        public bool DemoOn
+        {
+            get { return demoOn; }
+            set
+            {
+                demoOn = value;
+                OnPropertyChanged(nameof(DemoOn));
+            }
+        }
+        private string demoName;
+        public string DemoName
+        {
+            get { return demoName; }
+            set
+            {
+                if (demoName != value)
+                {
+                    demoName = value;
+                    OnPropertyChanged(nameof(DemoName));
+                }
+            }
+        }
         public bool IsLocationSelected
         {
             get { return isLocationSelected; }
@@ -232,10 +259,17 @@ namespace WPF.ViewModels
 
         public ICommand TooltipLanguageCommand => new RelayCommand(LanguageToolTip);
 
- 
+        public ICommand DemoCommand => new RelayCommand(StartStopDemo);
 
         public User Guide { get; set; }
         private NavigationService navigationService;
+
+
+        private string preDemoState;
+        private string preDemoYear;
+        private bool preDemoLocation;
+        private bool preDemoTime;
+        private bool preDemoLanguage;
         public TourRequestsStatisticsViewModel(User guide, NavigationService navigationService) 
         {
             _locationService=new LocationService();
@@ -252,6 +286,7 @@ namespace WPF.ViewModels
             IsLanguageSelected = false;
             LoadRequests();
             CreateStatisticForGraphState();
+            DemoName = "Demo";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -327,7 +362,7 @@ namespace WPF.ViewModels
             {
                 window.Effect = new BlurEffect();
             }
-            ParametarOfStatisticsForTourCreationWindow pwindow = new ParametarOfStatisticsForTourCreationWindow();
+            ParametarOfStatisticsForTourCreationWindow pwindow = new ParametarOfStatisticsForTourCreationWindow(DemoOn);
             pwindow.ShowDialog();
 
             if (ParametarOfStatisticsForTourCreationVIewModel.Accept)
@@ -471,6 +506,78 @@ namespace WPF.ViewModels
             List<SimpleRequest> list = AllRequests.Where(req => req.DateRange.StartDate.Month == MonthNameToMonthNumber(SelectedMonth)).ToList();
             AllRequests = new ObservableCollection<SimpleRequest>(list);
         }
+        private void StartStopDemo()
+        {
+            if (DemoOn)
+            {
+                IsLanguageSelected = preDemoLanguage;
+                IsLocationSelected = preDemoLocation;
+                SelectedState = preDemoState;
+                IsTimeSelected = preDemoTime;
+                SelectedYear = preDemoYear;
+                if (IsLanguageSelected)
+                    LanguageSelected();
+                if (IsLocationSelected)
+                    LocationSelected();
+                if (IsTimeSelected)
+                    TimeSelected();
+                if(!String.IsNullOrEmpty(SelectedState))
+                    FillCities();
+                if (!String.IsNullOrEmpty(SelectedYear))
+                    FillMonths();
+                cts.Cancel();
+                DemoOn = !DemoOn;
+                DemoName = "Demo";
+                MessageBox.Show("Demo has been stopped!", "Demo message", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                preDemoLanguage = IsLanguageSelected;
+                preDemoLocation = IsLocationSelected;
+                preDemoState = SelectedState;
+                preDemoTime = IsTimeSelected;
+                preDemoYear = SelectedYear;
+                SelectedState = "";
+                SelectedYear = "";
+                cts = new CancellationTokenSource();
+                DemoOn = !DemoOn;
+                DemoIsOn(cts.Token); 
+                DemoName = "Stop";
+            }
+        }
+        private async Task DemoIsOn(CancellationToken ct)
+        {
+            
+            if (DemoOn)
+            {
+
+                ct.ThrowIfCancellationRequested();
+                //MessageBox.Show("Demo has started!", "Demo message", MessageBoxButton.OK, MessageBoxImage.Information);
+                ct.ThrowIfCancellationRequested();
+                StartDemoWindow sdw = new StartDemoWindow();
+                sdw.Show();
+                await Task.Delay(2000, ct);
+                sdw.Close();
+                IsLocationSelected = true;
+                await Task.Delay(4000, ct);
+                SelectedState = "Nemacka";
+                await Task.Delay(4000, ct);
+                IsTimeSelected = true;
+                await Task.Delay(4000, ct);
+                SelectedYear = "2023";
+                await Task.Delay(4000, ct);
+                IsLanguageSelected = true;
+                await Task.Delay(1000, ct);
+                CreateTourWithHelpOfStatistics();
+                //DemoOn = !DemoOn;
+                //DemoName = "Demo";
+                //MessageBox.Show("Demo has been finished!","Demo message",MessageBoxButton.OK,MessageBoxImage.Information);
+            }
+        }
+
+
+
+
         public int MonthNameToMonthNumber(string monthName)
         {
             int monthNumber;

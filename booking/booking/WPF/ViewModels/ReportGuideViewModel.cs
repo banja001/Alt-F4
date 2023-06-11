@@ -137,7 +137,7 @@ namespace WPF.ViewModels
                 dataParagraph.Add("\n");
                 document.Add(dataParagraph);
 
-                iTextSharp.text.Paragraph text = new iTextSharp.text.Paragraph("\nScheduled tours\n\n", new Font(Font.FontFamily.HELVETICA, 18));
+                iTextSharp.text.Paragraph text = new iTextSharp.text.Paragraph("\n"+SelectedType+"\n\n", new Font(Font.FontFamily.HELVETICA, 18));
                 text.Alignment = Element.ALIGN_CENTER;
                 document.Add(text);
 

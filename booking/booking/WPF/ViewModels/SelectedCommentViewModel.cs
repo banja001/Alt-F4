@@ -11,6 +11,8 @@ using booking.Repositories;
 using booking.WPF.ViewModels;
 using System.ComponentModel;
 using System.Windows.Media;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace WPF.ViewModels
 {
@@ -95,7 +97,7 @@ namespace WPF.ViewModels
         }
         public Brush FilledStar { get; set; }
         public Brush EmptyStar { get; set; }
-        public SelectedCommentViewModel(User guide, TourRatingDTO rating)
+        public SelectedCommentViewModel(User guide, TourRatingDTO rating,bool demoOn)
         {
             Guide = guide;
             Comment = rating;
@@ -108,6 +110,8 @@ namespace WPF.ViewModels
             FirstStarColor = FilledStar;
             SecondStarColor = FilledStar;
             RatingStars();
+            if (demoOn)
+                DemoIsOn(new CancellationToken());
         }
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -155,6 +159,15 @@ namespace WPF.ViewModels
                 SecondStarColor = EmptyStar;
             if (Comment.AverageRating < 1)
                 FirstStarColor = EmptyStar;
+        }
+        private async Task DemoIsOn(CancellationToken ct)
+        {
+
+            ct.ThrowIfCancellationRequested();
+            await Task.Delay(2000, ct);
+            ReportReview();
+            await Task.Delay(2000, ct);
+            ExitWindow();
         }
     }
 }

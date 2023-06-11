@@ -87,7 +87,7 @@ namespace booking.Model
         }
 
         public ICommand CheckPointCommand => new RelayCommand(CheckPointClick,CanClick);
-        private void CheckPointClick()
+        public void CheckPointClick()
         {
             this.NotChecked = false;
             this.Active = true;
