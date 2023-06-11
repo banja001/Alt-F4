@@ -573,11 +573,12 @@ namespace WPF.ViewModels.Owner
             gfx.DrawLine(new XPen(XColor.FromArgb(50, 30, 200)), new XPoint(450, 130), new XPoint(450, ypos));
             gfx.DrawLine(new XPen(XColor.FromArgb(50, 30, 200)), new XPoint(320, 130), new XPoint(320, ypos));
 
-            
 
 
-            document.Save("ownerRatings.pdf");
-            System.Diagnostics.Process.Start("explorer", "ownerRatings.pdf");
+            string name = $"ownerRatings_{Guid.NewGuid()}.pdf";
+            document.Save(name);
+            System.Diagnostics.Process.Start("explorer", name);
+
         }
     }
 }
