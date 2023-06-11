@@ -40,7 +40,7 @@ namespace Domain.DTO
             NumberOfGuests= simpleRequest.NumberOfGuests;
             StartDate.Date = Convert.ToDateTime(simpleRequest.DateRange.StartDate, CultureInfo.GetCultureInfo("es-ES"));
             EndDate.Date = Convert.ToDateTime(simpleRequest.DateRange.EndDate, CultureInfo.GetCultureInfo("es-ES"));
-            IsPartOfComplex = false;
+            IsPartOfComplex = simpleRequest.IsPartOfComplex;
             SimpleRequestId = simpleRequest.Id;
         }
     }

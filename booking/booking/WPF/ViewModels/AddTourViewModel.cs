@@ -31,6 +31,7 @@ namespace WPF.ViewModels
         public ObservableCollection<TourImage> ImagesForListBox { get; set; }
         public List<TourImage> TourImages { get; set; }
         private SimpleRequest SimpleRequest;
+        public User Guide { get; set; }
         public bool IsNotRequest { get; set; }
         public string Image { get; set; }
         public ICommand ExitWindowCommand => new RelayCommand(ExitWindow);
@@ -52,6 +53,7 @@ namespace WPF.ViewModels
             ImagesForListBox=new ObservableCollection<TourImage>();
             Tour.StartTime.Date = DateTime.Now;
             IsNotRequest = true;
+            Guide = guide;
         }
         public AddTourViewModel(string[] parameters,User guide)
         {
@@ -68,6 +70,7 @@ namespace WPF.ViewModels
             ImagesForListBox = new ObservableCollection<TourImage>();
             Tour.StartTime.Date = DateTime.Now;
             IsNotRequest = true;
+            Guide = guide;
             InitilazeFields(parameters);
         }
         private void InitilazeFields(string[] parameters)
@@ -130,6 +133,7 @@ namespace WPF.ViewModels
             Tour.Location = simpleRequest.Location;
             IsNotRequest = isNotRequest;
             SimpleRequest = new SimpleRequest();
+            Guide = guide;
             SimpleRequest.Id = simpleRequest.SimpleRequestId;
         }
 
@@ -143,6 +147,7 @@ namespace WPF.ViewModels
                     {
                         Tour.Id = _tourRepository.MakeID();
                         Tour.Location.Id = _locationRepository.MakeID();
+                        Tour.Guide.Id = Guide.Id;
                         _checkPointRepository.AddRange(ObservableToList(CheckPointsForListBox));
                         _tourImageRepository.AddRange(TourImages);
                         _locationRepository.Add(Tour.Location);

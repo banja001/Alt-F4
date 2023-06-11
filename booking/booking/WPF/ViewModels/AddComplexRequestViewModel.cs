@@ -54,6 +54,7 @@ namespace WPF.ViewModels
             _complexRequest.Name = ComplexRequestName;
             foreach (var simpleRequest in _complexRequest.SimpleRequests)
             {
+                simpleRequest.IsPartOfComplex = true;
                 _simpleRequestService.Add(simpleRequest);
             }
             _complexRequestService.Add(_complexRequest);

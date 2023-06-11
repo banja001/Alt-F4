@@ -26,6 +26,7 @@ namespace Domain.Model
         public int NumberOfGuests { get; set; } 
         public DateRange DateRange { get; set; }
         public SimpleRequestStatus Status { get; set; }
+        public bool IsPartOfComplex { get; set; }
 
         public SimpleRequest()
         {
@@ -46,6 +47,7 @@ namespace Domain.Model
             NumberOfGuests = numberOfGuests;
             DateRange = new DateRange(startDate, endDate);
             Status = status;
+            IsPartOfComplex = false;
         }
         public SimpleRequest(int id, SimpleRequest simpleRequest)
         {
@@ -56,7 +58,8 @@ namespace Domain.Model
             Language = simpleRequest.Language;
             NumberOfGuests = simpleRequest.NumberOfGuests;
             DateRange = simpleRequest.DateRange;
-            Status = simpleRequest.Status;  
+            Status = simpleRequest.Status;
+            IsPartOfComplex = false;
         }
         public SimpleRequest(User user, SimpleRequestDTO simpleRequestDTO)
         {
@@ -67,6 +70,7 @@ namespace Domain.Model
             Language = simpleRequestDTO.Language;
             NumberOfGuests = simpleRequestDTO.NumberOfGuests;
             DateRange = new DateRange(simpleRequestDTO.StartDate, simpleRequestDTO.EndDate);
+            IsPartOfComplex = false;
 
             switch (simpleRequestDTO.StatusUri)
             {
@@ -96,7 +100,9 @@ namespace Domain.Model
                                    NumberOfGuests.ToString(),
                                    DateRange.StartDate.ToString("d", CultureInfo.GetCultureInfo("es-ES")),
                                    DateRange.EndDate.ToString("d", CultureInfo.GetCultureInfo("es-ES")),
-                                   Status.ToString()};
+                                   Status.ToString(),
+                                   IsPartOfComplex.ToString(),
+            };
             return csvValues;
         }
 
@@ -124,6 +130,7 @@ namespace Domain.Model
                 default:
                     throw new ArgumentException("Simple request Status in CSV does not exist");
             }
+            IsPartOfComplex = Convert.ToBoolean(values[9]);
         }
         public string GetStatusUri()
         {
