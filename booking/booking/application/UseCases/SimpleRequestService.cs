@@ -22,12 +22,14 @@ namespace application.UseCases
         private readonly ISimpleRequestRepository _simpleRequestRepository;
         private readonly LocationService _locationService;
         private readonly SimpleRequestTourService _simpleRequestTourService;
+        private readonly ComplexRequestService _complexRequestService;
         private readonly TourService _tourService;
         private readonly UserService _userService;
         public SimpleRequestService()
         {
             _simpleRequestRepository = Injector.CreateInstance<ISimpleRequestRepository>();
             _locationService = new LocationService();
+            _complexRequestService = new ComplexRequestService();   
             _simpleRequestTourService = new SimpleRequestTourService();
             _tourService = new TourService();
             _userService = new UserService();
@@ -39,7 +41,15 @@ namespace application.UseCases
             dispatcherTimer.Tick += dispatcherTicker;
             dispatcherTimer.Start();
         }
-        
+        public List<SimpleRequest> ConvertByGuest2(List<SimpleRequestDTO> simpleRequestDTOs, User guest2)
+        {
+            var list = new List<SimpleRequest>();
+            foreach (var simpleRequestDTO in simpleRequestDTOs)
+            {
+                list.Add(new SimpleRequest(guest2, simpleRequestDTO));
+            }
+            return list;    
+        }
         public Dictionary<string, int> GetLanguageChartByGuest2(User user)
         {
             var simpleRequests = _simpleRequestRepository.GetAllByGuest2(user);
@@ -224,6 +234,7 @@ namespace application.UseCases
         public void CheckApproval()
         {
             var simpleRequests = _simpleRequestRepository.GetAll();
+            var complexRequests = _complexRequestService.GetAll();
             foreach(var simpleRequest in simpleRequests)
             {
                 bool isInvalid = simpleRequest.DateRange.StartDate.Date >= DateTime.Now.AddDays(-2);
@@ -231,6 +242,15 @@ namespace application.UseCases
                     continue;
                 simpleRequest.Status = SimpleRequestStatus.INVALID;
                 _simpleRequestRepository.Update(simpleRequest);
+            }
+            foreach (var complexRequest in complexRequests)
+            {
+                var earliestSimpleRequest = _simpleRequestRepository.GetById(complexRequest.SimpleRequests[0].Id);
+                bool isInvalid = earliestSimpleRequest.DateRange.StartDate.Date >= DateTime.Now.AddDays(-2);
+                if (!isInvalid)
+                    continue;
+                complexRequest.Status = SimpleRequestStatus.INVALID;
+                _complexRequestService.Update(complexRequest);
             }
         }
 

@@ -16,23 +16,32 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="4*"/>
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal" Grid.Row="0">
-                <TextBox Text="{Binding PeopleCount}" VerticalAlignment="Top" x:Name="PeopleCount" BorderBrush="#FF65696D" Foreground="LightGray" Margin="20, 25, 15, 5" Width="80" Height="20" FontSize="12" FontWeight="Normal" LostFocus="PeopleCountLostFocus" GotFocus="PeopleCountGotFocus"></TextBox>
-                <TextBox Text="{Binding Language}" VerticalAlignment="Top" x:Name="Language" BorderBrush="#FF65696D" Foreground="LightGray" Margin="15, 25" Width="80" Height="20" FontSize="12" FontWeight="Normal" GotFocus="LanguageGotFocus" LostFocus="LanguageLostFocus"></TextBox>
-                <ComboBox VerticalAlignment="Top" x:Name="StateComboBox" SelectedItem="{Binding SelectedState, Mode=TwoWay}" ItemsSource="{Binding States, Mode=OneWay}" BorderBrush="#FF65696D" Margin="15,25" Width="80" Height="20" FontSize="12" FontWeight="Normal">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding FillCitiesCommand}"
+            <StackPanel Orientation="Vertical" Grid.Row="0">
+                <StackPanel Orientation="Horizontal">
+                    <Label MinWidth="80" FontSize="12" Margin="18,20,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc people_count}"></Label>
+                    <Label MinWidth="80" FontSize="12" Margin="28,20,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc language}"></Label>
+                    <Label MinWidth="80" FontSize="12" Margin="32,20,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc State}"></Label>
+                    <Label MinWidth="80" FontSize="12" Margin="28,20,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc City}"></Label>
+                    <Label MinWidth="80" FontSize="12" Margin="31,20,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc duration}"></Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Text="{Binding PeopleCount}" VerticalAlignment="Top" Margin="20, 0, 15, 5" Width="80" Height="20" FontSize="12" FontWeight="Normal"></TextBox>
+                    <TextBox Text="{Binding Language}" VerticalAlignment="Top" x:Name="Language" Margin="15, 0" Width="80" Height="20" FontSize="12" FontWeight="Normal"></TextBox>
+                    <ComboBox VerticalAlignment="Top" x:Name="StateComboBox" SelectedItem="{Binding SelectedState, Mode=TwoWay}" ItemsSource="{Binding States, Mode=OneWay}" BorderBrush="#FF65696D" Margin="15,0" Width="80" Height="20" FontSize="12" FontWeight="Normal">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding FillCitiesCommand}"
                              CommandParameter="{Binding ElementName=StateComboBox, Path=SelectedIndex}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </ComboBox>
-                <ComboBox VerticalAlignment="Top" ItemsSource="{Binding Cities, Mode=TwoWay}" x:Name="CityComboBox" SelectedItem="{Binding SelectedCity, Mode=TwoWay}" IsEnabled="true" BorderBrush="#FF65696D" Margin="15, 25" Width="80" Height="20" FontSize="12" FontWeight="Normal">
-                </ComboBox>
-                <TextBox Text="{Binding Duration}" VerticalAlignment="Top" x:Name="Duration" BorderBrush="#FF65696D" Foreground="LightGray" Margin="15, 25,0,25" Width="80" Height="20" FontSize="12" FontWeight="Normal" GotFocus="DurationGotFocus" LostFocus="DurationLostFocus"></TextBox>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <Button x:Name="Search" Command="{Binding SearchCommand}" CommandParameter="{Binding ElementName=tourSelectionTable, Path=SelectedItem}" Style="{DynamicResource LightButton}" VerticalAlignment="Top" Content="{ns:Loc Search}" Width="125" Height="30" Margin="120, 15, 8, 5" FontSize="14"></Button>
-                    <Button x:Name="BookTour" Command="{Binding BookATourCommand}" Style="{DynamicResource LightButton}" Content="{ns:Loc Book_a_tour}" Width="125" Height="30" Margin="8, 15, 20, 5" VerticalAlignment="Top" FontSize="14"></Button>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                    <ComboBox VerticalAlignment="Top" ItemsSource="{Binding Cities, Mode=TwoWay}" x:Name="CityComboBox" SelectedItem="{Binding SelectedCity, Mode=TwoWay}" IsEnabled="true" BorderBrush="#FF65696D" Margin="15, 0" Width="80" Height="20" FontSize="12" FontWeight="Normal">
+                    </ComboBox>
+                    <TextBox Text="{Binding Duration}" VerticalAlignment="Top" Margin="15,0,0,25" Width="80" Height="20" FontSize="12" FontWeight="Normal"></TextBox>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Button x:Name="Search" Command="{Binding SearchCommand}" CommandParameter="{Binding ElementName=tourSelectionTable, Path=SelectedItem}" Style="{DynamicResource LightButton}" VerticalAlignment="Top" Content="{ns:Loc Search}" Width="125" Height="30" Margin="160, -15, 8, 5" FontSize="14"></Button>
+                        <Button x:Name="BookTour" Command="{Binding BookATourCommand}" Style="{DynamicResource LightButton}" Content="{ns:Loc Book_a_tour}" Width="125" Height="30" Margin="8, -15, 20, 5" VerticalAlignment="Top" FontSize="14"></Button>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
             <DataGrid CellStyle="{DynamicResource LightDataGridCell}" RowStyle="{DynamicResource LightDataGridRow}" Style="{DynamicResource LighDataGrid}" ColumnHeaderStyle="{DynamicResource LightHeaderStyle}" Margin="20,20,20,15" x:Name="tourSelectionTable" SelectedItem="{Binding SelectedTour}" ItemsSource="{Binding TourLocationDTOs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" FontSize="12" FontWeight="Normal" Grid.Row="1" BorderBrush="#FF65696D" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True" >

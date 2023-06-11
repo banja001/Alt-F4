@@ -17,7 +17,7 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height ="10*"/>
-                <RowDefinition Height ="1*"/>
+                <RowDefinition Height ="0.9*"/>
             </Grid.RowDefinitions>
             <GroupBox Style="{DynamicResource LightGroupBox}" Grid.Row="0" Header="{ns:Loc Book_a_tour_header}" Grid.Column="0" Grid.ColumnSpan="2" Margin="20, 20">
                 <Grid Margin="0,0,0,0">
@@ -55,8 +55,8 @@
                     <TextBox x:Name="GuestNumberInput" Text="{Binding NumberOfGuests, Mode=TwoWay}" Grid.Column="1" Grid.Row="7" IsReadOnly="False" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
                     <Label Content="{ns:Loc Avg_guest_age}" Grid.Column="0" Grid.Row="8" Style="{DynamicResource LightHeaderLabel}" Margin="30, 5, 20, 0"/>
                     <TextBox x:Name="AverageGuestAgeInput" Text="{Binding AverageGuestAge, Mode=TwoWay}" Grid.Column="1" Grid.Row="8" IsReadOnly="False" FontSize="12" FontWeight="Normal" Margin="30, 10, 20 ,20"/>
-                    <Label Content="{ns:Loc Select_voucher}" Grid.Column="0" Grid.Row="9" Style="{DynamicResource LightHeaderLabel}" Margin="30, 0, 20, 0"/>
-                    <ComboBox Grid.Row="9" ItemsSource="{Binding VouchersComboBoxSource, Mode=TwoWay}" Margin="30, 5, 20 ,20" Grid.Column="1" x:Name="VouchersComboBox" SelectedItem="{Binding SelectedVoucher}" FontSize="12"/>
+                    <Label Content="{ns:Loc Select_voucher}" Grid.Column="0" Grid.Row="9" Style="{DynamicResource LightHeaderLabel}" Margin="30, 0, 20, 15"/>
+                    <ComboBox Grid.Row="9" ItemsSource="{Binding VouchersComboBoxSource, Mode=TwoWay}" Margin="30, 5, 20 ,22" Grid.Column="1" x:Name="VouchersComboBox" SelectedItem="{Binding SelectedVoucher}" FontSize="12"/>
                 </Grid>
             </GroupBox>
             <Button Command="{Binding ConfirmBookingCommand}" Style="{DynamicResource LightButton}" x:Name="ConfirmBookingButton" Grid.Row="1" Grid.Column="0" Content="{ns:Loc Confirm}" Margin="60, 0, 40, 20"/>

@@ -1,5 +1,6 @@
 ﻿using booking.Model;
 using booking.Serializer;
+using Domain.DTO;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -56,6 +57,34 @@ namespace Domain.Model
             NumberOfGuests = simpleRequest.NumberOfGuests;
             DateRange = simpleRequest.DateRange;
             Status = simpleRequest.Status;  
+        }
+        public SimpleRequest(User user, SimpleRequestDTO simpleRequestDTO)
+        {
+            Id = simpleRequestDTO.Id;
+            User = user;
+            Description = simpleRequestDTO.Description;
+            Location = simpleRequestDTO.Location;
+            Language = simpleRequestDTO.Language;
+            NumberOfGuests = simpleRequestDTO.NumberOfGuests;
+            DateRange = new DateRange(simpleRequestDTO.StartDate, simpleRequestDTO.EndDate);
+
+            switch (simpleRequestDTO.StatusUri)
+            {
+                case "../../../Resources/Icons/approved.png":
+                    {
+                        Status = SimpleRequestStatus.APPROVED; break;
+                    }
+                case "../../../Resources/Icons/onhold.png":
+                    {
+                        Status = SimpleRequestStatus.ON_HOLD; break;
+                    }
+                case "../../../Resources/Icons/invalid.png":
+                    {
+                        Status = SimpleRequestStatus.INVALID; break;
+                    }
+                default:
+                    throw new ArgumentException("Exception thrown when converting from StatusURI to SimpleRequeststatus.");
+            }
         }
         public string[] ToCSV()
         {

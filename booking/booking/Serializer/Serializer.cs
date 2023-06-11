@@ -5,28 +5,26 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Runtime.Serialization;
 
 namespace booking.Serializer
 {
-    public class Serializer<T> where T : ISerializable, new()
+    class Serializer<T> where T : ISerializable, new()
     {
         private const char Delimiter = '|';
 
-         public void ToCSV(string fileName, List<T> objects)
-         {
-             StringBuilder csv = new StringBuilder();
+        public void ToCSV(string fileName, List<T> objects)
+        {
+            StringBuilder csv = new StringBuilder();
 
-             foreach (T obj in objects)
-             {
-                 string line = string.Join(Delimiter.ToString(), obj.ToCSV());
-                 csv.AppendLine(line);
-             }
+            foreach (T obj in objects)
+            {
+                string line = string.Join(Delimiter.ToString(), obj.ToCSV());
+                csv.AppendLine(line);
+            }
 
-             File.WriteAllText(fileName, csv.ToString());
+            File.WriteAllText(fileName, csv.ToString());
 
-         }
-        
+        }
 
         public List<T> FromCSV(string fileName)
         {
@@ -42,7 +40,5 @@ namespace booking.Serializer
 
             return objects;
         }
-
-        
     }
 }

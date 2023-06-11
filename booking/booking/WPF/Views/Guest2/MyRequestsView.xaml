@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:booking.WPF.Views.Guest2"
              xmlns:ns="clr-namespace:Localization"
              mc:Ignorable="d" 
-             xmlns:cvt="clr-namespace:booking.Converter" 
+             xmlns:cvt="clr-namespace:booking.Converter" xmlns:cvt1="clr-namespace:Converter"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Style="{DynamicResource LightBackground}">
         <TabControl BorderThickness="0" Background="#E6E9F4" Margin="0,0,0,0">
@@ -17,13 +17,13 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Height="520">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="1.0*"/>
                             <RowDefinition Height="0.8*"/>
+                            <RowDefinition Height="1.0*"/>
                             <RowDefinition Height="0.8*"/>
+                            <RowDefinition Height="1.0*"/>
                             <RowDefinition Height="0.8*"/>
-                            <RowDefinition Height="0.8*"/>
-                            <RowDefinition Height="0.8*"/>
-                            <RowDefinition Height="0.8*"/>
-                            <RowDefinition Height="0.8*"/>
+                            <RowDefinition Height="0.6*"/>
                             <RowDefinition Height="0.8*"/>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="3*"/>
@@ -32,27 +32,48 @@
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}" Grid.Row="0" Grid.Column="0" Content="{ns:Loc location}" />
-                        <Label Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}" Grid.Row="2" Grid.Column="0" Content="{ns:Loc Time_estimation}" />
-                        <Label Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}" Grid.Row="4" Grid.Column="0" Content="{ns:Loc Additional_information}" />
+                        <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Orientation="Vertical">
+                            <Label Height="28" Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}"  Content="{ns:Loc location}" />
+                            <StackPanel Margin="0" Orientation="Horizontal">
+                                <Label MinWidth="100" FontSize="10" Margin="25,0,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc State}" />
+                                <Label FontSize="10" Margin="47,0,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc City}" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Orientation="Vertical">
+                            <Label Height="28" Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}"  Content="{ns:Loc Time_estimation}" />
+                            <StackPanel Margin="0" Orientation="Horizontal">
+                                <Label FontSize="10" MinWidth="100" Margin="25,0,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc From_message}" />
+                                <Label FontSize="10" Margin="47,0,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc To_message}" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" Orientation="Vertical">
+                            <Label Height="28" Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}"  Content="{ns:Loc Additional_information}" />
+                            <StackPanel Margin="0" Orientation="Horizontal">
+                                <Label MinWidth="100" FontSize="10" Margin="25,0,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc language}" />
+                                <Label FontSize="10" Margin="47,0,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc Number_of_guests}" />
+                            </StackPanel>
+                        </StackPanel>
+                        
                         <Label Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}" Grid.Row="6" Grid.Column="0" Content="{ns:Loc Description}" />
 
                         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                            <TextBox  LostFocus="StateLostFocus" GotFocus="StateGotFocus" x:Name="StateTextBox" Text="{Binding State}" Width="130" Margin="30,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                            <TextBox  LostFocus="CityLostFocus" GotFocus="CityGotFocus" x:Name="CityTextBox" Text="{Binding City}" Width="130" Margin="15,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <TextBox Text="{Binding State}" Width="130" Margin="30,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <TextBox Text="{Binding City}" Width="130" Margin="15,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                            <DatePicker SelectedDate="{Binding StartDate}" Text="Start date" Width="130" Margin="30,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                            <DatePicker SelectedDate="{Binding EndDate}" Text="End date" Width="130" Margin="15,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <DatePicker Height="25" SelectedDate="{Binding StartDate}" Text="Start date" Width="130" Margin="30,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <DatePicker Height="25" SelectedDate="{Binding EndDate}" Text="End date" Width="130" Margin="15,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                            <TextBox  LostFocus="LanguageLostFocus" GotFocus="LanguageGotFocus" x:Name="LanguageTextBox" Text="{Binding Language}" Width="130" Margin="30,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                            <TextBox  LostFocus="NumberOfGuestsLostFocus" GotFocus="NumberOfGuestsGotFocus" x:Name="NumberOfGuestsTextBox" Text="{Binding NumberOfGuests}" Width="130" Margin="15,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <TextBox Text="{Binding Language}" Width="130" Margin="30,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <TextBox Text="{Binding NumberOfGuests}" Width="130" Margin="15,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                         </StackPanel>
 
-                        <TextBox Height="60" VerticalAlignment="Top" LostFocus="DescriptionLostFocus" GotFocus="DescriptionGotFocus" x:Name="DescriptionTextBox" TextWrapping="Wrap" Text="{Binding Description}" Margin="30,0,0,0" Width="275" HorizontalAlignment="Left" Grid.Row="7" Grid.RowSpan="2" Grid.Column="0" />
+                        <TextBox Height="60" VerticalAlignment="Top"  TextWrapping="Wrap" Text="{Binding Description}" Margin="30,0,0,0" Width="275" HorizontalAlignment="Left" Grid.Row="7" Grid.RowSpan="2" Grid.Column="0" />
                         <Label Margin="10,0,0,0" Grid.Row="0" Grid.Column="1" Content="{ns:Loc Former_simple_requests}" Style="{DynamicResource LightHeaderLabel}"/>
                         
                         <StackPanel Orientation="Horizontal" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -98,6 +119,146 @@
                 </Grid>
             </TabItem>
             <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="Complex requests" MinWidth="100">
+                <Grid Style="{DynamicResource LightBackground}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Height="520">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1.0*"/>
+                            <RowDefinition Height="0.8*"/>
+                            <RowDefinition Height="1.0*"/>
+                            <RowDefinition Height="0.8*"/>
+                            <RowDefinition Height="1.0*"/>
+                            <RowDefinition Height="0.8*"/>
+                            <RowDefinition Height="0.6*"/>
+                            <RowDefinition Height="0.8*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="3*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Orientation="Vertical">
+                            <Label Height="28" Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}"  Content="{ns:Loc location}" />
+                            <StackPanel Margin="0" Orientation="Horizontal">
+                                <Label MinWidth="100" FontSize="10" Margin="25,0,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc State}" />
+                                <Label FontSize="10" Margin="47,0,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc City}" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Orientation="Vertical">
+                            <Label Height="28" Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}"  Content="{ns:Loc Time_estimation}" />
+                            <StackPanel Margin="0" Orientation="Horizontal">
+                                <Label FontSize="10" MinWidth="100" Margin="25,0,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc From_message}" />
+                                <Label FontSize="10" Margin="47,0,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc To_message}" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" Orientation="Vertical">
+                            <Label Height="28" Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}"  Content="{ns:Loc Additional_information}" />
+                            <StackPanel Margin="0" Orientation="Horizontal">
+                                <Label MinWidth="100" FontSize="10" Margin="25,0,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc language}" />
+                                <Label FontSize="10" Margin="47,0,0,0" Style="{DynamicResource ItemsControlHeader}" Content="{ns:Loc Number_of_guests}" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <Label Margin="25,0,0,0" Style="{DynamicResource LightHeaderLabel}" Grid.Row="6" Grid.Column="0" Content="{ns:Loc Description}" />
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                            <TextBox Text="{Binding State}" Width="130" Margin="30,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <TextBox Text="{Binding City}" Width="130" Margin="15,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                            <DatePicker Height="25" SelectedDate="{Binding StartDate}" Text="Start date" Width="130" Margin="30,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <DatePicker Height="25" SelectedDate="{Binding EndDate}" Text="End date" Width="130" Margin="15,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                            <TextBox  Text="{Binding Language}" Width="130" Margin="30,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <TextBox  Text="{Binding NumberOfGuests}" Width="130" Margin="15,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <TextBox Height="60" VerticalAlignment="Top" TextWrapping="Wrap" Text="{Binding Description}" Margin="30,0,0,0" Width="275" HorizontalAlignment="Left" Grid.Row="7" Grid.RowSpan="2" Grid.Column="0" />
+                        <Label Margin="10,0,0,0" Grid.Row="0" Grid.Column="1" Content="{ns:Loc Added_simple_requests}" Style="{DynamicResource LightHeaderLabel}"/>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Button Command="{Binding CancelSimpleRequestCommand}" Content="{ns:Loc Cancel}" Margin="93,10,5,0" Width="100" Height="30" Style="{DynamicResource LightClearButton}"/>
+                            <Button Command="{Binding AddSimpleRequestCommand}" Content="{ns:Loc Add}" Margin="5,10,0,0" Width="100" Height="30" Style="{DynamicResource LightButton}"/>
+                        </StackPanel>
+
+                        <ScrollViewer VerticalAlignment="Top" Margin="5,0,0,0" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Grid.RowSpan="5" Height="190" VerticalScrollBarVisibility="Hidden" Width="400">
+                            <ItemsControl ItemsSource="{Binding AddedSimpleRequests, Mode=TwoWay}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Height="80" HorizontalAlignment="Left" Width="380" Margin="8" Background="{DynamicResource ItemsControlBackground}" Style="{DynamicResource LightBorder}" BorderThickness="2" CornerRadius="3">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="1*"></RowDefinition>
+                                                    <RowDefinition Height="1*"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="1.2*"/>
+                                                    <ColumnDefinition Width="1.5*"/>
+                                                    <ColumnDefinition Width="1.5*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0" Grid.RowSpan="2" >
+                                                    <Border Margin="0,5,0,0" Padding="1" Width="36" Height="36" VerticalAlignment="Center" BorderBrush="#7588c4" Background="White" BorderThickness="2" CornerRadius="18">
+                                                        <Image Height="25" Width="25" Source="{Binding StatusUri, Converter={cvt:UrlToImageSourceConverter}}" Margin="0,0,0,0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Image>
+                                                    </Border>
+                                                    <Button Margin="0,2,0,0" Style="{DynamicResource LightClearButton}" Content="{ns:Loc see_more}" Command="{Binding Path=DataContext.PreviewAddedRequestCommand,  RelativeSource= {RelativeSource FindAncestor,
+                                                         AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Id}"/>
+                                                </StackPanel>
+
+                                                <Label Style="{DynamicResource ItemsControlHeader}" Margin="5,0,5,0" Grid.Column="1" Content="{ns:Loc obtain_date}" Grid.Row="0"></Label>
+                                                <Label Style="{DynamicResource ItemsControlHeader}" Margin="5,0,5,0" Grid.Column="1" Content="{ns:Loc expiry_date}" Grid.Row="1"></Label>
+                                                <Label Style="{DynamicResource LightHeaderLabel}" FontWeight="Medium" Grid.Column="3" Grid.Row="0" Margin="5,0,0,0" Content="{Binding StartDate.Date, Mode=OneWay,Converter={cvt:DateTimeToDateOnlyConverter}}" Width="90"/>
+                                                <Label Style="{DynamicResource LightHeaderLabel}" FontWeight="Medium" Grid.Column="3" Grid.Row="1" Margin="5,0,0,0" Content="{Binding EndDate.Date, Mode=OneWay,Converter={cvt:DateTimeToDateOnlyConverter}}" Width="90"/>
+
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                        
+                        <Label Margin="15,7,0,0" Grid.Row="7" Grid.Column="1" Style="{DynamicResource LightHeaderLabel}" Content="{ns:Loc Former_complex_requests}"></Label>
+
+                        <StackPanel HorizontalAlignment="Stretch" Grid.Row="6" Grid.Column="1" Orientation="Horizontal" >
+                            <Button HorizontalAlignment="Right" Width="100" Height="30" Command="{Binding ClearAddedRequestsCommand}" VerticalAlignment="Top" Margin="180,0,10,0" Style="{DynamicResource LightClearButton}" Content="{ns:Loc Clear}" ></Button>
+                            <Button Command="{Binding SubmitComplexRequest}" HorizontalAlignment="Right" Width="100" Height="30" VerticalAlignment="Top" Margin="0,0,15,0" Style="{DynamicResource LightButton}" Content="{ns:Loc Request}" ></Button>
+                        </StackPanel>
+                        
+                        
+                        <ScrollViewer VerticalAlignment="Top" Margin="5,0,0,0" HorizontalAlignment="Left" Grid.Row="8" Grid.Column="1" Grid.RowSpan="2" Height="190" VerticalScrollBarVisibility="Hidden" Width="400">
+                            <ItemsControl ItemsSource="{Binding ComplexRequests}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Height="80" HorizontalAlignment="Left" Width="380" Margin="8" Background="{DynamicResource ItemsControlBackground}" Style="{DynamicResource LightBorder}" BorderThickness="2" CornerRadius="3">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="1*"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="1.5*"/>
+                                                    <ColumnDefinition Width="1.5*"/>
+                                                    <ColumnDefinition Width="1.8*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" Style="{DynamicResource ItemsControlHeader}" Content="{Binding Name}"/>
+                                                <Border Grid.Row="0" Grid.Column="1" Margin="0,5,0,0" Padding="1" Width="36" Height="36" VerticalAlignment="Center" BorderBrush="#7588c4" Background="White" BorderThickness="2" CornerRadius="18">
+                                                    <Image Height="25" Width="25" Source="{Binding Status, Converter={cvt1:SimpleRequestStatusToImageSourceConverter}}" Margin="0,0,0,0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Image>
+                                                </Border>
+                                                <Button Command="{Binding Path=DataContext.ShowComplexRequestCommand,  RelativeSource= {RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Id}" Width="100" Height="40" Grid.Row="0" Grid.Column="2" Style="{DynamicResource LightClearButton}" Content="{ns:Loc see_more}"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

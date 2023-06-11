@@ -47,7 +47,7 @@
                     <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
                         <Label Style="{DynamicResource LightHeaderLabel}" Content="{ns:Loc Active_tour}" VerticalAlignment="Center" Margin="20,10,0,0"/>
                         <StackPanel Orientation="Horizontal">
-                            <DataGrid CellStyle="{DynamicResource LightDataGridCell}" RowStyle="{DynamicResource LightDataGridRow}" Style="{DynamicResource LighDataGrid}" ColumnHeaderStyle="{DynamicResource LightHeaderStyle}" Margin="20,5,0,0" Height="40" Width="640" x:Name="ActiveTourTable" ItemsSource="{Binding ActiveTour}" AutoGenerateColumns="False" IsHitTestVisible="False" IsReadOnly="True">
+                            <DataGrid CellStyle="{DynamicResource LightDataGridCell}" RowStyle="{DynamicResource LightDataGridRow}" Style="{DynamicResource LighDataGrid}" ColumnHeaderStyle="{DynamicResource LightHeaderStyle}" Margin="20,5,0,0" Height="40" Width="665" x:Name="ActiveTourTable" ItemsSource="{Binding ActiveTour}" AutoGenerateColumns="False" IsHitTestVisible="False" IsReadOnly="True">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="{ns:Loc name}"  Width="1*" Binding="{Binding Name}" />
                                     <DataGridTextColumn Header="{ns:Loc language}" Width="1*" Binding="{Binding Language}"/>
@@ -59,7 +59,7 @@
                             </DataGrid>
                             <Button Command="{Binding JoinActiveTourCommand}" Style="{DynamicResource LightButton}" Content="{ns:Loc Join_tour}" Grid.Row="1" Grid.Column="1" Width="150" Height="35" Margin="90,5,20,20"  VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,325,0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,300,0">
                             <Label Width="auto" FontSize="12" Content="{ns:Loc Current_checkpoint}" Style="{DynamicResource LightHeaderLabel}" VerticalAlignment="Center" Margin="0,5,5,0"/>
                             <TextBox FontSize="14" Width="120" Height="20" Margin="5,10,5,5" IsEnabled="False" Text="{Binding CurrentCheckpoint.Name}"/>
                         </StackPanel>
@@ -84,8 +84,6 @@
                             <DataGridTextColumn Header="{ns:Loc start_time}"  Width="1*" Binding="{Binding Start.Time}"/>
                             <DataGridTextColumn Header="{ns:Loc end_date}"  Width="1*" Binding="{Binding End.Date, Converter={cvt:DateTimeToDateOnlyConverter}}" />
                             <DataGridTextColumn Header="{ns:Loc end_time}"  Width="1*" Binding="{Binding End.Time}"/>
-                            <DataGridTextColumn Header="{ns:Loc guideId}"  Width="1*" Binding="{Binding Guide.Id}" />
-                            <DataGridTextColumn Header="{ns:Loc tourId}"  Width="1*" Binding="{Binding Tour.Id}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

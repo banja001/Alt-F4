@@ -1,5 +1,5 @@
 ﻿using booking.Model;
-using booking.Repository;
+using Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,26 +10,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using booking.WPF.ViewModels;
 using WPF.ViewModels;
 
 namespace WPF.Views.Guest2
 {
     /// <summary>
-    /// Interaction logic for SearchTourView.xaml
+    /// Interaction logic for AddComplexRequestView.xaml
     /// </summary>
-    public partial class SearchTourView : UserControl
+    public partial class AddComplexRequestView : Window
     {
-        public SearchTourView()
+        public AddComplexRequestView(User user, ComplexRequest complexRequest)
         {
             InitializeComponent();
-        }
-        public SearchTourView(User user)
-        {
-            InitializeComponent();
-            this.DataContext = new SearchTourViewModel(user);
+            this.DataContext = new AddComplexRequestViewModel(user, complexRequest);
         }
     }
 }
