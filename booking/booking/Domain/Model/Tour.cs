@@ -19,6 +19,7 @@ namespace booking.Model
         private string language;
         private int maxGuests;
         private double duration;
+        public User Guide;
         public int Id
         {
             get => id;
@@ -110,6 +111,7 @@ namespace booking.Model
         {
             Location = new Location();  
             StartTime = new DateAndTime();
+            Guide = new User();
         }
 
         public Tour(int id, string name, string description, string language, int maxGuests, DateAndTime startTime, double duration, Location location)
@@ -122,8 +124,21 @@ namespace booking.Model
             StartTime = startTime;
             Duration = duration;
             Location = location;
+            Guide = new User();
+            Guide.Id = 4;
         }
-
+        public Tour(int id, string name, string description, string language, int maxGuests, DateAndTime startTime, double duration, Location location, User guide)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            Language = language;
+            MaxGuests = maxGuests;
+            StartTime = startTime;
+            Duration = duration;
+            Location = location;
+            Guide = guide;
+        }
         public string[] ToCSV()
         {
             string[] csvValues = {  Id.ToString(),
@@ -133,7 +148,8 @@ namespace booking.Model
                                     Language.ToString(),
                                     MaxGuests.ToString(),
                                     StartTime.ToString(),
-                                    Duration.ToString()
+                                    Duration.ToString(),
+                                    Guide.Id.ToString()
                                  };
             return csvValues;
         }
@@ -150,6 +166,7 @@ namespace booking.Model
             StartTime.Date = Convert.ToDateTime(dateAndTime[0], CultureInfo.GetCultureInfo("es-ES"));
             StartTime.Time = dateAndTime[1];
             Duration = Convert.ToDouble(values[7]);
+            Guide.Id= int.Parse(values[8]);
         }
         public string Error => null;
 

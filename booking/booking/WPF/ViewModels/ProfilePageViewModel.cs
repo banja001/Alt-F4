@@ -10,6 +10,8 @@ using booking.Commands;
 using booking.Model;
 using booking.View;
 using booking.WPF.ViewModels;
+using booking.application.UseCases;
+using booking.Repository;
 
 namespace WPF.ViewModels
 {
@@ -19,7 +21,9 @@ namespace WPF.ViewModels
         public string Super { get; set; }
         public ICommand SignOutCommand => new RelayCommand(SignOut);
         public ICommand TooltipQuitCommand => new RelayCommand(QuitJobToolTip);
+        private AppointmentService _appiontmentService;
 
+        private readonly UserRepository _userRepository;
         private bool quitTooltip;
 
         public bool QuitTooltip
@@ -37,7 +41,10 @@ namespace WPF.ViewModels
         public ProfilePageViewModel(User guide)
         {
             Guide = guide;
-            Super = Guide.IsSuper();
+            _appiontmentService = new AppointmentService();
+            _userRepository=new UserRepository();
+            Super = Guide.IsSuper( IsGuideSuper());
+
         }
 
         public void QuitJobToolTip()
@@ -61,7 +68,16 @@ namespace WPF.ViewModels
                 signIn.Show();
             }
         }
-
+        public bool IsGuideSuper()
+        {
+            List<Appointment>appointments= _appiontmentService.FindAllAppointmentsByGuide(Guide.Id);
+            string bestLanguage=_appiontmentService.GroupByLanguage(appointments);
+            if (_appiontmentService.IsAbove20(appointments, bestLanguage))
+                _userRepository.UpdateSuperGuide(Guide.Id,true,bestLanguage);
+            else
+                _userRepository.UpdateSuperGuide(Guide.Id, false,"");
+            return _appiontmentService.IsAbove20(appointments, bestLanguage);
+        }
        
     }
 }

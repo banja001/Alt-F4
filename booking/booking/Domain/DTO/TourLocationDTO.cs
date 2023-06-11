@@ -20,6 +20,7 @@ namespace booking.DTO
         private int maxGuests;
         private DateTime startTime;
         private double duration;
+        public User Guide;
         public string Name 
         {
             get => name;
@@ -110,6 +111,7 @@ namespace booking.DTO
         {
             Images = new List<TourImage>();
             startTime = new DateTime();
+            Guide = new User();
         }
         public TourLocationDTO(Appointment appointment, Tour tour, Location location)
         {
@@ -121,9 +123,11 @@ namespace booking.DTO
             MaxGuests = tour.MaxGuests;
             Duration = tour.Duration;
             startTime = appointment.Start.Date;
+            Guide.Id = appointment.Guide.Id;
         }
-        public TourLocationDTO(int id, string name, string description, string location, string language, int maxGuests, DateTime startTime, double duration, List<TourImage> tourImages)
+        public TourLocationDTO(int id, string name, string description, string location, string language, int maxGuests, DateTime startTime, double duration, List<TourImage> tourImages, int GuideId)
         {
+            Guide = new User();
             this.Location = location;
             this.Name = name;
             this.Description = description;
@@ -133,6 +137,7 @@ namespace booking.DTO
             this.Duration = duration;
             this.MaxGuests = maxGuests;
             this.Images = tourImages;
+            this.Guide.Id=GuideId;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

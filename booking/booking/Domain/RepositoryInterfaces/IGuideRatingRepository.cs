@@ -17,5 +17,6 @@ namespace booking.Domain.RepositoryInterfaces
         void Delete(int id);
         void Add(object entity);
         public void Update(GuideRating guideRating);
+        public GuideRating GetByAppointmentId(int id);
     }
 }

@@ -73,5 +73,10 @@ namespace booking.Repositories
             _guideRatings[idx] = guideRating;
             _serializer.ToCSV(fileName, _guideRatings);
         }
+
+        public GuideRating GetByAppointmentId(int id)
+        {
+            return _guideRatings.Find(g => g.AppointmentId== id);
+        }
     }
 }
