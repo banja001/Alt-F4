@@ -120,6 +120,7 @@ namespace booking.WPF.ViewModels
         private void OnSubmitComplexRequest()
         {
             var addedSimpleRequests = _simpleRequestService.ConvertByGuest2(AddedSimpleRequests.ToList<SimpleRequestDTO>(), User);
+            
             ComplexRequest complexRequest = new ComplexRequest(User.Id, SimpleRequestStatus.ON_HOLD, addedSimpleRequests);
             
             Window window = System.Windows.Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);

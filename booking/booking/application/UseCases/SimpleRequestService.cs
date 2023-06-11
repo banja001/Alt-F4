@@ -268,6 +268,35 @@ namespace application.UseCases
             }
             return simpleRequests;
         }
+        public List<SimpleRequest> FindAllSimpleTourInSimpleRequestsTours(int guideId)
+        {
+            List<SimpleRequest> simpleRequests=new List<SimpleRequest>();
+            List<SimpleRequestTour> all = _simpleRequestTourService.GetAll();
+            foreach (var str in all)
+            {
+                str.Tour = _tourService.FindAll().Find(t=>t.Id==str.Tour.Id);
+                SimpleRequest s= _simpleRequestRepository.GetAll().Find(sr=>sr.Id==str.SimpleRequest.Id);
+                s = _simpleRequestRepository.GetById(str.SimpleRequest.Id);
+                if(s.Status==SimpleRequestStatus.APPROVED && str.Tour.Guide.Id==guideId)
+                    simpleRequests.Add(s);
+            }
+            return simpleRequests;
+        }
+
+        
+        public ComplexRequest CheckWhichComplexTour(int id)
+        {
+            List<ComplexRequest> complexRequests = _complexRequestService.GetAll();
+            foreach (var str in complexRequests)
+            {
+                if (str.SimpleRequests.Find(sr => sr.Id == id) != null)
+                {
+                    return str;
+                }
+
+            }
+            return null;
+        }
         public List<SimpleRequest> GetAll()
         {
             return _simpleRequestRepository.GetAll();

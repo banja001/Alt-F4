@@ -225,11 +225,38 @@ namespace WPF.ViewModels
 
         private void LoadRequests()
         {
+            
             AllRequests.Clear();
             foreach (var request in _simpleRequestsService.CreateListOfSimpleRequestsDTO()) 
             {
+                if (request.IsPartOfComplex)
+                {
+                    if (CheckComplexTour(request.SimpleRequestId))
+                    {
+                        AllRequests.Add(request);
+                    }
+                }
+                else
+                {
+
                     AllRequests.Add(request);
+                }
             }
+        }
+        private bool CheckComplexTour(int id)
+        {
+            List<ComplexRequest>allComplex=new List<ComplexRequest>();
+            foreach (var sr in _simpleRequestsService.FindAllSimpleTourInSimpleRequestsTours(Guide.Id))
+            {
+                if(_simpleRequestsService.CheckWhichComplexTour(sr.Id)!=null)
+                    allComplex.Add(_simpleRequestsService.CheckWhichComplexTour(sr.Id));
+            }
+            foreach (ComplexRequest cr in allComplex)
+            {
+                if(cr.SimpleRequests.Find(sr => sr.Id == id)!=null)
+                    return false;
+            }
+            return true;
         }
         private void FillCities()
         {
