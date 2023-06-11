@@ -54,7 +54,7 @@ namespace booking.WPF.ViewModels
             try
             {
                 string uniqueId = Guid.NewGuid().ToString();
-                string filePath = "C:\\Users\\Marko\\Desktop\\" + _user.Username + "_report_" + uniqueId.Substring(uniqueId.Count()-4) + ".pdf";
+                string filePath = "..\\..\\..\\Resources\\Reports\\" + _user.Username + "_report_" + uniqueId.Substring(uniqueId.Count()-4) + ".pdf";
                 PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(filePath, FileMode.Create));
 
                 document.Open();
