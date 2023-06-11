@@ -12,6 +12,9 @@ using booking.View;
 using booking.WPF.ViewModels;
 using booking.application.UseCases;
 using booking.Repository;
+using application.UseCases;
+using Domain.RepositoryInterfaces;
+using booking.Injector;
 
 namespace WPF.ViewModels
 {
@@ -21,9 +24,11 @@ namespace WPF.ViewModels
         public string Super { get; set; }
         public ICommand SignOutCommand => new RelayCommand(SignOut);
         public ICommand TooltipQuitCommand => new RelayCommand(QuitJobToolTip);
+        public ICommand QuitJobCommand => new RelayCommand(QuitJob);
         private AppointmentService _appiontmentService;
+        private readonly TourService _tourService;
 
-        private readonly UserRepository _userRepository;
+        private readonly UserService _userService; 
         private bool quitTooltip;
 
         public bool QuitTooltip
@@ -42,7 +47,8 @@ namespace WPF.ViewModels
         {
             Guide = guide;
             _appiontmentService = new AppointmentService();
-            _userRepository=new UserRepository();
+            _userService=new UserService();
+            _tourService =new TourService();
             Super = Guide.IsSuper( IsGuideSuper());
 
         }
@@ -71,12 +77,27 @@ namespace WPF.ViewModels
         public bool IsGuideSuper()
         {
             List<Appointment>appointments= _appiontmentService.FindAllAppointmentsByGuide(Guide.Id);
-            string bestLanguage=_appiontmentService.GroupByLanguage(appointments);
-            if (_appiontmentService.IsAbove20(appointments, bestLanguage))
-                _userRepository.UpdateSuperGuide(Guide.Id,true,bestLanguage);
-            else
-                _userRepository.UpdateSuperGuide(Guide.Id, false,"");
-            return _appiontmentService.IsAbove20(appointments, bestLanguage);
+            if (appointments.Count > 0)
+            {
+                string bestLanguage = _appiontmentService.GroupByLanguage(appointments);
+                if (_appiontmentService.IsAbove20(appointments, bestLanguage))
+                    _userService.UpdateSuperGuide(Guide.Id, true, bestLanguage);
+                else
+                    _userService.UpdateSuperGuide(Guide.Id, false, "");
+                return _appiontmentService.IsAbove20(appointments, bestLanguage);
+            }
+           else
+                return false;
+        }
+        public void QuitJob()
+        {
+            if (MessageBox.Show("Are you sure you want to quit job?", "Warning", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+
+                _userService.QuitJob(Guide.Id);
+                _tourService.GiveVouchersBecauseGuideQuitted(Guide.Id);
+                MessageBox.Show("You quitted job!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
        
     }

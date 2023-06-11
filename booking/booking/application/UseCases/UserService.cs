@@ -1,6 +1,7 @@
 ﻿using booking.Injector;
 using booking.Model;
 using booking.Repository;
+using booking.Serializer;
 using Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,13 @@ namespace application.UseCases
         {
             userRepository.Update(user);
         }
-        
+        public void UpdateSuperGuide(int id, bool super, string language)
+        {
+           userRepository.UpdateSuperGuide(id, super, language);
+        }
+        public void QuitJob(int id)
+        {
+            userRepository.QuitJob(id);
+        }
     }
 }

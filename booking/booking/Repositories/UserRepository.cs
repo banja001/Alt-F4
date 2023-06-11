@@ -77,5 +77,10 @@ namespace booking.Repository
             GetById(id).SuperGuideLanguage = language;
             _serializer.ToCSV(FilePath, _users);
         }
+        public void QuitJob(int id)
+        {
+            GetById(id).IsQuit = true;
+            _serializer.ToCSV(FilePath, _users);
+        }
     }
 }

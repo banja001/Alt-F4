@@ -63,7 +63,8 @@ namespace booking.WPF.ViewModels
                 FinishedTours.Add(a);
             }  
             MostVisitedTour =new ObservableCollection<AppointmentGuestsDTO>();
-            SelectedYear = Years[0];
+            if(Years.Count>0)
+                SelectedYear = Years[0];
             Guide = guide;
             DemoName = "Demo";
         }

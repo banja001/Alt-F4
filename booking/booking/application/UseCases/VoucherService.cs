@@ -49,5 +49,13 @@ namespace application.UseCases
         {
             _voucherRepository.Update(voucher);
         }
+        public int MakeID() 
+        {
+            return _voucherRepository.MakeID();
+        }
+        public void Add(Voucher v)
+        {
+            _voucherRepository.Add(v);
+        }
     }
 }
