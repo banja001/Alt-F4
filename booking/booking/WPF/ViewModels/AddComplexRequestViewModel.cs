@@ -45,6 +45,11 @@ namespace WPF.ViewModels
                 MessageBox.Show("You need to enter complex tour name!", "Error");
                 return;
             }
+            if(_complexRequest.SimpleRequests.Count < 2)
+            {
+                MessageBox.Show("Complex request needs to have at least 2 simple requests!", "Error");
+                return;
+            }
 
             _complexRequest.Name = ComplexRequestName;
             foreach (var simpleRequest in _complexRequest.SimpleRequests)

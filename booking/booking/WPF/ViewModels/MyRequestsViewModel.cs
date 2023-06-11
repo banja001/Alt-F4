@@ -93,7 +93,16 @@ namespace booking.WPF.ViewModels
                 MessageBox.Show("Values you have entered are invalid!", "Error");
                 return;
             }
-            SimpleRequest simpleRequest = new SimpleRequest();
+            if(AddedSimpleRequests.Count() > 0)
+            {
+                var previousSimpleRequest = new SimpleRequest(User, AddedSimpleRequests.First());
+                if(previousSimpleRequest.DateRange.StartDate.Date > StartDate.Date)
+                {
+                    MessageBox.Show("You can't enter date that is before first simple request date!", "Error");
+                    return;
+                }
+            }
+                SimpleRequest simpleRequest = new SimpleRequest();
             if (AddSimpleRequest(simpleRequest, "Complex"))
             {
                 AddedSimpleRequests.Add(new SimpleRequestDTO(AddedSimpleRequests.Count + 1,
@@ -185,7 +194,8 @@ namespace booking.WPF.ViewModels
         private bool AddSimpleRequest(SimpleRequest simpleRequest, string type)
         {
             Location location = new Location(-1, City, State);
-            location.Id = !_locationService.Contains(location) ? _locationService.MakeID() : location.Id = _locationService.GetId(location.State, location.City);
+            location.Id = !_locationService.Contains(location) ? _locationService.MakeID() : _locationService.GetId(location.State, location.City);
+            _locationService.Add(location);
             if (StartDate.ToDateTime().Date <= DateTime.Now.AddDays(2))
             {
                 MessageBox.Show("The start date of request should be at least 48h earlier than actual date of tour", "Alert");
