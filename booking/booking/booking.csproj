@@ -167,6 +167,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Folder Include="Resources\Videos\" />
     <Folder Include="Resources\Reports\" />
   </ItemGroup>
 

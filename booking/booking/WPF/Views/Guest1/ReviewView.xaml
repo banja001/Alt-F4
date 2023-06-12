@@ -7,18 +7,10 @@
         xmlns:cvt="clr-namespace:booking.Converter"
         mc:Ignorable="d"
         Title="ReviewView" Height="450" Width="1123" WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <SolidColorBrush x:Key="GreenBrush" Color="#597a6a" />
-
-        <Style x:Key="labelsStyle" TargetType="{x:Type Control}">
-            <Setter Property="Foreground" Value="#edf2f0"></Setter>
-            <Setter Property="FontSize" Value="14"></Setter>
-        </Style>
-        <Style x:Key="gridStyle" TargetType="Grid">
-            <Setter Property="Background" Value="#699687"></Setter>
-        </Style>
-    </Window.Resources>
-    <Grid Style="{StaticResource ResourceKey=gridStyle}">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CloseCommand}" Gesture="ESC"></KeyBinding>
+    </Window.InputBindings>
+    <Grid Style="{StaticResource ResourceKey=gridStyleGuest1}">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="8*"></RowDefinition>
@@ -29,7 +21,7 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Content="Ratings I got as a guest" 
-            Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Bottom" FontSize="24" FontWeight="Bold" Margin="10 0"/>
+            Style="{StaticResource ResourceKey=labelsStyleGuest1}" VerticalAlignment="Bottom" FontSize="24" FontWeight="Bold" Margin="10 0"/>
 
         <DataGrid x:Name="reservationsData" Grid.Row="1" Grid.Column="0"
                               ItemsSource="{Binding Reviews, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
@@ -69,6 +61,6 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Grid.Row="2" Grid.Column="0" Name="bClose" Content="Close" Command="{Binding CloseCommand}" HorizontalAlignment="Right" Width="79" Height="30" Margin="10 0"/>
+        <Button Grid.Row="2" Grid.Column="0" Name="bClose" Content="Close" Style="{StaticResource ResourceKey=buttonGuest1}" Command="{Binding CloseCommand}" HorizontalAlignment="Right" Width="79" Height="30" Margin="10 0"/>
     </Grid>
 </Window>

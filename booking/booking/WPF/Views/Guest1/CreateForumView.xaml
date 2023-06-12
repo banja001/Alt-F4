@@ -8,33 +8,11 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="CreateForumView" Height="359" Width="766" WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <SolidColorBrush x:Key="GreenBrush" Color="#597a6a" />
-
-        <Style x:Key="labelsStyle" TargetType="{x:Type Control}">
-            <Setter Property="Foreground" Value="#edf2f0"></Setter>
-            <Setter Property="FontSize" Value="14"></Setter>
-        </Style>
-        <Style x:Key="groupBoxStyle" TargetType="GroupBox">
-            <Setter Property="Background" Value="#597a6a"></Setter>
-            <Setter Property="Foreground" Value="#edf2f0"></Setter>
-            <Setter Property="FontSize" Value="14"></Setter>
-        </Style>
-        <Style x:Key="tabItemStyle" TargetType="TabItem">
-            <Setter Property="Background" Value="#699687"></Setter>
-            <Setter Property="Foreground" Value="#edf2f0"></Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Foreground" Value="#597a6a"></Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="gridStyle" TargetType="Grid">
-            <Setter Property="Background" Value="#699687"></Setter>
-        </Style>
-    </Window.Resources>
-    <Grid Style="{StaticResource ResourceKey=gridStyle}">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CreateForumCommand}" Gesture="ALT+C"></KeyBinding>
+        <KeyBinding Command="{Binding CloseWindowCommand}" Gesture="ESC"></KeyBinding>
+    </Window.InputBindings>
+    <Grid Style="{StaticResource ResourceKey=gridStyleGuest1}">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
@@ -49,9 +27,9 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Grid.ColumnSpan="2" Name="lbHeader" Content="Create forum" 
-            Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24" FontWeight="Bold" Margin="10 0"/>
+            Style="{StaticResource ResourceKey=labelsStyleGuest1}" FontSize="24" FontWeight="Bold" Margin="10 0"/>
 
-        <Label Grid.Row="1" Grid.Column="0" Content="State" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="State" Style="{StaticResource ResourceKey=labelsStyleGuest1}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0"/>
         <ComboBox Grid.Row="1" Grid.Column="1" x:Name="StateComboBox" Height="22"
                                   ItemsSource="{Binding States, UpdateSourceTrigger=PropertyChanged}" 
                                   SelectedItem="{Binding SelectedState}" Margin="10 0">
@@ -62,17 +40,17 @@
             </i:Interaction.Triggers>
         </ComboBox>
 
-        <Label Grid.Row="1" Grid.Column="2" Content="City" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0"/>
+        <Label Grid.Row="1" Grid.Column="2" Content="City" Style="{StaticResource ResourceKey=labelsStyleGuest1}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0"/>
         <ComboBox Grid.Row="1" Grid.Column="3" x:Name="CityComboBox"  Height="22" 
                                   ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}"
                                   SelectedItem="{Binding SelectedCity}" IsEnabled="{Binding CitiesComboBoxEnabled, UpdateSourceTrigger=PropertyChanged}" Margin="10 0"/>
-        
-        <Label Grid.Row="2" Grid.Column="0" Content="Comment" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 0"/>
+
+        <Label Grid.Row="2" Grid.Column="0" Content="Comment" Style="{StaticResource ResourceKey=labelsStyleGuest1}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 0"/>
         <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Name="txtbComment" Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Margin="10 10 10 0"/>
 
         <WrapPanel Grid.Row="3" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 15">
-            <Button Height="20" Width="67" Content="Cancel" Margin="10 0" Command="{Binding CloseWindowCommand}"/>
-            <Button Name="ReserveAccommodationButton" Height="20" Width="67" Content="Create" Margin="10 0" Command="{Binding CreateForumCommand}"/>
+            <Button Height="20" Width="67" Content="Cancel" Margin="10 0" Command="{Binding CloseWindowCommand}" Style="{StaticResource ResourceKey=buttonGuest1}"/>
+            <Button Name="ReserveAccommodationButton" Height="20" Width="67" Content="Create" Style="{StaticResource ResourceKey=buttonGuest1}" Margin="10 0" Command="{Binding CreateForumCommand}"/>
         </WrapPanel>
     </Grid>
 </Window>

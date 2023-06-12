@@ -104,12 +104,22 @@ namespace WPF.ViewModels.Guest1
         }
         private void OpenCommentsMyForm()
         {
+            if(SelectedMyForum == null)
+            {
+                MessageBox.Show("You have to select a forum before you can leave a comment");
+                return;
+            }
             var forumCommentWindow = new ForumCommentsView(SelectedMyForum, userId);
             forumCommentWindow.ShowDialog();
         }
 
         private void OpenComments()
         {
+            if (SelectedFromAllForums == null)
+            {
+                MessageBox.Show("You have to select a forum before you can leave a comment");
+                return;
+            }
             var forumCommentWindow = new ForumCommentsView(SelectedFromAllForums, userId);
             forumCommentWindow.ShowDialog();
         }
