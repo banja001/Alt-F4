@@ -17,7 +17,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <TabControl BorderThickness="0" Background="#E6E9F4" Margin="0,0,0,0">
-        <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="Active tour" MinWidth="100">
+        <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="{ns:Loc Active_tour}" MinWidth="100">
             <Grid Style="{DynamicResource LightBackground}">
                 <Grid.Resources>
                     <Style x:Key="LightHeaderStyle" TargetType="DataGridColumnHeader">
@@ -89,10 +89,10 @@
                 </Grid>
             </Grid>
         </TabItem>
-        <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="Search" MinWidth="100">
+        <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="{ns:Loc Search}" MinWidth="100">
             <ContentControl Content="{Binding SearchViewModel}"></ContentControl>
         </TabItem>
-        <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="Vouchers" MinWidth="100">
+        <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="{ns:Loc Vouchers}" MinWidth="100">
             <Grid Style="{DynamicResource LightBackground}">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <Label Style="{DynamicResource LightHeaderLabel}" Content="{ns:Loc Available_vouchers}" VerticalAlignment="Center" Margin="15,20,0,10"/>

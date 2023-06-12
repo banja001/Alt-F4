@@ -406,7 +406,7 @@ namespace WPF.ViewModels
                 await Task.Delay(2000, ct);
                 SelectedStartDate = DateTime.Now.AddDays(3);
                 await Task.Delay(2000, ct);
-                Language = "Nemacki";
+                Language = "Engleski";
                 await Task.Delay(2000, ct);
                 MaxGuests = "30";
                 await Task.Delay(2000, ct);

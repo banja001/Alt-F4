@@ -177,6 +177,9 @@
   <data name="Completed_tours" xml:space="preserve">
     <value>Completed tours</value>
   </data>
+  <data name="Complex_requests" xml:space="preserve">
+    <value>Complex requests</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
@@ -296,6 +299,9 @@
   </data>
   <data name="Simple_request" xml:space="preserve">
     <value>Simple request</value>
+  </data>
+  <data name="Simple_requests" xml:space="preserve">
+    <value>Simple requests</value>
   </data>
   <data name="start_date" xml:space="preserve">
     <value>Start date</value>

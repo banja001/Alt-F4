@@ -10,7 +10,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Style="{DynamicResource LightBackground}">
         <TabControl BorderThickness="0" Background="#E6E9F4" Margin="0,0,0,0">
-            <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="Simple requests" MinWidth="100">
+            <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="{ns:Loc Simple_requests}" MinWidth="100">
                 <Grid Style="{DynamicResource LightBackground}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"/>
@@ -118,7 +118,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="Complex requests" MinWidth="100">
+            <TabItem FontWeight="SemiBold" BorderThickness="0" BorderBrush="#E6E9F4" Background="#E6E9F4" FontSize="14" Foreground="#293045" Header="{ns:Loc Complex_requests}" MinWidth="100">
                 <Grid Style="{DynamicResource LightBackground}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"/>

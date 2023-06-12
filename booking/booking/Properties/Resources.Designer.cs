@@ -250,6 +250,15 @@ namespace booking.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kompleksni zahtevi.
+        /// </summary>
+        internal static string Complex_requests {
+            get {
+                return ResourceManager.GetString("Complex_requests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Potvrdi.
         /// </summary>
         internal static string Confirm {
@@ -606,6 +615,15 @@ namespace booking.Properties {
         internal static string Simple_request {
             get {
                 return ResourceManager.GetString("Simple_request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prosti zahtevi.
+        /// </summary>
+        internal static string Simple_requests {
+            get {
+                return ResourceManager.GetString("Simple_requests", resourceCulture);
             }
         }
         

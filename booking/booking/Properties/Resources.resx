@@ -180,6 +180,9 @@
   <data name="Completed_tours" xml:space="preserve">
     <value>Završene ture</value>
   </data>
+  <data name="Complex_requests" xml:space="preserve">
+    <value>Kompleksni zahtevi</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>Potvrdi</value>
   </data>
@@ -299,6 +302,9 @@
   </data>
   <data name="Simple_request" xml:space="preserve">
     <value>Prosti zahtev</value>
+  </data>
+  <data name="Simple_requests" xml:space="preserve">
+    <value>Prosti zahtevi</value>
   </data>
   <data name="start_date" xml:space="preserve">
     <value>Datum početka</value>
