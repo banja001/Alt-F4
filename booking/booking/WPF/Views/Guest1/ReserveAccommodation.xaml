@@ -19,31 +19,6 @@
                 <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" />
             </StackPanel>
         </ControlTemplate>
-
-        <SolidColorBrush x:Key="GreenBrush" Color="#597a6a" />
-
-        <Style x:Key="labelsStyle" TargetType="{x:Type Control}">
-            <Setter Property="Foreground" Value="#edf2f0"></Setter>
-            <Setter Property="FontSize" Value="14"></Setter>
-        </Style>
-        <Style x:Key="groupBoxStyle" TargetType="GroupBox">
-            <Setter Property="Background" Value="#597a6a"></Setter>
-            <Setter Property="Foreground" Value="#edf2f0"></Setter>
-            <Setter Property="FontSize" Value="14"></Setter>
-        </Style>
-        <Style x:Key="tabItemStyle" TargetType="TabItem">
-            <Setter Property="Background" Value="#699687"></Setter>
-            <Setter Property="Foreground" Value="#edf2f0"></Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Foreground" Value="#597a6a"></Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="gridStyle" TargetType="Grid">
-            <Setter Property="Background" Value="#699687"></Setter>
-        </Style>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Command="{Binding CloseWindowCommand}" Gesture="ESC"></KeyBinding>
@@ -52,7 +27,7 @@
     </Window.InputBindings>
     <Grid KeyboardNavigation.TabNavigation="Cycle"
           FocusManager.FocusedElement="{Binding ElementName=gbSearch.cStartDate}"
-          Style="{StaticResource ResourceKey=gridStyle}">
+          Style="{StaticResource ResourceKey=gridStyleGuest1}">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
@@ -67,9 +42,9 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Pick a date of your reservation" 
-               Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24" FontWeight="Bold" Margin="10 0"/>
+               Style="{StaticResource ResourceKey=labelsStyleGuest1}" FontSize="24" FontWeight="Bold" Margin="10 0"/>
 
-        <GroupBox Name="gbSearch" Grid.Row="1" Grid.ColumnSpan="2" Header="Search" Margin="10 0" Style="{StaticResource ResourceKey=groupBoxStyle}">
+        <GroupBox Name="gbSearch" Grid.Row="1" Grid.ColumnSpan="2" Header="Search" Margin="10 0" Style="{StaticResource ResourceKey=groupBoxStyleGuest1}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="8*"></RowDefinition>
@@ -83,7 +58,7 @@
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Content="Start date" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ResourceKey=labelsStyle}" Margin="5 10"/>
+                <Label Grid.Row="0" Grid.Column="0" Content="Start date" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ResourceKey=labelsStyleGuest1}" Margin="5 10"/>
                 <Calendar Name="cStartDate" Grid.Row="0" Grid.Column="1" SelectedDate="{Binding Path=NewDate.StartDate, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" 
                         VerticalAlignment="Center">
                     <i:Interaction.Triggers>
@@ -93,7 +68,7 @@
                     </i:Interaction.Triggers>
                 </Calendar>
 
-                <Label Grid.Row="0" Grid.Column="2" Content="End date" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ResourceKey=labelsStyle}" Margin="5 10"/>
+                <Label Grid.Row="0" Grid.Column="2" Content="End date" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ResourceKey=labelsStyleGuest1}" Margin="5 10"/>
                 <Calendar Grid.Row="0" Grid.Column="3" SelectedDate="{Binding Path=NewDate.EndDate, UpdateSourceTrigger=PropertyChanged}"  Validation.ErrorTemplate="{StaticResource ValidationTemplate}" 
                         VerticalAlignment="Center">
                     <i:Interaction.Triggers>
@@ -103,7 +78,7 @@
                     </i:Interaction.Triggers>
                 </Calendar>
 
-                <Label Grid.Row="1" Grid.Column="0" Content="Num of days" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource ResourceKey=labelsStyle}" Margin="5 0"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Num of days" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource ResourceKey=labelsStyleGuest1}" Margin="5 0"/>
                 <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" Name="NumOfDaysTextBox" Text="{Binding NumOfDays, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True,  NotifyOnValidationError=True}"
                                     Height="25">
                     <i:Interaction.Triggers>
@@ -133,7 +108,7 @@
             </Grid>
         </GroupBox>
 
-        <Label Grid.Row="2" Grid.ColumnSpan="2" Name="AlternativeDates" Content="Alternative dates:" Style="{StaticResource ResourceKey=labelsStyle}" Visibility="{Binding AlternativeDatesVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom"  HorizontalAlignment="Left" Margin="5 0"/>
+        <Label Grid.Row="2" Grid.ColumnSpan="2" Name="AlternativeDates" Content="Alternative dates:" Style="{StaticResource ResourceKey=labelsStyleGuest1}" Visibility="{Binding AlternativeDatesVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom"  HorizontalAlignment="Left" Margin="5 0"/>
         <DataGrid Grid.Row="3" Grid.ColumnSpan="2" x:Name="accommodationData"
                           ItemsSource="{Binding FreeDates,
                                         Mode=OneWay,
@@ -175,7 +150,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Label Grid.Row="4" Grid.Column="0" Content="Num of guests" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0"/>
+        <Label Grid.Row="4" Grid.Column="0" Content="Num of guests" Style="{StaticResource ResourceKey=labelsStyleGuest1}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0"/>
         <xctk:IntegerUpDown x:Name="udNumOfGuests" Grid.Row="4" Grid.Column="1" Height="20" Margin="0 0 10 0" KeyDown="udNumOfGuests_KeyDown">
             <xctk:IntegerUpDown.Text>
                 <Binding Path="GuestsNumber" UpdateSourceTrigger="PropertyChanged"/>
@@ -204,8 +179,8 @@
         </xctk:IntegerUpDown>
 
         <WrapPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Height="20" Width="67" Content="Cancel" Margin="10 0" Command="{Binding CloseWindowCommand}"/>
-            <Button Name="ReserveAccommodationButton" Height="20" Width="67" Content="Reserve" Margin="10 0" Command="{Binding ReserveAccommodationClickCommand}" IsEnabled="{Binding ReserveButtonEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Height="20" Width="67" Content="Cancel" Style="{StaticResource ResourceKey=buttonGuest1}" Margin="10 0" Command="{Binding CloseWindowCommand}"/>
+            <Button Name="ReserveAccommodationButton" Height="20" Width="67" Content="Reserve" Style="{StaticResource ResourceKey=buttonGuest1}" Margin="10 0" Command="{Binding ReserveAccommodationClickCommand}" IsEnabled="{Binding ReserveButtonEnabled, UpdateSourceTrigger=PropertyChanged}"/>
         </WrapPanel>
     </Grid>
 </Window>

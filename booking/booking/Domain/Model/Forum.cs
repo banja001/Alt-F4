@@ -2,17 +2,32 @@
 using booking.Serializer;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Domain.Model
 {
-    public class Forum : ISerializable
+    public class Forum : ISerializable, INotifyPropertyChanged
     {
         public int Id { get; set; }
         public string Location { get; set; }
         public int CreatorId { get; set; }
-        public bool Open { get; set; }
+
+        private bool open;
+        public bool Open 
+        { 
+            get { return open; }
+            set
+            {
+                if(open != value)
+                {
+                    open = value;
+                    OnPropertyChanged(nameof(Open));
+                }
+            }
+        }
         public bool VeryUseful { get; set; }
 
         public Forum() { }
@@ -24,6 +39,12 @@ namespace Domain.Model
             CreatorId = creatorId;
             Open = open;
             VeryUseful = veryUseful;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         public string[] ToCSV()
         {

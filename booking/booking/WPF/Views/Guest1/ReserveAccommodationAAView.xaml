@@ -9,18 +9,11 @@
         xmlns:cvt="clr-namespace:booking.Converter"
         mc:Ignorable="d"
         Title="ReserveAccommodationAAView" Height="450" Width="800" WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <SolidColorBrush x:Key="GreenBrush" Color="#597a6a" />
-
-        <Style x:Key="labelsStyle" TargetType="{x:Type Control}">
-            <Setter Property="Foreground" Value="#edf2f0"></Setter>
-            <Setter Property="FontSize" Value="14"></Setter>
-        </Style>
-        <Style x:Key="gridStyle" TargetType="Grid">
-            <Setter Property="Background" Value="#699687"></Setter>
-        </Style>
-    </Window.Resources>
-    <Grid Style="{StaticResource ResourceKey=gridStyle}">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CloseWindowCommand}" Gesture="ESC"></KeyBinding>
+        <KeyBinding Command="{Binding ReserveAccommodationClickCommand}" Gesture="CTRL+R"></KeyBinding>
+    </Window.InputBindings>
+    <Grid Style="{StaticResource ResourceKey=gridStyleGuest1}">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="5*"></RowDefinition>
@@ -31,7 +24,7 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Name="lbHeader" Content="Pick a date of your reservation" 
-            Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24" FontWeight="Bold" Margin="10 0"/>
+            Style="{StaticResource ResourceKey=labelsStyleGuest1}" FontSize="24" FontWeight="Bold" Margin="10 0"/>
 
         <DataGrid Grid.Row="1" Grid.Column="0" x:Name="accommodationData"
                           ItemsSource="{Binding FreeDates,
@@ -75,8 +68,8 @@
         </DataGrid>
         
         <WrapPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 15">
-            <Button Height="20" Width="67" Content="Cancel" Margin="10 0" Command="{Binding CloseWindowCommand}"/>
-            <Button Name="ReserveAccommodationButton" Height="20" Width="67" Content="Reserve" Margin="10 0" Command="{Binding ReserveAccommodationClickCommand}" IsEnabled="{Binding ReserveButtonEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Height="20" Width="67" Content="Cancel" Style="{StaticResource buttonGuest1}" Margin="10 0" Command="{Binding CloseWindowCommand}"/>
+            <Button Name="ReserveAccommodationButton" Height="20" Width="67" Style="{StaticResource buttonGuest1}" Content="Reserve" Margin="10 0" Command="{Binding ReserveAccommodationClickCommand}" IsEnabled="{Binding ReserveButtonEnabled, UpdateSourceTrigger=PropertyChanged}"/>
         </WrapPanel>
     </Grid>
 </Window>

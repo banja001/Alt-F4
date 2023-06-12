@@ -13,6 +13,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 
 namespace WPF.ViewModels.Guest1
@@ -96,12 +97,23 @@ namespace WPF.ViewModels.Guest1
 
         private void SetEnable()
         {
+            if(selectedForum == null)
+            {
+                MessageBox.Show("You have to choose a forumbefore u can interact with it");
+                return;
+            }
             TxtbEnabled = selectedForum.Open;
             PostButtonEnabled = false;
         }
 
         private void LoadComments()
         {
+            if (selectedForum == null)
+            {
+                MessageBox.Show("You have to choose a forumbefore u can interact with it");
+                return;
+            }
+
             List<ForumComment> allComments = _forumCommentService.GetByForumId(selectedForum.Id);
             
             foreach(var comment in allComments)

@@ -79,5 +79,38 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="labelsStyleGuest1" TargetType="{x:Type Control}">
+            <Setter Property="Foreground" Value="#333333  "></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
+        </Style>
+        <Style x:Key="groupBoxStyleGuest1" TargetType="GroupBox">
+            <Setter Property="Background" Value="#A7C2A7"></Setter>
+            <Setter Property="Foreground" Value="#333333"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
+        </Style>
+        <Style x:Key="tabItemStyleGuest1" TargetType="TabItem">
+            <Setter Property="Background" Value="#C7E8C7      "></Setter>
+            <Setter Property="Foreground" Value="#333333  "></Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="#333333"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="gridStyleGuest1" TargetType="Grid">
+            <Setter Property="Background" Value="#C7E8C7"></Setter>
+        </Style>
+        <Style x:Key="buttonGuest1" TargetType="Button">
+            <Setter Property="Background" Value="#4e6e65"></Setter>
+            <Setter Property="Foreground" Value="#C7E8C7"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="BorderBrush" Value="White"></Setter>
+        </Style>
+        <Style x:Key="comboBoxGuest1" TargetType="ComboBox">
+            <Setter Property="Background" Value="#BFF5DB"></Setter>
+        </Style>
+
     </Application.Resources>
 </Application>

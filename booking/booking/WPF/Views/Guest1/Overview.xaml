@@ -3,10 +3,10 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WPF.Views.Guest1"
       xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+      xmlns:local="clr-namespace:Utilities"
       xmlns:val="clr-namespace:booking.Validation"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -20,30 +20,6 @@
             </StackPanel>
         </ControlTemplate>
         
-        <SolidColorBrush x:Key="GreenBrush" Color="#597a6a" />
-
-        <Style x:Key="labelsStyle" TargetType="{x:Type Control}">
-            <Setter Property="Foreground" Value="#edf2f0"></Setter>
-            <Setter Property="FontSize" Value="14"></Setter>
-        </Style>
-        <Style x:Key="groupBoxStyle" TargetType="GroupBox">
-            <Setter Property="Background" Value="#597a6a"></Setter>
-            <Setter Property="Foreground" Value="#edf2f0"></Setter>
-            <Setter Property="FontSize" Value="14"></Setter>
-        </Style>
-        <Style x:Key="tabItemStyle" TargetType="TabItem">
-            <Setter Property="Background" Value="#699687"></Setter>
-            <Setter Property="Foreground" Value="#edf2f0"></Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Foreground" Value="#597a6a"></Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="gridStyle" TargetType="Grid">
-            <Setter Property="Background" Value="#699687"></Setter>
-        </Style>
     </Page.Resources>
     <Page.InputBindings>
         <KeyBinding Command="{Binding ReserveAccommodationsCommand}" Gesture="CTRL+R"></KeyBinding>
@@ -51,7 +27,7 @@
         <KeyBinding Command="{Binding SeeAllCommand}" Gesture="CTRL+L"></KeyBinding>
         <KeyBinding Command="{Binding OpenImagesCommand}" Gesture="ALT+V"></KeyBinding>
     </Page.InputBindings>
-    <Grid Style="{StaticResource ResourceKey=gridStyle}">
+    <Grid Style="{StaticResource ResourceKey=gridStyleGuest1}">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="0.4*"></RowDefinition>
@@ -64,7 +40,7 @@
 
         
         <GroupBox Grid.Row="0" Grid.ColumnSpan="2" Header="Search" 
-                              Style="{StaticResource ResourceKey=groupBoxStyle}" BorderThickness="2" Margin="10 0" KeyDown="GroupBox_KeyDown">
+                              Style="{StaticResource ResourceKey=groupBoxStyleGuest1}" BorderThickness="2" Margin="10 0" KeyDown="GroupBox_KeyDown">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -83,18 +59,18 @@
                 </Grid.ColumnDefinitions>
                 <WrapPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Bottom">
                     <CheckBox x:Name="CheckBoxApartment" Content="Apartment" 
-                                      Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" Margin="10 0" IsChecked="{Binding ApartmentChecked}" KeyDown="CheckBox_KeyDown"/>
+                                      Style="{StaticResource ResourceKey=labelsStyleGuest1}" HorizontalAlignment="Left" Margin="10 0" IsChecked="{Binding ApartmentChecked}" KeyDown="CheckBox_KeyDown"/>
                     <CheckBox x:Name="CheckBoxHouse" Content="House" 
-                                      Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Center" Margin="10 0" IsChecked="{Binding HouseChecked}" KeyDown="CheckBox_KeyDown"/>
+                                      Style="{StaticResource ResourceKey=labelsStyleGuest1}" HorizontalAlignment="Center" Margin="10 0" IsChecked="{Binding HouseChecked}" KeyDown="CheckBox_KeyDown"/>
                     <CheckBox x:Name="CheckBoxCabin" Content="Cabin" 
-                                      Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Right" Margin="10 0" IsChecked="{Binding CabinChecked}" KeyDown="CheckBox_KeyDown"/>
+                                      Style="{StaticResource ResourceKey=labelsStyleGuest1}" HorizontalAlignment="Right" Margin="10 0" IsChecked="{Binding CabinChecked}" KeyDown="CheckBox_KeyDown"/>
                 </WrapPanel>
 
                 <Label Grid.Row="1" Grid.Column="0" Content="Name" VerticalAlignment="Center" 
-                               Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" Margin="5 0"/>
-                <TextBox Grid.Row="1" Grid.Column="1"  x:Name="tSearchBarName" Height="22" Text="{Binding SearchedAccommodation.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                               Style="{StaticResource ResourceKey=labelsStyleGuest1}" HorizontalAlignment="Left" Margin="5 0"/>
+                <xctk:WatermarkTextBox Grid.Row="1" Grid.Column="1" x:Name="tSearchBarName" Height="23" Text="{Binding SearchedAccommodation.Name, UpdateSourceTrigger=PropertyChanged}" Watermark="Enter name" />
 
-                <Label Grid.Row="1" Grid.Column="2" Content="State" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <Label Grid.Row="1" Grid.Column="2" Content="State" Style="{StaticResource ResourceKey=labelsStyleGuest1}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 <ComboBox Grid.Row="1" Grid.Column="3" x:Name="StateComboBox" Height="22" 
                                   ItemsSource="{Binding States, UpdateSourceTrigger=PropertyChanged}" 
                                   SelectedItem="{Binding SelectedState}">
@@ -105,12 +81,13 @@
                     </i:Interaction.Triggers>
                 </ComboBox>
 
-                <Label Grid.Row="1" Grid.Column="4" Content="City" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <Label Grid.Row="1" Grid.Column="4" Content="City" Style="{StaticResource ResourceKey=labelsStyleGuest1}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 <ComboBox Grid.Row="1" Grid.Column="5" x:Name="CityComboBox"  Height="22" 
                                   ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}"
-                                  SelectedItem="{Binding SelectedCity}" IsEnabled="{Binding CitiesComboBoxEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+                                  SelectedItem="{Binding SelectedCity}" IsEnabled="{Binding CitiesComboBoxEnabled, UpdateSourceTrigger=PropertyChanged}">
+                </ComboBox>
 
-                <Label Grid.Row="2" Content="Guests" Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0"/>
+                <Label Grid.Row="2" Content="Guests" Style="{StaticResource ResourceKey=labelsStyleGuest1}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0"/>
                 <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" x:Name="tSearchBarNumberOfGuests" Height="22">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
@@ -139,7 +116,7 @@
                 </xctk:IntegerUpDown>
 
                 <Label Grid.Row="2" Grid.Column="2" Height="30" Content="Days" 
-                               Style="{StaticResource ResourceKey=labelsStyle}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                               Style="{StaticResource ResourceKey=labelsStyleGuest1}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 <xctk:IntegerUpDown Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" x:Name="tSearchBarNumberOfDays" Height="22">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
@@ -167,15 +144,15 @@
                     </Validation.ErrorTemplate>
                 </xctk:IntegerUpDown>
 
-                <Button Grid.Row="1" Grid.Column="6" x:Name="SeeAllButton" Command="{Binding SeeAllCommand}" Height="22" Width="67" Content="See all" HorizontalAlignment="Right" Margin="10 0"/>
-                <Button Grid.Row="2" Grid.Column="6" x:Name="SearchAccommodationButton" Command="{Binding SearchAccommodationsCommand}" 
+                <Button Grid.Row="1" Grid.Column="6" x:Name="SeeAllButton" Command="{Binding SeeAllCommand}" Style="{StaticResource buttonGuest1}" Height="22" Width="67" Content="See all" HorizontalAlignment="Right" Margin="10 0"/>
+                <Button Grid.Row="2" Grid.Column="6" x:Name="SearchAccommodationButton" Command="{Binding SearchAccommodationsCommand}" Style="{StaticResource buttonGuest1}"
                         IsEnabled="{Binding SearchButtonEnabled, UpdateSourceTrigger=PropertyChanged}" Height="22" Width="67" Content="Search" HorizontalAlignment="Right" Margin="10 0"/>
             </Grid>
         </GroupBox>
 
-        <Button Grid.Row="1" Grid.Column="1" x:Name="ReserveAccommodationButton" Command="{Binding ReserveAccommodationsCommand}"
+        <Button Grid.Row="1" Grid.Column="1" x:Name="ReserveAccommodationButton" Command="{Binding ReserveAccommodationsCommand}" Style="{StaticResource buttonGuest1}"
                         Width="67" Height="25" Content="Reserve" IsEnabled="{Binding ReserveButtonEnabled, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10 10"/>
-        <Label Grid.Row="1" Grid.Column="0" Content="Accommodations" Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10 0"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="Accommodations" Style="{StaticResource ResourceKey=labelsStyleGuest1}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10 0"/>
         <DataGrid Grid.Row="2" Grid.ColumnSpan="2" x:Name="accommodationData"
                           ItemsSource="{Binding AccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
@@ -222,7 +199,7 @@
                         <DataTemplate>
                             <Button x:Name="ImagesButton" Command="{Binding DataContext.OpenImagesCommand,
                                             RelativeSource= {RelativeSource FindAncestor,
-                                            AncestorType={x:Type DataGrid}}}" Content="View"/>
+                                            AncestorType={x:Type DataGrid}}}" Style="{StaticResource buttonGuest1}" Content="View"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

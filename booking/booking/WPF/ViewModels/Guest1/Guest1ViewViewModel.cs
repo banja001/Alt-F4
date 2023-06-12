@@ -19,6 +19,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Xml.Linq;
+using WPF.Views.Guest1;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace WPF.ViewModels.Guest1
@@ -64,6 +65,7 @@ namespace WPF.ViewModels.Guest1
         public ICommand OpenSecondTabCommand => new RelayCommand(OpenSecondTab);
         public ICommand OpenThirdTabCommand => new RelayCommand(OpenThirdTab);
         public ICommand OpenFourthTabCommand => new RelayCommand(OpenFourthTab);
+        public ICommand TutorialCommand => new RelayCommand(Tutorial);
 
         public Guest1ViewViewModel(int userId)
         {
@@ -172,6 +174,20 @@ namespace WPF.ViewModels.Guest1
         private void OpenFourthTab()
         {
             SelectedIndexTabControl = 3;
+        }
+
+        private void Tutorial()
+        {
+            TutorialView window;
+            if (SelectedIndexTabControl == 0)
+                window = new TutorialView("search");
+            else if(SelectedIndexTabControl == 1)
+                window = new TutorialView("rate");
+            else if(selectedIndexTabControl == 2)
+                window = new TutorialView("reservations");
+            else
+                window = new TutorialView("forums");
+            window.ShowDialog();
         }
     }
 }

@@ -11,53 +11,30 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:val="clr-namespace:booking.Validation"
         mc:Ignorable="d"
-        Title="Guest" Height="760" Width="846" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" Background="#597a6a">
+        Title="Guest" Height="760" Width="846" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" Background="#A7C2A7">
     <Window.InputBindings>
         <KeyBinding Command="{Binding OpenFirstTabCommand}" Gesture="F1"></KeyBinding>
         <KeyBinding Command="{Binding OpenSecondTabCommand}" Gesture="F2"></KeyBinding>
         <KeyBinding Command="{Binding OpenThirdTabCommand}" Gesture="F3"></KeyBinding>
         <KeyBinding Command="{Binding OpenFourthTabCommand}" Gesture="F4"></KeyBinding>
+        <KeyBinding Command="{Binding TutorialCommand}" Gesture="CTRL+T"></KeyBinding>
     </Window.InputBindings>
-    <Window.Resources>
-        <SolidColorBrush x:Key="GreenBrush" Color="#597a6a" />
-
-        <Style x:Key="labelsStyle" TargetType="{x:Type Control}">
-            <Setter Property="Foreground" Value="#edf2f0"></Setter>
-            <Setter Property="FontSize" Value="14"></Setter>
-        </Style>
-        <Style x:Key="groupBoxStyle" TargetType="GroupBox">
-            <Setter Property="Background" Value="#597a6a"></Setter>
-            <Setter Property="Foreground" Value="#edf2f0"></Setter>
-            <Setter Property="FontSize" Value="14"></Setter>
-        </Style>
-        <Style x:Key="tabItemStyle" TargetType="TabItem">
-            <Setter Property="Background" Value="#699687"></Setter>
-            <Setter Property="Foreground" Value="#edf2f0"></Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Foreground" Value="#597a6a"></Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="gridStyle" TargetType="Grid">
-            <Setter Property="Background" Value="#699687"></Setter>
-        </Style>
-    </Window.Resources>
     <Grid KeyboardNavigation.TabNavigation="Cycle"
           FocusManager.FocusedElement="{Binding ElementName=tabControl}">
         <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0">
-            <Button Content="Tutorial" Height="25" Width="55" Margin="5 0"/>
-            <Label Name="lbUserName" Content="{Binding UserName}" Style="{StaticResource ResourceKey=labelsStyle}"/>
-            <Label Content="|   Score:" Style="{StaticResource ResourceKey=labelsStyle}"/>
-            <Label Name="lbScore" Content="{Binding Score}" Style="{StaticResource ResourceKey=labelsStyle}"/>
+            <Button Content="Tutorial" Style="{StaticResource ResourceKey=buttonGuest1}" Command="{Binding TutorialCommand}" Height="25" Width="55" Margin="5 0"/>
+            <Label Name="lbUserName" Content="{Binding UserName}" Style="{StaticResource ResourceKey=labelsStyleGuest1}"/>
+            <Label Content="|   Score:" Style="{StaticResource ResourceKey=labelsStyleGuest1}"/>
+            <Label Name="lbScore" Content="{Binding Score}" Style="{StaticResource ResourceKey=labelsStyleGuest1}"/>
         </WrapPanel>
         <TabControl Name="tabControl" SelectedIndex="{Binding SelectedIndexTabControl, UpdateSourceTrigger=PropertyChanged}">
-            <TabItem Name="tabItemOverview" Header="Overview" Height="30" VerticalAlignment="Top" Style="{StaticResource ResourceKey=tabItemStyle}"
+            <TabItem Name="tabItemOverview" Header="Overview" Height="30" VerticalAlignment="Top" Style="{StaticResource ResourceKey=tabItemStyleGuest1}"
                  KeyboardNavigation.TabNavigation="Cycle"
                  FocusManager.FocusedElement="{Binding ElementName=wpRadioButtons.rbOverview}">
-
-                <Grid Style="{StaticResource ResourceKey=gridStyle}">
+                <TabItem.InputBindings>
+                    
+                </TabItem.InputBindings>
+                <Grid Style="{StaticResource ResourceKey=gridStyleGuest1}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.5*"></RowDefinition>
                         <RowDefinition Height="0.5*"></RowDefinition>
@@ -67,25 +44,26 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Name="lbHeader" Content="Accommodation overview" 
-                       Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24" FontWeight="Bold" Margin="10 0"/>
+                       Style="{StaticResource ResourceKey=labelsStyleGuest1}" FontSize="24" FontWeight="Bold" Margin="10 0"/>
                     <WrapPanel Name="wpRadioButtons" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10 10">
                         <RadioButton Name="rbOverview"  Content="Overview" RenderTransformOrigin="0.722,0.613" 
-                                     Style="{StaticResource ResourceKey=labelsStyle}" IsChecked="True" KeyDown="RadioButton_KeyDown" Click="rbOverview_Click"/>
+                                     Style="{StaticResource ResourceKey=labelsStyleGuest1}" IsChecked="True" KeyDown="RadioButton_KeyDown" Click="rbOverview_Click"/>
                         <RadioButton Name="rbAnywhereAnytime" Grid.Column="0" Content="Anywhere, anytime" Margin="10 0" 
-                                     Style="{StaticResource ResourceKey=labelsStyle}" RenderTransformOrigin="0.722,0.613" KeyDown="RadioButton_KeyDown" Checked="rbAnywhereAnytime_Checked"/>
+                                     Style="{StaticResource ResourceKey=labelsStyleGuest1}" RenderTransformOrigin="0.722,0.613" KeyDown="RadioButton_KeyDown" Checked="rbAnywhereAnytime_Checked"/>
                     </WrapPanel>
                     <Frame Grid.Row="2" Grid.Column="0" NavigationUIVisibility="Hidden" Name="fOverviewAnywhere"/>
                 </Grid>
             </TabItem>
-            <TabItem Name="tabItemRate" Header="Rate" Height="30" Style="{StaticResource ResourceKey=tabItemStyle}"
+            <TabItem Name="tabItemRate" Header="Rate" Height="30" Style="{StaticResource ResourceKey=tabItemStyleGuest1}"
                  KeyboardNavigation.TabNavigation="Cycle" 
                  FocusManager.FocusedElement="{Binding ElementName=lbStayedIn}">
                 <TabItem.InputBindings>
                     <KeyBinding Command="{Binding RemoveImageCommand}" Gesture="CTRL+R"></KeyBinding>
                     <KeyBinding Command="{Binding SubmitRateCommand}" Gesture="CTRL+S"></KeyBinding>
                     <KeyBinding Command="{Binding AddImageCommand}" Gesture="ALT+A"></KeyBinding>
+                    <KeyBinding Command="{Binding OpetRecievedRatingsCommand}" Gesture="ALT+R"></KeyBinding>
                 </TabItem.InputBindings>
-                <Grid Style="{StaticResource ResourceKey=gridStyle}">
+                <Grid Style="{StaticResource ResourceKey=gridStyleGuest1}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1.5*"></RowDefinition>
                         <RowDefinition Height="3*"></RowDefinition>
@@ -103,12 +81,12 @@
                     </Grid.ColumnDefinitions>
 
                     <Label Grid.Row="0" Grid.ColumnSpan="3" Content="Rate your accommodations" 
-                       Style="{StaticResource ResourceKey=labelsStyle}" FontSize="24" FontWeight="Bold" Margin="10"/>
+                       Style="{StaticResource ResourceKey=labelsStyleGuest1}" FontSize="24" FontWeight="Bold" Margin="10"/>
 
-                    <Button Grid.Row="0" Grid.Column="3" Content="Ratings I got" Command="{Binding OpetRecievedRatingsCommand}" IsEnabled="{Binding RatingsIGotEnabled}" Width="79" Height="30" HorizontalAlignment="Right" Margin="10 0"/>
+                    <Button Grid.Row="0" Grid.Column="3" Content="Ratings I got" Style="{StaticResource ResourceKey=buttonGuest1}" Command="{Binding OpetRecievedRatingsCommand}" IsEnabled="{Binding RatingsIGotEnabled}" Width="79" Height="30" HorizontalAlignment="Right" Margin="10 0"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="Stayed in" 
-                       Style="{StaticResource ResourceKey=labelsStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
+                       Style="{StaticResource ResourceKey=labelsStyleGuest1}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
                     <ListBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Name="lbStayedIn"
                             ItemsSource="{Binding StayedInAccommodations}" 
                              SelectedItem="{Binding SelectedFromList, UpdateSourceTrigger=PropertyChanged}"
@@ -121,20 +99,20 @@
                         </i:Interaction.Triggers>
                     </ListBox>
 
-                    <Label Grid.Row="2" Grid.Column="0" Content="Clean" Style="{StaticResource ResourceKey=labelsStyle}"
+                    <Label Grid.Row="2" Grid.Column="0" Content="Clean" Style="{StaticResource ResourceKey=labelsStyleGuest1}"
                        HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0"/>
                     <syncfusion:SfRating Grid.Row="2" Grid.Column="1" Name="stClean" Value="{Binding CleanRating, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Center" Width="150"/>
 
-                    <Label Grid.Row="3" Grid.Column="0" Content="Owner" Style="{StaticResource ResourceKey=labelsStyle}"
+                    <Label Grid.Row="3" Grid.Column="0" Content="Owner" Style="{StaticResource ResourceKey=labelsStyleGuest1}"
                        HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0"/>
                     <syncfusion:SfRating Grid.Row="3" Grid.Column="1" Name="stOwner" Value="{Binding OwnersKindenssRating, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="30" ItemsCount="5" VerticalAlignment="Center" Width="150"/>
 
-                    <Label Grid.Row="2" Grid.Column="2" Content="Comment" Style="{StaticResource ResourceKey=labelsStyle}"
+                    <Label Grid.Row="2" Grid.Column="2" Content="Comment" Style="{StaticResource ResourceKey=labelsStyleGuest1}"
                        HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="3" Name="txtbComment" Text="{Binding RatingComment, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Margin="10 10 10 0"/>
+                    <xctk:WatermarkTextBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="3" Name="txtbComment" Text="{Binding RatingComment, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Watermark="Comment" Margin="10 10 10 0"/>
 
                     <GroupBox Grid.Row="4" Grid.ColumnSpan="4" Header="Images" Margin="10"
-                          Style="{StaticResource ResourceKey=groupBoxStyle}">
+                          Style="{StaticResource ResourceKey=groupBoxStyleGuest1}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="3*"></RowDefinition>
@@ -146,12 +124,12 @@
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
 
-                            <Label Grid.Row="0" Grid.Column="0" Content="Image url" Style="{StaticResource ResourceKey=labelsStyle}"
+                            <Label Grid.Row="0" Grid.Column="0" Content="Image url" Style="{StaticResource ResourceKey=labelsStyleGuest1}"
                                HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0"/>
-                            <TextBox Grid.Row="0" Grid.Column="1" Name="tbImageUrl" Text="{Binding ImageUrl, UpdateSourceTrigger=PropertyChanged}" Height="25" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0 0 10 0"/>
+                            <xctk:WatermarkTextBox Grid.Row="0" Grid.Column="1" Name="tbImageUrl" Text="{Binding ImageUrl, UpdateSourceTrigger=PropertyChanged}" Height="25" TextWrapping="Wrap" VerticalAlignment="Center" Watermark="URL" Margin="0 0 10 0"/>
 
 
-                            <Label Grid.Row="1" Grid.Column="0" Content="Added" Style="{StaticResource ResourceKey=labelsStyle}"
+                            <Label Grid.Row="1" Grid.Column="0" Content="Added" Style="{StaticResource ResourceKey=labelsStyleGuest1}"
                                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0"/>
                             <ListView Grid.Row="1" Grid.Column="1" Name="lvAddedImages" 
                                      ItemsSource="{Binding AddedImages, UpdateSourceTrigger=PropertyChanged}" 
@@ -171,13 +149,13 @@
                             </ListView>
 
                             <Button Grid.Row="0" Grid.Column="2" Name="bAddImage" Command="{Binding AddImageCommand}" IsEnabled="{Binding AddImageEnabled, UpdateSourceTrigger=PropertyChanged}"
-                                Content="Add" HorizontalAlignment="Center" Height="23" VerticalAlignment="Center" Width="63" Margin="0 0 10 0"/>
-                            <Button Grid.Row="1" Grid.Column="2" Content="Remove" Command="{Binding RemoveImageCommand}" IsEnabled="{Binding RemoveImageEnabled, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Height="23" VerticalAlignment="Top" Width="63" Margin="0 0 10 0"/>
+                                Content="Add" HorizontalAlignment="Center" Height="23" Style="{StaticResource ResourceKey=buttonGuest1}" VerticalAlignment="Center" Width="63" Margin="0 0 10 0"/>
+                            <Button Grid.Row="1" Grid.Column="2" Content="Remove" Style="{StaticResource ResourceKey=buttonGuest1}" Command="{Binding RemoveImageCommand}" IsEnabled="{Binding RemoveImageEnabled, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Height="23" VerticalAlignment="Top" Width="63" Margin="0 0 10 0"/>
                         </Grid>
                     </GroupBox>
 
                     <GroupBox Grid.Row="5" Grid.ColumnSpan="4" Header="Renovation suggestion (optional)" Margin="10 0"
-                          Style="{StaticResource ResourceKey=groupBoxStyle}">
+                          Style="{StaticResource ResourceKey=groupBoxStyleGuest1}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="6*"></RowDefinition>
@@ -188,14 +166,15 @@
                                 <ColumnDefinition Width="9*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
 
-                            <Label Grid.Row="0" Grid.Column="0" Content="Description" Style="{StaticResource ResourceKey=labelsStyle}"
+                            <Label Grid.Row="0" Grid.Column="0" Content="Description" Style="{StaticResource ResourceKey=labelsStyleGuest1}"
                                HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <TextBox Grid.Row="0" Grid.Column="1" Name="txtbRenovationDescription" Text="{Binding RenovationDescription, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Margin="0 10 10 0"/>
+                            <xctk:WatermarkTextBox Grid.Row="0" Grid.Column="1" Name="txtbRenovationDescription" Text="{Binding RenovationDescription, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Watermark="Description" Margin="0 10 10 0"/>
 
-                            <Label Grid.Row="1" Grid.Column="0" Content="How urgent" Style="{StaticResource ResourceKey=labelsStyle}"
+                            <Label Grid.Row="1" Grid.Column="0" Content="How urgent" Style="{StaticResource ResourceKey=labelsStyleGuest1}"
                                HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <ComboBox Grid.Row="1" Grid.Column="1" Height="24" 
-                                      SelectedItem="{Binding SelectedUrgency}" Margin="0 0 10 0">
+                                      SelectedItem="{Binding SelectedUrgency}" 
+                                      Style="{StaticResource ResourceKey=comboBoxGuest1}" Margin="0 0 10 0">
                                 <ComboBoxItem Content="Level 1 - It would be nice to renovate some small things, but everything works perefctly without that"/>
                                 <ComboBoxItem Content="Level 2 - Accommodation needs small adjustments which would make it perfect"/>
                                 <ComboBoxItem Content="Level 3 - There are few things that should really be taken care of"/>
@@ -204,10 +183,10 @@
                             </ComboBox>
                         </Grid>
                     </GroupBox>
-                    <Button Grid.Row="6" Grid.Column="3" Name="bSubmitRate" Command="{Binding SubmitRateCommand}" IsEnabled="{Binding SubmitEnabled, UpdateSourceTrigger=PropertyChanged}" Content="Submit rate" HorizontalAlignment="Right" Height="30" VerticalAlignment="Center" Width="79" Margin="10 0"/>
+                    <Button Grid.Row="6" Grid.Column="3" Name="bSubmitRate" Style="{StaticResource ResourceKey=buttonGuest1}" Command="{Binding SubmitRateCommand}" IsEnabled="{Binding SubmitEnabled, UpdateSourceTrigger=PropertyChanged}" Content="Submit rate" HorizontalAlignment="Right" Height="30" VerticalAlignment="Center" Width="79" Margin="10 0"/>
                 </Grid>
             </TabItem>
-            <TabItem Name="tabItemReservations" Header="Reservations" Height="30" VerticalAlignment="Top" Style="{StaticResource ResourceKey=tabItemStyle}"
+            <TabItem Name="tabItemReservations" Header="Reservations" Height="30" VerticalAlignment="Top" Style="{StaticResource ResourceKey=tabItemStyleGuest1}"
                  KeyboardNavigation.TabNavigation="Cycle"
                  FocusManager.FocusedElement="{Binding ElementName=gbAllReservations.reservationsData}">
                 <TabItem.InputBindings>
@@ -215,7 +194,7 @@
                     <KeyBinding Command="{Binding Path=PostponeReservationCommand}" Gesture="CTRL+P"></KeyBinding>
                     <KeyBinding Command="{Binding Path=ViewCommentCommand}" Gesture="ALT+V"></KeyBinding>
                 </TabItem.InputBindings>
-                <Grid Style="{StaticResource ResourceKey=gridStyle}">
+                <Grid Style="{StaticResource ResourceKey=gridStyleGuest1}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"></RowDefinition>
                         <RowDefinition Height="4*"></RowDefinition>
@@ -226,11 +205,11 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" Content="Reservations overview" Style="{StaticResource ResourceKey=labelsStyle}"
+                    <Label Grid.Row="0" Grid.Column="0" Content="Reservations overview" Style="{StaticResource ResourceKey=labelsStyleGuest1}"
                        FontSize="24" FontWeight="Bold" Margin="10,0,10,0" Grid.ColumnSpan="2"/>
 
                     <GroupBox Name="gbAllReservations" Grid.Row="1" Grid.Column="0" Header="All reservations" Margin="10,10,10,10"
-                          Style="{StaticResource ResourceKey=groupBoxStyle}" Grid.ColumnSpan="2">
+                          Style="{StaticResource ResourceKey=groupBoxStyleGuest1}" Grid.ColumnSpan="2">
                         <Grid>
                             <DataGrid x:Name="reservationsData"
                               ItemsSource="{Binding ReservationAccommodationDTOs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
@@ -273,10 +252,10 @@
                                                     <Button x:Name="bPostpone" Command="{Binding Path=DataContext.PostponeReservationCommand,       
                                                          RelativeSource= {RelativeSource FindAncestor,
                                                          AncestorType={x:Type DataGrid}}}" 
-                                                         Content="Postpone" Margin="10"/>
+                                                         Content="Postpone" Style="{StaticResource ResourceKey=buttonGuest1}" Margin="10"/>
                                                     <Button x:Name="bCancel" Command="{Binding Path=DataContext.CancelReservationCommand,       
                                                          RelativeSource= {RelativeSource FindAncestor,
-                                                         AncestorType={x:Type DataGrid}}}" Content="Cancel" Margin="10" />
+                                                         AncestorType={x:Type DataGrid}}}" Content="Cancel" Style="{StaticResource ResourceKey=buttonGuest1}" Margin="10" />
                                                 </WrapPanel>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
@@ -286,7 +265,7 @@
                         </Grid>
                     </GroupBox>
                     <GroupBox Grid.Row="2" Grid.Column="0" Header="Reservation requests" Margin="10,10,10,10"
-                          Style="{StaticResource ResourceKey=groupBoxStyle}" Grid.ColumnSpan="2">
+                          Style="{StaticResource ResourceKey=groupBoxStyleGuest1}" Grid.ColumnSpan="2">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -333,7 +312,7 @@
                                             <DataTemplate>
                                                 <Button x:Name="bViewOwnersComment" Command="{Binding Path=DataContext.ViewCommentCommand,       
                                                          RelativeSource= {RelativeSource FindAncestor,
-                                                         AncestorType={x:Type DataGrid}}}" Content="View" Margin="20 10"/>
+                                                         AncestorType={x:Type DataGrid}}}" Content="View" Style="{StaticResource ResourceKey=buttonGuest1}" Margin="20 10"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -341,11 +320,16 @@
                             </DataGrid>
                         </Grid>
                     </GroupBox>
-                    <Button Grid.Row="3" Grid.Column="0" Content="Generate report" Command="{Binding GenerateReportCommand}" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="26" Margin="10 0"/>
+                    <Button Grid.Row="3" Grid.Column="0" Content="Generate report" Command="{Binding GenerateReportCommand}" Style="{StaticResource ResourceKey=buttonGuest1}" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="26" Margin="10 0"/>
                 </Grid>
             </TabItem>
-            <TabItem Name="tabItemForums" Header="Forums" Style="{StaticResource ResourceKey=tabItemStyle}" Height="30">
-                <Grid Style="{StaticResource ResourceKey=gridStyle}">
+            <TabItem Name="tabItemForums" Header="Forums" Style="{StaticResource ResourceKey=tabItemStyleGuest1}" Height="30">
+                <TabItem.InputBindings>
+                    <KeyBinding Command="{Binding CreateForumClickCommand}" Gesture="ALT+C"></KeyBinding>
+                    <KeyBinding Command="{Binding OpenCommentsMyFormCommand}" Gesture="CTRL+L"></KeyBinding>
+                    <KeyBinding Command="{Binding CloseFormCommand}" Gesture="ALT+X"></KeyBinding>
+                </TabItem.InputBindings>
+                <Grid Style="{StaticResource ResourceKey=gridStyleGuest1}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"></RowDefinition>
                         <RowDefinition Height="5*"></RowDefinition>
@@ -355,11 +339,11 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" Content="Forums" Style="{StaticResource ResourceKey=labelsStyle}"
+                    <Label Grid.Row="0" Grid.Column="0" Content="Forums" Style="{StaticResource ResourceKey=labelsStyleGuest1}"
                        FontSize="24" FontWeight="Bold" Margin="10,0,10,0" Grid.ColumnSpan="2"/>
 
                     <GroupBox Grid.Row="1" Grid.Column="0" Header="My forums" Margin="10,10,10,10"
-                          Style="{StaticResource ResourceKey=groupBoxStyle}">
+                          Style="{StaticResource ResourceKey=groupBoxStyleGuest1}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="8*"></RowDefinition>
@@ -407,9 +391,12 @@
                                                          AncestorType={x:Type DataGrid}}}" Width="80" Content="Close forum" Margin="20 10">
                                                     <Button.Style>
                                                         <Style TargetType="Button">
-                                                            <Setter Property="IsEnabled" Value="False"/>
+                                                            <Setter Property="Background" Value="#4e6e65"></Setter>
+                                                            <Setter Property="Foreground" Value="#C7E8C7"></Setter>
+                                                            <Setter Property="BorderThickness" Value="1"></Setter>
+                                                            <Setter Property="BorderBrush" Value="White"></Setter>
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Open}" Value="True">
+                                                                <DataTrigger Binding="{Binding Open, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                                                     <Setter Property="IsEnabled" Value="True"/>
                                                                 </DataTrigger>
                                                             </Style.Triggers>
@@ -424,18 +411,18 @@
                                             <DataTemplate>
                                                 <Button x:Name="bComm" Command="{Binding Path=DataContext.OpenCommentsMyFormCommand,       
                                                          RelativeSource= {RelativeSource FindAncestor,
-                                                         AncestorType={x:Type DataGrid}}}" Width="80" Content="Open" Margin="20 10"/>
+                                                         AncestorType={x:Type DataGrid}}}" Width="80" Content="Open" Style="{StaticResource ResourceKey=buttonGuest1}" Margin="20 10"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <Button Grid.Row="1" Grid.Column="0" Content="Create forum" Command="{Binding CreateForumClickCommand}" HorizontalAlignment="Right" VerticalAlignment="Center" Width="120" Height="26" Margin="10 0"/>
+                            <Button Grid.Row="1" Grid.Column="0" Content="Create forum" Command="{Binding CreateForumClickCommand}" Style="{StaticResource ResourceKey=buttonGuest1}" HorizontalAlignment="Right" VerticalAlignment="Center" Width="120" Height="26" Margin="10 0"/>
                         </Grid>
                     </GroupBox>
 
                     <GroupBox Grid.Row="2" Grid.Column="0" Header="All forums" Margin="10,10,10,40"
-                          Style="{StaticResource ResourceKey=groupBoxStyle}">
+                          Style="{StaticResource ResourceKey=groupBoxStyleGuest1}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -484,7 +471,7 @@
                                                         <Style TargetType="CheckBox">
                                                             <Setter Property="IsChecked" Value="False"/>
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Open}" Value="True">
+                                                                <DataTrigger Binding="{Binding Open, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                                                     <Setter Property="IsChecked" Value="True"/>
                                                                 </DataTrigger>
                                                             </Style.Triggers>
@@ -519,7 +506,7 @@
                                             <DataTemplate>
                                                 <Button x:Name="bOpen" Command="{Binding Path=DataContext.OpenCommentsCommand,       
                                                          RelativeSource= {RelativeSource FindAncestor,
-                                                         AncestorType={x:Type DataGrid}}}" Width="80" Content="Open" HorizontalAlignment="Center" Margin="20 10"/>
+                                                         AncestorType={x:Type DataGrid}}}" Width="80" Content="Open" HorizontalAlignment="Center" Style="{StaticResource ResourceKey=buttonGuest1}" Margin="20 10"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
